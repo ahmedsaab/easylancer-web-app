@@ -11,7 +11,7 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
 
 ### Documentation
 
-- [**The Hitchhiker's Guide to `react-boilerplate`**](docs/general/introduction.md): An introduction for newcomers to the concepts of react-boiler-plate which is what the app is based on.
+- [**The Hitchhiker's Guide to `react-boilerplate`**](docs/general/introduction.md): An introduction to the boiler-plate app that the app is based on.
 - [Overview](docs/general): A short overview of the included tools
 - [**Commands**](docs/general/commands.md): Getting the most out of this boilerplate
 - [Testing](docs/testing): How to work with the built-in test harness
