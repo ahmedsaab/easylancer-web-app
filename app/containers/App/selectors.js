@@ -21,6 +21,12 @@ const makeSelectLoading = () =>
     globalState => globalState.loading,
   );
 
+const makeSelectOpenedModal = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.modal,
+  );
+
 const makeSelectError = () =>
   createSelector(
     selectGlobal,
@@ -46,4 +52,5 @@ export {
   makeSelectError,
   makeSelectRepos,
   makeSelectLocation,
+  makeSelectOpenedModal,
 };

@@ -7,44 +7,67 @@
  */
 
 import React from 'react';
+
 import { Helmet } from 'react-helmet';
-import styled from 'styled-components';
+import SideBar from 'containers/SideBar';
 import { Switch, Route } from 'react-router-dom';
-
-import HomePage from 'containers/HomePage/Loadable';
-import FeaturePage from 'containers/FeaturePage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import Header from 'components/Header';
+import { MDBCol, MDBRow } from 'mdbreact';
 import Footer from 'components/Footer';
-
+import Header from 'containers/Header';
+import TaskPage from 'containers/TaskPage/Loadable';
+import SearchPage from 'containers/SearchPage/Loadable';
+import LoadingIndicator from 'components/LoadingIndicator';
+import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import auth from 'utils/auth';
+import { Container, ContentRow, Wrapper } from 'containers/App/components';
 import GlobalStyle from '../../global-styles';
 
-const AppWrapper = styled.div`
-  max-width: calc(768px + 16px * 2);
-  margin: 0 auto;
-  display: flex;
-  min-height: 100%;
-  padding: 0 16px;
-  flex-direction: column;
-`;
+const handleAuthentication = ({ location }) => {
+  if (/access_token|id_token|error/.test(location.hash)) {
+    auth.handleAuthentication();
+  }
+};
 
-export default function App() {
+function App() {
   return (
-    <AppWrapper>
-      <Helmet
-        titleTemplate="%s - React.js Boilerplate"
-        defaultTitle="React.js Boilerplate"
-      >
-        <meta name="description" content="A React.js Boilerplate application" />
+    <div>
+      <Helmet titleTemplate="%s - Easylancer" defaultTitle="Easylancer">
+        <meta
+          name="description"
+          content="Find local skilled workers in your city"
+        />
       </Helmet>
-      <Header />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/features" component={FeaturePage} />
-        <Route path="" component={NotFoundPage} />
-      </Switch>
-      <Footer />
+      <Wrapper>
+        <SideBar />
+        <Container fluid>
+          <MDBRow>
+            <Header />
+          </MDBRow>
+          <ContentRow>
+            <MDBCol size="12">
+              <Switch>
+                <Route exact path="/" component={SearchPage} />
+                <Route path="/task/:id" component={TaskPage} />
+                <Route path="/search" component={SearchPage} />
+                <Route
+                  path="/callback"
+                  render={props => {
+                    handleAuthentication(props);
+                    return <LoadingIndicator />;
+                  }}
+                />
+                <Route path="" component={NotFoundPage} />
+              </Switch>
+            </MDBCol>
+          </ContentRow>
+          <MDBRow>
+            <Footer />
+          </MDBRow>
+        </Container>
+      </Wrapper>
       <GlobalStyle />
-    </AppWrapper>
+    </div>
   );
 }
+
+export default App;

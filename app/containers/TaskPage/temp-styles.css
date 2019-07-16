@@ -1,0 +1,15 @@
+@media (max-width: 575px) {
+  .full-screen-modal-container {
+    margin: 0;
+  }
+
+  .full-screen-modal-content {
+    border-radius: 0 !important;
+    height: 100vh;
+  }
+}
+
+.close {
+  font-size: 40px;
+}
+
