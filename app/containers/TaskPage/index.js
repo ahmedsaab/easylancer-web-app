@@ -9,26 +9,14 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import LoadingIndicator from 'components/LoadingIndicator';
 import { loadTask } from 'containers/TaskPage/actions';
-import {
-  MDBBtn,
-  MDBCol,
-  MDBIcon,
-  MDBModal,
-  MDBModalBody,
-  MDBModalFooter,
-  MDBModalHeader,
-  MDBRow,
-} from 'mdbreact';
+import { MDBCol, MDBRow } from 'mdbreact';
 import TaskDetails from 'components/TaskDetails';
 import TaskOffers from 'components/TaskOffers';
 import ProfileCard from 'components/ProfileCard';
 import TaskHeader from 'components/TaskHeader';
 import TabSwitch from 'components/TabSwitch';
 import ActionButtons from 'components/ActionButtons';
-import {
-  ContainerRow,
-  OfferModalTaskTitle,
-} from 'containers/TaskPage/components';
+import { ContainerRow } from 'containers/TaskPage/components';
 import { makeSelectOpenedModal } from 'containers/App/selectors';
 import { updateModal } from 'containers/App/actions';
 import saga from './saga';
@@ -40,6 +28,7 @@ import {
 } from './selectors';
 
 import './temp-styles.css';
+import CreateOfferModal from 'components/CreateOfferModal';
 
 export function TaskPage({
   match,
@@ -112,41 +101,16 @@ export function TaskPage({
           <TabSwitch tabs={tabs} />
         </MDBCol>
         <MDBCol sm="12" md="4">
-          <MDBModal
-            isOpen={openedModal === 'create-offer'}
-            toggle={() => updateGlobalModal(null)}
-            size="lg"
-            className="full-screen-modal-container"
-            contentClassName="full-screen-modal-content"
-            closeAriaLabel="full-screen-modal-close-button"
-          >
-            <MDBModalHeader toggle={() => updateGlobalModal(null)}>
-              Offer for:
-              <OfferModalTaskTitle>{task.title}</OfferModalTaskTitle>
-            </MDBModalHeader>
-            <MDBModalBody>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim enim ad minim veniam, quis nostrud exercitation ullamco
-              laboris aliquip ex ea commodo consequat.
-            </MDBModalBody>
-            <MDBModalFooter>
-              <MDBBtn
-                outline
-                color="danger"
-                onClick={() => updateGlobalModal(null)}
-              >
-                Cancel
-              </MDBBtn>
-              <MDBBtn outline>
-                Send <MDBIcon far icon="paper-plane" className="ml-1" />
-              </MDBBtn>
-            </MDBModalFooter>
-          </MDBModal>
           <ActionButtons buttons={actionButtons} />
           <hr />
           <ProfileCard user={task.creatorUser} />
         </MDBCol>
+        <CreateOfferModal
+          taskTitle={task.title}
+          isOpen={openedModal === 'create-offer'}
+          onClose={() => updateGlobalModal(null)}
+          onSend={() => updateGlobalModal(null)}
+        />
       </ContainerRow>
     </div>
   );
