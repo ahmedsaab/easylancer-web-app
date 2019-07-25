@@ -16,7 +16,14 @@ import {
 import * as PropTypes from 'prop-types';
 import { OfferModalTaskTitle } from 'components/CreateOfferModal/components';
 
-function CreateOfferModal({ isOpen, onClose, onSend, taskTitle }) {
+function CreateOfferModal({
+  isOpen,
+  onClose,
+  onSend,
+  onUpdatePaymentMethod,
+  paymentMethod,
+  taskTitle,
+}) {
   return (
     <MDBModal
       isOpen={isOpen}
@@ -34,17 +41,17 @@ function CreateOfferModal({ isOpen, onClose, onSend, taskTitle }) {
         <div>
           <div>Payment Method</div>
           <MDBInput
-            onClick={this.onClick(3)}
-            checked={this.state.radio === 3}
-            label="Default unchecked disabled"
+            onClick={() => onUpdatePaymentMethod('card')}
+            checked={paymentMethod === 'card'}
+            label="Card"
             disabled
             type="radio"
             id="radio3"
           />
           <MDBInput
-            onClick={this.onClick(3)}
-            checked={this.state.radio === 2}
-            label="Default checked disabled"
+            onClick={() => onUpdatePaymentMethod('cash')}
+            checked={paymentMethod === 'cash'}
+            label="Cash"
             disabled
             type="radio"
             id="radio3"
@@ -67,6 +74,8 @@ CreateOfferModal.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
   onSend: PropTypes.func,
+  onUpdatePaymentMethod: PropTypes.func,
+  paymentMethod: PropTypes.string,
   taskTitle: PropTypes.string,
 };
 

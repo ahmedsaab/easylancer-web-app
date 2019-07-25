@@ -1,0 +1,41 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+
+{
+  "acceptedOffer": "5cf6c599e02e0436534d5407",
+  "category": "category1",
+  "createdAt": 1559598630901,
+  "creatorRating": null,
+  "creatorUser": {
+    "badges": [
+
+    ],
+    "dislikes": 0,
+    "firstName": "Ahmed",
+    "id": "5cf58c672357cc11fbc6b3d4",
+    "imageUrl": null,
+    "lastName": "Saleh",
+    "likes": 0,
+    "approved": false
+  },
+  "description": "wwwwwwdewdewdwd ewdewd wedew dew dw",
+  "endDateTime": null,
+  "id": "5cf596262357cc11fbc6b3d6",
+  "imagesUrls": [
+
+  ],
+  "location": {
+    "lat": 93.2,
+    "lon": 10.23
+  },
+  "paymentMethod": "card",
+  "price": 400,
+  "seenCount": 1,
+  "startDateTime": 1555723569401,
+  "status": "accepted",
+  "title": "this is a test",
+  "type": "type1",
+  "workerRating": null,
+  "workerUser": null
+}
