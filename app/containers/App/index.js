@@ -20,6 +20,7 @@ import LoadingIndicator from 'components/LoadingIndicator';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import auth from 'utils/auth';
 import { Container, ContentRow, Wrapper } from 'containers/App/components';
+import Modal from 'containers/Modal';
 import GlobalStyle from '../../global-styles';
 
 const handleAuthentication = ({ location }) => {
@@ -45,6 +46,7 @@ function App() {
           </MDBRow>
           <ContentRow>
             <MDBCol size="12">
+              <Modal />
               <Switch>
                 <Route exact path="/" component={SearchPage} />
                 <Route path="/task/:id" component={TaskPage} />

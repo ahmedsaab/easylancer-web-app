@@ -1,11 +1,24 @@
 import produce from 'immer';
-import { LOAD_TASK, LOAD_TASK_ERROR, LOAD_TASK_SUCCESS } from './constants';
+import {
+  LOAD_TASK,
+  LOAD_TASK_ERROR,
+  LOAD_TASK_OFFERS_ERROR,
+  LOAD_TASK_SUCCESS,
+  LOAD_TASK_OFFERS_SUCCESS,
+} from './constants';
 
 export const initialState = {
   id: null,
-  data: null,
-  loading: false,
-  error: null,
+  task: {
+    data: null,
+    loading: true,
+    error: null,
+  },
+  offers: {
+    data: null,
+    loading: true,
+    error: null,
+  },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -13,18 +26,28 @@ const taskPageReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case LOAD_TASK:
-        draft.loading = true;
+        draft.task.loading = true;
         draft.id = action.id;
         break;
 
       case LOAD_TASK_SUCCESS:
-        draft.data = action.data;
-        draft.loading = false;
+        draft.task.data = action.data;
+        draft.task.loading = false;
         break;
 
       case LOAD_TASK_ERROR:
-        draft.error = action.error;
-        draft.loading = false;
+        draft.task.error = action.error;
+        draft.task.loading = false;
+        break;
+
+      case LOAD_TASK_OFFERS_SUCCESS:
+        draft.offers.data = action.data;
+        draft.offers.loading = false;
+        break;
+
+      case LOAD_TASK_OFFERS_ERROR:
+        draft.offers.loading = false;
+        draft.offers.error = action.error;
         break;
     }
   });

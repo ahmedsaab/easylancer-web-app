@@ -8,8 +8,8 @@ import { compose } from 'redux';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import LoadingIndicator from 'components/LoadingIndicator';
-import { loadTask } from 'containers/TaskPage/actions';
-import { MDBCol, MDBRow } from 'mdbreact';
+import { loadTask, loadTaskOffers } from 'containers/TaskPage/actions';
+import { MDBBadge, MDBCol, MDBIcon, MDBRow } from 'mdbreact';
 import TaskDetails from 'components/TaskDetails';
 import TaskOffers from 'components/TaskOffers';
 import ProfileCard from 'components/ProfileCard';
@@ -17,27 +17,19 @@ import TaskHeader from 'components/TaskHeader';
 import TabSwitch from 'components/TabSwitch';
 import ActionButtons from 'components/ActionButtons';
 import { ContainerRow } from 'containers/TaskPage/components';
-import { makeSelectOpenedModal } from 'containers/App/selectors';
-import { updateModal } from 'containers/App/actions';
+import { updateModal } from 'containers/Modal/actions';
 import saga from './saga';
 import reducer from './reducer';
-import {
-  makeSelectTaskPageTask,
-  makeSelectTaskPageLoading,
-  makeSelectTaskPageError,
-} from './selectors';
+import { makeSelectTaskPageTask, makeSelectTaskPageOffers } from './selectors';
 
 import './temp-styles.css';
-import CreateOfferModal from 'components/CreateOfferModal';
 
 export function TaskPage({
   match,
   task,
-  loading,
-  error,
+  offers,
   onPageLoad,
-  updateGlobalModal,
-  openedModal,
+  onCreateOfferButtonClick,
 }) {
   useInjectReducer({ key: 'taskPage', reducer });
   useInjectSaga({ key: 'taskPage', saga });
@@ -46,21 +38,38 @@ export function TaskPage({
   const tabs = [
     {
       path: `/task/${id}`,
-      text: 'Details',
-      component: () => <TaskDetails task={task} />,
+      header: 'Details',
+      component: () => <TaskDetails task={task.data} />,
       exact: true,
     },
     {
       path: `/task/${id}/offers`,
-      text: 'Offers',
-      component: TaskOffers,
+      header: (
+        <div>
+          Offers
+          {offers.data ? (
+            <MDBBadge color="default" pill className="ml-2">
+              {offers.data.length}
+            </MDBBadge>
+          ) : (
+            <MDBIcon icon="spinner" pulse className="ml-2" spin fixed />
+          )}
+        </div>
+      ),
+      component: () => (
+        <TaskOffers
+          offers={offers.data}
+          loading={offers.loading}
+          error={offers.error}
+        />
+      ),
     },
   ];
   const actionButtons = [
     {
       icon: 'file-contract',
       text: 'Offer',
-      onClick: () => updateGlobalModal('create-offer'),
+      onClick: onCreateOfferButtonClick,
     },
     {
       icon: 'envelope',
@@ -74,12 +83,12 @@ export function TaskPage({
     onPageLoad(id);
   }, [id]);
 
-  if (loading || (!error && !task)) {
+  if (task.loading || (!task.error && !task.data)) {
     return <LoadingIndicator />;
   }
 
-  if (error) {
-    return <div>{JSON.stringify(error.message)}</div>;
+  if (task.error) {
+    return <div>{JSON.stringify(task.error.message)}</div>;
   }
 
   return (
@@ -95,7 +104,7 @@ export function TaskPage({
         <MDBCol sm="12" md="8">
           <MDBRow>
             <MDBCol size="12">
-              <TaskHeader task={task} />
+              <TaskHeader task={task.data} />
             </MDBCol>
           </MDBRow>
           <TabSwitch tabs={tabs} />
@@ -103,14 +112,8 @@ export function TaskPage({
         <MDBCol sm="12" md="4">
           <ActionButtons buttons={actionButtons} />
           <hr />
-          <ProfileCard user={task.creatorUser} />
+          <ProfileCard user={task.data.creatorUser} />
         </MDBCol>
-        <CreateOfferModal
-          taskTitle={task.title}
-          isOpen={openedModal === 'create-offer'}
-          onClose={() => updateGlobalModal(null)}
-          onSend={() => updateGlobalModal(null)}
-        />
       </ContainerRow>
     </div>
   );
@@ -122,24 +125,31 @@ TaskPage.propTypes = {
       id: PropTypes.node,
     }).isRequired,
   }).isRequired,
+  task: PropTypes.shape({
+    data: PropTypes.object,
+    loading: PropTypes.bool,
+    error: PropTypes.instanceOf(Error),
+  }),
+  offers: PropTypes.shape({
+    data: PropTypes.array,
+    loading: PropTypes.bool,
+    error: PropTypes.instanceOf(Error),
+  }),
   onPageLoad: PropTypes.func,
-  updateGlobalModal: PropTypes.func,
-  openedModal: PropTypes.string,
-  error: PropTypes.instanceOf(Error),
-  loading: PropTypes.bool,
-  task: PropTypes.object,
+  onCreateOfferButtonClick: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
+  offers: makeSelectTaskPageOffers(),
   task: makeSelectTaskPageTask(),
-  loading: makeSelectTaskPageLoading(),
-  error: makeSelectTaskPageError(),
-  openedModal: makeSelectOpenedModal(),
 });
 
 const mapDispatchToProps = dispatch => ({
-  onPageLoad: id => dispatch(loadTask(id)),
-  updateGlobalModal: name => dispatch(updateModal(name)),
+  onPageLoad: id => {
+    dispatch(loadTask(id));
+    dispatch(loadTaskOffers(id));
+  },
+  onCreateOfferButtonClick: () => dispatch(updateModal('create-offer')),
 });
 
 const withConnect = connect(

@@ -12,19 +12,13 @@ const makeSelectTaskPage = () =>
 const makeSelectTaskPageTask = () =>
   createSelector(
     selectTaskPageDomain,
-    subState => subState.data,
+    subState => subState.task,
   );
 
-const makeSelectTaskPageError = () =>
+const makeSelectTaskPageOffers = () =>
   createSelector(
     selectTaskPageDomain,
-    subState => subState.error,
-  );
-
-const makeSelectTaskPageLoading = () =>
-  createSelector(
-    selectTaskPageDomain,
-    subState => subState.loading,
+    subState => subState.offers,
   );
 
 const makeSelectTaskPageId = () =>
@@ -38,7 +32,6 @@ export default makeSelectTaskPage;
 export {
   selectTaskPageDomain,
   makeSelectTaskPageTask,
-  makeSelectTaskPageError,
-  makeSelectTaskPageLoading,
   makeSelectTaskPageId,
+  makeSelectTaskPageOffers,
 };

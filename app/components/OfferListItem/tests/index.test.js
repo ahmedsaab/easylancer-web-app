@@ -1,6 +1,6 @@
 /**
  *
- * Tests for CreateOfferModal
+ * Tests for OfferListItem
  *
  * @see https://github.com/react-boilerplate/react-boilerplate/tree/master/docs/testing
  *
@@ -10,12 +10,12 @@ import React from 'react';
 import { render } from 'react-testing-library';
 // import 'jest-dom/extend-expect'; // add some helpful assertions
 
-import CreateOfferModal from '../index';
+import OfferListItem from '../index';
 
-describe('<CreateOfferModal />', () => {
+describe('<OfferListItem />', () => {
   it('Expect to not log errors in console', () => {
     const spy = jest.spyOn(global.console, 'error');
-    render(<CreateOfferModal />);
+    render(<OfferListItem />);
     expect(spy).not.toHaveBeenCalled();
   });
 
@@ -31,7 +31,7 @@ describe('<CreateOfferModal />', () => {
   it.skip('Should render and match the snapshot', () => {
     const {
       container: { firstChild },
-    } = render(<CreateOfferModal />);
+    } = render(<OfferListItem />);
     expect(firstChild).toMatchSnapshot();
   });
 });

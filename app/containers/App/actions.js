@@ -62,10 +62,3 @@ export function repoLoadingError(error) {
     error,
   };
 }
-
-export function updateModal(modalName) {
-  return {
-    type: UPDATE_MODAL,
-    modalName,
-  };
-}

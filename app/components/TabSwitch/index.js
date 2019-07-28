@@ -18,7 +18,7 @@ function TabSwitch({ tabs }) {
   const tabLinks = tabs.map(tab => (
     <MDBNavItem key={tab.text}>
       <TabNavLink exact={tab.exact} to={tab.path}>
-        {tab.text}
+        {tab.header}
       </TabNavLink>
     </MDBNavItem>
   ));

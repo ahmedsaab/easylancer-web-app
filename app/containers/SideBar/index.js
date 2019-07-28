@@ -55,26 +55,34 @@ function SideBar({ isOpen, handleToggle }) {
         <SideBarList>
           <SideBarListElement>
             <SideBarLinkElement to="/search">
-              <MDBIcon icon="search" />
-              <SideBarLinkElementText>Find work</SideBarLinkElementText>
+              <div onClick={handleToggle}>
+                <MDBIcon icon="search" />
+                <SideBarLinkElementText>Find work</SideBarLinkElementText>
+              </div>
             </SideBarLinkElement>
           </SideBarListElement>
           <SideBarListElement>
             <SideBarLinkElement to="/my-orders">
-              <MDBIcon icon="handshake" />
-              <SideBarLinkElementText>My orders</SideBarLinkElementText>
+              <div onClick={handleToggle}>
+                <MDBIcon icon="handshake" />
+                <SideBarLinkElementText>My orders</SideBarLinkElementText>
+              </div>
             </SideBarLinkElement>
           </SideBarListElement>
           <SideBarListElement>
             <SideBarLinkElement to="/messages">
-              <MDBIcon icon="comments" />
-              <SideBarLinkElementText>Messages</SideBarLinkElementText>
+              <div onClick={handleToggle}>
+                <MDBIcon icon="comments" />
+                <SideBarLinkElementText>Messages</SideBarLinkElementText>
+              </div>
             </SideBarLinkElement>
           </SideBarListElement>
           <SideBarListElement>
             <SideBarLinkElement to="/settings">
-              <MDBIcon icon="cog" />
-              <SideBarLinkElementText>Settings</SideBarLinkElementText>
+              <div onClick={handleToggle}>
+                <MDBIcon icon="cog" />
+                <SideBarLinkElementText>Settings</SideBarLinkElementText>
+              </div>
             </SideBarLinkElement>
           </SideBarListElement>
         </SideBarList>

@@ -5,20 +5,22 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import LoadingIndicator from 'components/LoadingIndicator';
+import OfferList from 'components/OfferList';
 
-function TaskOffers() {
-  return (
-    <div>
-      <FormattedMessage {...messages.header} />
-    </div>
-  );
+function TaskOffers({ offers, loading, error }) {
+  if (loading) return <LoadingIndicator />;
+  if (error) return <div>Something bad happened :(</div>;
+  return <OfferList offers={offers} label="All" />;
 }
 
-TaskOffers.propTypes = {};
+TaskOffers.propTypes = {
+  offers: PropTypes.array,
+  loading: PropTypes.bool,
+  error: PropTypes.object,
+};
 
 export default TaskOffers;
