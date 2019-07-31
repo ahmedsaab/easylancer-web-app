@@ -12,7 +12,6 @@ import { Helmet } from 'react-helmet';
 import SideBar from 'elements/pages/SideBar';
 import { Switch, Route } from 'react-router-dom';
 import { MDBCol, MDBRow } from 'mdbreact';
-import Footer from 'elements/organisms/Footer';
 import Header from 'elements/pages/Header';
 import TaskPage from 'elements/pages/TaskPage/Loadable';
 import SearchPage from 'elements/pages/SearchPage/Loadable';
@@ -62,9 +61,6 @@ function App() {
               </Switch>
             </MDBCol>
           </ContentRow>
-          <MDBRow>
-            <Footer />
-          </MDBRow>
         </Container>
       </Wrapper>
       <GlobalStyle />

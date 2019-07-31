@@ -25,6 +25,7 @@ import {
   SideBarUserName,
 } from 'elements/pages/SideBar/components';
 import reducer from 'elements/pages/SideBar/reducer';
+import Footer from 'elements/organisms/Footer';
 
 function SideBar({ isOpen, handleToggle }) {
   useInjectReducer({ key: 'sideNavBar', reducer });
@@ -79,6 +80,7 @@ function SideBar({ isOpen, handleToggle }) {
           </SideBarListElement>
         </SideBarList>
         <SideBarButton onClick={auth.login}>Log in</SideBarButton>
+        <Footer />
       </SideBarContainer>
     </div>
   );

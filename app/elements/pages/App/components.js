@@ -9,7 +9,7 @@ export const Wrapper = styled('div')`
 
 export const ContentRow = styled(MDBRow)`
   margin-top: 60px;
-  margin-bottom: 50px;
+  margin-bottom: 15px;
   margin-left: 235px;
   @media (max-width: 1200px) {
     margin-left: 0px;

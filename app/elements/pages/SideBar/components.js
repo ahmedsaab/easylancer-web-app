@@ -11,6 +11,8 @@ export const SideBarContainer = styled('nav')`
   max-width: 250px;
   z-index: 1000;
   position: fixed;
+  display: flex;
+  flex-direction: column;
   &.active {
     margin-left: 0;
   }

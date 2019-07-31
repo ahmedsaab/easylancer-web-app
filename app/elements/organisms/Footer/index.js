@@ -3,16 +3,7 @@ import { MDBContainer, MDBFooter } from 'mdbreact';
 import styled from 'styled-components';
 
 const Footer = styled(MDBFooter)`
-  height; 50px;
-  position: fixed;
-  z-index: 400;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  width: 100%;
-  @media (min-width: 1200px) {
-    padding-left: 250px;
-  }
+  margin-top: auto;
 `;
 
 const FooterPagePro = () => (
