@@ -53,6 +53,7 @@ export function OfferDetailsModal({ taskId, offers, location }) {
 
   return (
     <FluidModal
+      style={{ padding: '20px' }}
       isOpen={offerUrlRegex.test(location.pathname)}
       onClose={() => alert('close button clicked')}
     >

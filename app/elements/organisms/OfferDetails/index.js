@@ -5,17 +5,30 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import styled from 'styled-elements';
+import * as PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import { FormattedMessage } from 'react-intl';
-import messages from 'elements/organisms/OfferDetails/messages';
+import { MDBBtn } from 'mdbreact';
+
+const OfferDetailsContainer = styled.div`
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const FooterContainer = styled.div`
+  margin-top: auto;
+`;
 
 function OfferDetails() {
   return (
-    <div>
-      <FormattedMessage {...messages.header} />
-    </div>
+    <OfferDetailsContainer>
+      <FooterContainer>
+        <MDBBtn color="success" block className="">
+          Accept Offer
+        </MDBBtn>
+      </FooterContainer>
+    </OfferDetailsContainer>
   );
 }
 

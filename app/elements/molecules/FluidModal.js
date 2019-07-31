@@ -33,9 +33,10 @@ const ModalContainer = styled.div`
   }
 `;
 
-function FluidModal({ isOpen, onClose, children }) {
+function FluidModal({ isOpen, onClose, style, children }) {
   return (
     <ModalContainer
+      style={style}
       isOpen={isOpen}
       toggle={onClose}
       className="fluid-modal-container"
@@ -46,6 +47,7 @@ function FluidModal({ isOpen, onClose, children }) {
 }
 
 FluidModal.propTypes = {
+  style: PropTypes.object,
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
   children: PropTypes.any,
