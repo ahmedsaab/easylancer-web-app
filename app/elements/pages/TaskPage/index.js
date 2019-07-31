@@ -9,12 +9,10 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import LoadingIndicator from 'elements/organisms/LoadingIndicator';
 import { loadTask, loadTaskOffers } from 'elements/pages/TaskPage/actions';
-import { MDBBadge, MDBCol, MDBIcon, MDBRow } from 'mdbreact';
-import TaskDetails from 'elements/organisms/TaskDetails';
-import TaskOffers from 'elements/organisms/TaskOffers';
+import { MDBCol, MDBRow } from 'mdbreact';
 import ProfileCard from 'elements/organisms/ProfileCard';
 import TaskHeader from 'elements/organisms/TaskHeader';
-import TabSwitch from 'elements/organisms/TabSwitch';
+import TaskSwitch from 'elements/organisms/TaskSwitch';
 import ActionButtons from 'elements/molecules/ActionButtons';
 import { ContainerRow } from 'elements/pages/TaskPage/components';
 import { updateModal } from 'elements/pages/Modal/actions';
@@ -37,38 +35,6 @@ export function TaskPage({
   useInjectSaga({ key: 'taskPage', saga });
 
   const { id } = match.params;
-  const tabs = [
-    {
-      match: `/task/${id}`,
-      path: `/task/${id}`,
-      header: 'Details',
-      component: () => <TaskDetails task={task.data} />,
-      exact: true,
-    },
-    {
-      match: `/task/${id}/offers/*`,
-      path: `/task/${id}/offers/`,
-      header: (
-        <div>
-          Offers
-          {offers.data ? (
-            <MDBBadge color="default" pill className="ml-2">
-              {offers.data.length}
-            </MDBBadge>
-          ) : (
-            <MDBIcon icon="spinner" pulse className="ml-2" spin fixed />
-          )}
-        </div>
-      ),
-      component: () => (
-        <TaskOffers
-          offers={offers.data}
-          loading={offers.loading}
-          error={offers.error}
-        />
-      ),
-    },
-  ];
   const actionButtons = [
     {
       icon: 'file-contract',
@@ -98,7 +64,7 @@ export function TaskPage({
   return (
     <div>
       <Helmet>
-        <title>TaskPage</title>
+        <title>{task.data.title}</title>
         <meta
           name="description"
           content="This is a page that shows the details of a Task"
@@ -111,7 +77,7 @@ export function TaskPage({
               <TaskHeader task={task.data} />
             </MDBCol>
           </MDBRow>
-          <TabSwitch tabs={tabs} />
+          <TaskSwitch task={task.data} offers={offers} />
         </MDBCol>
         <MDBCol sm="12" md="4">
           <ActionButtons buttons={actionButtons} />

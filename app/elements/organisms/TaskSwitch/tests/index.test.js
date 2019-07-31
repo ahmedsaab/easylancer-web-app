@@ -1,6 +1,6 @@
 /**
  *
- * Tests for TabSwitch
+ * Tests for TaskSwitch
  *
  * @see https://github.com/react-boilerplate/react-boilerplate/tree/master/docs/testing
  *
@@ -8,14 +8,20 @@
 
 import React from 'react';
 import { render } from 'react-testing-library';
+import { IntlProvider } from 'react-intl';
 // import 'jest-dom/extend-expect'; // add some helpful assertions
 
-import TabSwitch from 'elements/organisms/TabSwitch/index';
+import TaskSwitch from 'elements/organisms/TaskSwitch/index';
+import { DEFAULT_LOCALE } from 'i18n';
 
-describe('<TabSwitch />', () => {
+describe('<TaskSwitch />', () => {
   it('Expect to not log errors in console', () => {
     const spy = jest.spyOn(global.console, 'error');
-    render(<TabSwitch />);
+    render(
+      <IntlProvider locale={DEFAULT_LOCALE}>
+        <TaskSwitch />
+      </IntlProvider>,
+    );
     expect(spy).not.toHaveBeenCalled();
   });
 
@@ -31,7 +37,11 @@ describe('<TabSwitch />', () => {
   it.skip('Should render and match the snapshot', () => {
     const {
       container: { firstChild },
-    } = render(<TabSwitch />);
+    } = render(
+      <IntlProvider locale={DEFAULT_LOCALE}>
+        <TaskSwitch />
+      </IntlProvider>,
+    );
     expect(firstChild).toMatchSnapshot();
   });
 });
