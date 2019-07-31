@@ -32,7 +32,7 @@ const handleAuthentication = ({ location }) => {
 function App() {
   return (
     <div style={{ overflowX: 'hidden' }}>
-      <Helmet titleTemplate="%s - Easylancer" defaultTitle="Easylancer">
+      <Helmet titleTemplate="%s | Easylancer" defaultTitle="Easylancer">
         <meta
           name="description"
           content="Find local skilled workers in your city"

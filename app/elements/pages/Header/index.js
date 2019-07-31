@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { toggleSideNav } from 'elements/pages/Header/actions';
-import * as strawberry from 'images/strawberry.png';
+import * as logo from 'images/logo.png';
 import {
   NavBar,
   NavIcon,
@@ -20,7 +20,7 @@ function Header({ handleToggle }) {
         <NavIcon icon="bars" size="2x" />
       </NavMenuButton>
       <MDBNavbarBrand href="#">
-        <NavLogoIcon src={strawberry} />
+        <NavLogoIcon src={logo} />
         <NavLogoText>Easylancer</NavLogoText>
       </MDBNavbarBrand>
       <NavIcon icon="bell" size="lg" />
@@ -33,7 +33,7 @@ Header.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  handleToggle: () => dispatch(toggleSideNav()),
+  handleToggle: () => dispatch(toggleSideNav(true)),
 });
 
 const withConnect = connect(

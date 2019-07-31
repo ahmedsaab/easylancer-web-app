@@ -24,8 +24,8 @@ export function SearchPage({ data, onPageLoad }) {
   return (
     <div>
       <Helmet>
-        <title>SearchPage</title>
-        <meta name="description" content="Description of SearchPage" />
+        <title>Search</title>
+        <meta name="description" content="Find services" />
       </Helmet>
       <MDBRow>
         <MDBCol sm="12" md="8">

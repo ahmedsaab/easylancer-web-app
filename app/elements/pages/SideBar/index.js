@@ -53,36 +53,28 @@ function SideBar({ isOpen, handleToggle }) {
           </SideBarUser>
         </SideBarHeader>
         <SideBarList>
-          <SideBarListElement>
+          <SideBarListElement onClick={handleToggle}>
             <SideBarLinkElement to="/search">
-              <div onClick={handleToggle}>
-                <MDBIcon icon="search" />
-                <SideBarLinkElementText>Find work</SideBarLinkElementText>
-              </div>
+              <MDBIcon icon="search" />
+              <SideBarLinkElementText>Find work</SideBarLinkElementText>
             </SideBarLinkElement>
           </SideBarListElement>
-          <SideBarListElement>
+          <SideBarListElement onClick={handleToggle}>
             <SideBarLinkElement to="/my-orders">
-              <div onClick={handleToggle}>
-                <MDBIcon icon="handshake" />
-                <SideBarLinkElementText>My orders</SideBarLinkElementText>
-              </div>
+              <MDBIcon icon="handshake" />
+              <SideBarLinkElementText>My orders</SideBarLinkElementText>
             </SideBarLinkElement>
           </SideBarListElement>
-          <SideBarListElement>
+          <SideBarListElement onClick={handleToggle}>
             <SideBarLinkElement to="/messages">
-              <div onClick={handleToggle}>
-                <MDBIcon icon="comments" />
-                <SideBarLinkElementText>Messages</SideBarLinkElementText>
-              </div>
+              <MDBIcon icon="comments" />
+              <SideBarLinkElementText>Messages</SideBarLinkElementText>
             </SideBarLinkElement>
           </SideBarListElement>
-          <SideBarListElement>
+          <SideBarListElement onClick={handleToggle}>
             <SideBarLinkElement to="/settings">
-              <div onClick={handleToggle}>
-                <MDBIcon icon="cog" />
-                <SideBarLinkElementText>Settings</SideBarLinkElementText>
-              </div>
+              <MDBIcon icon="cog" />
+              <SideBarLinkElementText>Settings</SideBarLinkElementText>
             </SideBarLinkElement>
           </SideBarListElement>
         </SideBarList>
@@ -98,7 +90,7 @@ SideBar.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  handleToggle: () => dispatch(toggleSideNav()),
+  handleToggle: () => dispatch(toggleSideNav(false)),
 });
 
 const mapStateToProps = createStructuredSelector({
