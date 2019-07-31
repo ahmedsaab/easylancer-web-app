@@ -1,16 +1,16 @@
-/**
- *
- * ActionButtons
- *
- */
-
 import React from 'react';
-import RightPaddedIcon from 'elements/organisms/RightPaddedIcon';
 import * as PropTypes from 'prop-types';
-import {
-  ActionButton,
-  ActionButtonsContainer,
-} from 'elements/organisms/ActionButtons/components';
+import styled from 'styled-components';
+import { MDBBtn, MDBIcon } from 'mdbreact';
+
+const ActionButton = styled(MDBBtn)`
+  font-size: 16px;
+`;
+
+const ActionButtonsContainer = styled('div')`
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
 
 function ActionButtons({ buttons }) {
   const buttonComponents = buttons.map(button => (
@@ -19,7 +19,7 @@ function ActionButtons({ buttons }) {
       key={button.text}
       className="btn btn-rounded waves-effect"
     >
-      <RightPaddedIcon far={button.far} icon={button.icon} />
+      <MDBIcon className="mr-2" far={button.far} icon={button.icon} />
       {button.text}
     </ActionButton>
   ));

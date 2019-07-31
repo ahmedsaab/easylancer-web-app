@@ -1,8 +1,6 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 
-import List from 'elements/organisms/List';
-import ListItem from 'elements/organisms/ListItem';
 import LoadingIndicator from 'elements/organisms/LoadingIndicator';
 import { withRouter } from 'react-router-dom';
 import TaskCard from 'elements/organisms/TaskCard';
@@ -10,13 +8,10 @@ import { CardDeckResp } from 'elements/organisms/TaskDeck/components';
 
 function TaskDeck({ loading, error, tasks, history }) {
   if (loading) {
-    return <List component={LoadingIndicator} />;
+    return <LoadingIndicator />;
   }
   if (error) {
-    const ErrorComponent = () => (
-      <ListItem item="Something went wrong, please try again!" />
-    );
-    return <List component={ErrorComponent} />;
+    return <div>{JSON.stringify(error)}</div>;
   }
   if (tasks.length > 0) {
     const taskCards = tasks.map(task => (

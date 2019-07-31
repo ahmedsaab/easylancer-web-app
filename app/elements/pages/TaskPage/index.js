@@ -15,13 +15,16 @@ import TaskOffers from 'elements/organisms/TaskOffers';
 import ProfileCard from 'elements/organisms/ProfileCard';
 import TaskHeader from 'elements/organisms/TaskHeader';
 import TabSwitch from 'elements/organisms/TabSwitch';
-import ActionButtons from 'elements/organisms/ActionButtons';
+import ActionButtons from 'elements/molecules/ActionButtons';
 import { ContainerRow } from 'elements/pages/TaskPage/components';
 import { updateModal } from 'elements/pages/Modal/actions';
 import OfferDetailsModal from 'elements/pages/OfferDetailsModal';
 import saga from 'elements/pages/TaskPage/saga';
 import reducer from 'elements/pages/TaskPage/reducer';
-import { makeSelectTaskPageTask, makeSelectTaskPageOffers } from 'elements/pages/TaskPage/selectors';
+import {
+  makeSelectTaskPageTask,
+  makeSelectTaskPageOffers,
+} from 'elements/pages/TaskPage/selectors';
 
 export function TaskPage({
   match,

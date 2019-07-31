@@ -15,8 +15,6 @@ import {
   ProfileCardHeader,
   ViewProfileLink,
 } from 'elements/organisms/ProfileCard/components';
-import RightPaddedIcon from 'elements/organisms/RightPaddedIcon';
-import LeftPaddedIcon from 'elements/organisms/LeftPaddedIcon';
 import Avatar from 'elements/molecules/Avatar';
 import LikesMetric from 'elements/molecules/LikesMetric';
 
@@ -30,9 +28,9 @@ function ProfileCard({ user }) {
       <ProfileCardBody>
         <ProfileCardHeader>
           <div>
-            <RightPaddedIcon size="2x" fab icon="codiepie" />
-            <RightPaddedIcon size="2x" fab icon="connectdevelop" />
-            <RightPaddedIcon size="2x" fab icon="codepen" />
+            <MDBIcon size="2x" className="mr-2" fab icon="codiepie" />
+            <MDBIcon size="2x" className="mr-2" fab icon="connectdevelop" />
+            <MDBIcon size="2x" className="mr-2" fab icon="codepen" />
           </div>
           <h4 className="card-title">
             {user.firstName} {user.lastName}
@@ -53,7 +51,7 @@ function ProfileCard({ user }) {
           <ViewProfileLink>
             <h5>
               View profile
-              <LeftPaddedIcon icon="angle-double-right" />
+              <MDBIcon className="ml-2" icon="angle-double-right" />
             </h5>
           </ViewProfileLink>
         </div>
