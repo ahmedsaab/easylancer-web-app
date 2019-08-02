@@ -15,39 +15,39 @@ import { useInjectReducer } from 'utils/injectReducer';
 import FluidModal from 'elements/molecules/FluidModal';
 import OfferDetails from 'elements/organisms/OfferDetails';
 import LoadingIndicator from 'elements/organisms/LoadingIndicator';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import {
-  makeSelectTaskPageId,
-  makeSelectTaskPageOffers,
-} from 'elements/pages/TaskPage/selectors';
-import makeSelectOfferDetailsModal from 'elements/pages/OfferDetailsModal/selectors';
+  makeSelectOfferDetailsIsSending,
+  makeSelectOfferDetailsOffer,
+} from 'elements/pages/OfferDetailsModal/selectors';
 import reducer from 'elements/pages/OfferDetailsModal/reducer';
 import saga from 'elements/pages/OfferDetailsModal/saga';
+import { acceptOffer } from 'elements/pages/OfferDetailsModal/actions';
 
-const offerUrlRegex = RegExp(/offers\/[0-9a-f]/i);
+export const offerUrlRegex = RegExp(/offers\/[0-9a-f]/i);
 
-export function OfferDetailsModal({ taskId, offers, location }) {
+export function OfferDetailsModal({
+  offer,
+  isSending,
+  location,
+  onClose,
+  onAcceptOffer,
+}) {
   useInjectReducer({ key: 'offerDetailsModal', reducer });
   useInjectSaga({ key: 'offerDetailsModal', saga });
+  let content = null;
 
-  let content = <LoadingIndicator />;
-
-  if (offers.error) {
-    content = <div>{JSON.stringify(offers.error.message)}</div>;
-  }
-
-  if (offers.data && taskId) {
+  if (!offer) {
+    content = <LoadingIndicator />;
+  } else if (offer instanceof Error) {
+    content = <div>{JSON.stringify(offer)}</div>;
+  } else {
     content = (
-      <Switch>
-        {offers.data.map(offer => (
-          <Route
-            key={offer.id}
-            exact
-            path={`/task/${taskId}/offers/${offer.id}`}
-            component={() => <OfferDetails offer={offer} />}
-          />
-        ))}
-      </Switch>
+      <OfferDetails
+        offer={offer}
+        isLoading={isSending}
+        onHireClick={() => onAcceptOffer(offer.id)}
+      />
     );
   }
 
@@ -55,7 +55,7 @@ export function OfferDetailsModal({ taskId, offers, location }) {
     <FluidModal
       style={{ padding: '20px' }}
       isOpen={offerUrlRegex.test(location.pathname)}
-      onClose={() => alert('close button clicked')}
+      onClose={onClose}
     >
       {content}
     </FluidModal>
@@ -63,28 +63,23 @@ export function OfferDetailsModal({ taskId, offers, location }) {
 }
 
 OfferDetailsModal.propTypes = {
-  taskId: PropTypes.string,
-  offers: PropTypes.shape({
-    data: PropTypes.array,
-    loading: PropTypes.bool,
-    error: PropTypes.instanceOf(Error),
-  }),
+  offer: PropTypes.object,
+  isSending: PropTypes.bool,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
+  onClose: PropTypes.func,
+  onAcceptOffer: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  offerDetailsModal: makeSelectOfferDetailsModal(),
-  offers: makeSelectTaskPageOffers(),
-  taskId: makeSelectTaskPageId(),
+  isSending: makeSelectOfferDetailsIsSending(),
+  offer: makeSelectOfferDetailsOffer(),
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
+const mapDispatchToProps = dispatch => ({
+  onAcceptOffer: offerId => dispatch(acceptOffer(offerId)),
+});
 
 const withConnect = connect(
   mapStateToProps,

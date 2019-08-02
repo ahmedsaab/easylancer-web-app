@@ -32,10 +32,14 @@ const TabContent = styled('div')`
   margin-top: -3px;
 `;
 
-function TabSwitch({ tabs }) {
+function TabSwitch({ tabs, disabled }) {
   const tabLinks = tabs.map(tab => (
-    <MDBNavItem key={tab.path}>
-      <TabNavLink exact={tab.exact} to={tab.path}>
+    <MDBNavItem disabled key={tab.path}>
+      <TabNavLink
+        onClick={disabled ? e => e.preventDefault() : () => {}}
+        exact={tab.exact}
+        to={tab.path}
+      >
         {tab.header}
       </TabNavLink>
     </MDBNavItem>
@@ -60,6 +64,7 @@ function TabSwitch({ tabs }) {
 }
 
 TabSwitch.propTypes = {
+  disabled: PropTypes.bool,
   tabs: PropTypes.array,
 };
 

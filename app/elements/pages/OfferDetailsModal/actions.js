@@ -1,13 +1,34 @@
-/*
- *
- * OfferDetailsModal actions
- *
- */
+import {
+  ACCEPT_OFFER,
+  ACCEPT_OFFER_SUCCESS,
+  ACCEPT_OFFER_ERROR,
+  VIEW_OFFER,
+} from 'elements/pages/OfferDetailsModal/constants';
 
-import { DEFAULT_ACTION } from 'elements/pages/OfferDetailsModal/constants';
-
-export function defaultAction() {
+export function acceptOffer(offerId) {
   return {
-    type: DEFAULT_ACTION,
+    type: ACCEPT_OFFER,
+    offerId,
+  };
+}
+
+
+export function acceptOfferSuccess() {
+  return {
+    type: ACCEPT_OFFER_SUCCESS,
+  };
+}
+
+export function acceptOfferError(error) {
+  return {
+    type: ACCEPT_OFFER_ERROR,
+    error,
+  };
+}
+
+export function viewOffer(offer) {
+  return {
+    type: VIEW_OFFER,
+    offer,
   };
 }

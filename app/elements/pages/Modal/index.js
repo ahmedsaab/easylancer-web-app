@@ -21,13 +21,23 @@ import 'elements/pages/Modal/styles.css';
 export function Modal({ type, onClose }) {
   useInjectReducer({ key: 'modal', reducer });
   let modalContent;
+  let modalSettings;
 
   switch (type) {
     case 'create-offer':
       modalContent = <CreateOfferModal />;
+      modalSettings = {
+
+      };
       break;
     case 'message-task-owner':
       modalContent = <CreateOfferModal />;
+      break;
+    case 'task-assigned-confirmation':
+      modalContent = <CreateOfferModal />;
+      modalSettings = {
+
+      };
       break;
     default:
       modalContent = null;
@@ -48,7 +58,11 @@ export function Modal({ type, onClose }) {
 }
 
 Modal.propTypes = {
-  type: PropTypes.oneOf(['create-offer', 'message-task-owner']),
+  type: PropTypes.oneOf([
+    'create-offer',
+    'message-task-owner',
+    'task-assigned-confirmation',
+  ]),
   onClose: PropTypes.func,
 };
 

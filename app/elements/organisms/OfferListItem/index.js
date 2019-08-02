@@ -10,14 +10,10 @@ import {
   PriceTagContainer,
   RatingsContainer,
 } from 'elements/organisms/OfferListItem/components';
-import { withRouter } from 'react-router-dom';
 
-function OfferListItem({ offer, history, location }) {
+function OfferListItem({ offer, isSelected, onClick, disabled }) {
   return (
-    <ButtonListItem
-      selected={location.pathname.includes(`offers/${offer.id}`)}
-      onClick={() => history.push(`${offer.id}`)}
-    >
+    <ButtonListItem disabled={disabled} selected={isSelected} onClick={onClick}>
       <div className="d-flex">
         <div className="flex-shrink-1">
           <Avatar
@@ -56,13 +52,10 @@ function OfferListItem({ offer, history, location }) {
 }
 
 OfferListItem.propTypes = {
+  disabled: PropTypes.bool,
   offer: PropTypes.object,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
+  isSelected: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
-export default withRouter(OfferListItem);
+export default OfferListItem;

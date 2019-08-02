@@ -15,6 +15,7 @@ const ActionButtonsContainer = styled('div')`
 function ActionButtons({ buttons }) {
   const buttonComponents = buttons.map(button => (
     <ActionButton
+      disabled={button.disabled}
       onClick={button.onClick}
       key={button.text}
       className="btn btn-rounded waves-effect"

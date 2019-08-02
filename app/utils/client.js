@@ -76,6 +76,31 @@ export const postOffer = async (id, offer) => {
   }
 };
 
+export const acceptOffer = async (taskId, offerId) => {
+  await sleep(1000);
+  try {
+    const response = await axios.post(
+      `${process.env.CLIENT_API_ROOT}/tasks/${taskId}/accept`,
+      { offerId },
+      {
+        headers,
+      },
+    );
+
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      throw new Error(
+        `The server responded with error code ${error.response.status}`,
+      );
+    } else if (error.request) {
+      throw new Error(`Failed to read response from Server`);
+    } else {
+      throw new Error(`An unexpected error occurred`);
+    }
+  }
+};
+
 export const searchTasks = async filters => {
   await sleep(1000);
   try {

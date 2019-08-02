@@ -23,12 +23,15 @@ import {
   makeSelectTaskPageTask,
   makeSelectTaskPageOffers,
 } from 'elements/pages/TaskPage/selectors';
+import { makeSelectOfferDetailsIsSending } from 'elements/pages/OfferDetailsModal/selectors';
 
 export function TaskPage({
   match,
+  history,
   task,
   offers,
   onPageLoad,
+  isSendingOffer,
   onCreateOfferButtonClick,
 }) {
   useInjectReducer({ key: 'taskPage', reducer });
@@ -37,11 +40,13 @@ export function TaskPage({
   const { id } = match.params;
   const actionButtons = [
     {
+      disabled: isSendingOffer,
       icon: 'file-contract',
       text: 'Offer',
       onClick: onCreateOfferButtonClick,
     },
     {
+      disabled: isSendingOffer,
       icon: 'envelope',
       text: 'Message',
       onClick: () => {},
@@ -77,14 +82,20 @@ export function TaskPage({
               <TaskHeader task={task.data} />
             </MDBCol>
           </MDBRow>
-          <TaskSwitch task={task.data} offers={offers} />
+          <TaskSwitch
+            disabled={isSendingOffer}
+            task={task.data}
+            offers={offers}
+          />
         </MDBCol>
         <MDBCol sm="12" md="4">
           <ActionButtons buttons={actionButtons} />
           <hr />
           <MDBRow className="no-gutters">
             <MDBCol>
-              <OfferDetailsModal />
+              <OfferDetailsModal
+                onClose={() => history.push(`/task/${task.data.id}/offers/`)}
+              />
               <ProfileCard user={task.data.creatorUser} />
             </MDBCol>
           </MDBRow>
@@ -103,6 +114,9 @@ TaskPage.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   task: PropTypes.shape({
     data: PropTypes.object,
     loading: PropTypes.bool,
@@ -113,6 +127,7 @@ TaskPage.propTypes = {
     loading: PropTypes.bool,
     error: PropTypes.instanceOf(Error),
   }),
+  isSendingOffer: PropTypes.bool,
   onPageLoad: PropTypes.func,
   onCreateOfferButtonClick: PropTypes.func,
 };
@@ -120,6 +135,7 @@ TaskPage.propTypes = {
 const mapStateToProps = createStructuredSelector({
   offers: makeSelectTaskPageOffers(),
   task: makeSelectTaskPageTask(),
+  isSendingOffer: makeSelectOfferDetailsIsSending(),
 });
 
 const mapDispatchToProps = dispatch => ({

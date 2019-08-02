@@ -12,6 +12,8 @@ import {
   updateOfferModalPayment,
   updateOfferModalPrice,
 } from 'elements/pages/CreateOfferModal/actions';
+import { viewOffer } from 'elements/pages/OfferDetailsModal/actions';
+import { offerUrlRegex } from 'elements/pages/OfferDetailsModal';
 
 export function* getTask() {
   const id = yield select(makeSelectTaskPageId());
@@ -30,8 +32,17 @@ export function* getTaskOffers() {
   const id = yield select(makeSelectTaskPageId());
 
   try {
-    const task = yield call(client.getTaskOffers, id);
-    yield put(taskOffersLoaded(task));
+    const offers = yield call(client.getTaskOffers, id);
+    yield put(taskOffersLoaded(offers));
+    // eslint-disable-next-line no-restricted-globals
+    if (offerUrlRegex.test(location.pathname)) {
+      yield put(
+        viewOffer(
+          // eslint-disable-next-line no-restricted-globals
+          offers.find(offer => offer.id === location.pathname.split('/').pop()),
+        ),
+      );
+    }
   } catch (err) {
     yield put(taskOffersLoadingError(err));
   }

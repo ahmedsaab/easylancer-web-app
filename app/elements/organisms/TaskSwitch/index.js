@@ -5,7 +5,7 @@ import { MDBBadge, MDBIcon } from 'mdbreact';
 import TaskOffers from 'elements/organisms/TaskOffers';
 import TabSwitch from 'elements/molecules/TabSwitch';
 
-function TaskSwitch({ task, offers }) {
+function TaskSwitch({ task, offers, disabled }) {
   const tabs = [
     {
       match: `/task/${task.id}`,
@@ -31,6 +31,7 @@ function TaskSwitch({ task, offers }) {
       ),
       component: () => (
         <TaskOffers
+          disabled={disabled}
           offers={offers.data}
           loading={offers.loading}
           error={offers.error}
@@ -38,10 +39,11 @@ function TaskSwitch({ task, offers }) {
       ),
     },
   ];
-  return <TabSwitch tabs={tabs} />;
+  return <TabSwitch disabled={disabled} tabs={tabs} />;
 }
 
 TaskSwitch.propTypes = {
+  disabled: PropTypes.bool,
   task: PropTypes.object,
   offers: PropTypes.shape({
     data: PropTypes.array,
