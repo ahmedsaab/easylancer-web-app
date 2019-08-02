@@ -5,7 +5,7 @@ import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const TabNav = styled(MDBNav)`
-  border-bottom: 3px solid #dee2e6;
+  border-bottom: 2px solid #dee2e6;
 `;
 
 const TabNavLink = styled(MDBNavLink)`
@@ -16,20 +16,14 @@ const TabNavLink = styled(MDBNavLink)`
   &.active {
     background-color: #fafafa !important;
     border-color: #dee2e6 #dee2e6 #fafafa !important;
-    border: solid 3px;
+    border: solid 2px;
     margin-bottom: -2px;
-    border-bottom: 3px solid;
+    border-bottom: 2px solid;
   }
 `;
 
 const TabContent = styled('div')`
-  border-left: 3px solid #dee2e6;
-  border-right: 3px solid #dee2e6;
-  border-bottom: 3px solid #dee2e6;
-  border-bottom-left-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
   margin-bottom: 20px;
-  margin-top: -3px;
 `;
 
 function TabSwitch({ tabs, disabled }) {

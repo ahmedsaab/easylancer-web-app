@@ -15,7 +15,8 @@ function AssignedOfferListItem({ offer, onClick }) {
     <div
       style={{
         padding: '15px',
-        borderRadius: '10px',
+        borderRadius: '20px',
+        border: '2px solid #4cbbad8a',
         backgroundColor: '#4cbbad8a',
       }}
       onClick={onClick}
