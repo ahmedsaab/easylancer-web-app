@@ -10,14 +10,27 @@ import * as PropTypes from 'prop-types';
 import LoadingIndicator from 'elements/organisms/LoadingIndicator';
 import OfferList from 'elements/organisms/OfferList';
 import { TaskOffersContainer } from 'elements/organisms/TaskOffers/components';
-import { loadTask, loadTaskOffers } from 'elements/pages/TaskPage/actions';
+import AssignedOfferListItem from 'elements/organisms/AssignedOfferListItem';
 
 function TaskOffers({ offers, loading, error, disabled }) {
   if (loading) return <LoadingIndicator />;
   if (error) return <div>Something bad happened :(</div>;
+
+  const assignedOffer = offers.find(offer => offer.isAssigned);
+
   return (
     <TaskOffersContainer>
-      <OfferList disabled={disabled} offers={offers} label="All" />
+      {assignedOffer ? <AssignedOfferListItem offer={assignedOffer} /> : null}
+      <OfferList
+        disabled={disabled}
+        offers={offers.filter(offer => offer.isNew)}
+        label="New"
+      />
+      <OfferList
+        disabled={disabled}
+        offers={offers.filter(offer => !offer.isNew && !offer.isAssigned)}
+        label="Other"
+      />
     </TaskOffersContainer>
   );
 }

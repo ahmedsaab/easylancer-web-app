@@ -35,6 +35,10 @@ function OfferList({
     </OfferItemContainer>
   ));
 
+  if (offerComponents.length === 0) {
+    return null;
+  }
+
   return (
     <div>
       <div>{label}</div>

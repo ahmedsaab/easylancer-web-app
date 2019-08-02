@@ -30,6 +30,7 @@ export function OfferDetailsModal({
   offer,
   isSending,
   location,
+  history,
   onClose,
   onAcceptOffer,
 }) {
@@ -46,7 +47,7 @@ export function OfferDetailsModal({
       <OfferDetails
         offer={offer}
         isLoading={isSending}
-        onHireClick={() => onAcceptOffer(offer.id)}
+        onHireClick={() => onAcceptOffer(offer.id, history)}
       />
     );
   }
@@ -68,6 +69,9 @@ OfferDetailsModal.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   onClose: PropTypes.func,
   onAcceptOffer: PropTypes.func,
 };
@@ -78,7 +82,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onAcceptOffer: offerId => dispatch(acceptOffer(offerId)),
+  onAcceptOffer: (offerId, history) => dispatch(acceptOffer(offerId, history)),
 });
 
 const withConnect = connect(

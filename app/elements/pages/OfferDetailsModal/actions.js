@@ -5,13 +5,13 @@ import {
   VIEW_OFFER,
 } from 'elements/pages/OfferDetailsModal/constants';
 
-export function acceptOffer(offerId) {
+export function acceptOffer(offerId, history) {
   return {
     type: ACCEPT_OFFER,
     offerId,
+    history,
   };
 }
-
 
 export function acceptOfferSuccess() {
   return {

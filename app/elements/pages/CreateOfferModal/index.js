@@ -33,13 +33,17 @@ import {
 import LoadingIndicator from 'elements/organisms/LoadingIndicator';
 import { useInjectReducer } from 'utils/injectReducer';
 import reducer from 'elements/pages/CreateOfferModal/reducer';
-import { OfferModalTaskTitle, RadioButtonsGroup } from 'elements/pages/CreateOfferModal/components';
+import {
+  OfferModalTaskTitle,
+  RadioButtonsGroup,
+} from 'elements/pages/CreateOfferModal/components';
 import saga from 'elements/pages/CreateOfferModal/saga';
 import {
   makeSelectCreateOfferModalMessage,
   makeSelectCreateOfferModalPayment,
   makeSelectCreateOfferModalPrice, makeSelectCreateOfferModalStatus,
 } from 'elements/pages/CreateOfferModal/selectors';
+import 'elements/pages/CreateOfferModal/styles.css';
 
 function CreateOfferModal({
   price,
@@ -66,7 +70,10 @@ function CreateOfferModal({
     default:
       return (
         <div>
-          <MDBModalHeader toggle={onCloseModal}>
+          <MDBModalHeader
+            toggle={onCloseModal}
+            className="create-offer-modal-close"
+          >
             Your offer for
             <OfferModalTaskTitle>{task.title}</OfferModalTaskTitle>
           </MDBModalHeader>

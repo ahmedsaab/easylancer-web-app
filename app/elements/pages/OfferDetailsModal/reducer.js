@@ -14,6 +14,7 @@ import {
 export const initialState = {
   isSending: false,
   offer: null,
+  sendError: null,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -27,9 +28,11 @@ const offerDetailsModalReducer = (state = initialState, action) =>
         draft.offer = action.offer;
         break;
       case ACCEPT_OFFER_SUCCESS:
+        draft.sendError = null;
         draft.isSending = false;
         break;
       case ACCEPT_OFFER_ERROR:
+        draft.sendError = action.error;
         draft.isSending = false;
         break;
     }

@@ -16,27 +16,38 @@ import CreateOfferModal from 'elements/pages/CreateOfferModal';
 import { updateModal } from 'elements/pages/Modal/actions';
 import { makeSelectModalType } from 'elements/pages/Modal/selectors';
 import reducer from 'elements/pages/Modal/reducer';
-import 'elements/pages/Modal/styles.css';
+import TaskAssignedModalContent from 'elements/organisms/TaskAssignedModalContent';
+import './styles.css';
 
 export function Modal({ type, onClose }) {
   useInjectReducer({ key: 'modal', reducer });
   let modalContent;
-  let modalSettings;
+  let modalSettings = {
+    size: 'md',
+    className: '',
+    contentClassName: '',
+    centered: false,
+  };
 
   switch (type) {
     case 'create-offer':
       modalContent = <CreateOfferModal />;
       modalSettings = {
-
+        size: 'lg',
+        className: 'full-screen-modal-container',
+        contentClassName: 'full-screen-modal-content',
       };
       break;
     case 'message-task-owner':
       modalContent = <CreateOfferModal />;
       break;
     case 'task-assigned-confirmation':
-      modalContent = <CreateOfferModal />;
+      modalContent = <TaskAssignedModalContent />;
       modalSettings = {
-
+        size: 'md',
+        className: 'confirmation-modal-container',
+        contentClassName: 'confirmation-modal-content',
+        centered: true,
       };
       break;
     default:
@@ -47,10 +58,10 @@ export function Modal({ type, onClose }) {
     <MDBModal
       isOpen={modalContent !== null}
       toggle={onClose}
-      size="lg"
-      className="full-screen-modal-container"
-      contentClassName="full-screen-modal-content"
-      closeAriaLabel="full-screen-modal-close-button"
+      centered={modalSettings.centered}
+      size={modalSettings.size}
+      className={modalSettings.className}
+      contentClassName={modalSettings.contentClassName}
     >
       {modalContent}
     </MDBModal>

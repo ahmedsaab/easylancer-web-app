@@ -28,6 +28,12 @@ const makeSelectOfferDetailsIsSending = () =>
     substate => substate.isSending,
   );
 
+const makeSelectOfferDetailsendError = () =>
+  createSelector(
+    selectOfferDetailsModalDomain,
+    substate => substate.sendError,
+  );
+
 const makeSelectOfferDetailsOffer = () =>
   createSelector(
     selectOfferDetailsModalDomain,
@@ -39,4 +45,5 @@ export {
   selectOfferDetailsModalDomain,
   makeSelectOfferDetailsIsSending,
   makeSelectOfferDetailsOffer,
+  makeSelectOfferDetailsendError,
 };

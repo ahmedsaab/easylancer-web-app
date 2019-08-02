@@ -9,7 +9,13 @@
   }
 }
 
-.close {
-  font-size: 40px;
+.confirmation-modal-content {
+  border-radius: 0.6rem !important;
 }
 
+@media (max-width: 575px) {
+  .confirmation-modal-container {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+}
