@@ -26,8 +26,10 @@ import {
 } from 'elements/pages/SideBar/components';
 import reducer from 'elements/pages/SideBar/reducer';
 import Footer from 'elements/organisms/Footer';
+import { makeSelectGlobalUser } from 'elements/pages/App/selectors';
+import LoadingIndicator from 'elements/organisms/LoadingIndicator';
 
-function SideBar({ isOpen, handleToggle }) {
+function SideBar({ isOpen, user, handleToggle }) {
   useInjectReducer({ key: 'sideNavBar', reducer });
 
   return (
@@ -44,11 +46,19 @@ function SideBar({ isOpen, handleToggle }) {
             </MDBCol>
             <MDBCol size="8">
               <SideBarUserData>
-                <SideBarUserName>Angelina Parsutina</SideBarUserName>
-                <SideBarUserCredit>
-                  <SideBarUserCreditAmount>€ 112</SideBarUserCreditAmount>
-                  <MDBIcon icon="wallet" />
-                </SideBarUserCredit>
+                {user ? (
+                  <SideBarUserData>
+                    <SideBarUserName>
+                      {user.firstName} {user.lastName}
+                    </SideBarUserName>
+                    <SideBarUserCredit>
+                      <SideBarUserCreditAmount>€ 112</SideBarUserCreditAmount>
+                      <MDBIcon icon="wallet" />
+                    </SideBarUserCredit>
+                  </SideBarUserData>
+                ) : (
+                  <LoadingIndicator />
+                )}
               </SideBarUserData>
             </MDBCol>
           </SideBarUser>
@@ -89,6 +99,7 @@ function SideBar({ isOpen, handleToggle }) {
 SideBar.propTypes = {
   isOpen: PropTypes.bool,
   handleToggle: PropTypes.func,
+  user: PropTypes.object,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -97,6 +108,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = createStructuredSelector({
   isOpen: makeSelectNavBarVisible(),
+  user: makeSelectGlobalUser(),
 });
 
 const withConnect = connect(

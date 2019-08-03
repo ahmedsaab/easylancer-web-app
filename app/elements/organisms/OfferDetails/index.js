@@ -26,6 +26,14 @@ function OfferDetails({ offer, isLoading, onHireClick }) {
       <div>{JSON.stringify(offer)}</div>
       <FooterContainer>
         <MDBBtn
+          disabled={isLoading}
+          color="warning"
+          block
+          className=""
+        >
+          Message
+        </MDBBtn>
+        <MDBBtn
           onClick={onHireClick}
           disabled={isLoading}
           color="success"

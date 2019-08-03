@@ -6,12 +6,15 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 
-import React from 'react';
-
-import { Helmet } from 'react-helmet';
-import SideBar from 'elements/pages/SideBar';
+import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { MDBCol, MDBRow } from 'mdbreact';
+import * as PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
+import { compose } from 'redux';
+
+import SideBar from 'elements/pages/SideBar';
 import Header from 'elements/pages/Header';
 import TaskPage from 'elements/pages/TaskPage/Loadable';
 import SearchPage from 'elements/pages/SearchPage/Loadable';
@@ -21,6 +24,9 @@ import auth from 'utils/auth';
 import { Container, ContentRow, Wrapper } from 'elements/pages/App/components';
 import Modal from 'elements/pages/Modal';
 import GlobalStyle from 'global-styles';
+import { useInjectSaga } from 'utils/injectSaga';
+import { loadUser } from 'elements/pages/App/actions';
+import saga from './saga';
 
 const handleAuthentication = ({ location }) => {
   if (/access_token|id_token|error/.test(location.hash)) {
@@ -28,7 +34,13 @@ const handleAuthentication = ({ location }) => {
   }
 };
 
-function App() {
+function App({ onLoad }) {
+  useInjectSaga({ key: 'app', saga });
+
+  useEffect(() => {
+    onLoad();
+  }, []);
+
   return (
     <div style={{ overflowX: 'hidden' }}>
       <Helmet titleTemplate="%s | Easylancer" defaultTitle="Easylancer">
@@ -68,4 +80,17 @@ function App() {
   );
 }
 
-export default App;
+App.propTypes = {
+  onLoad: PropTypes.func,
+};
+
+const mapDispatchToProps = dispatch => ({
+  onLoad: () => dispatch(loadUser()),
+});
+
+const withConnect = connect(
+  null,
+  mapDispatchToProps,
+);
+
+export default compose(withConnect)(App);

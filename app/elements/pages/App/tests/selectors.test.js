@@ -1,6 +1,6 @@
 import {
   selectGlobal,
-  makeSelectCurrentUser,
+  makeSelectUser,
   makeSelectLoading,
   makeSelectError,
   makeSelectRepos,
