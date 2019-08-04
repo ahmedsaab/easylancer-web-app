@@ -7,7 +7,7 @@ const sleep = async time => new Promise(resolve => setTimeout(resolve, time));
 
 export const getTask = async id => {
   try {
-    await sleep(1000);
+    // await sleep(1000);
     const response = await axios.get(
       `${process.env.CLIENT_API_ROOT}/tasks/${id}/view`,
       { headers },
@@ -53,7 +53,7 @@ export const getTaskOffers = async id => {
 
 export const getUser = async () => {
   try {
-    await sleep(1000);
+    // await sleep(1000);
     const response = await axios.get(`${process.env.CLIENT_API_ROOT}/auth/me`, {
       headers,
     });

@@ -2,6 +2,8 @@ import { createSelector } from 'reselect';
 import { initialState } from 'elements/pages/TaskPage/reducer';
 
 const selectTaskPageDomain = state => state.taskPage || initialState;
+const selectTaskPageTask = state => state.task || initialState.task;
+const selectTaskPageOffers = state => state.offers || initialState.offers;
 
 const makeSelectTaskPage = () =>
   createSelector(
@@ -12,13 +14,13 @@ const makeSelectTaskPage = () =>
 const makeSelectTaskPageTask = () =>
   createSelector(
     selectTaskPageDomain,
-    subState => subState.task,
+    selectTaskPageTask,
   );
 
 const makeSelectTaskPageOffers = () =>
   createSelector(
     selectTaskPageDomain,
-    subState => subState.offers,
+    selectTaskPageOffers,
   );
 
 const makeSelectTaskPageId = () =>

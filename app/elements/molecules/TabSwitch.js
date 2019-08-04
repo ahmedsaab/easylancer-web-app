@@ -14,11 +14,12 @@ const TabNavLink = styled(MDBNavLink)`
   font-weight: 520;
   font-size: 1.2rem;
   &.active {
-    background-color: #fafafa !important;
-    border-color: #dee2e6 #dee2e6 #fafafa !important;
     border: solid 2px;
     margin-bottom: -2px;
     border-bottom: 2px solid;
+  }
+  :hover:not(.active) {
+    border-color: white !important;
   }
 `;
 

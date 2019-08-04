@@ -13,9 +13,7 @@ import { MDBCol, MDBRow } from 'mdbreact';
 import ProfileCard from 'elements/organisms/ProfileCard';
 import TaskHeader from 'elements/organisms/TaskHeader';
 import TaskSwitch from 'elements/organisms/TaskSwitch';
-import ActionButtons from 'elements/molecules/ActionButtons';
 import { ContainerRow } from 'elements/pages/TaskPage/components';
-import { updateModal } from 'elements/pages/Modal/actions';
 import OfferDetailsModal from 'elements/pages/OfferDetailsModal';
 import saga from 'elements/pages/TaskPage/saga';
 import reducer from 'elements/pages/TaskPage/reducer';
@@ -24,6 +22,7 @@ import {
   makeSelectTaskPageOffers,
 } from 'elements/pages/TaskPage/selectors';
 import { makeSelectOfferDetailsIsSending } from 'elements/pages/OfferDetailsModal/selectors';
+import TaskActionButtons from 'elements/organisms/TaskActionButtons';
 
 export function TaskPage({
   match,
@@ -32,27 +31,11 @@ export function TaskPage({
   offers,
   onPageLoad,
   isSendingOffer,
-  onCreateOfferButtonClick,
 }) {
   useInjectReducer({ key: 'taskPage', reducer });
   useInjectSaga({ key: 'taskPage', saga });
 
   const { id } = match.params;
-  const actionButtons = [
-    {
-      disabled: isSendingOffer,
-      icon: 'file-contract',
-      text: 'Offer',
-      onClick: onCreateOfferButtonClick,
-    },
-    {
-      disabled: isSendingOffer,
-      icon: 'envelope',
-      text: 'Message',
-      onClick: () => {},
-      far: true,
-    },
-  ];
 
   useEffect(() => {
     onPageLoad(id);
@@ -89,7 +72,7 @@ export function TaskPage({
           />
         </MDBCol>
         <MDBCol sm="12" md="4">
-          <ActionButtons buttons={actionButtons} />
+          <TaskActionButtons />
           <hr />
           <MDBRow className="no-gutters">
             <MDBCol>
@@ -129,7 +112,6 @@ TaskPage.propTypes = {
   }),
   isSendingOffer: PropTypes.bool,
   onPageLoad: PropTypes.func,
-  onCreateOfferButtonClick: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -143,7 +125,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(loadTask(id));
     dispatch(loadTaskOffers(id));
   },
-  onCreateOfferButtonClick: () => dispatch(updateModal('create-offer')),
 });
 
 const withConnect = connect(

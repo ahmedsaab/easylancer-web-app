@@ -56,7 +56,7 @@ function App({ onLoad }) {
             <Header />
           </MDBRow>
           <ContentRow>
-            <MDBCol size="12">
+            <div style={{ width: '100%' }}>
               <Modal />
               <Switch>
                 <Route exact path="/" component={SearchPage} />
@@ -71,7 +71,7 @@ function App({ onLoad }) {
                 />
                 <Route path="" component={NotFoundPage} />
               </Switch>
-            </MDBCol>
+            </div>
           </ContentRow>
         </Container>
       </Wrapper>
