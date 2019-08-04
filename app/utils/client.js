@@ -30,7 +30,7 @@ export const getTask = async id => {
 
 export const getTaskOffers = async id => {
   try {
-    await sleep(3000);
+    // await sleep(3000);
     const response = await axios.get(
       `${process.env.CLIENT_API_ROOT}/tasks/${id}/offers`,
       { headers },
@@ -74,7 +74,7 @@ export const getUser = async () => {
 };
 
 export const postOffer = async (id, offer) => {
-  await sleep(1000);
+  // await sleep(1000);
   try {
     const response = await axios.post(
       `${process.env.CLIENT_API_ROOT}/tasks/${id}/apply`,
@@ -99,11 +99,11 @@ export const postOffer = async (id, offer) => {
 };
 
 export const acceptOffer = async (taskId, offerId) => {
-  await sleep(1000);
+  // await sleep(1000);
   try {
     const response = await axios.post(
       `${process.env.CLIENT_API_ROOT}/tasks/${taskId}/accept`,
-      { offerId },
+      { id: offerId },
       {
         headers,
       },

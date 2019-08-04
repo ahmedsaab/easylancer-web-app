@@ -10,11 +10,30 @@ const ActionButton = styled(MDBBtn)`
 const ActionButtonsContainer = styled('div')`
   margin-top: 10px;
   margin-bottom: 10px;
+  @media screen and (max-width: 767px) {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    left: 0;
+    padding-right: 25px;
+    padding-left: 25px;
+    background: #ffffffcf;
+    padding-top: 10px;
+    border-top: 1px solid #d0d0d0;
+    z-index: 600;
+    margin-bottom: 0;
+  }
 `;
 
+/**
+ * @return {null}
+ */
 function ActionButtons({ buttons }) {
   const buttonComponents = buttons.map(button => (
     <ActionButton
+      style={button.style}
+      color={button.color}
+      block
       disabled={button.disabled}
       onClick={button.onClick}
       key={button.text}
@@ -24,11 +43,13 @@ function ActionButtons({ buttons }) {
       {button.text}
     </ActionButton>
   ));
-  return (
-    <ActionButtonsContainer className="btn-group btn-block">
+
+  return buttonComponents.length ? (
+    <ActionButtonsContainer>
       {buttonComponents}
+      <hr />
     </ActionButtonsContainer>
-  );
+  ) : null;
 }
 
 ActionButtons.propTypes = {

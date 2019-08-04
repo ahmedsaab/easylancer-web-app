@@ -50,20 +50,6 @@ export function TaskActionButtons({
     offer => offer.workerUser.id === user.id,
   );
 
-  if (
-    (userIsOwner && (task.status === 'open' || task.status === 'assigned')) ||
-    (userIsAssigned && task.status === 'assigned')
-  ) {
-    actionButtons.push({
-      disabled,
-      icon: 'calender-times',
-      text: 'Cancel',
-      onClick: () => {
-        alert('cancel action clicked');
-      },
-    });
-  }
-
   if (!userIsOwner && !userHasApplied) {
     actionButtons.push({
       disabled,
@@ -76,7 +62,7 @@ export function TaskActionButtons({
   if (
     !userIsOwner &&
     ((!userIsAssigned && task.status === 'open') ||
-      (userIsAssigned && task.status === 'assigned'))
+      (userIsAssigned && task.status === 'accepted'))
   ) {
     actionButtons.push({
       disabled,
@@ -88,11 +74,12 @@ export function TaskActionButtons({
     });
   }
 
-  if (task.status === 'assigned' && (userIsOwner || userIsAssigned)) {
+  if (task.status === 'accepted' && (userIsOwner || userIsAssigned)) {
     actionButtons.push({
+      color: 'warning',
       disabled,
-      icon: 'calender',
-      text: 'Request Reschedule',
+      icon: 'clock',
+      text: 'Reschedule',
       onClick: () => {
         alert('reschedule action clicked');
       },
@@ -121,13 +108,28 @@ export function TaskActionButtons({
     });
   }
 
+  if (
+    (userIsOwner && (task.status === 'open' || task.status === 'accepted')) ||
+    (userIsAssigned && task.status === 'accepted')
+  ) {
+    actionButtons.push({
+      color: 'danger',
+      disabled,
+      icon: 'times',
+      text: 'Cancel',
+      onClick: () => {
+        alert('cancel action clicked');
+      },
+    });
+  }
+
   return <ActionButtons buttons={actionButtons} />;
 }
 
 TaskActionButtons.propTypes = {
   task: PropTypes.object,
   user: PropTypes.object,
-  offers: PropTypes.array,
+  offers: PropTypes.object,
   disabled: PropTypes.bool,
   onCreateOfferButtonClick: PropTypes.func,
 };

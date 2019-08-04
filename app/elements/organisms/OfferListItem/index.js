@@ -17,7 +17,7 @@ function OfferListItem({ offer, isSelected, onClick, disabled }) {
       <div className="d-flex">
         <div className="flex-shrink-1">
           <Avatar
-            imgStyle={{ width: '80px', border: '0' }}
+            imgStyle={{ width: '80px', border: '2px solid white' }}
             imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
             isApproved={offer.workerUser.approved}
           />

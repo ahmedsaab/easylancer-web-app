@@ -1,9 +1,3 @@
-/**
- *
- * OfferList
- *
- */
-
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import OfferListItem from 'elements/organisms/OfferListItem';
@@ -12,6 +6,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { viewOffer } from 'elements/pages/OfferDetailsModal/actions';
 import { withRouter } from 'react-router-dom';
+import ListLabel from 'elements/atoms/ListLabel';
 
 function OfferList({
   offers,
@@ -41,7 +36,7 @@ function OfferList({
 
   return (
     <div>
-      <div>{label}</div>
+      <ListLabel>{label}</ListLabel>
       <div>{offerComponents}</div>
     </div>
   );

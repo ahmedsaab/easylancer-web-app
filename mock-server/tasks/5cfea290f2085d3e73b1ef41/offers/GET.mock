@@ -4,7 +4,6 @@ Access-Control-Allow-Origin: *
 
 [
    {
-      "isAssigned": true,
       "id":"5d3dffc186917d548f51e56b",
       "message":"wedwedwedwe",
       "paymentMethod":"card",

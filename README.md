@@ -19,3 +19,22 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
 - [Your app](docs/js): Supercharging your app with Routing, Redux, simple
   asynchronicity helpers, etc.
 - [**Troubleshooting**](docs/general/gotchas.md): Solutions to common problems faced by developers.
+
+### TODO (FE)
+
+- Task Page
+    - Distinguish assigned offer in offers tab
+    - Color code task status tag
+    - Disable scroll while OfferDetails modal open on mobile
+    - Ability to hide/close the offerDetails modal
+    - Action buttons restyling (sticky)
+    - Offers tab empty state
+    - TaskAssignedModal content
+    - Empty message modal
+    - Open message modal from offer
+    - Open message modal from task
+    - Improved Spinners
+    
+### TODO (BE)
+
+- Review and change the task statuses names

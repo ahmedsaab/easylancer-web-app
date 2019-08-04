@@ -11,16 +11,22 @@ import LoadingIndicator from 'elements/organisms/LoadingIndicator';
 import OfferList from 'elements/organisms/OfferList';
 import { TaskOffersContainer } from 'elements/organisms/TaskOffers/components';
 import AssignedOfferListItem from 'elements/organisms/AssignedOfferListItem';
+import ListLabel from 'elements/atoms/ListLabel';
 
-function TaskOffers({ offers, loading, error, disabled }) {
+function TaskOffers({ offers, acceptedOfferId, loading, error, disabled }) {
   if (loading) return <LoadingIndicator />;
   if (error) return <div>Something bad happened :(</div>;
 
-  const assignedOffer = offers.find(offer => offer.isAssigned);
-
   return (
     <TaskOffersContainer>
-      {assignedOffer ? <AssignedOfferListItem offer={assignedOffer} /> : null}
+      {acceptedOfferId ? (
+        <div>
+          <ListLabel>Assigned</ListLabel>
+          <AssignedOfferListItem
+            offer={offers.find(offer => offer.id === acceptedOfferId)}
+          />
+        </div>
+      ) : null}
       <OfferList
         disabled={disabled}
         offers={offers.filter(offer => offer.isNew)}
@@ -28,7 +34,9 @@ function TaskOffers({ offers, loading, error, disabled }) {
       />
       <OfferList
         disabled={disabled}
-        offers={offers.filter(offer => !offer.isNew && !offer.isAssigned)}
+        offers={offers.filter(
+          offer => !offer.isNew && offer.id !== acceptedOfferId,
+        )}
         label="Other"
       />
     </TaskOffersContainer>
@@ -36,6 +44,7 @@ function TaskOffers({ offers, loading, error, disabled }) {
 }
 
 TaskOffers.propTypes = {
+  acceptedOfferId: PropTypes.string,
   disabled: PropTypes.bool,
   offers: PropTypes.array,
   loading: PropTypes.bool,

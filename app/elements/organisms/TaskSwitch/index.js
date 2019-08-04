@@ -32,6 +32,7 @@ function TaskSwitch({ task, offers, disabled }) {
       component: () => (
         <TaskOffers
           disabled={disabled}
+          acceptedOfferId={task.acceptedOffer}
           offers={offers.data}
           loading={offers.loading}
           error={offers.error}

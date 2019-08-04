@@ -15,16 +15,19 @@ function AssignedOfferListItem({ offer, onClick }) {
     <div
       style={{
         padding: '15px',
-        borderRadius: '20px',
-        border: '2px solid #4cbbad8a',
-        backgroundColor: '#4cbbad8a',
+        borderRadius: '7px',
+        border: '2px solid rgba(228, 222, 153, 0.54)',
+        backgroundColor: 'rgba(245, 243, 220, 0.54)',
       }}
       onClick={onClick}
     >
       <div className="d-flex">
         <div className="flex-shrink-1">
           <Avatar
-            imgStyle={{ width: '80px', border: '0' }}
+            imgStyle={{
+              width: '80px',
+              border: '2px solid rgba(228, 222, 153, 0.54)',
+            }}
             imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
             isApproved={offer.workerUser.approved}
           />
