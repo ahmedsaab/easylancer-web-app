@@ -33,7 +33,7 @@ Access-Control-Allow-Origin: *
   "price": 400,
   "seenCount": 1,
   "startDateTime": 1555723569401,
-  "status": "accepted",
+  "status": "assigned",
   "title": "this is a test",
   "type": "type1",
   "workerRating": null,

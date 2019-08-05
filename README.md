@@ -23,18 +23,22 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
 ### TODO (FE)
 
 - Task Page
-    - Distinguish assigned offer in offers tab
-    - Color code task status tag
-    - Disable scroll while OfferDetails modal open on mobile
-    - Ability to hide/close the offerDetails modal
-    - Action buttons restyling (sticky)
-    - Offers tab empty state
-    - TaskAssignedModal content
-    - Empty message modal
-    - Open message modal from offer
-    - Open message modal from task
-    - Improved Spinners
+    - [ ] Distinguish assigned offer in offers tab
+    - [X] Color code task status tag
+    - [ ] Sidebar on click link backdrop bug
+    - [ ] Disable scroll while OfferDetails modal open on mobile
+    - [ ] Ability to hide/close the offerDetails modal
+    - [ ] Action buttons restyling (sticky)
+    - [ ] Offers tab empty state
+    - [ ] TaskAssignedModal content
+    - [ ] Empty message modal
+    - [ ] Open message modal from offer
+    - [ ] Open message modal from task
+    - [ ] Design Spinners
+    - [ ] Fix broken Auth workflow for not logged in sessions
     
 ### TODO (BE)
 
-- Review and change the task statuses names
+- [X] Review and change the task statuses names
+- [ ] Filter out removed tasks from Client API
+- [ ] Filter out investigation tasks from search, get task, and profile tasks endpoints but not in my tasks page

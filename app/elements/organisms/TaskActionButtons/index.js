@@ -62,7 +62,7 @@ export function TaskActionButtons({
   if (
     !userIsOwner &&
     ((!userIsAssigned && task.status === 'open') ||
-      (userIsAssigned && task.status === 'accepted'))
+      (userIsAssigned && task.status === 'assigned'))
   ) {
     actionButtons.push({
       disabled,
@@ -74,7 +74,7 @@ export function TaskActionButtons({
     });
   }
 
-  if (task.status === 'accepted' && (userIsOwner || userIsAssigned)) {
+  if (task.status === 'assigned' && (userIsOwner || userIsAssigned)) {
     actionButtons.push({
       color: 'warning',
       disabled,
@@ -89,6 +89,7 @@ export function TaskActionButtons({
   if (task.status === 'in-progress' && (userIsOwner || userIsAssigned)) {
     actionButtons.push({
       disabled,
+      color: 'success',
       icon: 'flag-checkered',
       text: 'Finish',
       onClick: () => {
@@ -97,7 +98,11 @@ export function TaskActionButtons({
     });
   }
 
-  if (task.status === 'closed') {
+  if (
+    task.status === 'done' ||
+    task.status === 'not-done' ||
+    task.status === 'cancelled'
+  ) {
     actionButtons.push({
       disabled,
       icon: 'copy',
@@ -109,8 +114,8 @@ export function TaskActionButtons({
   }
 
   if (
-    (userIsOwner && (task.status === 'open' || task.status === 'accepted')) ||
-    (userIsAssigned && task.status === 'accepted')
+    (userIsOwner && (task.status === 'open' || task.status === 'assigned')) ||
+    (userIsAssigned && task.status === 'assigned')
   ) {
     actionButtons.push({
       color: 'danger',

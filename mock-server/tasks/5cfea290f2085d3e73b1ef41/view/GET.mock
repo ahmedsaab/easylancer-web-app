@@ -33,7 +33,7 @@ Access-Control-Allow-Origin: *
     "price": 300,
     "seenCount": 0,
     "startDateTime": 1496846048700,
-    "status": "assigned",
+    "status": "not-done",
     "title": "Home cleaning for 60m2 appartment",
     "type": "type1",
     "workerRating": null,

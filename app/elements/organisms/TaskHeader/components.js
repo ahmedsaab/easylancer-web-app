@@ -10,16 +10,6 @@ export const StatusTime = styled('div')`
   padding-left: 3px;
 `;
 
-export const StatusBadge = styled(MDBBadge).attrs({
-  pill: true,
-  className: 'text-capitalize',
-})`
-  font-size: 15px;
-  padding-bottom: 4px;
-  padding-top: 4px;
-  box-shadow: none;
-`;
-
 export const LocationText = styled('div')`
   padding-top: 4px;
   padding-bottom: 4px;

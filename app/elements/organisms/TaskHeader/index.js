@@ -14,19 +14,19 @@ import {
   PriceTagContainer,
   SeenIcon,
   SeenInfo,
-  StatusBadge,
   StatusTime,
   TaskBadge,
   TitleText,
 } from 'elements/organisms/TaskHeader/components';
 import PriceTag from 'elements/molecules/PriceTag';
+import StatusBadge from 'elements/molecules/StatusBadge';
 
 function TaskHeader({ task }) {
   return (
     <div>
       <MDBRow>
         <MDBCol size="12">
-          <StatusBadge color="success">{task.status}</StatusBadge>
+          <StatusBadge status={task.status} />
           <SeenInfo>
             <SeenIcon far icon="eye" />
             {task.seenCount}

@@ -31,7 +31,7 @@ Access-Control-Allow-Origin: *
     "paymentMethod": "card",
     "price": 400,
     "startDateTime": 1555723569401,
-    "status": "accepted",
+    "status": "assigned",
     "title": "this is a test",
     "type": "type1"
   },
