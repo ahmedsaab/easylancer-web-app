@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { MDBBtn, MDBIcon } from 'mdbreact';
+import { getWindowHeight } from 'utils/stylesHelper';
 
 const ActionButton = styled(MDBBtn)`
   font-size: 16px;
@@ -26,9 +27,7 @@ const ActionButtonsContainer = styled('div')`
 `;
 
 const setMarginOnRelative = (relativeComponent, component) => {
-  if (
-    Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 768
-  ) {
+  if (getWindowHeight() < 768) {
     // eslint-disable-next-line no-param-reassign
     relativeComponent.current.style.marginBottom = window
       .getComputedStyle(component.current)

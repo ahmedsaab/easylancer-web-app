@@ -29,9 +29,9 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
     - [X] Sidebar on click link backdrop bug
     - [X] Disable body scroll on open Sidebar on mobile
     - [X] Fix z-index order
-    - [ ] Disable scroll while OfferDetails modal open on mobile
+    - [X] Disable scroll while OfferDetails modal open on mobile
     - [X] Ability to hide/close the offerDetails modal
-    - [ ] Action buttons restyling (sticky)
+    - [X] Action buttons restyling (sticky)
     - [ ] Offers tab empty state
     - [ ] Offer Details Modal content
     - [ ] TaskAssignedModal content

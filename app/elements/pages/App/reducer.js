@@ -14,6 +14,7 @@ import {
   LOAD_USER_ERROR,
   SET_BODY_SCROLL,
 } from 'elements/pages/App/constants';
+import { disableBodyScroll, enableBodyScroll } from 'utils/stylesHelper';
 
 // The initial state of the App
 export const initialState = {
@@ -52,11 +53,9 @@ const appReducer = (state = initialState, action) =>
 
 const allowBodyScroll = allow => {
   if (allow) {
-    document.body.style.overflow = 'auto';
-    document.body.style.position = 'static';
+    enableBodyScroll();
   } else {
-    document.body.style.overflowY = 'scroll';
-    document.body.style.position = 'fixed';
+    disableBodyScroll();
   }
 };
 

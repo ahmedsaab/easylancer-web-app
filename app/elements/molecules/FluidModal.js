@@ -1,6 +1,11 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+  getWindowHeight,
+} from 'utils/stylesHelper';
 
 const animationShow = keyframes`
   0% { top:0; left: 100%; }
@@ -34,6 +39,12 @@ const ModalContainer = styled.div`
 `;
 
 function FluidModal({ isOpen, style, children }) {
+  if (isOpen && getWindowHeight() < 768) {
+    disableBodyScroll();
+  } else {
+    enableBodyScroll();
+  }
+
   return (
     <ModalContainer style={style} isOpen={isOpen}>
       {children}
