@@ -11,7 +11,7 @@ const SideBarReducer = (state = initialState, action) =>
     switch (action.type) {
       case TOGGLE_SIDE_NAV_VIEW:
         handleBodyScroll(draft.isOpen);
-        draft.isOpen = action.open ? action.open : !draft.isOpen;
+        draft.isOpen = action.open === undefined ? !draft.isOpen : action.open;
         break;
     }
   });

@@ -26,7 +26,7 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
 - Task Page
     - [ ] Distinguish assigned offer in offers tab
     - [X] Color code task status tag
-    - [ ] Sidebar on click link backdrop bug
+    - [X] Sidebar on click link backdrop bug
     - [ ] Disable scroll while OfferDetails modal open on mobile
     - [ ] Ability to hide/close the offerDetails modal
     - [ ] Action buttons restyling (sticky)
