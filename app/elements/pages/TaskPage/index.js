@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -35,6 +35,7 @@ export function TaskPage({
   useInjectReducer({ key: 'taskPage', reducer });
   useInjectSaga({ key: 'taskPage', saga });
 
+  const ref = useRef(null);
   const { id } = match.params;
 
   useEffect(() => {
@@ -50,7 +51,7 @@ export function TaskPage({
   }
 
   return (
-    <div>
+    <div ref={ref}>
       <Helmet>
         <title>{task.data.title}</title>
         <meta
@@ -72,7 +73,7 @@ export function TaskPage({
           />
         </MDBCol>
         <MDBCol sm="12" md="4">
-          <TaskActionButtons />
+          <TaskActionButtons containerRef={ref} />
           <MDBRow className="no-gutters">
             <MDBCol>
               <OfferDetailsModal

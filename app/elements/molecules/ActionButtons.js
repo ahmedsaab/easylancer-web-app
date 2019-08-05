@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { MDBBtn, MDBIcon } from 'mdbreact';
@@ -10,7 +10,7 @@ const ActionButton = styled(MDBBtn)`
 const ActionButtonsContainer = styled('div')`
   margin-top: 10px;
   margin-bottom: 10px;
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 768px) {
     position: fixed;
     bottom: 0;
     width: 100vw;
@@ -20,15 +20,34 @@ const ActionButtonsContainer = styled('div')`
     background: #ffffffcf;
     padding-top: 10px;
     border-top: 1px solid #d0d0d0;
-    z-index: 600;
+    z-index: 300;
     margin-bottom: 0;
   }
 `;
 
+const setMarginOnRelative = (relativeComponent, component) => {
+  if (
+    Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 768
+  ) {
+    // eslint-disable-next-line no-param-reassign
+    relativeComponent.current.style.marginBottom = window
+      .getComputedStyle(component.current)
+      .getPropertyValue('height');
+  }
+};
+
 /**
  * @return {null}
  */
-function ActionButtons({ buttons }) {
+function ActionButtons({ buttons, relativeStyleRef }) {
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setMarginOnRelative(relativeStyleRef, ref);
+    });
+    setMarginOnRelative(relativeStyleRef, ref);
+  });
+
+  const ref = useRef(null);
   const buttonComponents = buttons.map(button => (
     <ActionButton
       style={button.style}
@@ -45,7 +64,7 @@ function ActionButtons({ buttons }) {
   ));
 
   return buttonComponents.length ? (
-    <ActionButtonsContainer>
+    <ActionButtonsContainer ref={ref}>
       {buttonComponents}
       <hr />
     </ActionButtonsContainer>
@@ -53,6 +72,7 @@ function ActionButtons({ buttons }) {
 }
 
 ActionButtons.propTypes = {
+  relativeStyleRef: PropTypes.instanceOf(Element),
   buttons: PropTypes.array,
 };
 

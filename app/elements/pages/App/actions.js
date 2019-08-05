@@ -19,6 +19,7 @@ import {
   LOAD_USER,
   LOAD_USER_SUCCESS,
   LOAD_USER_ERROR,
+  SET_BODY_SCROLL,
 } from 'elements/pages/App/constants';
 
 export function loadUser() {
@@ -38,5 +39,12 @@ export function loadUserError(error) {
   return {
     type: LOAD_USER_ERROR,
     error,
+  };
+}
+
+export function setBodyScroll(scroll) {
+  return {
+    type: SET_BODY_SCROLL,
+    scroll,
   };
 }

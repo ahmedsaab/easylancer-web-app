@@ -11,13 +11,23 @@ import styled from 'styled-components';
 import { MDBBtn, MDBIcon } from 'mdbreact';
 
 const OfferDetailsContainer = styled.div`
-  min-height: 100%;
   display: flex;
   flex-direction: column;
+  flex: 1;
 `;
 
 const FooterContainer = styled.div`
   margin-top: auto;
+`;
+
+const ActionButton = styled(MDBBtn).attrs({
+  rounded: true,
+  block: true,
+  color: props => props.color,
+  onClick: props => props.onClick,
+  disabled: props => props.disabled,
+})`
+  margin-top: 10px !Important;
 `;
 
 function OfferDetails({ offer, isLoading, onHireClick }) {
@@ -25,27 +35,16 @@ function OfferDetails({ offer, isLoading, onHireClick }) {
     <OfferDetailsContainer>
       <div>{JSON.stringify(offer)}</div>
       <FooterContainer>
-        <MDBBtn
-          disabled={isLoading}
-          color="warning"
-          block
-          className=""
-        >
+        <ActionButton color="primary" disabled={isLoading}>
           Message
-        </MDBBtn>
-        <MDBBtn
-          onClick={onHireClick}
-          disabled={isLoading}
-          color="success"
-          block
-          className=""
-        >
+        </ActionButton>
+        <ActionButton color="green" onClick={onHireClick} disabled={isLoading}>
           {isLoading ? (
             <MDBIcon style={{ paddingTop: '2px' }} icon="spinner" pulse fixed />
           ) : (
             'Hire now'
           )}
-        </MDBBtn>
+        </ActionButton>
       </FooterContainer>
     </OfferDetailsContainer>
   );

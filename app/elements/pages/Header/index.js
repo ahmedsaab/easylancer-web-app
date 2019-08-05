@@ -12,6 +12,7 @@ import {
   NavMenuButton,
   NavLogoIcon,
 } from 'elements/pages/Header/components';
+import { setBodyScroll } from 'elements/pages/App/actions';
 
 function Header({ handleToggle }) {
   return (
@@ -33,7 +34,10 @@ Header.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  handleToggle: () => dispatch(toggleSideNav(true)),
+  handleToggle: () => {
+    dispatch(setBodyScroll(false));
+    dispatch(toggleSideNav(true));
+  },
 });
 
 const withConnect = connect(

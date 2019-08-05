@@ -9,7 +9,7 @@ export const SideBarContainer = styled('nav')`
   transition: all 0.3s;
   min-width: 250px;
   max-width: 250px;
-  z-index: 1000;
+  z-index: 5000;
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -78,7 +78,7 @@ export const SideBarOverlay = styled('div')`
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.8);
-  z-index: 500;
+  z-index: 4500;
   cursor: pointer;
 `;
 

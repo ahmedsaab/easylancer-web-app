@@ -28,6 +28,7 @@ import reducer from 'elements/pages/SideBar/reducer';
 import Footer from 'elements/organisms/Footer';
 import { makeSelectGlobalUser } from 'elements/pages/App/selectors';
 import LoadingIndicator from 'elements/organisms/LoadingIndicator';
+import { setBodyScroll } from 'elements/pages/App/actions';
 
 function SideBar({ isOpen, user, handleToggle }) {
   useInjectReducer({ key: 'sideNavBar', reducer });
@@ -103,7 +104,10 @@ SideBar.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  handleToggle: () => dispatch(toggleSideNav(false)),
+  handleToggle: () => {
+    dispatch(setBodyScroll(true));
+    dispatch(toggleSideNav(false));
+  },
 });
 
 const mapStateToProps = createStructuredSelector({

@@ -10,7 +10,7 @@ const animationShow = keyframes`
 const ModalContainer = styled.div`
   position: absolute;
   margin: 0;
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -19,7 +19,7 @@ const ModalContainer = styled.div`
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.2);
   outline: 0;
-  z-index: 10;
+  z-index: 100;
   display: ${props => (props.isOpen ? 'visible' : 'none')};
   animation-name: ${animationShow};
   animation-duration: 0.5s;
@@ -29,18 +29,13 @@ const ModalContainer = styled.div`
     position: fixed !important;
     height: 100vh !important;
     width: 100vw !important;
-    z-index: 500 !important;
+    z-index: 1000 !important;
   }
 `;
 
-function FluidModal({ isOpen, onClose, style, children }) {
+function FluidModal({ isOpen, style, children }) {
   return (
-    <ModalContainer
-      style={style}
-      isOpen={isOpen}
-      toggle={onClose}
-      className="fluid-modal-container"
-    >
+    <ModalContainer style={style} isOpen={isOpen}>
       {children}
     </ModalContainer>
   );
@@ -49,7 +44,6 @@ function FluidModal({ isOpen, onClose, style, children }) {
 FluidModal.propTypes = {
   style: PropTypes.object,
   isOpen: PropTypes.bool,
-  onClose: PropTypes.func,
   children: PropTypes.any,
 };
 

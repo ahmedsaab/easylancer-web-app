@@ -12,6 +12,7 @@ import {
   LOAD_USER,
   LOAD_USER_SUCCESS,
   LOAD_USER_ERROR,
+  SET_BODY_SCROLL,
 } from 'elements/pages/App/constants';
 
 // The initial state of the App
@@ -42,7 +43,21 @@ const appReducer = (state = initialState, action) =>
         draft.error = action.error;
         draft.user = null;
         break;
+
+      case SET_BODY_SCROLL:
+        allowBodyScroll(action.scroll);
+        break;
     }
   });
+
+const allowBodyScroll = allow => {
+  if (allow) {
+    document.body.style.overflow = 'auto';
+    document.body.style.position = 'static';
+  } else {
+    document.body.style.overflowY = 'scroll';
+    document.body.style.position = 'fixed';
+  }
+};
 
 export default appReducer;

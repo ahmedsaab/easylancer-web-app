@@ -29,6 +29,7 @@ export function TaskActionButtons({
   user,
   offers,
   disabled,
+  containerRef,
   onCreateOfferButtonClick,
 }) {
   useInjectReducer({ key: 'taskActionButtons', reducer });
@@ -128,7 +129,9 @@ export function TaskActionButtons({
     });
   }
 
-  return <ActionButtons buttons={actionButtons} />;
+  return (
+    <ActionButtons relativeStyleRef={containerRef} buttons={actionButtons} />
+  );
 }
 
 TaskActionButtons.propTypes = {
@@ -137,6 +140,7 @@ TaskActionButtons.propTypes = {
   offers: PropTypes.object,
   disabled: PropTypes.bool,
   onCreateOfferButtonClick: PropTypes.func,
+  containerRef: PropTypes.instanceOf(Element),
 };
 
 const mapStateToProps = createStructuredSelector({

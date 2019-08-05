@@ -24,7 +24,7 @@ export const NavBar = styled(MDBNavbar).attrs({
 })`
   height: 60px;
   position: fixed;
-  z-index: 400;
+  z-index: 200;
   top: 0;
   right: 0;
   left: 0;

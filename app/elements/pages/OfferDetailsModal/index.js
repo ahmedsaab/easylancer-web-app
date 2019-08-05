@@ -23,6 +23,8 @@ import {
 import reducer from 'elements/pages/OfferDetailsModal/reducer';
 import saga from 'elements/pages/OfferDetailsModal/saga';
 import { acceptOffer } from 'elements/pages/OfferDetailsModal/actions';
+import ModalHeader from 'elements/atoms/ModalHeader';
+import ModalCloseIcon from 'elements/atoms/ModalCloseIcon';
 
 export const offerUrlRegex = RegExp(/offers\/[0-9a-f]/i);
 
@@ -58,6 +60,9 @@ export function OfferDetailsModal({
       isOpen={offerUrlRegex.test(location.pathname)}
       onClose={onClose}
     >
+      <ModalHeader>
+        <ModalCloseIcon onClick={onClose} />
+      </ModalHeader>
       {content}
     </FluidModal>
   );
