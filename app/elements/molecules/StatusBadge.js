@@ -49,7 +49,14 @@ function StatusBadge({ status }) {
 }
 
 StatusBadge.propTypes = {
-  status: PropTypes.oneOf([]),
+  status: PropTypes.oneOf([
+    'open',
+    'assigned',
+    'in-progress',
+    'done',
+    'not-done',
+    'cancelled',
+  ]),
 };
 
 export default StatusBadge;
