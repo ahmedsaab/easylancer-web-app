@@ -40,10 +40,12 @@ const setMarginOnRelative = (relativeComponent, component) => {
  */
 function ActionButtons({ buttons, relativeStyleRef }) {
   useEffect(() => {
-    window.addEventListener('resize', () => {
+    if (buttons.length) {
+      window.addEventListener('resize', () => {
+        setMarginOnRelative(relativeStyleRef, ref);
+      });
       setMarginOnRelative(relativeStyleRef, ref);
-    });
-    setMarginOnRelative(relativeStyleRef, ref);
+    }
   });
 
   const ref = useRef(null);
