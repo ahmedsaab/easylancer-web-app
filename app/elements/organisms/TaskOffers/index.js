@@ -12,35 +12,49 @@ import OfferList from 'elements/organisms/OfferList';
 import { TaskOffersContainer } from 'elements/organisms/TaskOffers/components';
 import AssignedOfferListItem from 'elements/organisms/AssignedOfferListItem';
 import ListLabel from 'elements/atoms/ListLabel';
+import EmptyStateContent from 'elements/molecules/EmptyStateContent';
+import * as emptyPicture from 'images/empty-state.png';
 
 function TaskOffers({ offers, acceptedOfferId, loading, error, disabled }) {
   if (loading) return <LoadingIndicator />;
   if (error) return <div>Something bad happened :(</div>;
 
-  return (
-    <TaskOffersContainer>
-      {acceptedOfferId ? (
-        <div>
-          <ListLabel>Assigned</ListLabel>
-          <AssignedOfferListItem
-            offer={offers.find(offer => offer.id === acceptedOfferId)}
-          />
-        </div>
-      ) : null}
-      <OfferList
-        disabled={disabled}
-        offers={offers.filter(offer => offer.isNew)}
-        label="New"
-      />
-      <OfferList
-        disabled={disabled}
-        offers={offers.filter(
-          offer => !offer.isNew && offer.id !== acceptedOfferId,
-        )}
-        label="Other"
-      />
-    </TaskOffersContainer>
+  let content = (
+    <EmptyStateContent
+      summary="No offers yet"
+      details="Interested workers will start applying to your task soon. Don't go for long!"
+      picture={emptyPicture}
+    />
   );
+
+  if (offers.length > 0) {
+    content = (
+      <div>
+        {acceptedOfferId ? (
+          <div>
+            <ListLabel>Assigned</ListLabel>
+            <AssignedOfferListItem
+              offer={offers.find(offer => offer.id === acceptedOfferId)}
+            />
+          </div>
+        ) : null}
+        <OfferList
+          disabled={disabled}
+          offers={offers.filter(offer => offer.isNew)}
+          label="New"
+        />
+        <OfferList
+          disabled={disabled}
+          offers={offers.filter(
+            offer => !offer.isNew && offer.id !== acceptedOfferId,
+          )}
+          label="Other"
+        />
+      </div>
+    );
+  }
+
+  return <TaskOffersContainer>{content}</TaskOffersContainer>;
 }
 
 TaskOffers.propTypes = {

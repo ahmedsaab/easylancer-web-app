@@ -3,40 +3,5 @@ Content-Type: application/json; charset=utf-8
 Access-Control-Allow-Origin: *
 
 [
-   {
-      "id":"5d3dffc186917d548f51e56b",
-      "message":"wedwedwedwe",
-      "paymentMethod":"card",
-      "price":300,
-      "workerUser":{
-         "badges":[
 
-         ],
-         "dislikes":0,
-         "firstName":"Ahmed",
-         "id":"5cf58c672357cc11fbc6b3d4",
-         "imageUrl":null,
-         "lastName":"Saleh",
-         "likes":0,
-         "approved":false
-      }
-   },
-   {
-      "id":"5d400cdabcb54e2179da4d5c",
-      "message":"wdqwdqwdwqe",
-      "paymentMethod":"card",
-      "price":70,
-      "workerUser":{
-         "badges":[
-
-         ],
-         "dislikes":0,
-         "firstName":"Zobr",
-         "id":"5cf6b8df97b51b1e16efc6e5",
-         "imageUrl":null,
-         "lastName":"Slam",
-         "likes":0,
-         "approved":false
-      }
-   }
 ]

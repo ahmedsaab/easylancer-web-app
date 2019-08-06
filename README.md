@@ -32,9 +32,10 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
     - [X] Disable scroll while OfferDetails modal open on mobile
     - [X] Ability to hide/close the offerDetails modal
     - [X] Action buttons restyling (sticky)
-    - [ ] Offers tab empty state
+    - [X] Offers tab empty state
     - [ ] Offer Details Modal content + actions business logic
     - [ ] TaskAssignedModal content
+    - [ ] Create offer success/failure modal contents
     - [ ] Assigned Offer on click + Modal 
     - [ ] Empty message modal
     - [ ] Open message modal from offer
@@ -45,5 +46,6 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
 ### TODO (BE)
 
 - [X] Review and change the task statuses names
+- [ ] Distinguish new offers
 - [ ] Filter out removed tasks from Client API
 - [ ] Filter out investigation tasks from search, get task, and profile tasks endpoints but not in my tasks page

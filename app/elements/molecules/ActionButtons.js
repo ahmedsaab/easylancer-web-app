@@ -73,7 +73,7 @@ function ActionButtons({ buttons, relativeStyleRef }) {
 }
 
 ActionButtons.propTypes = {
-  relativeStyleRef: PropTypes.instanceOf(Element),
+  relativeStyleRef: PropTypes.object,
   buttons: PropTypes.array,
 };
 

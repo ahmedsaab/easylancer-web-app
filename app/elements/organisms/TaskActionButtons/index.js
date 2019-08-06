@@ -140,7 +140,7 @@ TaskActionButtons.propTypes = {
   offers: PropTypes.object,
   disabled: PropTypes.bool,
   onCreateOfferButtonClick: PropTypes.func,
-  containerRef: PropTypes.instanceOf(Element),
+  containerRef: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
