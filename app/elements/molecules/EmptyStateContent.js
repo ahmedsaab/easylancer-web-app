@@ -7,7 +7,6 @@ const ContentContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 600px;
   background: #f9f9f9bf;
   padding-left: 15%;
   padding-right: 15%;
@@ -36,9 +35,15 @@ const Picture = styled.img`
   padding-bottom: 20px;
 `;
 
-function EmptyStateContent({ summary, details, picture, children }) {
+function EmptyStateContent({
+  summary,
+  details,
+  picture,
+  children,
+  containerStyle,
+}) {
   return (
-    <ContentContainer>
+    <ContentContainer style={containerStyle}>
       <Picture src={picture} />
       <Summary>{summary}</Summary>
       <Details>{details}</Details>
@@ -52,6 +57,7 @@ EmptyStateContent.propTypes = {
   details: PropTypes.string,
   picture: PropTypes.string,
   children: PropTypes.any,
+  containerStyle: PropTypes.object,
 };
 
 export default EmptyStateContent;

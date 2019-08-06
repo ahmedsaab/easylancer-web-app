@@ -24,6 +24,7 @@ function TaskOffers({ offers, acceptedOfferId, loading, error, disabled }) {
       summary="No offers yet"
       details="Interested workers will start applying to your task soon. Don't go for long!"
       picture={emptyPicture}
+      containerStyle={{ height: '600px' }}
     />
   );
 
@@ -48,7 +49,7 @@ function TaskOffers({ offers, acceptedOfferId, loading, error, disabled }) {
           offers={offers.filter(
             offer => !offer.isNew && offer.id !== acceptedOfferId,
           )}
-          label="Other"
+          label="All"
         />
       </div>
     );

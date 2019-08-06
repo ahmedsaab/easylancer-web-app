@@ -42,10 +42,14 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
     - [ ] Open message modal from task
     - [ ] Design Spinners
     - [ ] Fix broken Auth workflow for not logged in sessions
+    - [ ] Login button styling
+    - [ ] Create task button
+    - [ ] Create task modal
     
 ### TODO (BE)
 
 - [X] Review and change the task statuses names
 - [ ] Distinguish new offers
 - [ ] Filter out removed tasks from Client API
+- [ ] Get offer endpoint with more data about the offer's user relative to the task applied (similar finished tasks, relative badges, relative success rate, relative ratings)
 - [ ] Filter out investigation tasks from search, get task, and profile tasks endpoints but not in my tasks page

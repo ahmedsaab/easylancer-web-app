@@ -3,12 +3,11 @@ import * as PropTypes from 'prop-types';
 import Avatar from 'elements/molecules/Avatar';
 import ButtonListItem from 'elements/atoms/ButtonListItem';
 import PriceTag from 'elements/molecules/PriceTag';
-import { MDBIcon } from 'mdbreact';
 import LikesMetric from 'elements/molecules/LikesMetric';
 import {
   MiddleContainer,
   PriceTagContainer,
-  RatingsContainer,
+  WorkerRating,
 } from 'elements/organisms/OfferListItem/components';
 
 function OfferListItem({ offer, isSelected, onClick, disabled }) {
@@ -28,13 +27,7 @@ function OfferListItem({ offer, isSelected, onClick, disabled }) {
               {offer.workerUser.firstName} {offer.workerUser.lastName}
             </div>
             <div style={{ paddingTop: '5px' }}>
-              <RatingsContainer>
-                <MDBIcon icon="star" />
-                <MDBIcon icon="star" />
-                <MDBIcon icon="star" />
-                <MDBIcon icon="star-half-alt" />
-                <MDBIcon far icon="star" />
-              </RatingsContainer>
+              <WorkerRating score={7} />
               <LikesMetric
                 style={{ float: 'left' }}
                 likes={offer.workerUser.likes}

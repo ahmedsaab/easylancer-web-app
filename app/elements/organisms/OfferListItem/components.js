@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import StarRating from 'elements/molecules/StarRating';
 
 export const PriceTagContainer = styled.div.attrs({
   className: 'flex-shrink-1',
@@ -14,8 +15,7 @@ export const MiddleContainer = styled.div.attrs({
   font-size: 1rem;
 `;
 
-export const RatingsContainer = styled.div`
-  color: #ffc400;
+export const WorkerRating = styled(StarRating)`
   float: left;
   padding-right: 20px;
 `;

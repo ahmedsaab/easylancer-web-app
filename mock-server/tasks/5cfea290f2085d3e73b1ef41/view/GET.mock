@@ -3,7 +3,7 @@ Content-Type: application/json; charset=utf-8
 Access-Control-Allow-Origin: *
 
 {
-    "acceptedOffer": "5d400cdabcb54e2179da4d5c",
+    "acceptedOffer": null,
     "category": "category2",
     "createdAt": 1560191632847,
     "creatorRating": null,
@@ -33,20 +33,9 @@ Access-Control-Allow-Origin: *
     "price": 300,
     "seenCount": 0,
     "startDateTime": 1496846048700,
-    "status": "assigned",
+    "status": "open",
     "title": "Home cleaning for 60m2 appartment",
     "type": "type1",
     "workerRating": null,
-    "workerUser":{
-       "badges":[
-
-       ],
-       "dislikes":0,
-       "firstName":"Zobr",
-       "id":"5cf6b8df97b51b1e16efc6e5",
-       "imageUrl":null,
-       "lastName":"Slam",
-       "likes":0,
-       "approved":false
-    }
+    "workerUser": null
 }
