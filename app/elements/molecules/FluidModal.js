@@ -35,6 +35,7 @@ const ModalContainer = styled.div`
     height: 100vh !important;
     width: 100vw !important;
     z-index: 1000 !important;
+    border: 0 !important;
   }
 `;
 
