@@ -8,6 +8,7 @@ export const Wrapper = styled('div')`
 `;
 
 export const ContentRow = styled(MDBRow)`
+  overflow-y: hidden;
   margin-top: 60px;
   margin-bottom: 15px;
   margin-left: 235px;
