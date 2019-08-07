@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 import {
@@ -32,19 +32,29 @@ const ModalContainer = styled.div`
   animation-timing-function: ease-out;
   @media (max-width: 768px) {
     position: fixed !important;
-    height: 100vh !important;
+    max-height: 100vh !important;
     width: 100vw !important;
     z-index: 1000 !important;
+    overflow-y: scroll;
     border: 0 !important;
   }
 `;
 
-function FluidModal({ isOpen, style, children }) {
+const handleBodyScroll = isOpen => {
   if (isOpen && getWindowHeight() < 768) {
     disableBodyScroll();
   } else {
     enableBodyScroll();
   }
+};
+
+function FluidModal({ isOpen, style, children }) {
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      handleBodyScroll(isOpen);
+    });
+    handleBodyScroll(isOpen);
+  });
 
   return (
     <ModalContainer style={style} isOpen={isOpen}>

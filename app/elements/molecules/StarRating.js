@@ -10,12 +10,14 @@ const Container = styled('div')`
 function StarRating({ score, className }) {
   return (
     <Container className={className}>
-      {[...Array(Math.floor(score / 2))].map(() => (
-        <MDBIcon icon="star" />
+      {[...Array(Math.floor(score / 2))].map((e, i) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <MDBIcon key={`${i}-star`} icon="star" />
       ))}
       {score % 2 ? <MDBIcon icon="star-half-alt" /> : null}
-      {[...Array(Math.floor((10 - score) / 2))].map(() => (
-        <MDBIcon far icon="star" />
+      {[...Array(Math.floor((10 - score) / 2))].map((e, i) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <MDBIcon far key={`${i}-empty-star`} icon="star" />
       ))}
     </Container>
   );

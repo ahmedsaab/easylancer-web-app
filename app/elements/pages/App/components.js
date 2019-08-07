@@ -17,7 +17,7 @@ export const ContentRow = styled(MDBRow)`
   }
 `;
 
-export const Container = styled(MDBContainer).attrs({ fluid: true })`
+export const Container = styled(MDBContainer).attrs(props => ({ fluid: true }))`
   @media (max-width: 1200px) {
     padding-left: 0px;
     padding-right: 0px;

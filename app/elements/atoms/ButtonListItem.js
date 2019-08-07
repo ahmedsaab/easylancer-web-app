@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { MDBBtn } from 'mdbreact';
 
-export default styled(MDBBtn).attrs({
+export default styled(MDBBtn).attrs(props => ({
   outline: true,
   block: true,
-})`
+}))`
   :hover {
     border-color: ${props => (props.selected ? `default` : `white`)} !important;
   }

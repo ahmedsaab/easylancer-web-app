@@ -11,7 +11,7 @@ import LoadingIndicator from 'elements/organisms/LoadingIndicator';
 import OfferList from 'elements/organisms/OfferList';
 import { TaskOffersContainer } from 'elements/organisms/TaskOffers/components';
 import AssignedOfferListItem from 'elements/organisms/AssignedOfferListItem';
-import ListLabel from 'elements/atoms/ListLabel';
+import SectionLabel from 'elements/atoms/SectionLabel';
 import EmptyStateContent from 'elements/molecules/EmptyStateContent';
 import * as emptyPicture from 'images/empty-state.png';
 
@@ -33,7 +33,7 @@ function TaskOffers({ offers, acceptedOfferId, loading, error, disabled }) {
       <div>
         {acceptedOfferId ? (
           <div>
-            <ListLabel>Assigned</ListLabel>
+            <SectionLabel>Assigned</SectionLabel>
             <AssignedOfferListItem
               offer={offers.find(offer => offer.id === acceptedOfferId)}
             />

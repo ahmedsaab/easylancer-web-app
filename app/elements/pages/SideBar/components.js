@@ -34,11 +34,11 @@ export const SideBarListElement = styled('li')`
   }
 `;
 
-export const SideBarLinkElement = styled(NavLink).attrs({
+export const SideBarLinkElement = styled(NavLink).attrs(props => ({
   activeStyle: {
     backgroundColor: '#1C2331',
   },
-})`
+}))`
   color: inherit;
   text-decoration: none;
   transition: all 0.3s;
@@ -52,9 +52,9 @@ export const SideBarLinkElement = styled(NavLink).attrs({
   }
 `;
 
-export const SideBarHeader = styled('div').attrs({
+export const SideBarHeader = styled('div').attrs(props => ({
   className: 'sidebar-header',
-})`
+}))`
   // height: 60px;
   padding: 20px;
   padding-left: 10px;
@@ -63,7 +63,7 @@ export const SideBarHeader = styled('div').attrs({
   text-align: center;
 `;
 
-export const SideBarButton = styled(Button).attrs({ block: true })`
+export const SideBarButton = styled(Button).attrs(props => ({ block: true }))`
   padding-right: 20px;
   padding-left: 20px;
 `;
@@ -92,9 +92,9 @@ export const SideBarList = styled('ul')`
   border-bottom: 2px solid #47748b;
 `;
 
-export const SideBarUserName = styled('div').attrs({
+export const SideBarUserName = styled('div').attrs(props => ({
   className: 'text-truncate',
-})`
+}))`
   max-width: 100%;
   display: inline-block;
   vertical-align: middle;
@@ -105,13 +105,13 @@ export const SideBarUserData = styled('div')`
   padding-right: 10px;
 `;
 
-export const SideBarUser = styled(MDBRow).attrs({
+export const SideBarUser = styled(MDBRow).attrs(props => ({
   className: 'align-self-center no-gutters',
-})``;
+}))``;
 
-export const SideBarUserImage = styled('img').attrs({
+export const SideBarUserImage = styled('img').attrs(props => ({
   className: 'img-fluid z-depth-1 rounded-circle',
-})``;
+}))``;
 
 export const SideBarUserCredit = styled('div')`
   text-align: left;

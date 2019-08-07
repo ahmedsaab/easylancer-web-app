@@ -2,7 +2,6 @@ export const getWindowHeight = () =>
   Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
 export const disableBodyScroll = () => {
-  document.body.style.overflowY = 'scroll';
   document.body.style.position = 'fixed';
 };
 

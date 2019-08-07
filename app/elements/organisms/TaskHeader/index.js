@@ -15,11 +15,11 @@ import {
   SeenIcon,
   SeenInfo,
   StatusTime,
-  TaskBadge,
   TitleText,
 } from 'elements/organisms/TaskHeader/components';
 import PriceTag from 'elements/molecules/PriceTag';
 import StatusBadge from 'elements/molecules/StatusBadge';
+import Tag from 'elements/atoms/Tag';
 
 function TaskHeader({ task }) {
   return (
@@ -54,10 +54,10 @@ function TaskHeader({ task }) {
       <MDBRow>
         <MDBCol>
           <div>
-            <TaskBadge>Cleaning</TaskBadge>
-            <TaskBadge>Home</TaskBadge>
-            <TaskBadge>Floor</TaskBadge>
-            <TaskBadge>Windows</TaskBadge>
+            <Tag>Cleaning</Tag>
+            <Tag>Home</Tag>
+            <Tag>Floor</Tag>
+            <Tag>Windows</Tag>
           </div>
         </MDBCol>
       </MDBRow>

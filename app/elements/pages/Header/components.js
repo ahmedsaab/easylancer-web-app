@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { MDBIcon, MDBNavbar } from 'mdbreact';
 
-export const NavMenuButton = styled('div').attrs({
+export const NavMenuButton = styled('div').attrs(props => ({
   size: 'sm',
-})`
+}))`
   color: #f5f5f5;
   cursor: pointer;
   @media (min-width: 1200px) {
@@ -18,10 +18,10 @@ export const NavLogoText = styled('span')`
   font-weight: 1000;
 `;
 
-export const NavBar = styled(MDBNavbar).attrs({
+export const NavBar = styled(MDBNavbar).attrs(props => ({
   color: 'unique-color-dark',
   dark: true,
-})`
+}))`
   height: 60px;
   position: fixed;
   z-index: 200;
@@ -38,6 +38,6 @@ export const NavIcon = styled(MDBIcon)`
   color: white;
 `;
 
-export const NavLogoIcon = styled('img').attrs({
+export const NavLogoIcon = styled('img').attrs(props => ({
   height: '30',
-})``;
+}))``;

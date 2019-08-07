@@ -56,7 +56,7 @@ export function OfferDetailsModal({
 
   return (
     <FluidModal
-      style={{ padding: '20px' }}
+      style={{ padding: '20px', margin: '0 0 40px 0' }}
       isOpen={offerUrlRegex.test(location.pathname)}
       onClose={onClose}
     >

@@ -13,6 +13,9 @@ import IconWithNumber from 'elements/molecules/IconWithNumber';
 import Avatar from 'elements/molecules/Avatar';
 import FullName from 'elements/molecules/FullName';
 import StarRating from 'elements/molecules/StarRating';
+import Section from 'elements/molecules/Section';
+import BadgesDetails from 'elements/molecules/BadgesDetails';
+import NumberedTags from 'elements/molecules/NumberedTags';
 
 const OfferDetailsContainer = styled.div`
   display: flex;
@@ -24,13 +27,13 @@ const FooterContainer = styled.div`
   margin-top: auto;
 `;
 
-const ActionButton = styled(MDBBtn).attrs({
+const ActionButton = styled(MDBBtn).attrs(props => ({
   rounded: true,
   block: true,
-  color: props => props.color,
-  onClick: props => props.onClick,
-  disabled: props => props.disabled,
-})`
+  color: props.color,
+  onClick: props.onClick,
+  disabled: props.disabled,
+}))`
   margin-top: 10px !Important;
 `;
 
@@ -48,8 +51,19 @@ const WorkerName = styled(FullName)`
   padding: 10px 0 0 0;
 `;
 
+const OfferSection = styled(Section)`
+  margin-bottom: 20px;
+`;
+
+const Text = styled.div``;
 
 function OfferDetails({ offer, isLoading, onHireClick }) {
+  // TODO: remove this when the backend sends the tags
+  offer.workerUser.tags = [
+    { name: 'Cleaning', count: 3 },
+    { name: 'House', count: 82 },
+  ];
+
   return (
     <OfferDetailsContainer>
       <div style={{ paddingBottom: '20px' }}>
@@ -98,8 +112,15 @@ function OfferDetails({ offer, isLoading, onHireClick }) {
           <StarRating score={9} />
         </CenterDiv>
       </div>
-      <div>{JSON.stringify(offer)}</div>
-      <div>{JSON.stringify(offer)}</div>
+      <OfferSection title="Message" visible={!!offer.message}>
+        <Text>{offer.message}</Text>
+      </OfferSection>
+      <OfferSection title="Badges" visible={!!offer.workerUser.badges.length}>
+        <BadgesDetails badges={offer.workerUser.badges} />
+      </OfferSection>
+      <OfferSection title="Tags" visible={!!offer.workerUser.tags.length}>
+        <NumberedTags tags={offer.workerUser.tags} />
+      </OfferSection>
       <FooterContainer>
         <ActionButton color="primary" disabled={isLoading}>
           Message

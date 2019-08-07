@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { MDBBadge, MDBIcon } from 'mdbreact';
+import { MDBIcon } from 'mdbreact';
 
 export const StatusTime = styled('div')`
   font-size: 15px;
@@ -43,14 +43,4 @@ export const SeenInfo = styled('div')`
 
 export const SeenIcon = styled(MDBIcon)`
   padding-right: 5px;
-`;
-
-export const TaskBadge = styled(MDBBadge).attrs({
-  color: 'light',
-})`
-  font-size: 14px;
-  margin-right: 10px;
-  margin-top: 10px;
-  box-shadow: none;
-  padding: 8px;
 `;

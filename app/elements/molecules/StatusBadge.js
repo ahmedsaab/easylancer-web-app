@@ -5,11 +5,11 @@ import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { MDBBadge } from 'mdbreact';
 
-const StatusBadgeContainer = styled(MDBBadge).attrs({
+const StatusBadgeContainer = styled(MDBBadge).attrs(props => ({
   pill: true,
   className: 'text-capitalize',
-  color: props => props.color,
-})`
+  color: props.color,
+}))`
   font-size: 15px;
   padding-bottom: 4px;
   padding-top: 4px;

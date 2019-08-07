@@ -45,10 +45,14 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
     - [ ] Login button styling
     - [ ] Create task button
     - [ ] Create task modal
+    - [X] Scrollable Fluid Modal
+    - [ ] Sticky offer details action buttons
+    - [X] Offer Details overflow bug
     
 ### TODO (BE)
 
 - [X] Review and change the task statuses names
+- [ ] Implement badges business logic
 - [ ] Distinguish new offers
 - [ ] Filter out removed tasks from Client API
 - [ ] Get offer endpoint with more data about the offer's user relative to the task applied (similar finished tasks, relative badges, relative success rate, relative ratings)

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { MDBBtn, MDBCard, MDBCardBody } from 'mdbreact';
 
-export const ProfileCardContainer = styled(MDBCard).attrs({
+export const ProfileCardContainer = styled(MDBCard).attrs(props => ({
   testimonial: true,
-})`
+}))`
   margin-top: 80px;
   margin-bottom: 5px;
   margin-left: 5px;
@@ -16,12 +16,12 @@ export const ProfileCardBody = styled(MDBCardBody)`
   padding-right: 0;
 `;
 
-export const GoToProfileButton = styled(MDBBtn).attrs({
+export const GoToProfileButton = styled(MDBBtn).attrs(props => ({
   floating: true,
   tag: 'a',
   className: 'ml-auto mr-4 lighten-3',
   action: true,
-})`
+}))`
   margin-bottom: 0.46rem !important;
   margin-left: 75% !important;
 `;

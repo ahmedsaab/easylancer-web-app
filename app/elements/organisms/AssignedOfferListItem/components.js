@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
-export const PriceTagContainer = styled.div.attrs({
+export const PriceTagContainer = styled.div.attrs(props => ({
   className: 'flex-shrink-1',
-})`
+}))`
   font-size: 1.3rem;
 `;
 
-export const MiddleContainer = styled.div.attrs({
+export const MiddleContainer = styled.div.attrs(props => ({
   className: 'flex-grow-1',
-})`
+}))`
   padding-left: 20px;
   padding-right: 20px;
   font-size: 1rem;

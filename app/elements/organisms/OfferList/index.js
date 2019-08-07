@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { viewOffer } from 'elements/pages/OfferDetailsModal/actions';
 import { withRouter } from 'react-router-dom';
-import ListLabel from 'elements/atoms/ListLabel';
+import SectionLabel from 'elements/atoms/SectionLabel';
 
 function OfferList({
   offers,
@@ -36,7 +36,7 @@ function OfferList({
 
   return (
     <div>
-      <ListLabel>{label}</ListLabel>
+      <SectionLabel>{label}</SectionLabel>
       <div>{offerComponents}</div>
     </div>
   );

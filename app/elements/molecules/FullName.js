@@ -2,9 +2,9 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Container = styled('div').attrs({
+const Container = styled('div').attrs(props => ({
   className: 'text-truncate',
-})`
+}))`
   max-width: 100%;
   display: inline-block;
   vertical-align: middle;
