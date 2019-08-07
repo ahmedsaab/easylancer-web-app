@@ -23,9 +23,9 @@ export const PaymentTag = styled('div')`
   line-height: 125%;
 `;
 
-function PriceTag({ price, paymentMethod, style }) {
+function PriceTag({ price, paymentMethod, className }) {
   return (
-    <PaymentTag style={style}>
+    <PaymentTag className={className}>
       <PaymentPrice>
         €<PaymentPriceNumber>{price}</PaymentPriceNumber>
       </PaymentPrice>
@@ -37,9 +37,9 @@ function PriceTag({ price, paymentMethod, style }) {
 }
 
 PriceTag.propTypes = {
-  style: PropTypes.object,
   price: PropTypes.number,
   paymentMethod: PropTypes.oneOf(['card', 'cash']),
+  className: PropTypes.string,
 };
 
 export default PriceTag;

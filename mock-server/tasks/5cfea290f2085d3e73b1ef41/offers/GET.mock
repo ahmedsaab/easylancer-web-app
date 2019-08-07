@@ -10,7 +10,26 @@ Access-Control-Allow-Origin: *
       "price":300,
       "workerUser":{
          "badges":[
-
+             {
+                "icon": "centos",
+                "summary": "New worker in the house",
+                "details": "A badge granted to new workers for the first 2 weeks"
+             },
+             {
+                "icon": "codiepie",
+                "summary": "100% profile data",
+                "details": "User have completely filled his profile to 100%"
+             }
+         ],
+         "tags": [
+             {
+                "name": "Cleaning",
+                "count": 3
+             },
+             {
+                "name": "House",
+                "count": 82
+             }
          ],
          "dislikes":0,
          "firstName":"Ahmed",
@@ -37,6 +56,16 @@ Access-Control-Allow-Origin: *
                 "icon": "codiepie",
                 "summary": "100% profile data",
                 "details": "User have completely filled his profile to 100%"
+             }
+         ],
+         "tags": [
+             {
+                "name": "Cleaning",
+                "count": 3
+             },
+             {
+                "name": "House",
+                "count": 82
              }
          ],
          "dislikes":0,
