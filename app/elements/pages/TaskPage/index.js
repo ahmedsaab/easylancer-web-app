@@ -74,6 +74,7 @@ export function TaskPage({
         </MDBCol>
         <MDBCol sm="12" md="4">
           <TaskActionButtons containerRef={ref} />
+          <hr />
           <MDBRow className="no-gutters">
             <MDBCol>
               <OfferDetailsModal

@@ -1,12 +1,9 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
+import CenteredDiv from 'elements/atoms/CenteredDiv';
 
-const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+const ContentContainer = styled(CenteredDiv)`
   background: #f9f9f9bf;
   padding-left: 15%;
   padding-right: 15%;

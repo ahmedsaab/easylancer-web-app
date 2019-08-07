@@ -46,7 +46,7 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
     - [ ] Create task button
     - [ ] Create task modal
     - [X] Scrollable Fluid Modal
-    - [ ] Sticky offer details action buttons
+    - [X] Sticky offer details action buttons
     - [X] Offer Details overflow bug
     
 ### TODO (BE)

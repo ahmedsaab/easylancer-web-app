@@ -4,7 +4,7 @@ import styled, { keyframes } from 'styled-components';
 import {
   disableBodyScroll,
   enableBodyScroll,
-  getWindowHeight,
+  getWindowWidth,
 } from 'utils/stylesHelper';
 
 const animationShow = keyframes`
@@ -41,14 +41,14 @@ const ModalContainer = styled.div`
 `;
 
 const handleBodyScroll = isOpen => {
-  if (isOpen && getWindowHeight() < 768) {
+  if (isOpen && getWindowWidth() < 768) {
     disableBodyScroll();
   } else {
     enableBodyScroll();
   }
 };
 
-function FluidModal({ isOpen, style, children }) {
+function FluidModal({ isOpen, style, children, reference }) {
   useEffect(() => {
     window.addEventListener('resize', () => {
       handleBodyScroll(isOpen);
@@ -57,7 +57,7 @@ function FluidModal({ isOpen, style, children }) {
   });
 
   return (
-    <ModalContainer style={style} isOpen={isOpen}>
+    <ModalContainer ref={reference} style={style} isOpen={isOpen}>
       {children}
     </ModalContainer>
   );
@@ -67,6 +67,7 @@ FluidModal.propTypes = {
   style: PropTypes.object,
   isOpen: PropTypes.bool,
   children: PropTypes.any,
+  reference: PropTypes.object,
 };
 
 export default FluidModal;

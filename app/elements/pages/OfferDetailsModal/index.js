@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useRef } from 'react';
 import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -38,6 +38,8 @@ export function OfferDetailsModal({
 }) {
   useInjectReducer({ key: 'offerDetailsModal', reducer });
   useInjectSaga({ key: 'offerDetailsModal', saga });
+
+  const ref = useRef(null);
   let content = null;
 
   if (!offer) {
@@ -47,6 +49,7 @@ export function OfferDetailsModal({
   } else {
     content = (
       <OfferDetails
+        containerRef={ref}
         offer={offer}
         isLoading={isSending}
         onHireClick={() => onAcceptOffer(offer.id, history)}
@@ -59,6 +62,7 @@ export function OfferDetailsModal({
       style={{ padding: '20px', margin: '0 0 40px 0' }}
       isOpen={offerUrlRegex.test(location.pathname)}
       onClose={onClose}
+      reference={ref}
     >
       <ModalHeader>
         <ModalCloseIcon onClick={onClose} />

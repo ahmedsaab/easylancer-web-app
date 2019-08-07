@@ -1,4 +1,4 @@
-export const getWindowHeight = () =>
+export const getWindowWidth = () =>
   Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
 export const disableBodyScroll = () => {

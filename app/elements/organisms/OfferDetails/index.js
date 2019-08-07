@@ -8,7 +8,7 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { MDBBtn, MDBIcon } from 'mdbreact';
+import { MDBIcon } from 'mdbreact';
 import IconWithNumber from 'elements/molecules/IconWithNumber';
 import Avatar from 'elements/molecules/Avatar';
 import FullName from 'elements/molecules/FullName';
@@ -16,6 +16,8 @@ import StarRating from 'elements/molecules/StarRating';
 import Section from 'elements/molecules/Section';
 import BadgesDetails from 'elements/molecules/BadgesDetails';
 import NumberedTags from 'elements/molecules/NumberedTags';
+import ActionButtons from 'elements/molecules/ActionButtons';
+import CenteredDiv from 'elements/atoms/CenteredDiv';
 
 const OfferDetailsContainer = styled.div`
   display: flex;
@@ -23,26 +25,8 @@ const OfferDetailsContainer = styled.div`
   flex: 1;
 `;
 
-const FooterContainer = styled.div`
-  margin-top: auto;
-`;
-
-const ActionButton = styled(MDBBtn).attrs(props => ({
-  rounded: true,
-  block: true,
-  color: props.color,
-  onClick: props.onClick,
-  disabled: props.disabled,
-}))`
-  margin-top: 10px !Important;
-`;
-
-const CenterDiv = styled.div`
+const CenterDiv = styled(CenteredDiv)`
   flex-grow: ${props => props.grow};
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
 
 const WorkerName = styled(FullName)`
@@ -57,11 +41,31 @@ const OfferSection = styled(Section)`
 
 const Text = styled.div``;
 
-function OfferDetails({ offer, isLoading, onHireClick }) {
+function OfferDetails({ offer, isLoading, onHireClick, containerRef }) {
   // TODO: remove this when the backend sends the tags
   offer.workerUser.tags = [
     { name: 'Cleaning', count: 3 },
     { name: 'House', count: 82 },
+  ];
+
+  const buttons = [
+    {
+      color: 'primary',
+      disabled: isLoading,
+      icon: 'envelope',
+      text: 'Message',
+      onClick: () => {
+        alert('message action clicked');
+      },
+    },
+    {
+      color: 'green',
+      disabled: isLoading,
+      icon: 'check',
+      text: 'Hire Now',
+      isLoading,
+      onClick: onHireClick,
+    },
   ];
 
   return (
@@ -121,18 +125,7 @@ function OfferDetails({ offer, isLoading, onHireClick }) {
       <OfferSection title="Tags" visible={!!offer.workerUser.tags.length}>
         <NumberedTags tags={offer.workerUser.tags} />
       </OfferSection>
-      <FooterContainer>
-        <ActionButton color="primary" disabled={isLoading}>
-          Message
-        </ActionButton>
-        <ActionButton color="green" onClick={onHireClick} disabled={isLoading}>
-          {isLoading ? (
-            <MDBIcon style={{ paddingTop: '2px' }} icon="spinner" pulse fixed />
-          ) : (
-            'Hire now'
-          )}
-        </ActionButton>
-      </FooterContainer>
+      <ActionButtons relativeStyleRef={containerRef} buttons={buttons} />
     </OfferDetailsContainer>
   );
 }
@@ -141,6 +134,7 @@ OfferDetails.propTypes = {
   isLoading: PropTypes.bool,
   offer: PropTypes.object,
   onHireClick: PropTypes.func,
+  containerRef: PropTypes.object,
 };
 
 export default OfferDetails;
