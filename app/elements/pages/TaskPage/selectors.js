@@ -1,53 +1,67 @@
 import { createSelector } from 'reselect';
 import { initialState } from 'elements/pages/TaskPage/reducer';
+import { selectGlobalUser } from 'elements/pages/App/selectors';
 
-const selectTaskPageDomain = state => state.taskPage || initialState;
-const selectTaskPageTask = state => state.task || initialState.task;
-const selectTaskPageOffers = state => state.offers || initialState.offers;
+const selectDomain = state => state.taskPage || initialState;
+
+const selectTaskData = state => state.taskPage.task.data;
+
+const selectTaskDataAcceptedOffer = state =>
+  state.taskPage.task.data.acceptedOffer;
+
+//
 
 const makeSelectTaskPage = () =>
   createSelector(
-    selectTaskPageDomain,
-    subState => subState,
+    selectDomain,
+    domain => domain,
   );
 
 const makeSelectTaskPageTask = () =>
   createSelector(
-    selectTaskPageDomain,
-    selectTaskPageTask,
-  );
-
-const makeSelectTaskPageTaskStatus = () =>
-  createSelector(
-    selectTaskPageDomain,
-    subState => subState.task.data.status,
-  );
-
-const makeSelectTaskPageTaskAcceptedOffer = () =>
-  createSelector(
-    selectTaskPageDomain,
-    subState => subState.task.data.acceptedOffer,
+    selectDomain,
+    domain => domain.task,
   );
 
 const makeSelectTaskPageOffers = () =>
   createSelector(
-    selectTaskPageDomain,
-    selectTaskPageOffers,
+    selectDomain,
+    domain => domain.offers,
   );
 
 const makeSelectTaskPageId = () =>
   createSelector(
-    selectTaskPageDomain,
-    subState => subState.id,
+    selectDomain,
+    domain => domain.id,
+  );
+
+const makeSelectTaskPageTaskDataStatus = () =>
+  createSelector(
+    selectDomain,
+    domain => domain.task.data.status,
+  );
+
+const makeSelectTaskPageUserIsTaskOwner = () =>
+  createSelector(
+    selectTaskData,
+    selectGlobalUser,
+    (task, user) => task && user && task.creatorUser.id === user.id,
+  );
+
+const makeSelectTaskPageTaskAcceptedOffer = () =>
+  createSelector(
+    selectDomain,
+    domain => domain.task.data.acceptedOffer,
   );
 
 export default makeSelectTaskPage;
 
 export {
-  selectTaskPageDomain,
+  selectTaskDataAcceptedOffer,
   makeSelectTaskPageTask,
   makeSelectTaskPageId,
   makeSelectTaskPageOffers,
-  makeSelectTaskPageTaskStatus,
+  makeSelectTaskPageTaskDataStatus,
   makeSelectTaskPageTaskAcceptedOffer,
+  makeSelectTaskPageUserIsTaskOwner,
 };

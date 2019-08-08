@@ -1,49 +1,42 @@
 import { createSelector } from 'reselect';
 import { initialState } from 'elements/pages/OfferDetailsModal/reducer';
-
-/**
- * Direct selector to the offerDetailsModal state domain
- */
+import { selectTaskDataAcceptedOffer } from 'elements/pages/TaskPage/selectors';
 
 const selectOfferDetailsModalDomain = state =>
   state.offerDetailsModal || initialState;
 
-/**
- * Other specific selectors
- */
-
-/**
- * Default selector used by OfferDetailsModal
- */
+const selectOfferDetailsId = state => state.offerDetailsModal.offer.id;
+//
 
 const makeSelectOfferDetailsModal = () =>
   createSelector(
     selectOfferDetailsModalDomain,
-    substate => substate,
+    domain => domain,
   );
 
-const makeSelectOfferDetailsOfferId = () =>
+const makeSelectOfferDetailsIsAssigned = () =>
   createSelector(
-    selectOfferDetailsModalDomain,
-    substate => substate.id,
+    selectOfferDetailsId,
+    selectTaskDataAcceptedOffer,
+    (offerId, acceptedOfferId) => offerId === acceptedOfferId,
   );
 
 const makeSelectOfferDetailsIsSending = () =>
   createSelector(
     selectOfferDetailsModalDomain,
-    substate => substate.isSending,
+    domain => domain.isSending,
   );
 
 const makeSelectOfferDetailsendError = () =>
   createSelector(
     selectOfferDetailsModalDomain,
-    substate => substate.sendError,
+    domain => domain.sendError,
   );
 
 const makeSelectOfferDetailsOffer = () =>
   createSelector(
     selectOfferDetailsModalDomain,
-    substate => substate.offer,
+    domain => domain.offer,
   );
 
 export default makeSelectOfferDetailsModal;
@@ -52,5 +45,5 @@ export {
   makeSelectOfferDetailsIsSending,
   makeSelectOfferDetailsOffer,
   makeSelectOfferDetailsendError,
-  makeSelectOfferDetailsOfferId,
+  makeSelectOfferDetailsIsAssigned,
 };

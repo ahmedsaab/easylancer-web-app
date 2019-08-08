@@ -20,7 +20,7 @@ import ModalHeader from 'elements/atoms/ModalHeader';
 import ModalCloseIcon from 'elements/atoms/ModalCloseIcon';
 import {
   makeSelectTaskPageTaskAcceptedOffer,
-  makeSelectTaskPageTaskStatus,
+  makeSelectTaskPageTaskDataStatus,
 } from 'elements/pages/TaskPage/selectors';
 import OfferActionButtons from 'elements/organisms/OfferActionButtons';
 
@@ -71,7 +71,7 @@ OfferDetailsModal.propTypes = {
 const mapStateToProps = createStructuredSelector({
   isSending: makeSelectOfferDetailsIsSending(),
   offer: makeSelectOfferDetailsOffer(),
-  taskStatus: makeSelectTaskPageTaskStatus(),
+  taskStatus: makeSelectTaskPageTaskDataStatus(),
   acceptedOfferId: makeSelectTaskPageTaskAcceptedOffer(),
 });
 

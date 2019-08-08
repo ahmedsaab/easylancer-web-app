@@ -10,33 +10,32 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import { useInjectSaga } from 'utils/injectSaga';
-import { useInjectReducer } from 'utils/injectReducer';
-import reducer from 'elements/organisms/TaskActionButtons/reducer';
-import saga from 'elements/organisms/TaskActionButtons/saga';
-import { makeSelectGlobalUser } from 'elements/pages/App/selectors';
-import {
-  makeSelectTaskPageTaskAcceptedOffer,
-  makeSelectTaskPageTaskStatus,
-} from 'elements/pages/TaskPage/selectors';
 import ActionButtons from 'elements/molecules/ActionButtons';
-import { makeSelectOfferDetailsOfferId } from 'elements/pages/OfferDetailsModal/selectors';
 import { acceptOffer } from 'elements/pages/OfferDetailsModal/actions';
 import { TASK_STATUSES } from 'elements/pages/TaskPage/constants';
+import {
+  makeSelectTaskPageTaskDataStatus,
+  makeSelectTaskPageUserIsTaskOwner,
+} from 'elements/pages/TaskPage/selectors';
+import {
+  makeSelectOfferDetailsIsAssigned,
+  makeSelectOfferDetailsOffer,
+} from 'elements/pages/OfferDetailsModal/selectors';
 
 export function OfferActionButtons({
+  offer,
+  taskStatus,
+  isAssignedOffer,
+  isTaskOwner,
   isLoading = false,
   containerRef,
   onAcceptOffer,
-  user,
-  offerId,
-  taskStatus,
 }) {
-  useInjectReducer({ key: 'offerActionButtons', reducer });
-  useInjectSaga({ key: 'offerActionButtons', saga });
-
-  console.log(user.id);
+  console.log('.');
+  console.log(isAssignedOffer);
   console.log(taskStatus);
+  console.log(isTaskOwner);
+  console.log(offer);
 
   const buttons = [
     {
@@ -54,7 +53,7 @@ export function OfferActionButtons({
       icon: 'check',
       text: 'Hire Now',
       isLoading,
-      onClick: () => onAcceptOffer(offerId),
+      onClick: () => onAcceptOffer(offer.id),
     },
   ];
 
@@ -62,8 +61,9 @@ export function OfferActionButtons({
 }
 
 OfferActionButtons.propTypes = {
-  user: PropTypes.object,
-  offerId: PropTypes.string,
+  isTaskOwner: PropTypes.bool,
+  isAssignedOffer: PropTypes.bool,
+  offer: PropTypes.object,
   taskStatus: PropTypes.oneOf(TASK_STATUSES),
   containerRef: PropTypes.object,
   onAcceptOffer: PropTypes.func.isRequired,
@@ -71,10 +71,10 @@ OfferActionButtons.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  user: makeSelectGlobalUser(),
-  offerId: makeSelectOfferDetailsOfferId(),
-  taskStatus: makeSelectTaskPageTaskStatus(),
-  acceptedOfferId: makeSelectTaskPageTaskAcceptedOffer(),
+  isTaskOwner: makeSelectTaskPageUserIsTaskOwner(),
+  isAssignedOffer: makeSelectOfferDetailsIsAssigned(),
+  taskStatus: makeSelectTaskPageTaskDataStatus(),
+  offer: makeSelectOfferDetailsOffer(),
 });
 
 const mapDispatchToProps = dispatch => ({

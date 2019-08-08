@@ -99,7 +99,7 @@ export const postOffer = async (id, offer) => {
 };
 
 export const acceptOffer = async (taskId, offerId) => {
-  // await sleep(1000);
+  await sleep(2000);
   try {
     const response = await axios.post(
       `${process.env.CLIENT_API_ROOT}/tasks/${taskId}/accept`,

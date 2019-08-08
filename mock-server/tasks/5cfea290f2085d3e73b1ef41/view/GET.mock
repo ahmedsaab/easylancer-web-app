@@ -3,7 +3,7 @@ Content-Type: application/json; charset=utf-8
 Access-Control-Allow-Origin: *
 
 {
-    "acceptedOffer": "5d3dffc186917d548f51e56b",
+    "acceptedOffer": "5d400cdabcb54e2179da4d5c",
     "category": "category2",
     "createdAt": 1560191632847,
     "creatorRating": null,

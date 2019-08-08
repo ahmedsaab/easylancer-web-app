@@ -6,6 +6,7 @@ import { createSelector } from 'reselect';
 import { initialState } from 'elements/pages/App/reducer';
 
 const selectGlobal = state => state.global || initialState;
+const selectGlobalUser = state => state.global.user;
 
 const selectRouter = state => state.router;
 
@@ -38,5 +39,6 @@ export {
   makeSelectGlobalUser,
   makeSelectLoading,
   makeSelectError,
+  selectGlobalUser,
   makeSelectGlobalLocation,
 };
