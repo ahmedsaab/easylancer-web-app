@@ -9,8 +9,9 @@ import {
 import { makeSelectOfferDetailsOffer } from 'elements/pages/OfferDetailsModal/selectors';
 import { updateModal } from 'elements/pages/Modal/actions';
 import { loadTaskOffers } from 'elements/pages/TaskPage/actions';
+import history from 'utils/history';
 
-export function* acceptOffer(action) {
+export function* acceptOffer() {
   const taskId = yield select(makeSelectTaskPageId());
   const offer = yield select(makeSelectOfferDetailsOffer());
 
@@ -19,8 +20,7 @@ export function* acceptOffer(action) {
     yield put(acceptOfferSuccess());
     yield put(loadTaskOffers());
 
-    // eslint-disable-next-line no-restricted-globals
-    action.history.push(`/task/${taskId}/offers/`);
+    history.push(`/task/${taskId}/offers/`);
   } catch (err) {
     yield put(acceptOfferError(err));
   } finally {

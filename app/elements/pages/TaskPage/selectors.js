@@ -17,6 +17,18 @@ const makeSelectTaskPageTask = () =>
     selectTaskPageTask,
   );
 
+const makeSelectTaskPageTaskStatus = () =>
+  createSelector(
+    selectTaskPageDomain,
+    subState => subState.task.data.status,
+  );
+
+const makeSelectTaskPageTaskAcceptedOffer = () =>
+  createSelector(
+    selectTaskPageDomain,
+    subState => subState.task.data.acceptedOffer,
+  );
+
 const makeSelectTaskPageOffers = () =>
   createSelector(
     selectTaskPageDomain,
@@ -36,4 +48,6 @@ export {
   makeSelectTaskPageTask,
   makeSelectTaskPageId,
   makeSelectTaskPageOffers,
+  makeSelectTaskPageTaskStatus,
+  makeSelectTaskPageTaskAcceptedOffer,
 };

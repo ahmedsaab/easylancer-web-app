@@ -1,15 +1,8 @@
-/**
- *
- * OfferDetails
- *
- */
-
 import React from 'react';
 import * as PropTypes from 'prop-types';
 
 import BadgesDetails from 'elements/molecules/BadgesDetails';
 import NumberedTags from 'elements/molecules/NumberedTags';
-import ActionButtons from 'elements/molecules/ActionButtons';
 import CenteredDiv from 'elements/atoms/CenteredDiv';
 import ProfileHeader from 'elements/molecules/ProfileHeader';
 import {
@@ -19,27 +12,7 @@ import {
   OfferSection,
 } from 'elements/organisms/OfferDetails/components';
 
-function OfferDetails({ offer, isLoading, onHireClick, containerRef }) {
-  const buttons = [
-    {
-      color: 'primary',
-      disabled: isLoading,
-      icon: 'envelope',
-      text: 'Message',
-      onClick: () => {
-        alert('message action clicked');
-      },
-    },
-    {
-      color: 'green',
-      disabled: isLoading,
-      icon: 'check',
-      text: 'Hire Now',
-      isLoading,
-      onClick: onHireClick,
-    },
-  ];
-
+function OfferDetails({ offer, children }) {
   return (
     <OfferDetailsContainer>
       <ProfileHeader
@@ -66,16 +39,14 @@ function OfferDetails({ offer, isLoading, onHireClick, containerRef }) {
       <OfferSection title="Tags" visible={!!offer.workerUser.tags.length}>
         <NumberedTags tags={offer.workerUser.tags} />
       </OfferSection>
-      <ActionButtons relativeStyleRef={containerRef} buttons={buttons} />
+      {children}
     </OfferDetailsContainer>
   );
 }
 
 OfferDetails.propTypes = {
-  isLoading: PropTypes.bool,
   offer: PropTypes.object,
-  onHireClick: PropTypes.func,
-  containerRef: PropTypes.object,
+  children: PropTypes.any,
 };
 
 export default OfferDetails;

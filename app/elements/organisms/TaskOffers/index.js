@@ -10,8 +10,6 @@ import * as PropTypes from 'prop-types';
 import LoadingIndicator from 'elements/organisms/LoadingIndicator';
 import OfferList from 'elements/organisms/OfferList';
 import { TaskOffersContainer } from 'elements/organisms/TaskOffers/components';
-import AssignedOfferListItem from 'elements/organisms/AssignedOfferListItem';
-import SectionLabel from 'elements/atoms/SectionLabel';
 import EmptyStateContent from 'elements/molecules/EmptyStateContent';
 import * as emptyPicture from 'images/empty-state.png';
 
@@ -31,14 +29,11 @@ function TaskOffers({ offers, acceptedOfferId, loading, error, disabled }) {
   if (offers.length > 0) {
     content = (
       <div>
-        {acceptedOfferId ? (
-          <div>
-            <SectionLabel>Assigned</SectionLabel>
-            <AssignedOfferListItem
-              offer={offers.find(offer => offer.id === acceptedOfferId)}
-            />
-          </div>
-        ) : null}
+        <OfferList
+          disabled={disabled}
+          offers={offers.filter(offer => offer.id === acceptedOfferId)}
+          label="Assigned"
+        />
         <OfferList
           disabled={disabled}
           offers={offers.filter(offer => offer.isNew)}
