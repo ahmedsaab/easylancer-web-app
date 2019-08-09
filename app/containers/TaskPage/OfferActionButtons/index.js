@@ -22,31 +22,70 @@ function OfferActionButtons({
   containerRef,
   onAcceptOffer,
 }) {
-  console.log('.');
-  console.log(isAssignedOffer);
-  console.log(task);
-  console.log(isTaskOwner);
-  console.log(offer);
+  const buttons = [];
 
-  const buttons = [
-    {
-      color: 'primary',
-      disabled: isLoading,
-      icon: 'envelope',
-      text: 'Message',
-      onClick: () => {
-        alert('message action clicked');
+  if (task.status === 'open' && isTaskOwner) {
+    buttons.concat([
+      {
+        color: 'green',
+        disabled: isLoading,
+        icon: 'check',
+        text: 'Hire Now',
+        isLoading,
+        onClick: () => onAcceptOffer(offer.id),
       },
-    },
-    {
-      color: 'green',
+      {
+        color: 'primary',
+        disabled: isLoading,
+        icon: 'envelope',
+        text: 'Message',
+        onClick: () => {
+          alert('message action clicked');
+        },
+      },
+    ]);
+  }
+
+  if (!isAssignedOffer && !isTaskOwner) {
+    buttons.push({
+      color: 'danger',
       disabled: isLoading,
-      icon: 'check',
-      text: 'Hire Now',
+      icon: 'trash',
+      text: 'Withdraw',
       isLoading,
-      onClick: () => onAcceptOffer(offer.id),
-    },
-  ];
+      onClick: () => {
+        alert('withdraw offer action clicked');
+      },
+    });
+  }
+
+  if (
+    isTaskOwner &&
+    isAssignedOffer &&
+    (task.status === 'assigned' || task.status === 'in-progress')
+  ) {
+    buttons.push(
+      {
+        color: 'green',
+        disabled: isLoading,
+        icon: 'phone',
+        text: 'Call',
+        isLoading,
+        onClick: () => {
+          alert('call worker action clicked');
+        },
+      },
+      {
+        color: 'primary',
+        disabled: isLoading,
+        icon: 'envelope',
+        text: 'Message',
+        onClick: () => {
+          alert('message action clicked');
+        },
+      },
+    );
+  }
 
   return <ActionButtons relativeStyleRef={containerRef} buttons={buttons} />;
 }

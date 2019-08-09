@@ -4,15 +4,24 @@ import { MDBBtn, MDBCard, MDBCardBody, MDBIcon } from 'mdbreact';
 
 import Avatar from 'components/molecules/Avatar';
 import LikesMetric from 'components/molecules/LikesMetric';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
-const ProfileCardContainer = styled(MDBCard).attrs(props => ({
+const animationShow = keyframes`
+  0% { top:0; left: 100%; }
+  100%  { top:0; left:0; }
+`;
+
+const ProfileCardContainer = styled(MDBCard).attrs(() => ({
   testimonial: true,
 }))`
   margin-top: 80px;
   margin-bottom: 5px;
   margin-left: 5px;
   margin-right: 5px;
+  animation-name: ${animationShow};
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-out;
 `;
 
 const ProfileCardBody = styled(MDBCardBody)`
@@ -21,7 +30,7 @@ const ProfileCardBody = styled(MDBCardBody)`
   padding-right: 0;
 `;
 
-const GoToProfileButton = styled(MDBBtn).attrs(props => ({
+const GoToProfileButton = styled(MDBBtn).attrs(() => ({
   floating: true,
   tag: 'a',
   className: 'ml-auto mr-4 lighten-3',

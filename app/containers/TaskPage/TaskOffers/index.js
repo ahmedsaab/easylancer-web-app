@@ -20,19 +20,21 @@ import {
   selectTaskPageTaskData,
 } from 'containers/TaskPage/selectors';
 import { viewOffer } from 'containers/TaskPage/actions';
+import { makeSelectGlobalLocation } from 'containers/App/selectors';
 
 function TaskOffers({
   task,
   offers,
   loading,
   error,
+  location,
   onClickOffer,
-  selectedOfferId,
   disabled,
 }) {
   if (loading) return <LoadingIndicator />;
   if (error) return <div>Something bad happened :(</div>;
 
+  const selectedOfferId = location.pathname.split('/').pop();
   let content = (
     <OffersEmptyState
       summary="No offers yet"
@@ -80,8 +82,10 @@ TaskOffers.propTypes = {
   error: PropTypes.object,
   task: PropTypes.object,
   disabled: PropTypes.bool,
-  selectedOfferId: PropTypes.string,
   onClickOffer: PropTypes.func,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -90,6 +94,7 @@ const mapStateToProps = createStructuredSelector({
   error: selectTaskPageOffersError,
   task: selectTaskPageTaskData,
   selectedOfferId: selectTaskPageOffersSelectedId,
+  location: makeSelectGlobalLocation(),
 });
 
 const mapDispatchToProps = dispatch => ({

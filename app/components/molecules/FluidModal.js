@@ -31,7 +31,7 @@ const ModalContainer = styled.div`
   animation-timing-function: ease-out;
   @media (max-width: 768px) {
     position: fixed !important;
-    max-height: 100vh !important;
+    height: 100vh !important;
     width: 100vw !important;
     z-index: 1000 !important;
     overflow-y: scroll;
