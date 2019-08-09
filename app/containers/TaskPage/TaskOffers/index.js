@@ -16,7 +16,6 @@ import {
   selectTaskPageOffersData,
   selectTaskPageOffersError,
   selectTaskPageOffersLoading,
-  selectTaskPageOffersSelectedId,
   selectTaskPageTaskData,
 } from 'containers/TaskPage/selectors';
 import { viewOffer } from 'containers/TaskPage/actions';
@@ -93,7 +92,6 @@ const mapStateToProps = createStructuredSelector({
   loading: selectTaskPageOffersLoading,
   error: selectTaskPageOffersError,
   task: selectTaskPageTaskData,
-  selectedOfferId: selectTaskPageOffersSelectedId,
   location: makeSelectGlobalLocation(),
 });
 

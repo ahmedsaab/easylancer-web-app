@@ -67,7 +67,7 @@ function ProfileHeader({
         </CenterDiv>
       </TopContainer>
       <CenterDiv>
-        <ProfileName first={firstName} last={lastName} />
+        <ProfileName user={{ firstName, lastName }} />
         <StarRating score={rating} />
       </CenterDiv>
       {children}

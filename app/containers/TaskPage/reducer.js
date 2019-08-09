@@ -19,15 +19,16 @@ export const initialState = {
     error: null,
   },
   offers: {
-    selectedId: null,
     data: null,
     loading: true,
     error: null,
   },
   offer: {
     data: null,
-    isSending: false,
-    sendError: null,
+    actions: {
+      hire: null,
+      withdraw: null,
+    },
   },
 };
 
@@ -60,25 +61,22 @@ const taskPageReducer = (state = initialState, action) =>
         draft.offers.error = action.error;
         break;
 
-      case ACCEPT_OFFER:
-        draft.offer.isSending = true;
-        break;
-
       case VIEW_OFFER:
-        draft.offers.selectedId = action.offerId;
         draft.offer.data = draft.offers.data.find(
           offer => offer.id === action.offerId,
         );
         break;
 
+      case ACCEPT_OFFER:
+        draft.offer.actions.hire = 'loading';
+        break;
+
       case ACCEPT_OFFER_SUCCESS:
-        draft.offer.sendError = null;
-        draft.offer.isSending = false;
+        draft.offer.actions.hire = 'success';
         break;
 
       case ACCEPT_OFFER_ERROR:
-        draft.offer.sendError = action.error;
-        draft.offer.isSending = false;
+        draft.offer.actions.hire = 'error';
         break;
     }
   });

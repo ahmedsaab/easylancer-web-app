@@ -2,7 +2,7 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Container = styled('div').attrs(props => ({
+const Container = styled('div').attrs(() => ({
   className: 'text-truncate',
 }))`
   max-width: 100%;
@@ -10,18 +10,17 @@ const Container = styled('div').attrs(props => ({
   vertical-align: middle;
 `;
 
-function FullName({ first, last, className }) {
+function FullName({ user, className }) {
   return (
     <Container className={className}>
-      {first} {last}
+      {user.firstName} {user.lastName}
     </Container>
   );
 }
 
 FullName.propTypes = {
   className: PropTypes.string,
-  first: PropTypes.string,
-  last: PropTypes.string,
+  user: PropTypes.object,
 };
 
 export default FullName;

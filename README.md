@@ -34,7 +34,7 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
     - [X] Action buttons restyling (sticky)
     - [X] Offers tab empty state
     - [X] Offer Details Modal content + actions business logic
-    - [ ] TaskAssignedModal content
+    - [X] TaskAssignedModal content
     - [ ] Create offer success/failure modal contents
     - [ ] Assigned Offer on click + Modal 
     - [ ] Empty message modal

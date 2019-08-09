@@ -17,13 +17,13 @@ const selectTaskPageOffersLoading = state =>
   (state.taskPage || initialState).offers.loading;
 const selectTaskPageOffersError = state =>
   (state.taskPage || initialState).offers.error;
-const selectTaskPageOffersSelectedId = state =>
-  (state.taskPage || initialState).offers.selectedId;
 
 const selectTaskPageOfferData = state =>
   (state.taskPage || initialState).offer.data;
-const selectTaskPageOfferSendError = state =>
-  (state.taskPage || initialState).offer.sendError;
+const selectTaskPageOfferActions = state =>
+  (state.taskPage || initialState).offer.actions;
+const selectTaskPageOfferActionsHire = state =>
+  (state.taskPage || initialState).offer.actions.hire;
 
 const makeSelectTaskPageUserIsTaskOwner = () =>
   createSelector(
@@ -46,9 +46,9 @@ export {
   selectTaskPageOffersData,
   selectTaskPageOffersError,
   selectTaskPageOffersLoading,
-  selectTaskPageOffersSelectedId,
   selectTaskPageOfferData,
-  selectTaskPageOfferSendError,
+  selectTaskPageOfferActions,
+  selectTaskPageOfferActionsHire,
   makeSelectTaskPageUserIsTaskOwner,
   makeSelectOfferIsAssigned,
 };

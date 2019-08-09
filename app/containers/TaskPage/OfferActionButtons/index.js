@@ -7,7 +7,7 @@ import { compose } from 'redux';
 import ActionButtons from 'components/molecules/ActionButtons';
 import {
   makeSelectOfferIsAssigned,
-  makeSelectTaskPageUserIsTaskOwner,
+  makeSelectTaskPageUserIsTaskOwner, selectTaskPageOfferActions,
   selectTaskPageOfferData,
   selectTaskPageTaskData,
 } from 'containers/TaskPage/selectors';
@@ -16,43 +16,44 @@ import { acceptOffer } from 'containers/TaskPage/actions';
 function OfferActionButtons({
   offer,
   task,
+  actions,
   isAssignedOffer,
   isTaskOwner,
-  isLoading = false,
   containerRef,
   onAcceptOffer,
 }) {
   const buttons = [];
+  const disabled = Object.values(actions).includes('loading');
 
   if (task.status === 'open' && isTaskOwner) {
-    buttons.concat([
+    buttons.push(
       {
         color: 'green',
-        disabled: isLoading,
+        disabled,
         icon: 'check',
         text: 'Hire Now',
-        isLoading,
+        isLoading: actions.hire === 'loading',
         onClick: () => onAcceptOffer(offer.id),
       },
       {
         color: 'primary',
-        disabled: isLoading,
+        disabled,
         icon: 'envelope',
         text: 'Message',
         onClick: () => {
           alert('message action clicked');
         },
       },
-    ]);
+    );
   }
 
   if (!isAssignedOffer && !isTaskOwner) {
     buttons.push({
       color: 'danger',
-      disabled: isLoading,
+      disabled,
       icon: 'trash',
       text: 'Withdraw',
-      isLoading,
+      isLoading: actions.withdraw === 'loading',
       onClick: () => {
         alert('withdraw offer action clicked');
       },
@@ -67,17 +68,16 @@ function OfferActionButtons({
     buttons.push(
       {
         color: 'green',
-        disabled: isLoading,
+        disabled,
         icon: 'phone',
         text: 'Call',
-        isLoading,
         onClick: () => {
           alert('call worker action clicked');
         },
       },
       {
         color: 'primary',
-        disabled: isLoading,
+        disabled,
         icon: 'envelope',
         text: 'Message',
         onClick: () => {
@@ -97,7 +97,7 @@ OfferActionButtons.propTypes = {
   task: PropTypes.object,
   containerRef: PropTypes.object,
   onAcceptOffer: PropTypes.func,
-  isLoading: PropTypes.bool,
+  actions: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -105,6 +105,7 @@ const mapStateToProps = createStructuredSelector({
   isAssignedOffer: makeSelectOfferIsAssigned(),
   task: selectTaskPageTaskData,
   offer: selectTaskPageOfferData,
+  actions: selectTaskPageOfferActions,
 });
 
 const mapDispatchToProps = dispatch => ({
