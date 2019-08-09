@@ -21,10 +21,10 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 
 // Import root app
-import App from 'elements/pages/App';
+import App from 'containers/App';
 
 // Import Language Provider
-import LanguageProvider from 'elements/pages/LanguageProvider';
+import LanguageProvider from 'containers/LanguageProvider';
 
 // Load the favicon and the .htaccess file
 import '!file-loader?name=[name].[ext]!./images/favicon.ico';
@@ -66,7 +66,7 @@ if (module.hot) {
   // Hot reloadable React components and translation json files
   // modules.hot.accept does not accept dynamic dependencies,
   // have to be constants at compile-time
-  module.hot.accept(['./i18n', 'elements/pages/App'], () => {
+  module.hot.accept(['./i18n', 'containers/App'], () => {
     ReactDOM.unmountComponentAtNode(MOUNT_NODE);
     render(translationMessages);
   });
