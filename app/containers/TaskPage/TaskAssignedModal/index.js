@@ -17,6 +17,7 @@ import 'containers/TaskPage/TaskAssignedModal/styles.css';
 import CenteredDiv from 'components/atoms/CenteredDiv';
 import FullName from 'components/molecules/FullName';
 import Avatar from 'components/molecules/Avatar';
+import Bold from 'components/atoms/Bold';
 
 const imgStyle = {
   width: '120px',
@@ -36,11 +37,6 @@ const Text = styled.div`
   padding-bottom: 20px;
   font-size: 1.2rem;
   text-align: center;
-`;
-
-const Bold = styled.div`
-  display: inline;
-  font-weight: bold;
 `;
 
 function TaskAssignedModal({ status, task, offer, onClickOkay }) {

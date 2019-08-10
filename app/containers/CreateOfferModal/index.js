@@ -1,10 +1,4 @@
-/**
- *
- * CreateOfferModal
- *
- */
-
-import React from 'react';
+import React, { useRef } from 'react';
 import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -12,12 +6,9 @@ import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import {
-  MDBBtn,
   MDBCol,
-  MDBIcon,
   MDBInput,
   MDBModalBody,
-  MDBModalFooter,
   MDBModalHeader,
   MDBRow,
 } from 'mdbreact';
@@ -34,8 +25,10 @@ import LoadingIndicator from 'components/molecules/LoadingIndicator';
 import { useInjectReducer } from 'utils/injectReducer';
 import reducer from 'containers/CreateOfferModal/reducer';
 import {
+  InformativeDiv,
   OfferModalTaskTitle,
   RadioButtonsGroup,
+  SecondaryText,
 } from 'containers/CreateOfferModal/components';
 import saga from 'containers/CreateOfferModal/saga';
 import {
@@ -45,11 +38,12 @@ import {
   makeSelectCreateOfferModalStatus,
 } from 'containers/CreateOfferModal/selectors';
 import 'containers/CreateOfferModal/styles.css';
+import ActionButtons from 'components/molecules/ActionButtons';
+import AnimatedStatus from 'components/molecules/AnimatedTick';
 
 function CreateOfferModal({
   price,
   payment,
-  message,
   status,
   task,
   onCloseModal,
@@ -61,84 +55,137 @@ function CreateOfferModal({
   useInjectReducer({ key: 'createOfferModal', reducer });
   useInjectSaga({ key: 'createOfferModal', saga });
 
+  let content = null;
+  const buttons = [];
+  const ref = useRef(null);
+
   switch (status) {
     case 'loading':
-      return <LoadingIndicator />;
+      content = <LoadingIndicator />;
+      break;
     case 'success':
-      return <div>You are god to go :)</div>;
+      content = (
+        <InformativeDiv>
+          <AnimatedStatus
+            status
+            message={`Your offer have been sent to ${
+              task.creatorUser.firstName
+            }`}
+          />
+          <SecondaryText>
+            You will be notified if you get hired for the job.
+          </SecondaryText>
+        </InformativeDiv>
+      );
+      buttons.push({
+        color: 'green',
+        disabled: false,
+        text: 'Got it!',
+        isLoading: false,
+        onClick: onCloseModal,
+      });
+      break;
     case 'failed':
-      return <div>Something bad happened :(</div>;
+      content = (
+        <InformativeDiv>
+          <AnimatedStatus status={false} message="Whoops!" />
+          <SecondaryText>
+            Something bad happened, please try again later :(
+          </SecondaryText>
+        </InformativeDiv>
+      );
+      buttons.push({
+        color: 'danger',
+        disabled: false,
+        text: '...Okay',
+        isLoading: false,
+        onClick: onCloseModal,
+      });
+      break;
     default:
-      return (
+      buttons.push(
+        {
+          color: 'green',
+          disabled: false,
+          icon: 'paper-plane',
+          text: 'Send Offer',
+          isLoading: false,
+          onClick: onSendOffer,
+        },
+        {
+          color: 'danger',
+          disabled: false,
+          text: 'Cancel',
+          isLoading: false,
+          onClick: onCloseModal,
+        },
+      );
+      content = (
         <div>
-          <MDBModalHeader
-            toggle={onCloseModal}
-            className="create-offer-modal-close"
-          >
-            Your offer for
-            <OfferModalTaskTitle>{task.title}</OfferModalTaskTitle>
-          </MDBModalHeader>
-          <MDBModalBody>
-            <MDBRow>
-              <MDBCol size={6}>
-                <div className="form-group">
-                  <label htmlFor="offer-price">Price</label>
-                  <NumberInput
-                    id="offer-price"
-                    value={price}
-                    onUpdate={onUpdatePrice}
-                    stepSize={10}
+          <MDBRow>
+            <MDBCol size={6}>
+              <div className="form-group">
+                <label htmlFor="offer-price">Price</label>
+                <NumberInput
+                  id="offer-price"
+                  value={price}
+                  onUpdate={onUpdatePrice}
+                  stepSize={10}
+                />
+              </div>
+            </MDBCol>
+            <MDBCol size={6}>
+              <div className="form-group">
+                <label htmlFor="offer-payment-method">Payment Method</label>
+                <RadioButtonsGroup id="offer-payment-method">
+                  <MDBInput
+                    onClick={() => onUpdatePayment('card')}
+                    checked={payment === 'card'}
+                    label="Card"
+                    type="radio"
+                    id="radio1"
                   />
-                </div>
-              </MDBCol>
-              <MDBCol size={6}>
-                <div className="form-group">
-                  <label htmlFor="offer-payment-method">Payment Method</label>
-                  <RadioButtonsGroup id="offer-payment-method">
-                    <MDBInput
-                      onClick={() => onUpdatePayment('card')}
-                      checked={payment === 'card'}
-                      label="Card"
-                      type="radio"
-                      id="radio1"
-                    />
-                    <MDBInput
-                      onClick={() => onUpdatePayment('cash')}
-                      checked={payment === 'cash'}
-                      label="Cash"
-                      type="radio"
-                      id="radio2"
-                    />
-                  </RadioButtonsGroup>
-                </div>
-              </MDBCol>
-            </MDBRow>
-            <div className="form-group">
-              <label htmlFor="offer-message">Message</label>
-              <input
-                id="offer-message"
-                onChange={event => onUpdateMessage(event.target.value)}
-                className="form-control"
-              />
-            </div>
-          </MDBModalBody>
-          <MDBModalFooter>
-            <MDBBtn outline color="danger" onClick={onCloseModal}>
-              Cancel
-            </MDBBtn>
-            <MDBBtn outline onClick={onSendOffer}>
-              Send <MDBIcon far icon="paper-plane" className="ml-1" />
-            </MDBBtn>
-          </MDBModalFooter>
+                  <MDBInput
+                    onClick={() => onUpdatePayment('cash')}
+                    checked={payment === 'cash'}
+                    label="Cash"
+                    type="radio"
+                    id="radio2"
+                  />
+                </RadioButtonsGroup>
+              </div>
+            </MDBCol>
+          </MDBRow>
+          <div className="form-group">
+            <label htmlFor="offer-message">Message</label>
+            <input
+              id="offer-message"
+              onChange={event => onUpdateMessage(event.target.value)}
+              className="form-control"
+            />
+          </div>
         </div>
       );
   }
+
+  return (
+    <div ref={ref}>
+      <MDBModalHeader
+        toggle={onCloseModal}
+        className="create-offer-modal-close"
+      >
+        Your offer for
+        <OfferModalTaskTitle>{task.title}</OfferModalTaskTitle>
+      </MDBModalHeader>
+      <MDBModalBody>{content}</MDBModalBody>
+      <ActionButtons relativeStyleRef={ref} buttons={buttons} />
+    </div>
+  );
 }
 
 CreateOfferModal.propTypes = {
   price: PropTypes.number,
   payment: PropTypes.oneOf(['cash', 'card']),
-  message: PropTypes.string,
   status: PropTypes.string,
   task: PropTypes.object,
   //
