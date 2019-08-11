@@ -37,11 +37,8 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
     - [X] TaskAssignedModal content
     - [X] Create offer success/failure modal contents
     - [X] Assigned Offer on click + Modal 
-    - [ ] Empty message modal
-    - [ ] Open message modal from offer
-    - [ ] Open message modal from task
     - [ ] Design Spinners
-    - [ ] Fix broken Auth workflow for not logged in sessions
+    - [X] Fix broken Auth workflow for not logged in sessions
     - [X] Login button styling
     - [ ] Create task button
     - [ ] Create task modal
@@ -51,8 +48,12 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
     - [ ] Cancel task action and modal
     - [ ] Finish task action and modal
     - [ ] Review tab in task page
+    - [ ] Empty message modal
+    - [ ] Open message modal from offer
+    - [ ] Open message modal from task
     - [ ] SideBar content regarding logged in user
     - [ ] Sign in and sign up
+
     
 ### TODO (BE)
 
@@ -64,3 +65,4 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
 - [ ] Filter out investigation tasks from search, get task, and profile tasks endpoints but not in my tasks page
 - [ ] Add badges functionality
 - [ ] Add tags functionality
+- [ ] Fix seen functionality

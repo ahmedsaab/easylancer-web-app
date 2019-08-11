@@ -8,7 +8,7 @@
 
 import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { MDBCol, MDBRow } from 'mdbreact';
+import { MDBRow } from 'mdbreact';
 import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -27,6 +27,11 @@ import GlobalStyle from 'global-styles';
 import { useInjectSaga } from 'utils/injectSaga';
 import { loadUser } from 'containers/App/actions';
 import saga from 'containers/App/saga';
+
+// eslint-disable-next-line no-restricted-globals
+if (!auth.isAuthenticated() && !location.pathname.includes('/callback')) {
+  auth.login();
+}
 
 const handleAuthentication = ({ location }) => {
   if (/access_token|id_token|error/.test(location.hash)) {

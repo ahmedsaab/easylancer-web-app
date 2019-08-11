@@ -65,7 +65,6 @@ export const SideBarHeader = styled('div').attrs(() => ({
 
 export const SideBarButton = styled(MDBBtn).attrs(() => ({
   block: true,
-  pill: true,
   className: 'btn btn-blk btn-rounded',
 }))``;
 
