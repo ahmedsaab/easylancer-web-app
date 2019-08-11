@@ -6,13 +6,17 @@ import { getWindowWidth } from 'utils/stylesHelper';
 
 const ActionButton = styled(MDBBtn)`
   font-size: 16px;
-  margin: 10px 0 10px 0 !important;
+  margin: 10px 5px 10px 5px !important;
+  @media screen and (max-width: ${props => props.whenToBlock}px) {
+    display: block;
+    width: 100%;
+  }
 `;
 
 const ActionButtonsContainer = styled('div')`
   margin-top: 10px;
   margin-bottom: 10px;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: ${props => props.whenToStick}px) {
     position: fixed;
     bottom: 0;
     width: 100vw;
@@ -28,25 +32,35 @@ const ActionButtonsContainer = styled('div')`
   }
 `;
 
-const setMarginOnRelative = (relativeComponent, component) => {
-  if (getWindowWidth() < 768) {
+const setMarginOnRelative = (relativeComponent, whenToBlock, component) => {
+  if (getWindowWidth() < whenToBlock) {
     // eslint-disable-next-line no-param-reassign
     relativeComponent.current.style.paddingBottom = window
       .getComputedStyle(component.current)
       .getPropertyValue('height');
+  } else {
+    // eslint-disable-next-line no-param-reassign
+    relativeComponent.current.style.paddingBottom = 0;
   }
 };
 
 /**
  * @return {null}
  */
-function ActionButtons({ buttons, relativeStyleRef }) {
+function ActionButtons({
+  buttons,
+  relativeStyleRef,
+  whenToStick,
+  whenToBlock,
+  className,
+  style,
+}) {
   useEffect(() => {
     if (buttons.length) {
       window.addEventListener('resize', () => {
-        setMarginOnRelative(relativeStyleRef, ref);
+        setMarginOnRelative(relativeStyleRef, whenToStick, ref);
       });
-      setMarginOnRelative(relativeStyleRef, ref);
+      setMarginOnRelative(relativeStyleRef, whenToStick, ref);
     }
   });
 
@@ -55,9 +69,9 @@ function ActionButtons({ buttons, relativeStyleRef }) {
     <ActionButton
       style={button.style}
       color={button.color}
-      block
       disabled={button.disabled}
       onClick={button.onClick}
+      whenToBlock={whenToBlock}
       key={button.text}
       className="btn btn-rounded waves-effect"
     >
@@ -73,7 +87,12 @@ function ActionButtons({ buttons, relativeStyleRef }) {
   ));
 
   return buttonComponents.length ? (
-    <ActionButtonsContainer ref={ref}>
+    <ActionButtonsContainer
+      whenToStick={whenToStick}
+      className={className}
+      style={style}
+      ref={ref}
+    >
       {buttonComponents}
     </ActionButtonsContainer>
   ) : null;
@@ -82,6 +101,10 @@ function ActionButtons({ buttons, relativeStyleRef }) {
 ActionButtons.propTypes = {
   relativeStyleRef: PropTypes.object,
   buttons: PropTypes.array,
+  className: PropTypes.string,
+  whenToBlock: PropTypes.number,
+  whenToStick: PropTypes.number,
+  style: PropTypes.object,
 };
 
 export default ActionButtons;

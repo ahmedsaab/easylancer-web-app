@@ -7,7 +7,8 @@ import { compose } from 'redux';
 import ActionButtons from 'components/molecules/ActionButtons';
 import {
   makeSelectOfferIsAssigned,
-  makeSelectTaskPageUserIsTaskOwner, selectTaskPageOfferActions,
+  makeSelectTaskPageUserIsTaskOwner,
+  selectTaskPageOfferActions,
   selectTaskPageOfferData,
   selectTaskPageTaskData,
 } from 'containers/TaskPage/selectors';
@@ -87,7 +88,14 @@ function OfferActionButtons({
     );
   }
 
-  return <ActionButtons relativeStyleRef={containerRef} buttons={buttons} />;
+  return (
+    <ActionButtons
+      whenToBlock={Number.MAX_SAFE_INTEGER}
+      whenToStick={768}
+      relativeStyleRef={containerRef}
+      buttons={buttons}
+    />
+  );
 }
 
 OfferActionButtons.propTypes = {

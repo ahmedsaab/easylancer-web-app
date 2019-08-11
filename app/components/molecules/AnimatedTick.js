@@ -1,28 +1,64 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { MDBIcon } from 'mdbreact';
-import './temp-styles.css';
+import styled, { keyframes } from 'styled-components';
 
-const BadgeRow = styled('div')`
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 15px;
+const SvgIcon = styled.svg`
+  width: 100px;
+  display: block;
+  margin: 0 auto 0;
 `;
 
-const BadgeIcon = styled(MDBIcon)`
-  font-size: 3rem;
+const AnimationDash = keyframes`
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
 `;
 
-const BadgeDetails = styled.div`
-  font-size: 0.8rem;
+const AnimationDashCheck = keyframes`
+  0% {
+    stroke-dashoffset: -100;
+  }
+  100% {
+    stroke-dashoffset: 900;
+  }
+`;
+
+const PathCircle = styled.circle`
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+  animation: ${AnimationDash} 0.9s ease-in-out;
+`;
+
+const PathLine = styled.line`
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+  stroke-dashoffset: 1000;
+  animation: ${AnimationDash} 0.9s 0.35s ease-in-out forwards;
+`;
+
+const PathCheck = styled.polyline`
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+  stroke-dashoffset: -100;
+  animation: ${AnimationDashCheck} 0.9s 0.35s ease-in-out forwards;
+`;
+
+const IconText = styled.p.attrs(props => ({
+  color: props.status ? '#73af55' : '#d06079',
+}))`
+  text-align: center;
+  margin: 20px 0 60px;
+  font-size: 1.25em;
+  color: ${props => props.color};
 `;
 
 function AnimatedStatus({ status, message }) {
   let content = (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
-      <circle
-        className="path circle"
+    <SvgIcon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+      <PathCircle
         fill="none"
         stroke="#D06079"
         strokeWidth="6"
@@ -31,20 +67,18 @@ function AnimatedStatus({ status, message }) {
         cy="65.1"
         r="62.1"
       />
-      <line
-        className="path line"
+      <PathLine
         fill="none"
         stroke="#D06079"
         strokeWidth="6"
         strokeLinecap="round"
         strokeMiterlimit="10"
         x1="34.4"
-        y1="37.9"
         x2="95.8"
+        y1="37.9"
         y2="92.3"
       />
-      <line
-        className="path line"
+      <PathLine
         fill="none"
         stroke="#D06079"
         strokeWidth="6"
@@ -55,14 +89,13 @@ function AnimatedStatus({ status, message }) {
         x2="34.4"
         y2="92.2"
       />
-    </svg>
+    </SvgIcon>
   );
 
   if (status) {
     content = (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
-        <circle
-          className="path circle"
+      <SvgIcon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+        <PathCircle
           fill="none"
           stroke="#73AF55"
           strokeWidth="6"
@@ -71,8 +104,7 @@ function AnimatedStatus({ status, message }) {
           cy="65.1"
           r="62.1"
         />
-        <polyline
-          className="path check"
+        <PathCheck
           fill="none"
           stroke="#73AF55"
           strokeWidth="6"
@@ -80,14 +112,14 @@ function AnimatedStatus({ status, message }) {
           strokeMiterlimit="10"
           points="100.2,40.2 51.5,88.8 29.8,67.5 "
         />
-      </svg>
+      </SvgIcon>
     );
   }
 
   return (
     <div>
       {content}
-      <p className={status ? 'success' : 'error'}>{message}</p>
+      <IconText status={status}>{message}</IconText>
     </div>
   );
 }

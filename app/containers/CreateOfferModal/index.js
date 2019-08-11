@@ -5,13 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
-import {
-  MDBCol,
-  MDBInput,
-  MDBModalBody,
-  MDBModalHeader,
-  MDBRow,
-} from 'mdbreact';
+import { MDBCol, MDBInput, MDBRow } from 'mdbreact';
 import NumberInput from 'components/molecules/NumberInput';
 import { updateModal } from 'containers/Modal/actions';
 import { selectTaskPageTaskData } from 'containers/TaskPage/selectors';
@@ -26,6 +20,9 @@ import { useInjectReducer } from 'utils/injectReducer';
 import reducer from 'containers/CreateOfferModal/reducer';
 import {
   InformativeDiv,
+  ModalContainer,
+  ModalHeader,
+  ModalBody,
   OfferModalTaskTitle,
   RadioButtonsGroup,
   SecondaryText,
@@ -40,6 +37,7 @@ import {
 import 'containers/CreateOfferModal/styles.css';
 import ActionButtons from 'components/molecules/ActionButtons';
 import AnimatedStatus from 'components/molecules/AnimatedTick';
+import { enableBodyScroll } from 'utils/stylesHelper';
 
 function CreateOfferModal({
   price,
@@ -56,6 +54,8 @@ function CreateOfferModal({
   useInjectSaga({ key: 'createOfferModal', saga });
 
   let content = null;
+  let parentStyle = {};
+
   const buttons = [];
   const ref = useRef(null);
 
@@ -84,6 +84,7 @@ function CreateOfferModal({
         isLoading: false,
         onClick: onCloseModal,
       });
+      parentStyle = { textAlign: 'center' };
       break;
     case 'failed':
       content = (
@@ -101,6 +102,7 @@ function CreateOfferModal({
         isLoading: false,
         onClick: onCloseModal,
       });
+      parentStyle = { textAlign: 'center' };
       break;
     default:
       buttons.push(
@@ -109,6 +111,7 @@ function CreateOfferModal({
           disabled: false,
           icon: 'paper-plane',
           text: 'Send Offer',
+          style: { float: 'right' },
           isLoading: false,
           onClick: onSendOffer,
         },
@@ -117,6 +120,7 @@ function CreateOfferModal({
           disabled: false,
           text: 'Cancel',
           isLoading: false,
+          style: { float: 'right' },
           onClick: onCloseModal,
         },
       );
@@ -169,17 +173,20 @@ function CreateOfferModal({
   }
 
   return (
-    <div ref={ref}>
-      <MDBModalHeader
-        toggle={onCloseModal}
-        className="create-offer-modal-close"
-      >
+    <ModalContainer ref={ref}>
+      <ModalHeader toggle={onCloseModal} className="create-offer-modal-close">
         Your offer for
         <OfferModalTaskTitle>{task.title}</OfferModalTaskTitle>
-      </MDBModalHeader>
-      <MDBModalBody>{content}</MDBModalBody>
-      <ActionButtons relativeStyleRef={ref} buttons={buttons} />
-    </div>
+      </ModalHeader>
+      <ModalBody>{content}</ModalBody>
+      <ActionButtons
+        style={parentStyle}
+        whenToBlock={768}
+        whenToStick={768}
+        relativeStyleRef={ref}
+        buttons={buttons}
+      />
+    </ModalContainer>
   );
 }
 
