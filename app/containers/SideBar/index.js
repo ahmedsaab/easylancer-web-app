@@ -23,6 +23,7 @@ import {
   SideBarUserData,
   SideBarUserImage,
   SideBarUserName,
+  SideBarButtonContainer,
 } from 'containers/SideBar/components';
 import reducer from 'containers/SideBar/reducer';
 import { makeSelectGlobalUser } from 'containers/App/selectors';
@@ -90,7 +91,9 @@ function SideBar({ isOpen, user, handleToggle }) {
             </SideBarLinkElement>
           </SideBarListElement>
         </SideBarList>
-        <SideBarButton onClick={auth.login}>Log in</SideBarButton>
+        <SideBarButtonContainer>
+          <SideBarButton onClick={auth.login}>Log in</SideBarButton>
+        </SideBarButtonContainer>
         <Footer />
       </SideBarContainer>
     </div>

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import { Button, MDBRow } from 'mdbreact';
+import { MDBBtn, MDBRow } from 'mdbreact';
 
 export const SideBarContainer = styled('nav')`
   background: #313e59;
@@ -34,7 +34,7 @@ export const SideBarListElement = styled('li')`
   }
 `;
 
-export const SideBarLinkElement = styled(NavLink).attrs(props => ({
+export const SideBarLinkElement = styled(NavLink).attrs(() => ({
   activeStyle: {
     backgroundColor: '#1C2331',
   },
@@ -52,7 +52,7 @@ export const SideBarLinkElement = styled(NavLink).attrs(props => ({
   }
 `;
 
-export const SideBarHeader = styled('div').attrs(props => ({
+export const SideBarHeader = styled('div').attrs(() => ({
   className: 'sidebar-header',
 }))`
   // height: 60px;
@@ -63,9 +63,14 @@ export const SideBarHeader = styled('div').attrs(props => ({
   text-align: center;
 `;
 
-export const SideBarButton = styled(Button).attrs(props => ({ block: true }))`
-  padding-right: 20px;
-  padding-left: 20px;
+export const SideBarButton = styled(MDBBtn).attrs(() => ({
+  block: true,
+  pill: true,
+  className: 'btn btn-blk btn-rounded',
+}))``;
+
+export const SideBarButtonContainer = styled.div`
+  padding: 0 20px;
 `;
 
 export const SideBarOverlay = styled('div')`
@@ -92,7 +97,7 @@ export const SideBarList = styled('ul')`
   border-bottom: 2px solid #47748b;
 `;
 
-export const SideBarUserName = styled('div').attrs(props => ({
+export const SideBarUserName = styled('div').attrs(() => ({
   className: 'text-truncate',
 }))`
   max-width: 100%;
@@ -105,11 +110,11 @@ export const SideBarUserData = styled('div')`
   padding-right: 10px;
 `;
 
-export const SideBarUser = styled(MDBRow).attrs(props => ({
+export const SideBarUser = styled(MDBRow).attrs(() => ({
   className: 'align-self-center no-gutters',
 }))``;
 
-export const SideBarUserImage = styled('img').attrs(props => ({
+export const SideBarUserImage = styled('img').attrs(() => ({
   className: 'img-fluid z-depth-1 rounded-circle',
 }))``;
 
