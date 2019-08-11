@@ -37,7 +37,6 @@ import {
 import 'containers/CreateOfferModal/styles.css';
 import ActionButtons from 'components/molecules/ActionButtons';
 import AnimatedStatus from 'components/molecules/AnimatedTick';
-import { enableBodyScroll } from 'utils/stylesHelper';
 
 function CreateOfferModal({
   price,
@@ -195,7 +194,6 @@ CreateOfferModal.propTypes = {
   payment: PropTypes.oneOf(['cash', 'card']),
   status: PropTypes.string,
   task: PropTypes.object,
-  //
   onCloseModal: PropTypes.func,
   onSendOffer: PropTypes.func,
   onUpdatePayment: PropTypes.func,

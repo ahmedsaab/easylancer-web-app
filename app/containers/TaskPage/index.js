@@ -20,6 +20,7 @@ import {
 } from 'containers/TaskPage/selectors';
 import LoadingIndicator from 'components/molecules/LoadingIndicator';
 import OfferModal from 'containers/TaskPage/OfferModal';
+import TaskAssignee from 'containers/TaskPage/TaskAssignee';
 import ProfileCard from 'components/molecules/ProfileCard';
 import history from 'utils/history';
 import saga, { offerUrlRegex } from 'containers/TaskPage/saga';
@@ -65,6 +66,7 @@ export function TaskPage({
           <MDBRow>
             <MDBCol size="12">
               <TaskHeader />
+              <TaskAssignee />
             </MDBCol>
           </MDBRow>
           <TaskSwitch />

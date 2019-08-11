@@ -1,5 +1,9 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { LOAD_TASK, LOAD_TASK_OFFERS, ACCEPT_OFFER } from 'containers/TaskPage/constants';
+import {
+  LOAD_TASK,
+  LOAD_TASK_OFFERS,
+  ACCEPT_OFFER,
+} from 'containers/TaskPage/constants';
 import {
   loadTaskOffers,
   taskLoaded,
@@ -62,7 +66,7 @@ export function* acceptOffer() {
     yield put(acceptOfferSuccess());
     yield put(loadTaskOffers());
 
-    history.push(`/task/${taskId}/offers/`);
+    history.push(`/task/${taskId}`);
   } catch (err) {
     yield put(acceptOfferError(err));
   } finally {
