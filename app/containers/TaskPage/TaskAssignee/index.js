@@ -25,13 +25,13 @@ const Container = styled.div`
   margin-bottom: 1rem;
   margin: 35px 0 0 0;
   border: 1px solid;
+  display: flex;
 `;
 
 const MiddleContainer = styled.div.attrs(() => ({
   className: 'flex-grow-1',
 }))`
   padding-left: 20px;
-  padding-right: 20px;
   font-size: 1rem;
   display: flex;
   flex-direction: column;
@@ -39,6 +39,8 @@ const MiddleContainer = styled.div.attrs(() => ({
   align-items: left;
   font-size: 1.1rem;
   font-weight: bold;
+  min-width: 170px;
+}
 `;
 
 const ContactButton = styled(MDBBtn).attrs(() => ({
@@ -47,6 +49,8 @@ const ContactButton = styled(MDBBtn).attrs(() => ({
 }))`
   padding: 0.375rem 0.75rem;
   margin: 0.75rem;
+  flex-shrink: 1;
+  min-width: 100px;
 `;
 
 const WorkerTag = styled.div`
@@ -84,25 +88,23 @@ function TaskAssignee({ task, offers, onContact }) {
     return (
       <Container>
         <WorkerTag>Worker</WorkerTag>
-        <div className="d-flex">
-          <AvatarContainer className="flex-shrink-1">
-            <Avatar
-              isApproved={offer.workerUser.isApproved}
-              imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
-              imgStyle={{ width: '50px', border: '1px solid' }}
-            />
-          </AvatarContainer>
-          <MiddleContainer>
-            <FullName user={offer.workerUser} />
-          </MiddleContainer>
-          <ContactButton
-            onClick={() => {
-              onContact(offer.id, task.id);
-            }}
-          >
-            Contact
-          </ContactButton>
-        </div>
+        <AvatarContainer className="flex-shrink-1">
+          <Avatar
+            isApproved={offer.workerUser.isApproved}
+            imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
+            imgStyle={{ width: '50px', border: '1px solid' }}
+          />
+        </AvatarContainer>
+        <MiddleContainer>
+          <FullName user={offer.workerUser} />
+        </MiddleContainer>
+        <ContactButton
+          onClick={() => {
+            onContact(offer.id, task.id);
+          }}
+        >
+          Contact
+        </ContactButton>
       </Container>
     );
   }

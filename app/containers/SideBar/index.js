@@ -93,6 +93,7 @@ function SideBar({ isOpen, user, handleToggle }) {
         <SideBarButtonContainer>
           {/* <SideBarButton onClick={auth.login}>Log in</SideBarButton> */}
           <SideBarButton onClick={() => alert('clicked on create task')}>
+            <MDBIcon className="mr-3" icon="magic" />
             Create task
           </SideBarButton>
         </SideBarButtonContainer>

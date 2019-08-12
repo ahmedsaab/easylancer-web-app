@@ -14,7 +14,7 @@ import { compose } from 'redux';
 import TaskAssignee from 'containers/TaskPage/TaskAssignee';
 
 const PaddedRow = styled(MDBRow)`
-  padding: 20px;
+  padding: 10px;
 `;
 
 const HeaderText = styled('div')`
