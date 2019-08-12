@@ -8,7 +8,6 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import { loadTasks } from 'containers/SearchPage/actions';
 import TaskDeck from 'components/molecules/TaskDeck';
-import { MDBCol, MDBRow } from 'mdbreact';
 import reducer from 'containers/SearchPage/reducer';
 import saga from 'containers/SearchPage/saga';
 import { makeSelectSearchData } from 'containers/SearchPage/selectors';
@@ -27,14 +26,7 @@ export function SearchPage({ data, onPageLoad }) {
         <title>Search</title>
         <meta name="description" content="Find services" />
       </Helmet>
-      <MDBRow>
-        <MDBCol sm="12" md="8">
-          <TaskDeck {...data} />
-        </MDBCol>
-        <MDBCol sm="12" md="4">
-          side-content
-        </MDBCol>
-      </MDBRow>
+      <TaskDeck {...data} />
     </div>
   );
 }
