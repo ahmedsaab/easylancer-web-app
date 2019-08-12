@@ -10,6 +10,13 @@ export const ACCEPT_OFFER_SUCCESS = 'app/TaskPage/ACCEPT_OFFER_SUCCESS';
 export const ACCEPT_OFFER_ERROR = 'app/TaskPage/ACCEPT_OFFER_ERROR';
 export const VIEW_OFFER = 'app/TaskPage/VIEW_OFFER';
 
+export const UPDATE_OFFER_PRICE = 'app/TaskPage/UPDATE_OFFER_PRICE';
+export const UPDATE_OFFER_PAYMENT = 'app/TaskPage/UPDATE_OFFER_PAYMENT';
+export const UPDATE_OFFER_MESSAGE = 'app/TaskPage/UPDATE_OFFER_MESSAGE';
+export const SEND_OFFER = 'app/TaskPage/SEND_OFFER';
+export const SEND_OFFER_SUCCESS = 'app/TaskPage/SEND_OFFER_SUCCESS';
+export const SEND_OFFER_FAIL = 'app/TaskPage/SEND_OFFER_FAIL';
+
 export const TASK_STATUSES = [
   'open',
   'assigned',

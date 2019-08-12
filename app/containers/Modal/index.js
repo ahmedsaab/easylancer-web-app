@@ -6,7 +6,7 @@ import { compose } from 'redux';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { MDBModal } from 'mdbreact';
-import CreateOfferModal from 'containers/CreateOfferModal';
+import CreateOfferModal from 'containers/TaskPage/CreateOfferModal';
 import { updateModal } from 'containers/Modal/actions';
 import { makeSelectModalType } from 'containers/Modal/selectors';
 import reducer from 'containers/Modal/reducer';

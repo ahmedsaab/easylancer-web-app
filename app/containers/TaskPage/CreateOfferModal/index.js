@@ -3,21 +3,8 @@ import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-
-import { useInjectSaga } from 'utils/injectSaga';
 import { MDBCol, MDBInput, MDBRow } from 'mdbreact';
-import NumberInput from 'components/molecules/NumberInput';
-import { updateModal } from 'containers/Modal/actions';
-import { selectTaskPageTaskData } from 'containers/TaskPage/selectors';
-import {
-  sendOfferModal,
-  updateOfferModalMessage,
-  updateOfferModalPayment,
-  updateOfferModalPrice,
-} from 'containers/CreateOfferModal/actions';
-import LoadingIndicator from 'components/molecules/LoadingIndicator';
-import { useInjectReducer } from 'utils/injectReducer';
-import reducer from 'containers/CreateOfferModal/reducer';
+
 import {
   InformativeDiv,
   ModalContainer,
@@ -26,32 +13,34 @@ import {
   OfferModalTaskTitle,
   RadioButtonsGroup,
   SecondaryText,
-} from 'containers/CreateOfferModal/components';
-import saga from 'containers/CreateOfferModal/saga';
+} from 'containers/TaskPage/CreateOfferModal/components';
+import NumberInput from 'components/molecules/NumberInput';
+import { updateModal } from 'containers/Modal/actions';
 import {
-  makeSelectCreateOfferModalMessage,
-  makeSelectCreateOfferModalPayment,
-  makeSelectCreateOfferModalPrice,
-  makeSelectCreateOfferModalStatus,
-} from 'containers/CreateOfferModal/selectors';
-import 'containers/CreateOfferModal/styles.css';
+  selectTaskPageTaskData,
+  selectTaskPageOfferFormData,
+  selectTaskPageOfferFormStatus,
+} from 'containers/TaskPage/selectors';
+import {
+  sendOfferModal,
+  updateOfferModalMessage,
+  updateOfferModalPayment,
+  updateOfferModalPrice,
+} from 'containers/TaskPage/actions';
+import LoadingIndicator from 'components/molecules/LoadingIndicator';
 import ActionButtons from 'components/molecules/ActionButtons';
 import AnimatedStatus from 'components/molecules/AnimatedTick';
 
 function CreateOfferModal({
-  price,
-  payment,
-  status,
+  form,
   task,
+  status,
   onCloseModal,
   onSendOffer,
   onUpdatePayment,
   onUpdatePrice,
   onUpdateMessage,
 }) {
-  useInjectReducer({ key: 'createOfferModal', reducer });
-  useInjectSaga({ key: 'createOfferModal', saga });
-
   let content = null;
   let parentStyle = {};
 
@@ -131,7 +120,7 @@ function CreateOfferModal({
                 <label htmlFor="offer-price">Price</label>
                 <NumberInput
                   id="offer-price"
-                  value={price}
+                  value={form.price}
                   onUpdate={onUpdatePrice}
                   stepSize={10}
                 />
@@ -143,14 +132,14 @@ function CreateOfferModal({
                 <RadioButtonsGroup id="offer-payment-method">
                   <MDBInput
                     onClick={() => onUpdatePayment('card')}
-                    checked={payment === 'card'}
+                    checked={form.payment === 'card'}
                     label="Card"
                     type="radio"
                     id="radio1"
                   />
                   <MDBInput
                     onClick={() => onUpdatePayment('cash')}
-                    checked={payment === 'cash'}
+                    checked={form.payment === 'cash'}
                     label="Cash"
                     type="radio"
                     id="radio2"
@@ -173,7 +162,7 @@ function CreateOfferModal({
 
   return (
     <ModalContainer ref={ref}>
-      <ModalHeader toggle={onCloseModal} className="create-offer-modal-close">
+      <ModalHeader toggle={onCloseModal}>
         Your offer for
         <OfferModalTaskTitle>{task.title}</OfferModalTaskTitle>
       </ModalHeader>
@@ -190,10 +179,9 @@ function CreateOfferModal({
 }
 
 CreateOfferModal.propTypes = {
-  price: PropTypes.number,
-  payment: PropTypes.oneOf(['cash', 'card']),
-  status: PropTypes.string,
+  form: PropTypes.object,
   task: PropTypes.object,
+  status: PropTypes.string,
   onCloseModal: PropTypes.func,
   onSendOffer: PropTypes.func,
   onUpdatePayment: PropTypes.func,
@@ -202,10 +190,8 @@ CreateOfferModal.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  price: makeSelectCreateOfferModalPrice(),
-  payment: makeSelectCreateOfferModalPayment(),
-  message: makeSelectCreateOfferModalMessage(),
-  status: makeSelectCreateOfferModalStatus(),
+  form: selectTaskPageOfferFormData,
+  status: selectTaskPageOfferFormStatus,
   task: selectTaskPageTaskData,
 });
 

@@ -37,7 +37,6 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
     - [X] TaskAssignedModal content
     - [X] Create offer success/failure modal contents
     - [X] Assigned Offer on click + Modal 
-    - [ ] Design Spinners
     - [X] Fix broken Auth workflow for not logged in sessions
     - [X] Login button styling
     - [ ] Create task button
@@ -48,6 +47,8 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
     - [ ] Cancel task action and modal
     - [ ] Finish task action and modal
     - [ ] Review tab in task page
+    - [ ] Edit task
+    - [ ] Design Spinners
     - [ ] Empty message modal
     - [ ] Open message modal from offer
     - [ ] Open message modal from task

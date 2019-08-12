@@ -9,6 +9,12 @@ import {
   ACCEPT_OFFER_ERROR,
   ACCEPT_OFFER_SUCCESS,
   VIEW_OFFER,
+  SEND_OFFER_FAIL,
+  SEND_OFFER,
+  SEND_OFFER_SUCCESS,
+  UPDATE_OFFER_MESSAGE,
+  UPDATE_OFFER_PAYMENT,
+  UPDATE_OFFER_PRICE,
 } from 'containers/TaskPage/constants';
 
 export const initialState = {
@@ -28,6 +34,14 @@ export const initialState = {
     actions: {
       hire: null,
       withdraw: null,
+    },
+    form: {
+      data: {
+        message: '',
+        price: 0,
+        payment: 'card',
+      },
+      status: null,
     },
   },
 };
@@ -77,6 +91,30 @@ const taskPageReducer = (state = initialState, action) =>
 
       case ACCEPT_OFFER_ERROR:
         draft.offer.actions.hire = 'error';
+        break;
+
+      case UPDATE_OFFER_PRICE:
+        draft.offer.form.data.price = action.price;
+        break;
+
+      case UPDATE_OFFER_PAYMENT:
+        draft.offer.form.data.payment = action.payment;
+        break;
+
+      case UPDATE_OFFER_MESSAGE:
+        draft.offer.form.data.message = action.message;
+        break;
+
+      case SEND_OFFER:
+        draft.offer.form.status = 'loading';
+        break;
+
+      case SEND_OFFER_SUCCESS:
+        draft.offer.form.status = 'success';
+        break;
+
+      case SEND_OFFER_FAIL:
+        draft.offer.form.status = 'failed';
         break;
     }
   });

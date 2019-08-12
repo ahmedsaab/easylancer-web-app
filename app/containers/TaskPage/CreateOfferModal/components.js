@@ -32,6 +32,9 @@ export const ModalContainer = styled.div`
 
 export const ModalHeader = styled(MDBModalHeader)`
   flex-shrink: 1;
+  button {
+    font-size: 40px;
+  }
 `;
 
 export const ModalBody = styled(MDBModalBody)`
