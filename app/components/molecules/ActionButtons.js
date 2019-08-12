@@ -7,7 +7,7 @@ import { getWindowWidth } from 'utils/stylesHelper';
 const ActionButton = styled(MDBBtn)`
   font-size: 16px;
   margin: 10px 5px 10px 5px !important;
-  @media screen and (max-width: ${props => props.whenToBlock}px) {
+  @media screen and (max-width: ${props => props.screen}px) {
     display: block;
     width: 100%;
   }
@@ -71,7 +71,7 @@ function ActionButtons({
       color={button.color}
       disabled={button.disabled}
       onClick={button.onClick}
-      whenToBlock={whenToBlock}
+      screen={whenToBlock}
       key={button.text}
       className="btn btn-rounded waves-effect"
     >
