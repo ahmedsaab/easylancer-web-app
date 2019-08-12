@@ -33,7 +33,7 @@ const ActionButtonsContainer = styled('div')`
 `;
 
 const setMarginOnRelative = (relativeComponent, whenToBlock, component) => {
-  if (getWindowWidth() < whenToBlock) {
+  if (getWindowWidth() < whenToBlock && component.current) {
     // eslint-disable-next-line no-param-reassign
     relativeComponent.current.style.paddingBottom = window
       .getComputedStyle(component.current)
