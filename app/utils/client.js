@@ -53,7 +53,7 @@ export const getTaskOffers = async id => {
 
 export const getUser = async () => {
   try {
-    // await sleep(1000);
+    await sleep(1000);
     const response = await axios.get(`${process.env.CLIENT_API_ROOT}/auth/me`, {
       headers,
     });

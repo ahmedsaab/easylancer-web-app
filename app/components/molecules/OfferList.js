@@ -8,10 +8,18 @@ export const OfferItemContainer = styled('div')`
   padding-bottom: 10px;
 `;
 
-function OfferList({ offers, selectedOfferId, label, disabled, onClickOffer }) {
+function OfferList({
+  offers,
+  isAssigned,
+  selectedOfferId,
+  label,
+  disabled,
+  onClickOffer,
+}) {
   const offerComponents = offers.map(offer => (
     <OfferItemContainer key={offer.id}>
       <OfferListItem
+        isAssigned={isAssigned}
         isSelected={offer.id === selectedOfferId}
         onClick={() => onClickOffer(offer)}
         offer={offer}
@@ -34,6 +42,7 @@ function OfferList({ offers, selectedOfferId, label, disabled, onClickOffer }) {
 
 OfferList.propTypes = {
   disabled: PropTypes.bool,
+  isAssigned: PropTypes.bool,
   offers: PropTypes.array,
   label: PropTypes.string,
   onClickOffer: PropTypes.func,

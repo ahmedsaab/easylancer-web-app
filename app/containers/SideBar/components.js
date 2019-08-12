@@ -4,6 +4,7 @@ import { MDBBtn, MDBRow } from 'mdbreact';
 
 export const SideBarContainer = styled('nav')`
   background: #313e59;
+  overflow-y: auto;
   height: 100%;
   color: #fff;
   transition: all 0.3s;
@@ -66,10 +67,12 @@ export const SideBarHeader = styled('div').attrs(() => ({
 export const SideBarButton = styled(MDBBtn).attrs(() => ({
   block: true,
   className: 'btn btn-blk btn-rounded',
-}))``;
+}))`
+  margin: 10px 10px 0 0 !important;
+`;
 
 export const SideBarButtonContainer = styled.div`
-  padding: 0 20px;
+  padding: 10px;
 `;
 
 export const SideBarOverlay = styled('div')`
@@ -93,6 +96,7 @@ export const SideBarLinkElementText = styled('div')`
 
 export const SideBarList = styled('ul')`
   padding: 20px 0;
+  margin: 0;
   border-bottom: 2px solid #47748b;
 `;
 

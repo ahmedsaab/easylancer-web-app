@@ -29,7 +29,7 @@ import { loadUser } from 'containers/App/actions';
 import saga from 'containers/App/saga';
 
 if (
-  process.env.SKIP_AUTH &&
+  !process.env.PASS_AUTH &&
   !auth.isAuthenticated() &&
   // eslint-disable-next-line no-restricted-globals
   !location.pathname.includes('/callback')

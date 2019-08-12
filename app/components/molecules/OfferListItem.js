@@ -27,9 +27,14 @@ const WorkerRating = styled(StarRating)`
   padding-right: 20px;
 `;
 
-function OfferListItem({ offer, isSelected, onClick, disabled }) {
+function OfferListItem({ offer, isSelected, isAssigned, onClick, disabled }) {
   return (
-    <ButtonListItem disabled={disabled} selected={isSelected} onClick={onClick}>
+    <ButtonListItem
+      assigned={isAssigned}
+      disabled={disabled}
+      selected={isSelected}
+      onClick={onClick}
+    >
       <div className="d-flex">
         <div className="flex-shrink-1">
           <Avatar
@@ -65,6 +70,7 @@ OfferListItem.propTypes = {
   disabled: PropTypes.bool,
   offer: PropTypes.object,
   isSelected: PropTypes.bool,
+  isAssigned: PropTypes.bool,
   onClick: PropTypes.func,
 };
 

@@ -6,7 +6,6 @@ import { compose } from 'redux';
 import { makeSelectNavBarVisible } from 'containers/SideBar/selectors';
 import { useInjectReducer } from 'utils/injectReducer';
 import { MDBCol, MDBIcon } from 'mdbreact';
-import auth from 'utils/auth';
 import { toggleSideNav } from 'containers/Header/actions';
 import {
   SideBarButton,
@@ -42,13 +41,13 @@ function SideBar({ isOpen, user, handleToggle }) {
       />
       <SideBarContainer className={isOpen ? 'active' : ''} id="sidebar">
         <SideBarHeader>
-          <SideBarUser>
-            <MDBCol size="4">
-              <SideBarUserImage src="https://i.pravatar.cc/55" />
-            </MDBCol>
-            <MDBCol size="8">
-              <SideBarUserData>
-                {user ? (
+          {user ? (
+            <SideBarUser>
+              <MDBCol size="4">
+                <SideBarUserImage src="https://i.pravatar.cc/55" />
+              </MDBCol>
+              <MDBCol size="8">
+                <SideBarUserData>
                   <SideBarUserData>
                     <SideBarUserName>
                       {user.firstName} {user.lastName}
@@ -58,12 +57,12 @@ function SideBar({ isOpen, user, handleToggle }) {
                       <MDBIcon icon="wallet" />
                     </SideBarUserCredit>
                   </SideBarUserData>
-                ) : (
-                  <LoadingIndicator />
-                )}
-              </SideBarUserData>
-            </MDBCol>
-          </SideBarUser>
+                </SideBarUserData>
+              </MDBCol>
+            </SideBarUser>
+          ) : (
+            <LoadingIndicator />
+          )}
         </SideBarHeader>
         <SideBarList>
           <SideBarListElement onClick={handleToggle}>
@@ -92,7 +91,10 @@ function SideBar({ isOpen, user, handleToggle }) {
           </SideBarListElement>
         </SideBarList>
         <SideBarButtonContainer>
-          <SideBarButton onClick={auth.login}>Log in</SideBarButton>
+          {/* <SideBarButton onClick={auth.login}>Log in</SideBarButton> */}
+          <SideBarButton onClick={() => alert('clicked on create task')}>
+            Create task
+          </SideBarButton>
         </SideBarButtonContainer>
         <Footer />
       </SideBarContainer>
