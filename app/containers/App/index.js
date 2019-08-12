@@ -28,8 +28,12 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { loadUser } from 'containers/App/actions';
 import saga from 'containers/App/saga';
 
-// eslint-disable-next-line no-restricted-globals
-if (!auth.isAuthenticated() && !location.pathname.includes('/callback')) {
+if (
+  process.env.SKIP_AUTH &&
+  !auth.isAuthenticated() &&
+  // eslint-disable-next-line no-restricted-globals
+  !location.pathname.includes('/callback')
+) {
   auth.login();
 }
 
