@@ -2,29 +2,14 @@ import {
   SEND_TASK,
   SEND_TASK_FAIL,
   SEND_TASK_SUCCESS,
-  UPDATE_TASK_PAYMENT,
-  UPDATE_TASK_PRICE,
-  UPDATE_TASK_TITLE,
+  UPDATE_TASK_FORM,
 } from './constants';
 
-export function updateTaskModalPrice(price) {
+export function updateTaskModalForm(key, value) {
   return {
-    type: UPDATE_TASK_PRICE,
-    price,
-  };
-}
-
-export function updateTaskModalPayment(payment) {
-  return {
-    type: UPDATE_TASK_PAYMENT,
-    payment,
-  };
-}
-
-export function updateTaskModalTitle(message) {
-  return {
-    type: UPDATE_TASK_TITLE,
-    message,
+    type: UPDATE_TASK_FORM,
+    key,
+    value,
   };
 }
 

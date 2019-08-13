@@ -1,8 +1,6 @@
 import produce from 'immer';
 import {
-  UPDATE_TASK_TITLE,
-  UPDATE_TASK_PRICE,
-  UPDATE_TASK_PAYMENT,
+  UPDATE_TASK_FORM,
   SEND_TASK_SUCCESS,
   SEND_TASK_FAIL,
   SEND_TASK,
@@ -13,6 +11,7 @@ export const initialState = {
     price: 0,
     payment: 'card',
     title: '',
+    description: '',
   },
   loading: false,
   error: null,
@@ -22,16 +21,8 @@ export const initialState = {
 const createTaskModalReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case UPDATE_TASK_PRICE:
-        draft.form.price = action.price;
-        break;
-
-      case UPDATE_TASK_PAYMENT:
-        draft.form.payment = action.payment;
-        break;
-
-      case UPDATE_TASK_TITLE:
-        draft.form.title = action.title;
+      case UPDATE_TASK_FORM:
+        draft.form[action.key] = action.value;
         break;
 
       case SEND_TASK:

@@ -11,23 +11,30 @@ import * as PropTypes from 'prop-types';
 
 function NumberInput({ value, onUpdate, stepSize = 1 }) {
   return (
-    <div className="def-number-input number-input">
-      <button
+    <div className="input-group">
+      <input
         type="button"
+        defaultValue="-"
+        className="button-minus"
+        data-field="quantity"
         onClick={() => onUpdate(value - stepSize)}
-        className="minus"
       />
       <input
-        className="quantity"
-        name="quantity"
-        value={value}
-        onChange={event => onUpdate(event.target.value)}
         type="number"
+        value={value}
+        onChange={event => {
+          const val = parseInt(event.target.value, 10);
+          onUpdate(val || 0);
+        }}
+        name="quantity"
+        className="quantity-field"
       />
-      <button
+      <input
         type="button"
+        defaultValue="+"
+        className="button-plus"
+        data-field="quantity"
         onClick={() => onUpdate(value + stepSize)}
-        className="plus"
       />
     </div>
   );

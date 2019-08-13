@@ -14,7 +14,7 @@ import 'containers/Modal/styles.css';
 import TaskAssignedModal from 'containers/TaskPage/TaskAssignedModal';
 import CreateTaskModal from 'containers/CreateTaskModal';
 
-export function Modal({ type, onClose }) {
+export function Modal({ type }) {
   useInjectReducer({ key: 'modal', reducer });
   let modalContent;
   let modalSettings = {
@@ -58,7 +58,7 @@ export function Modal({ type, onClose }) {
   return (
     <MDBModal
       isOpen={modalContent !== null}
-      toggle={onClose}
+      toggle={() => {}}
       centered={modalSettings.centered}
       size={modalSettings.size}
       className={modalSettings.className}
@@ -75,20 +75,12 @@ Modal.propTypes = {
     'create-task',
     'task-assigned-confirmation',
   ]),
-  onClose: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   type: makeSelectModalType(),
 });
 
-const mapDispatchToProps = dispatch => ({
-  onClose: () => dispatch(updateModal(null)),
-});
-
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps);
 
 export default compose(withConnect)(Modal);

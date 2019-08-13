@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 import CenteredDiv from 'components/atoms/CenteredDiv';
-import { MDBModalBody, MDBModalHeader } from 'mdbreact';
+import {
+  MDBDatePicker,
+  MDBModalBody,
+  MDBModalHeader,
+  MDBSelect,
+  MDBTimePicker,
+} from 'mdbreact';
 import ActionButtons from 'components/molecules/ActionButtons';
+import React from 'react';
 
 export const OfferModalTaskTitle = styled('div')`
   display: inline;
@@ -29,6 +36,9 @@ export const ModalContainer = styled.div`
   display: flex;
   flex-flow: column;
   padding: 0;
+  label {
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  }
 `;
 
 export const ModalHeader = styled(MDBModalHeader)`
@@ -41,6 +51,10 @@ export const ModalHeader = styled(MDBModalHeader)`
 export const ModalBody = styled(MDBModalBody)`
   flex-grow: 1;
   padding: 3% 6% 1.5%;
+  label {
+    color: grey;
+    font-weight: 400;
+  }
 `;
 
 export const ModalActionButtons = styled(ActionButtons)`
@@ -48,4 +62,57 @@ export const ModalActionButtons = styled(ActionButtons)`
   padding-left: 20px;
   border-top: 1px solid #d0d0d0;
   text-align: center;
+`;
+
+const FormContainer = styled.div`
+  label.active {
+    top: 1.4rem !important;
+    font-size: 1rem !important;
+  }
+`;
+
+export const FormSelect = props => (
+  <FormContainer>
+    <MDBSelect {...props} />
+  </FormContainer>
+);
+
+const TimePickerContainer = styled.div`
+  label {
+    transform: translateY(-14px) !important;
+  }
+`;
+
+export const TimePicker = props => (
+  <TimePickerContainer>
+    <MDBTimePicker {...props} />
+  </TimePickerContainer>
+);
+
+export const DatePicker = styled(MDBDatePicker).attrs(() => ({
+  theme: {
+    palette: {
+      primary: {
+        main: '#2bbbad',
+      },
+      secondary: {
+        main: '#FF8800',
+        contrastText: '#ffcc00',
+      },
+    },
+    typography: {
+      useNextVariants: true,
+    },
+  }
+}))`
+  label {
+    transform: translateY(-14px);
+    margin-top: 6px;
+  }
+  input {
+    margin-top: -8px;
+  }
+  div {
+    width: 100%;
+  }
 `;
