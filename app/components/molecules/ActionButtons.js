@@ -14,8 +14,8 @@ const ActionButton = styled(MDBBtn)`
 `;
 
 const ActionButtonsContainer = styled('div')`
-  margin-top: 10px;
-  margin-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   @media screen and (max-width: ${props => props.whenToStick}px) {
     position: fixed;
     bottom: 0;

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import CenteredDiv from 'components/atoms/CenteredDiv';
 import { MDBModalBody, MDBModalHeader } from 'mdbreact';
+import ActionButtons from 'components/molecules/ActionButtons';
 
 export const OfferModalTaskTitle = styled('div')`
   display: inline;
@@ -27,7 +28,7 @@ export const ModalContainer = styled.div`
   height: 100%;
   display: flex;
   flex-flow: column;
-  padding: 20px;
+  padding: 0;
 `;
 
 export const ModalHeader = styled(MDBModalHeader)`
@@ -39,4 +40,12 @@ export const ModalHeader = styled(MDBModalHeader)`
 
 export const ModalBody = styled(MDBModalBody)`
   flex-grow: 1;
+  padding: 3% 6% 1.5%;
+`;
+
+export const ModalActionButtons = styled(ActionButtons)`
+  padding-right: 20px;
+  padding-left: 20px;
+  border-top: 1px solid #d0d0d0;
+  text-align: center;
 `;

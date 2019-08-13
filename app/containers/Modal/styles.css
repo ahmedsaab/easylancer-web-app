@@ -1,6 +1,11 @@
+.full-screen-modal-content {
+  border-radius: 0.6rem !important;
+}
+
 @media (max-width: 768px) {
   .full-screen-modal-container {
     margin: 0;
+    max-width: 100%;
   }
 
   .full-screen-modal-content {

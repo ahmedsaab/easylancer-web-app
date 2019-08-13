@@ -12,6 +12,7 @@ import { makeSelectModalType } from 'containers/Modal/selectors';
 import reducer from 'containers/Modal/reducer';
 import 'containers/Modal/styles.css';
 import TaskAssignedModal from 'containers/TaskPage/TaskAssignedModal';
+import CreateTaskModal from 'containers/CreateTaskModal';
 
 export function Modal({ type, onClose }) {
   useInjectReducer({ key: 'modal', reducer });
@@ -27,13 +28,19 @@ export function Modal({ type, onClose }) {
     case 'create-offer':
       modalContent = <CreateOfferModal />;
       modalSettings = {
-        size: 'lg',
+        size: 'md',
         className: 'full-screen-modal-container',
         contentClassName: 'full-screen-modal-content',
       };
       break;
-    case 'message-task-owner':
-      modalContent = <CreateOfferModal />;
+    case 'create-task':
+      modalContent = <CreateTaskModal />;
+      modalSettings = {
+        size: 'lg',
+        className: 'full-screen-modal-container',
+        contentClassName: 'full-screen-modal-content',
+        centered: true,
+      };
       break;
     case 'task-assigned-confirmation':
       modalContent = <TaskAssignedModal />;
@@ -65,7 +72,7 @@ export function Modal({ type, onClose }) {
 Modal.propTypes = {
   type: PropTypes.oneOf([
     'create-offer',
-    'message-task-owner',
+    'create-task',
     'task-assigned-confirmation',
   ]),
   onClose: PropTypes.func,

@@ -1,26 +1,29 @@
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
-/**
- * Direct selector to the createTaskModal state domain
- */
-
 const selectCreateTaskModalDomain = state =>
   state.createTaskModal || initialState;
 
-/**
- * Other specific selectors
- */
-
-/**
- * Default selector used by CreateTaskModal
- */
-
-const makeSelectCreateTaskModal = () =>
+const makeSelectCreateTaskModalFrom = () =>
   createSelector(
     selectCreateTaskModalDomain,
-    substate => substate,
+    state => state.form,
   );
 
-export default makeSelectCreateTaskModal;
-export { selectCreateTaskModalDomain };
+const makeSelectCreateTaskModalLoading = () =>
+  createSelector(
+    selectCreateTaskModalDomain,
+    state => state.loading,
+  );
+
+const makeSelectCreateTaskModalError = () =>
+  createSelector(
+    selectCreateTaskModalDomain,
+    state => state.error,
+  );
+
+export {
+  makeSelectCreateTaskModalFrom,
+  makeSelectCreateTaskModalLoading,
+  makeSelectCreateTaskModalError,
+};

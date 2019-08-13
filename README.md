@@ -6,7 +6,7 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
 ### Quick start
 
 1.  Make sure that you have Node.js v8.15.1 and npm v5 or above installed.
-2.  Run `npm run setup` in order to install dependencies and clean the git repo.
+2.  Run `npm install` in order to install dependencies.
 3.  Run `npm start` to see the app at `http://localhost:3000`
 3.  Run `npm run mock-server` to start the mock server backend at `http://localhost:8080`
 
@@ -39,7 +39,7 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
     - [X] Assigned Offer on click + Modal 
     - [X] Fix broken Auth workflow for not logged in sessions
     - [X] Login button styling
-    - [ ] Create task button
+    - [X] Create task button
     - [ ] Create task modal
     - [X] Scrollable Fluid Modal
     - [X] Sticky offer details action buttons

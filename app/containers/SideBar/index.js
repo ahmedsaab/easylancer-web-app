@@ -29,8 +29,9 @@ import { makeSelectGlobalUser } from 'containers/App/selectors';
 import LoadingIndicator from 'components/molecules/LoadingIndicator';
 import { setBodyScroll } from 'containers/App/actions';
 import Footer from 'components/molecules/Footer';
+import { updateModal } from 'containers/Modal/actions';
 
-function SideBar({ isOpen, user, handleToggle }) {
+function SideBar({ isOpen, user, handleToggle, onCreateTaskButtonClick }) {
   useInjectReducer({ key: 'sideNavBar', reducer });
 
   return (
@@ -92,7 +93,7 @@ function SideBar({ isOpen, user, handleToggle }) {
         </SideBarList>
         <SideBarButtonContainer>
           {/* <SideBarButton onClick={auth.login}>Log in</SideBarButton> */}
-          <SideBarButton onClick={() => alert('clicked on create task')}>
+          <SideBarButton onClick={onCreateTaskButtonClick}>
             <MDBIcon className="mr-3" icon="magic" />
             Create task
           </SideBarButton>
@@ -107,11 +108,16 @@ SideBar.propTypes = {
   isOpen: PropTypes.bool,
   handleToggle: PropTypes.func,
   user: PropTypes.object,
+  onCreateTaskButtonClick: PropTypes.func,
 };
 
 const mapDispatchToProps = dispatch => ({
   handleToggle: () => {
     dispatch(setBodyScroll(true));
+    dispatch(toggleSideNav(false));
+  },
+  onCreateTaskButtonClick: () => {
+    dispatch(updateModal('create-task'));
     dispatch(toggleSideNav(false));
   },
 });
