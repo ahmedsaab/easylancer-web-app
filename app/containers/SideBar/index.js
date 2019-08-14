@@ -7,6 +7,8 @@ import { makeSelectNavBarVisible } from 'containers/SideBar/selectors';
 import { useInjectReducer } from 'utils/injectReducer';
 import { MDBCol, MDBIcon } from 'mdbreact';
 import { toggleSideNav } from 'containers/Header/actions';
+import { BrowserRouter } from 'react-router-dom';
+
 import {
   SideBarButton,
   SideBarContainer,
@@ -66,30 +68,32 @@ function SideBar({ isOpen, user, handleToggle, onCreateTaskButtonClick }) {
           )}
         </SideBarHeader>
         <SideBarList>
-          <SideBarListElement onClick={handleToggle}>
-            <SideBarLinkElement to="/search">
-              <MDBIcon icon="search" />
-              <SideBarLinkElementText>Find work</SideBarLinkElementText>
-            </SideBarLinkElement>
-          </SideBarListElement>
-          <SideBarListElement onClick={handleToggle}>
-            <SideBarLinkElement to="/my-orders">
-              <MDBIcon icon="handshake" />
-              <SideBarLinkElementText>My orders</SideBarLinkElementText>
-            </SideBarLinkElement>
-          </SideBarListElement>
-          <SideBarListElement onClick={handleToggle}>
-            <SideBarLinkElement to="/messages">
-              <MDBIcon icon="comments" />
-              <SideBarLinkElementText>Messages</SideBarLinkElementText>
-            </SideBarLinkElement>
-          </SideBarListElement>
-          <SideBarListElement onClick={handleToggle}>
-            <SideBarLinkElement to="/settings">
-              <MDBIcon icon="cog" />
-              <SideBarLinkElementText>Settings</SideBarLinkElementText>
-            </SideBarLinkElement>
-          </SideBarListElement>
+          <BrowserRouter>
+            <SideBarListElement onClick={handleToggle}>
+              <SideBarLinkElement to="/search">
+                <MDBIcon icon="search" />
+                <SideBarLinkElementText>Find work</SideBarLinkElementText>
+              </SideBarLinkElement>
+            </SideBarListElement>
+            <SideBarListElement onClick={handleToggle}>
+              <SideBarLinkElement to="/my-orders">
+                <MDBIcon icon="handshake" />
+                <SideBarLinkElementText>My orders</SideBarLinkElementText>
+              </SideBarLinkElement>
+            </SideBarListElement>
+            <SideBarListElement onClick={handleToggle}>
+              <SideBarLinkElement to="/messages">
+                <MDBIcon icon="comments" />
+                <SideBarLinkElementText>Messages</SideBarLinkElementText>
+              </SideBarLinkElement>
+            </SideBarListElement>
+            <SideBarListElement onClick={handleToggle}>
+              <SideBarLinkElement to="/settings">
+                <MDBIcon icon="cog" />
+                <SideBarLinkElementText>Settings</SideBarLinkElementText>
+              </SideBarLinkElement>
+            </SideBarListElement>
+          </BrowserRouter>
         </SideBarList>
         <SideBarButtonContainer>
           {/* <SideBarButton onClick={auth.login}>Log in</SideBarButton> */}

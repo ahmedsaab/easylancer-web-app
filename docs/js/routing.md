@@ -46,13 +46,15 @@ in `App.js` to create a `Switch` within the parent component. Also remove the `e
 
 ```JS
 // AboutPage/index.js
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 function AboutPage() {
   return (
+    <BrowserRouter>
     <Switch>
       <Route exact path="/about/our-team" />
     </Switch>
+    </BrowserRouter>
   );
 }
 ```

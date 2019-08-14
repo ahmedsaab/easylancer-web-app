@@ -1,6 +1,6 @@
 import React from 'react';
 import { MDBCol, MDBNav, MDBNavItem, MDBNavLink, MDBRow } from 'mdbreact';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -45,16 +45,18 @@ function TabSwitch({ tabs, disabled }) {
   ));
 
   return (
-    <MDBRow>
-      <MDBCol size="12">
-        <TabNav className="nav-tabs nav-justified">{tabLinks}</TabNav>
-      </MDBCol>
-      <MDBCol size="12">
-        <TabContent>
-          <Switch>{tabSwitch}</Switch>
-        </TabContent>
-      </MDBCol>
-    </MDBRow>
+    <BrowserRouter>
+      <MDBRow>
+        <MDBCol size="12">
+          <TabNav className="nav-tabs nav-justified">{tabLinks}</TabNav>
+        </MDBCol>
+        <MDBCol size="12">
+          <TabContent>
+            <Switch>{tabSwitch}</Switch>
+          </TabContent>
+        </MDBCol>
+      </MDBRow>
+    </BrowserRouter>
   );
 }
 

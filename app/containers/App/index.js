@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import { MDBRow } from 'mdbreact';
 import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -67,19 +67,21 @@ function App({ onLoad }) {
           <ContentRow>
             <div style={{ width: '100%' }}>
               <Modal />
-              <Switch>
-                <Route exact path="/" component={SearchPage} />
-                <Route path="/task/:id" component={TaskPage} />
-                <Route path="/search" component={SearchPage} />
-                <Route
-                  path="/callback"
-                  render={props => {
-                    handleAuthentication(props);
-                    return <LoadingIndicator />;
-                  }}
-                />
-                <Route path="" component={NotFoundPage} />
-              </Switch>
+              <BrowserRouter>
+                <Switch>
+                  <Route exact path="/" component={SearchPage} />
+                  <Route path="/task/:id" component={TaskPage} />
+                  <Route path="/search" component={SearchPage} />
+                  <Route
+                    path="/callback"
+                    render={props => {
+                      handleAuthentication(props);
+                      return <LoadingIndicator />;
+                    }}
+                  />
+                  <Route path="" component={NotFoundPage} />
+                </Switch>
+              </BrowserRouter>
             </div>
           </ContentRow>
         </Container>
