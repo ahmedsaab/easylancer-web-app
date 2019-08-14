@@ -3,39 +3,39 @@ Content-Type: application/json; charset=utf-8
 Access-Control-Allow-Origin: *
 
 {
-  "acceptedOffer": null,
-  "category": "category1",
-  "createdAt": 1559597979228,
-  "creatorRating": null,
-  "creatorUser": {
-    "badges": [
+    "acceptedOffer": "5d3dffc186917d548f51e56b",
+    "category": "category2",
+    "createdAt": 1560191632847,
+    "creatorRating": null,
+    "creatorUser": {
+        "badges": [
+
+        ],
+        "dislikes": 0,
+        "firstName": "Ahmed",
+        "id": "5cf5939b2357cc11fbc6b3d5",
+        "imageUrl": null,
+        "lastName": "Saab",
+        "likes": 0,
+        "approved": false
+    },
+    "description": "The appartment is really small. I need someone who can clean the floors with minimum water as well as do the dishes.",
+    "endDateTime": null,
+    "id": "5cfea290f2085d3e73b1ef41",
+    "imagesUrls": [
 
     ],
-    "dislikes": 0,
-    "firstName": "Ahmed",
-    "id": "5cf58c672357cc11fbc6b3d4",
-    "imageUrl": null,
-    "lastName": "Saleh",
-    "likes": 0,
-    "approved": false
-  },
-  "description": "wwwwwwdewdewdwd ewdewd wedew dew dw",
-  "endDateTime": null,
-  "id": "5cf5939b2357cc11fbc6b3d5",
-  "imagesUrls": [
-
-  ],
-  "location": {
-    "lat": 93.2,
-    "lon": 10.23
-  },
-  "paymentMethod": "card",
-  "price": 100,
-  "seenCount": 0,
-  "startDateTime": 1555723569401,
-  "status": "open",
-  "title": "cwecewcew",
-  "type": "type1",
-  "workerRating": null,
-  "workerUser": null
+    "location": {
+        "lat": 53.58384,
+        "lon": 9.98017
+    },
+    "paymentMethod": "card",
+    "price": 300,
+    "seenCount": 0,
+    "startDateTime": 1496846048700,
+    "status": "assigned",
+    "title": "Home cleaning for 60m2 appartment",
+    "type": "type1",
+    "workerRating": null,
+    "workerUser": null
 }

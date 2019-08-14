@@ -24,6 +24,10 @@ const selectTaskPageOfferActions = state =>
   (state.taskPage || initialState).offer.actions;
 const selectTaskPageOfferActionsHire = state =>
   (state.taskPage || initialState).offer.actions.hire;
+const selectTaskPageOfferFormData = state =>
+  (state.taskPage || initialState).offer.form.data;
+const selectTaskPageOfferFormStatus = state =>
+  (state.taskPage || initialState).offer.form.status;
 
 const makeSelectTaskPageUserIsTaskOwner = () =>
   createSelector(
@@ -49,6 +53,8 @@ export {
   selectTaskPageOfferData,
   selectTaskPageOfferActions,
   selectTaskPageOfferActionsHire,
+  selectTaskPageOfferFormData,
+  selectTaskPageOfferFormStatus,
   makeSelectTaskPageUserIsTaskOwner,
   makeSelectOfferIsAssigned,
 };

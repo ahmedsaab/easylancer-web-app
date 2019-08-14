@@ -65,6 +65,8 @@ class Auth {
     this.idToken = authResult.idToken;
     this.expiresAt = expiresAt;
 
+    localStorage.setItem('expiresAt', expiresAt);
+
     // navigate to the home route
     history.replace('/');
   }
@@ -116,7 +118,9 @@ class Auth {
     // Check whether the current time is past the
     // access token's expiry time
     const { expiresAt } = this;
-    return new Date().getTime() < expiresAt;
+    return (
+      new Date().getTime() < (expiresAt || localStorage.getItem('expiresAt'))
+    );
   }
 }
 

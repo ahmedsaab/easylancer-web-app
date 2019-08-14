@@ -1,5 +1,10 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { LOAD_TASK, LOAD_TASK_OFFERS, ACCEPT_OFFER } from 'containers/TaskPage/constants';
+import { call, put, select, takeLatest, takeLeading } from 'redux-saga/effects';
+import {
+  LOAD_TASK,
+  LOAD_TASK_OFFERS,
+  ACCEPT_OFFER,
+  SEND_OFFER,
+} from 'containers/TaskPage/constants';
 import {
   loadTaskOffers,
   taskLoaded,
@@ -9,16 +14,20 @@ import {
   acceptOfferError,
   acceptOfferSuccess,
   viewOffer,
-} from 'containers/TaskPage/actions';
-import * as client from 'utils/client';
-import {
+  offerSentError,
+  offerSentSuccess,
   updateOfferModalPayment,
   updateOfferModalPrice,
-} from 'containers/CreateOfferModal/actions';
+} from 'containers/TaskPage/actions';
+import * as client from 'utils/client';
 
 import history from 'utils/history';
 import { updateModal } from 'containers/Modal/actions';
 import { makeSelectGlobalLocation } from 'containers/App/selectors';
+import {
+  selectTaskPageTaskData,
+  selectTaskPageOfferFormData,
+} from 'containers/TaskPage/selectors';
 
 export const offerUrlRegex = RegExp(/offers\/[0-9a-f]/i);
 
@@ -62,7 +71,7 @@ export function* acceptOffer() {
     yield put(acceptOfferSuccess());
     yield put(loadTaskOffers());
 
-    history.push(`/task/${taskId}/offers/`);
+    history.push(`/task/${taskId}`);
   } catch (err) {
     yield put(acceptOfferError(err));
   } finally {
@@ -70,8 +79,22 @@ export function* acceptOffer() {
   }
 }
 
+export function* postOffer() {
+  const { id } = yield select(selectTaskPageTaskData);
+  const offer = yield select(selectTaskPageOfferFormData);
+
+  try {
+    yield call(client.postOffer, id, offer);
+    yield put(offerSentSuccess());
+    yield put(loadTaskOffers(id));
+  } catch (err) {
+    yield put(offerSentError(err));
+  }
+}
+
 export default function* taskData() {
   yield takeLatest(LOAD_TASK, getTask);
   yield takeLatest(LOAD_TASK_OFFERS, getTaskOffers);
   yield takeLatest(ACCEPT_OFFER, acceptOffer);
+  yield takeLeading(SEND_OFFER, postOffer);
 }

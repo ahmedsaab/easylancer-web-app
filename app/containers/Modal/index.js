@@ -1,9 +1,3 @@
-/**
- *
- * Modal
- *
- */
-
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -12,14 +6,15 @@ import { compose } from 'redux';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { MDBModal } from 'mdbreact';
-import CreateOfferModal from 'containers/CreateOfferModal';
+import CreateOfferModal from 'containers/TaskPage/CreateOfferModal';
 import { updateModal } from 'containers/Modal/actions';
 import { makeSelectModalType } from 'containers/Modal/selectors';
 import reducer from 'containers/Modal/reducer';
 import 'containers/Modal/styles.css';
 import TaskAssignedModal from 'containers/TaskPage/TaskAssignedModal';
+import CreateTaskModal from 'containers/CreateTaskModal';
 
-export function Modal({ type, onClose }) {
+export function Modal({ type }) {
   useInjectReducer({ key: 'modal', reducer });
   let modalContent;
   let modalSettings = {
@@ -33,13 +28,19 @@ export function Modal({ type, onClose }) {
     case 'create-offer':
       modalContent = <CreateOfferModal />;
       modalSettings = {
-        size: 'lg',
+        size: 'md',
         className: 'full-screen-modal-container',
         contentClassName: 'full-screen-modal-content',
       };
       break;
-    case 'message-task-owner':
-      modalContent = <CreateOfferModal />;
+    case 'create-task':
+      modalContent = <CreateTaskModal />;
+      modalSettings = {
+        size: 'lg',
+        className: 'full-screen-modal-container',
+        contentClassName: 'full-screen-modal-content',
+        centered: true,
+      };
       break;
     case 'task-assigned-confirmation':
       modalContent = <TaskAssignedModal />;
@@ -57,7 +58,7 @@ export function Modal({ type, onClose }) {
   return (
     <MDBModal
       isOpen={modalContent !== null}
-      toggle={onClose}
+      toggle={() => {}}
       centered={modalSettings.centered}
       size={modalSettings.size}
       className={modalSettings.className}
@@ -71,23 +72,15 @@ export function Modal({ type, onClose }) {
 Modal.propTypes = {
   type: PropTypes.oneOf([
     'create-offer',
-    'message-task-owner',
+    'create-task',
     'task-assigned-confirmation',
   ]),
-  onClose: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   type: makeSelectModalType(),
 });
 
-const mapDispatchToProps = dispatch => ({
-  onClose: () => dispatch(updateModal(null)),
-});
-
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps);
 
 export default compose(withConnect)(Modal);

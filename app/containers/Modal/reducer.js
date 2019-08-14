@@ -5,6 +5,7 @@
  */
 import produce from 'immer';
 import { UPDATE_MODAL } from 'containers/Modal/constants';
+import { disableBodyScroll, enableBodyScroll } from 'utils/stylesHelper';
 
 export const initialState = {
   type: null,
@@ -15,6 +16,11 @@ const modalReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case UPDATE_MODAL:
+        if (action.modalName) {
+          disableBodyScroll();
+        } else {
+          enableBodyScroll();
+        }
         draft.type = action.modalName;
         break;
     }

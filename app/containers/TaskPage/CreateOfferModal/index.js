@@ -3,59 +3,47 @@ import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { MDBCol, MDBInput, MDBRow } from 'mdbreact';
 
-import { useInjectSaga } from 'utils/injectSaga';
 import {
-  MDBCol,
-  MDBInput,
-  MDBModalBody,
-  MDBModalHeader,
-  MDBRow,
-} from 'mdbreact';
+  InformativeDiv,
+  ModalContainer,
+  ModalHeader,
+  ModalBody,
+  OfferModalTaskTitle,
+  RadioButtonsGroup,
+  SecondaryText,
+} from 'containers/TaskPage/CreateOfferModal/components';
 import NumberInput from 'components/molecules/NumberInput';
 import { updateModal } from 'containers/Modal/actions';
-import { selectTaskPageTaskData } from 'containers/TaskPage/selectors';
+import {
+  selectTaskPageTaskData,
+  selectTaskPageOfferFormData,
+  selectTaskPageOfferFormStatus,
+} from 'containers/TaskPage/selectors';
 import {
   sendOfferModal,
   updateOfferModalMessage,
   updateOfferModalPayment,
   updateOfferModalPrice,
-} from 'containers/CreateOfferModal/actions';
+} from 'containers/TaskPage/actions';
 import LoadingIndicator from 'components/molecules/LoadingIndicator';
-import { useInjectReducer } from 'utils/injectReducer';
-import reducer from 'containers/CreateOfferModal/reducer';
-import {
-  InformativeDiv,
-  OfferModalTaskTitle,
-  RadioButtonsGroup,
-  SecondaryText,
-} from 'containers/CreateOfferModal/components';
-import saga from 'containers/CreateOfferModal/saga';
-import {
-  makeSelectCreateOfferModalMessage,
-  makeSelectCreateOfferModalPayment,
-  makeSelectCreateOfferModalPrice,
-  makeSelectCreateOfferModalStatus,
-} from 'containers/CreateOfferModal/selectors';
-import 'containers/CreateOfferModal/styles.css';
 import ActionButtons from 'components/molecules/ActionButtons';
 import AnimatedStatus from 'components/molecules/AnimatedTick';
 
 function CreateOfferModal({
-  price,
-  payment,
-  status,
+  form,
   task,
+  status,
   onCloseModal,
   onSendOffer,
   onUpdatePayment,
   onUpdatePrice,
   onUpdateMessage,
 }) {
-  useInjectReducer({ key: 'createOfferModal', reducer });
-  useInjectSaga({ key: 'createOfferModal', saga });
-
   let content = null;
+  let parentStyle = {};
+
   const buttons = [];
   const ref = useRef(null);
 
@@ -84,6 +72,7 @@ function CreateOfferModal({
         isLoading: false,
         onClick: onCloseModal,
       });
+      parentStyle = { textAlign: 'center' };
       break;
     case 'failed':
       content = (
@@ -101,6 +90,7 @@ function CreateOfferModal({
         isLoading: false,
         onClick: onCloseModal,
       });
+      parentStyle = { textAlign: 'center' };
       break;
     default:
       buttons.push(
@@ -109,6 +99,7 @@ function CreateOfferModal({
           disabled: false,
           icon: 'paper-plane',
           text: 'Send Offer',
+          style: { float: 'right' },
           isLoading: false,
           onClick: onSendOffer,
         },
@@ -117,6 +108,7 @@ function CreateOfferModal({
           disabled: false,
           text: 'Cancel',
           isLoading: false,
+          style: { float: 'right' },
           onClick: onCloseModal,
         },
       );
@@ -128,7 +120,7 @@ function CreateOfferModal({
                 <label htmlFor="offer-price">Price</label>
                 <NumberInput
                   id="offer-price"
-                  value={price}
+                  value={form.price}
                   onUpdate={onUpdatePrice}
                   stepSize={10}
                 />
@@ -140,14 +132,14 @@ function CreateOfferModal({
                 <RadioButtonsGroup id="offer-payment-method">
                   <MDBInput
                     onClick={() => onUpdatePayment('card')}
-                    checked={payment === 'card'}
+                    checked={form.payment === 'card'}
                     label="Card"
                     type="radio"
                     id="radio1"
                   />
                   <MDBInput
                     onClick={() => onUpdatePayment('cash')}
-                    checked={payment === 'cash'}
+                    checked={form.payment === 'cash'}
                     label="Cash"
                     type="radio"
                     id="radio2"
@@ -169,26 +161,27 @@ function CreateOfferModal({
   }
 
   return (
-    <div ref={ref}>
-      <MDBModalHeader
-        toggle={onCloseModal}
-        className="create-offer-modal-close"
-      >
+    <ModalContainer ref={ref}>
+      <ModalHeader toggle={onCloseModal}>
         Your offer for
         <OfferModalTaskTitle>{task.title}</OfferModalTaskTitle>
-      </MDBModalHeader>
-      <MDBModalBody>{content}</MDBModalBody>
-      <ActionButtons relativeStyleRef={ref} buttons={buttons} />
-    </div>
+      </ModalHeader>
+      <ModalBody>{content}</ModalBody>
+      <ActionButtons
+        style={parentStyle}
+        whenToBlock={768}
+        whenToStick={768}
+        relativeStyleRef={ref}
+        buttons={buttons}
+      />
+    </ModalContainer>
   );
 }
 
 CreateOfferModal.propTypes = {
-  price: PropTypes.number,
-  payment: PropTypes.oneOf(['cash', 'card']),
-  status: PropTypes.string,
+  form: PropTypes.object,
   task: PropTypes.object,
-  //
+  status: PropTypes.string,
   onCloseModal: PropTypes.func,
   onSendOffer: PropTypes.func,
   onUpdatePayment: PropTypes.func,
@@ -197,10 +190,8 @@ CreateOfferModal.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  price: makeSelectCreateOfferModalPrice(),
-  payment: makeSelectCreateOfferModalPayment(),
-  message: makeSelectCreateOfferModalMessage(),
-  status: makeSelectCreateOfferModalStatus(),
+  form: selectTaskPageOfferFormData,
+  status: selectTaskPageOfferFormStatus,
   task: selectTaskPageTaskData,
 });
 

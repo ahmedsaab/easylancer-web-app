@@ -9,6 +9,12 @@ import {
   ACCEPT_OFFER_ERROR,
   ACCEPT_OFFER_SUCCESS,
   VIEW_OFFER,
+  SEND_OFFER,
+  SEND_OFFER_FAIL,
+  SEND_OFFER_SUCCESS,
+  UPDATE_OFFER_MESSAGE,
+  UPDATE_OFFER_PAYMENT,
+  UPDATE_OFFER_PRICE,
 } from 'containers/TaskPage/constants';
 
 export function loadTask(id) {
@@ -77,5 +83,45 @@ export function viewOffer(offerId) {
   return {
     type: VIEW_OFFER,
     offerId,
+  };
+}
+
+export function updateOfferModalPrice(price) {
+  return {
+    type: UPDATE_OFFER_PRICE,
+    price,
+  };
+}
+
+export function updateOfferModalPayment(payment) {
+  return {
+    type: UPDATE_OFFER_PAYMENT,
+    payment,
+  };
+}
+
+export function updateOfferModalMessage(message) {
+  return {
+    type: UPDATE_OFFER_MESSAGE,
+    message,
+  };
+}
+
+export function sendOfferModal() {
+  return {
+    type: SEND_OFFER,
+  };
+}
+
+export function offerSentSuccess() {
+  return {
+    type: SEND_OFFER_SUCCESS,
+  };
+}
+
+export function offerSentError(error) {
+  return {
+    type: SEND_OFFER_FAIL,
+    error,
   };
 }

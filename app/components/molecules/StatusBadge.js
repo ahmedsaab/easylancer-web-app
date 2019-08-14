@@ -1,15 +1,13 @@
-
-
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { MDBBadge } from 'mdbreact';
 
 const StatusBadgeContainer = styled(MDBBadge).attrs(props => ({
-  pill: true,
   className: 'text-capitalize',
   color: props.color,
 }))`
+  border-radius: 2px;
   font-size: 15px;
   padding-bottom: 4px;
   padding-top: 4px;

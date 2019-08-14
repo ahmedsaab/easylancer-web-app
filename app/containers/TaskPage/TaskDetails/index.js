@@ -11,9 +11,10 @@ import { createStructuredSelector } from 'reselect';
 import { selectTaskPageTaskData } from 'containers/TaskPage/selectors';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import TaskAssignee from 'containers/TaskPage/TaskAssignee';
 
 const PaddedRow = styled(MDBRow)`
-  padding: 20px;
+  padding: 10px;
 `;
 
 const HeaderText = styled('div')`
@@ -26,6 +27,9 @@ const HeaderText = styled('div')`
 function TaskDetails({ task, google }) {
   return (
     <PaddedRow>
+      <MDBCol size="12">
+        <TaskAssignee />
+      </MDBCol>
       <MDBCol size="12" lg="6">
         <HeaderText>Description</HeaderText>
         <div>{task.description}</div>

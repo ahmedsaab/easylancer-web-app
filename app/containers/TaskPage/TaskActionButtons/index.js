@@ -120,7 +120,12 @@ function TaskActionButtons({
   }
 
   return (
-    <ActionButtons relativeStyleRef={containerRef} buttons={actionButtons} />
+    <ActionButtons
+      whenToBlock={Number.MAX_SAFE_INTEGER}
+      whenToStick={768}
+      relativeStyleRef={containerRef}
+      buttons={actionButtons}
+    />
   );
 }
 

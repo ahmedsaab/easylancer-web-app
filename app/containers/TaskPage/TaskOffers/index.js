@@ -47,6 +47,7 @@ function TaskOffers({
       <div>
         <OfferList
           disabled={disabled}
+          isAssigned
           offers={offers.filter(offer => offer.id === task.acceptedOffer)}
           label="Assigned"
           selectedOfferId={selectedOfferId}
