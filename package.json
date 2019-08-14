@@ -90,6 +90,7 @@
     "react": "16.8.6",
     "react-day-picker": "^7.3.2",
     "react-dom": "16.8.6",
+    "react-dropzone-uploader": "^2.10.1",
     "react-helmet": "6.0.0-beta",
     "react-image-lightbox": "latest",
     "react-intl": "2.8.0",

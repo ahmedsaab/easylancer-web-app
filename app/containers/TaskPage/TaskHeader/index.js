@@ -40,7 +40,10 @@ function TaskHeader({ task }) {
         <MDBCol size="12" lg="9">
           <TitleText>{task.title}</TitleText>
           <StatusTime>
-            {moment(task.startDateTime).format('MMM D, YYYY [after] h:mm A z')}
+            {moment
+              .utc(task.startDateTime)
+              .local()
+              .format('MMM D, YYYY [at] h:mm A z')}
           </StatusTime>
         </MDBCol>
         <MDBCol size="12" lg="3">

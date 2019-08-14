@@ -122,12 +122,19 @@ function TaskCard({ task, viewTaskAction }) {
               alt=""
             />
             <CardOwnerName className="text-truncate">
-              Angelina Parsutina
+              Dummy User
             </CardOwnerName>
           </MDBCol>
           <MDBCol size="6">
-            <MDBBtn rounded block outline color="primary" size="sm">
-              Offer
+            <MDBBtn
+              rounded
+              block
+              outline
+              color="primary"
+              size="sm"
+              onClick={viewTaskAction}
+            >
+              View
             </MDBBtn>
           </MDBCol>
         </MDBRow>

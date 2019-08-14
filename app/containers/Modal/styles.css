@@ -10,7 +10,8 @@
 
   .full-screen-modal-content {
     border-radius: 0 !important;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     width: 100vw;
   }
 }

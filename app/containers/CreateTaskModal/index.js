@@ -15,7 +15,7 @@ import {
   DatePicker,
   TimePicker,
 } from 'containers/TaskPage/CreateOfferModal/components';
-import { MDBCol, MDBInput, MDBRow } from 'mdbreact';
+import { MDBChipsInput, MDBCol, MDBInput, MDBRow } from 'mdbreact';
 import NumberInput from 'components/molecules/NumberInput';
 import { updateModal } from 'containers/Modal/actions';
 import {
@@ -28,7 +28,8 @@ import {
   updateTaskModalForm,
 } from 'containers/CreateTaskModal/actions';
 import { useInjectSaga } from 'utils/injectSaga';
-import { countries } from 'containers/CreateTaskModal/constants';
+import { countries, categories } from 'containers/CreateTaskModal/constants';
+import MultiPhotoUploader from 'components/organisms/MultiPhotoUploader';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -62,6 +63,31 @@ export function CreateTaskModal({
       <ModalHeader toggle={onCloseModal}>Create a new task</ModalHeader>
       <ModalBody>
         <div className="form-group">
+          <MDBRow>
+            <MDBCol size={6}>
+              <FormSelect
+                color="default"
+                label="Category"
+                getTextContent={category => onUpdateForm('category', category)}
+                selected={form.category}
+                options={Object.keys(categories).map(name => ({
+                  text: name,
+                  value: categories[name].id,
+                }))}
+              />
+            </MDBCol>
+            <MDBCol size={6}>
+              <FormSelect
+                color="default"
+                label="Type"
+                getTextContent={type => onUpdateForm('type', type)}
+                selected={form.type}
+                options={categories[form.category].data}
+              />
+            </MDBCol>
+          </MDBRow>
+        </div>
+        <div className="form-group">
           <label htmlFor="task-title">Summary</label>
           <input
             id="task-title"
@@ -87,6 +113,8 @@ export function CreateTaskModal({
                 <FormSelect
                   color="default"
                   label="Country"
+                  getTextContent={country => onUpdateForm('country', country)}
+                  selected={form.country}
                   options={Object.keys(countries).map(name => ({
                     text: name,
                     value: countries[name].id,
@@ -98,7 +126,9 @@ export function CreateTaskModal({
               <FormSelect
                 color="default"
                 label="City"
-                options={countries.Egypt.data}
+                getTextContent={city => onUpdateForm('city', city)}
+                selected={form.city}
+                options={countries[form.country].data}
               />
             </MDBCol>
           </MDBRow>
@@ -154,6 +184,17 @@ export function CreateTaskModal({
               />
             </MDBCol>
           </MDBRow>
+        </div>
+        <div className="form-group">
+          <label htmlFor="task-photos">Photos</label>
+          <MultiPhotoUploader id="task-photos" />
+        </div>
+        <div className="form-group">
+          <label htmlFor="task-tags">Tags</label>
+          <MDBChipsInput
+            placeholder="+ Tag"
+            secondaryPlaceholder="Enter a tag"
+          />
         </div>
       </ModalBody>
       <ModalActionButtons
