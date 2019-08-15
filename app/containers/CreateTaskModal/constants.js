@@ -52,3 +52,74 @@ export const countries = {
     ],
   },
 };
+
+export const categories = {
+  Beauty: {
+    id: 1234,
+    data: [
+      {
+        text: 'Manicure',
+        value: '1',
+      },
+      {
+        text: 'Hair',
+        value: '2',
+      },
+    ],
+  },
+  Repair: {
+    id: 5678,
+    data: [
+      {
+        text: 'Computer',
+        value: '3',
+      },
+      {
+        text: 'Phone',
+        value: '4',
+      },
+      {
+        text: 'Bike',
+        value: '5',
+      },
+      {
+        text: 'Automotive',
+        value: '6',
+      },
+    ],
+  },
+  Home: {
+    id: 2853,
+    data: [
+      {
+        text: 'Cleaning',
+        value: '6',
+      },
+      {
+        text: 'Renovation',
+        value: '7',
+      },
+      {
+        text: 'Electricity',
+        value: '8',
+      },
+      {
+        text: 'Plumping',
+        value: '8',
+      },
+    ],
+  },
+  Expat: {
+    id: 1222,
+    data: [
+      {
+        text: 'Translation',
+        value: '1',
+      },
+      {
+        text: 'Paper work',
+        value: '2',
+      },
+    ],
+  },
+};

@@ -64,12 +64,11 @@ export const ModalActionButtons = styled(ActionButtons)`
   text-align: center;
 `;
 
-const FormContainer = styled.div`
-  label.active {
-    top: 1.4rem !important;
-    font-size: 1rem !important;
-  }
+export const Label = styled.label`
+  font-size: 0.8rem;
 `;
+
+const FormContainer = styled.div``;
 
 export const FormSelect = props => (
   <FormContainer>
@@ -78,9 +77,7 @@ export const FormSelect = props => (
 );
 
 const TimePickerContainer = styled.div`
-  label {
-    transform: translateY(-14px) !important;
-  }
+
 `;
 
 export const TimePicker = props => (
@@ -103,10 +100,10 @@ export const DatePicker = styled(MDBDatePicker).attrs(() => ({
     typography: {
       useNextVariants: true,
     },
-  }
+  },
 }))`
   label {
-    transform: translateY(-14px);
+    transform: translateY(-14px) scale(0.8);
     margin-top: 6px;
   }
   input {

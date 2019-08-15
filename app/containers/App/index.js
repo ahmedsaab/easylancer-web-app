@@ -28,15 +28,6 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { loadUser } from 'containers/App/actions';
 import saga from 'containers/App/saga';
 
-if (
-  !process.env.PASS_AUTH &&
-  !auth.isAuthenticated() &&
-  // eslint-disable-next-line no-restricted-globals
-  !location.pathname.includes('/callback')
-) {
-  auth.login();
-}
-
 const handleAuthentication = ({ location }) => {
   if (/access_token|id_token|error/.test(location.hash)) {
     auth.handleAuthentication();
@@ -47,7 +38,16 @@ function App({ onLoad }) {
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
-    onLoad();
+    if (
+      process.env.AUTH &&
+      !auth.isAuthenticated() &&
+      // eslint-disable-next-line no-restricted-globals
+      !location.pathname.includes('/callback')
+    ) {
+      auth.login();
+    } else {
+      onLoad();
+    }
   }, []);
 
   return (

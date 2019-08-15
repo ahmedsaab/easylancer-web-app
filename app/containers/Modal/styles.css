@@ -1,5 +1,5 @@
 .full-screen-modal-content {
-  border-radius: 0.6rem !important;
+  border-radius: 0 !important;
 }
 
 @media (max-width: 768px) {
@@ -10,7 +10,8 @@
 
   .full-screen-modal-content {
     border-radius: 0 !important;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     width: 100vw;
   }
 }
