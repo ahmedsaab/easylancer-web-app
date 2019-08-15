@@ -43,7 +43,7 @@ function TaskDetails({ task, google }) {
         <ImagesGrid />
       </MDBCol>
       <MDBCol size="12">
-        <HeaderText>Map</HeaderText>
+        <HeaderText>Location</HeaderText>
         <Map
           google={google}
           zoom={14}
@@ -55,10 +55,10 @@ function TaskDetails({ task, google }) {
             width: '100%',
             height: '400px',
           }}
-          initialCenter={{ lat: task.location.lat, lng: task.location.lon }}
+          initialCenter={{ lat: task.location.lat, lng: task.location.lng }}
         >
           <Circle
-            center={{ lat: task.location.lat, lng: task.location.lon }}
+            center={{ lat: task.location.lat, lng: task.location.lng }}
             radius={400}
             strokeColor="#000"
             strokeOpacity={0.1}
@@ -69,10 +69,6 @@ function TaskDetails({ task, google }) {
             visible
           />
         </Map>
-      </MDBCol>
-      <MDBCol size="12">
-        <HeaderText>Other:</HeaderText>
-        <div>{JSON.stringify(task)}</div>
       </MDBCol>
     </PaddedRow>
   );
@@ -90,6 +86,6 @@ const mapStateToProps = createStructuredSelector({
 const withConnect = connect(mapStateToProps);
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyBHvHgCxApjR8LChQxQ6E2BanJGpu7p5Q8',
+  apiKey: process.env.GOOGLE_MAPS_API_KEY,
   LoadingContainer: LoadingIndicator,
 })(compose(withConnect)(TaskDetails));

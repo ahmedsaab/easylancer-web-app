@@ -14,6 +14,7 @@ import {
   FormSelect,
   DatePicker,
   TimePicker,
+  Label,
 } from 'containers/TaskPage/CreateOfferModal/components';
 import { MDBChipsInput, MDBCol, MDBInput, MDBRow } from 'mdbreact';
 import NumberInput from 'components/molecules/NumberInput';
@@ -30,6 +31,7 @@ import {
 import { useInjectSaga } from 'utils/injectSaga';
 import { countries, categories } from 'containers/CreateTaskModal/constants';
 import MultiPhotoUploader from 'components/organisms/MultiPhotoUploader';
+import PlacesAutoComplete from 'components/organisms/PlacesAutoComplete';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -88,21 +90,18 @@ export function CreateTaskModal({
           </MDBRow>
         </div>
         <div className="form-group">
-          <label htmlFor="task-title">Summary</label>
-          <input
-            id="task-title"
+          <MDBInput
+            label="Summary"
             value={form.title}
             onChange={event => onUpdateForm('title', event.target.value)}
-            className="form-control"
           />
         </div>
         <div className="form-group">
-          <label htmlFor="task-description">Details</label>
-          <textarea
-            id="task-description"
+          <MDBInput
+            type="textarea"
+            label="Details"
             value={form.description}
             onChange={event => onUpdateForm('description', event.target.value)}
-            className="form-control"
             rows="5"
           />
         </div>
@@ -132,11 +131,17 @@ export function CreateTaskModal({
               />
             </MDBCol>
           </MDBRow>
+          <div>
+            <PlacesAutoComplete
+              onLocationChange={location => onUpdateForm('location', location)}
+              onLocationError={err => onUpdateForm('location', null)}
+            />
+          </div>
         </div>
         <div className="form-group">
           <MDBRow>
             <MDBCol size={6}>
-              <label htmlFor="task-price">Price</label>
+              <Label>Price</Label>
               <NumberInput
                 id="task-price"
                 value={form.price}
@@ -145,7 +150,7 @@ export function CreateTaskModal({
               />
             </MDBCol>
             <MDBCol size={6}>
-              <label htmlFor="task-payment-method">Payment Method</label>
+              <Label>Payment Method</Label>
               <RadioButtonsGroup id="task-payment-method">
                 <MDBInput
                   onClick={() => onUpdateForm('paymentMethod', 'card')}
@@ -186,11 +191,11 @@ export function CreateTaskModal({
           </MDBRow>
         </div>
         <div className="form-group">
-          <label htmlFor="task-photos">Photos</label>
+          <Label>Photos</Label>
           <MultiPhotoUploader id="task-photos" />
         </div>
         <div className="form-group">
-          <label htmlFor="task-tags">Tags</label>
+          <Label>Tags</Label>
           <MDBChipsInput
             placeholder="+ Tag"
             secondaryPlaceholder="Enter a tag"

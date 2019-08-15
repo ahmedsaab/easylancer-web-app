@@ -10,8 +10,8 @@ import {
 
 export const initialState = {
   form: {
-    price: 0,
-    payment: 'card',
+    price: 25,
+    paymentMethod: 'card',
     title: '',
     description: '',
     category: Object.keys(categories)[0],
@@ -21,10 +21,7 @@ export const initialState = {
     imagesUrls: [],
     date: new Date(),
     time: '12:00AM',
-    location: {
-      lat: 1,
-      lon: 2,
-    },
+    location: null,
   },
   loading: false,
   error: null,

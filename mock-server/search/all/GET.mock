@@ -10,7 +10,7 @@ Access-Control-Allow-Origin: *
     "id": "5cf5939b2357cc11fbc6b3d5",
     "location": {
       "lat": 93.2,
-      "lon": 10.23
+      "lng": 10.23
     },
     "paymentMethod": "card",
     "price": 100,
@@ -26,7 +26,7 @@ Access-Control-Allow-Origin: *
     "id": "5cf596262357cc11fbc6b3d6",
     "location": {
       "lat": 93.2,
-      "lon": 10.23
+      "lng": 10.23
     },
     "paymentMethod": "card",
     "price": 400,
@@ -42,7 +42,7 @@ Access-Control-Allow-Origin: *
     "id": "5cfea290f2085d3e73b1ef41",
     "location": {
       "lat": 53.58384,
-      "lon": 9.98017
+      "lng": 9.98017
     },
     "paymentMethod": "card",
     "price": 300,

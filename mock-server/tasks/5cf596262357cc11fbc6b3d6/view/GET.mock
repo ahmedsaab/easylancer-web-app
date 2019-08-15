@@ -27,7 +27,7 @@ Access-Control-Allow-Origin: *
   ],
   "location": {
     "lat": 93.2,
-    "lon": 10.23
+    "lng": 10.23
   },
   "paymentMethod": "card",
   "price": 400,
