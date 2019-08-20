@@ -39,8 +39,12 @@ function TaskDetails({ task, google }) {
         <div>{moment(task.createdAt).format('MMM. D, YYYY [at] h:mm A z')}</div>
       </MDBCol>
       <MDBCol size="12">
-        <HeaderText>Photos</HeaderText>
-        <ImagesGrid />
+        {task.imagesUrls.length ? (
+          <div>
+            <HeaderText>Photos</HeaderText>
+            <ImagesGrid images={task.imagesUrls} />
+          </div>
+        ) : null}
       </MDBCol>
       <MDBCol size="12">
         <HeaderText>Location</HeaderText>

@@ -5,6 +5,26 @@ const headers = { Authorization: `Bearer ${auth.getAccessToken()}` };
 
 const sleep = async time => new Promise(resolve => setTimeout(resolve, time));
 
+export const requestFileUpload = async () => {
+  try {
+    // await sleep(1000);
+    const response = await axios.get(process.env.FILES_API_URL, { headers });
+
+    return response.data;
+  } catch (error) {
+    // console.error(error)
+    if (error.response) {
+      throw new Error(
+        `The server responded with error code ${error.response.status}`,
+      );
+    } else if (error.request) {
+      throw new Error(`Failed to read response from Server`);
+    } else {
+      throw new Error(`An unexpected error occurred`);
+    }
+  }
+};
+
 export const getTask = async id => {
   try {
     // await sleep(1000);

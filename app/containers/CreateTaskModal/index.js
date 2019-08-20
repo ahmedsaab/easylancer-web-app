@@ -3,6 +3,7 @@ import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import * as client from 'utils/client';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import {
@@ -192,7 +193,11 @@ export function CreateTaskModal({
         </div>
         <div className="form-group">
           <Label>Photos</Label>
-          <MultiPhotoUploader id="task-photos" />
+          <MultiPhotoUploader
+            id="task-photos"
+            onUpdateUploadedImages={urls => onUpdateForm('imagesUrls', urls)}
+            requestFileUpload={client.requestFileUpload}
+          />
         </div>
         <div className="form-group">
           <Label>Tags</Label>

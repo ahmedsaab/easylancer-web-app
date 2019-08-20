@@ -62,6 +62,14 @@ const CardText = styled(MDBCardText)`
 `;
 
 function TaskCard({ task, viewTaskAction }) {
+  const CarouselItems = task.imagesUrls.map((url, i) => (
+    <MDBCarouselItem itemId={i + 1} key={url}>
+      <MDBView>
+        <img className="d-block w-100" src={url} alt="" />
+      </MDBView>
+    </MDBCarouselItem>
+  ));
+
   return (
     <CardResp>
       <CardTopLine className="blue-gradient" />
@@ -74,41 +82,13 @@ function TaskCard({ task, viewTaskAction }) {
       </MDBCardHeader>
       <MDBCarousel
         activeItem={1}
-        length={3}
+        length={CarouselItems.length}
         showControls
         showIndicators
         interval={false}
         className="z-depth-1"
       >
-        <MDBCarouselInner>
-          <MDBCarouselItem itemId="1">
-            <MDBView>
-              <img
-                className="d-block w-100"
-                src="https://picsum.photos/280/140"
-                alt="First slide"
-              />
-            </MDBView>
-          </MDBCarouselItem>
-          <MDBCarouselItem itemId="2">
-            <MDBView>
-              <img
-                className="d-block w-100"
-                src="https://mdbootstrap.com/img/Photos/Slides/img%20(129).jpg"
-                alt="Second slide"
-              />
-            </MDBView>
-          </MDBCarouselItem>
-          <MDBCarouselItem itemId="3">
-            <MDBView>
-              <img
-                className="d-block w-100"
-                src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg"
-                alt="Third slide"
-              />
-            </MDBView>
-          </MDBCarouselItem>
-        </MDBCarouselInner>
+        <MDBCarouselInner>{CarouselItems}</MDBCarouselInner>
       </MDBCarousel>
       <MDBCardBody>
         <CardText onClick={viewTaskAction}>{task.title}</CardText>

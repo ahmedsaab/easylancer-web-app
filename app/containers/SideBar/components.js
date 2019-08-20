@@ -103,6 +103,9 @@ export const SideBarList = styled('ul')`
 export const SideBarUserName = styled('div').attrs(() => ({
   className: 'text-truncate',
 }))`
+  float: left;
+  width: 100%;
+  text-align: left;
   max-width: 100%;
   display: inline-block;
   vertical-align: middle;
