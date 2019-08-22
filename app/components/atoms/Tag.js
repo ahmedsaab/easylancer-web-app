@@ -18,6 +18,7 @@ export default styled.div`
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: 0.25rem;
+  text-transform: capitalize;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 `;

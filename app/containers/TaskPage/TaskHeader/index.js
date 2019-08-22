@@ -20,6 +20,8 @@ import Tag from 'components/atoms/Tag';
 import { selectTaskPageTaskData } from 'containers/TaskPage/selectors';
 
 function TaskHeader({ task }) {
+  const tags = task.tags.map(tag => <Tag key={tag}>{tag}</Tag>);
+
   return (
     <div>
       <MDBRow>
@@ -53,14 +55,7 @@ function TaskHeader({ task }) {
         </MDBCol>
       </MDBRow>
       <MDBRow>
-        <MDBCol>
-          <div>
-            <Tag>Cleaning</Tag>
-            <Tag>Home</Tag>
-            <Tag>Floor</Tag>
-            <Tag>Windows</Tag>
-          </div>
-        </MDBCol>
+        <MDBCol>{tags}</MDBCol>
       </MDBRow>
     </div>
   );
