@@ -30,6 +30,7 @@ import LoadingIndicator from 'components/molecules/LoadingIndicator';
 import { setBodyScroll } from 'containers/App/actions';
 import Footer from 'components/molecules/Footer';
 import { updateModal } from 'containers/Modal/actions';
+import auth from 'utils/auth';
 
 function SideBar({ isOpen, user, handleToggle, onCreateTaskButtonClick }) {
   useInjectReducer({ key: 'sideNavBar', reducer });
@@ -92,7 +93,9 @@ function SideBar({ isOpen, user, handleToggle, onCreateTaskButtonClick }) {
           </SideBarListElement>
         </SideBarList>
         <SideBarButtonContainer>
-          {/* <SideBarButton onClick={auth.login}>Log in</SideBarButton> */}
+          <SideBarButton color="danger" onClick={auth.logout}>
+            Log out
+          </SideBarButton>
           <SideBarButton onClick={onCreateTaskButtonClick}>
             <MDBIcon className="mr-3" icon="magic" />
             Create task

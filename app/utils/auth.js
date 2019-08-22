@@ -104,7 +104,6 @@ class Auth {
 
     // Remove isLoggedIn flag from localStorage
     localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('accessToken');
 
     this.auth0.logout({
       returnTo: window.location.origin,
@@ -119,6 +118,7 @@ class Auth {
     // access token's expiry time
     const { expiresAt } = this;
     return (
+      localStorage.getItem('isLoggedIn') &&
       new Date().getTime() < (expiresAt || localStorage.getItem('expiresAt'))
     );
   }

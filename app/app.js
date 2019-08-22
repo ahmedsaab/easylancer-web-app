@@ -56,7 +56,7 @@ const render = messages => {
   // eslint-disable-next-line no-restricted-globals
   if (location.pathname.includes('/callback')) {
     auth.handleAuthentication();
-  } else if (process.env.AUTH && !auth.isAuthenticated()) {
+  } else if (/true/i.test(process.env.AUTH) && !auth.isAuthenticated()) {
     auth.login();
   } else {
     ReactDOM.render(

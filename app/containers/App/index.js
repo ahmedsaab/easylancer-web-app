@@ -18,7 +18,6 @@ import SideBar from 'containers/SideBar';
 import Header from 'containers/Header';
 import TaskPage from 'containers/TaskPage/Loadable';
 import SearchPage from 'containers/SearchPage/Loadable';
-import LoadingIndicator from 'components/molecules/LoadingIndicator';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import { Container, ContentRow, Wrapper } from 'containers/App/components';
 import Modal from 'containers/Modal';
@@ -55,13 +54,6 @@ function App({ onLoad }) {
                 <Route exact path="/" component={SearchPage} />
                 <Route path="/task/:id" component={TaskPage} />
                 <Route path="/search" component={SearchPage} />
-                <Route
-                  path="/callback"
-                  render={props => {
-                    handleAuthentication(props);
-                    return <LoadingIndicator />;
-                  }}
-                />
                 <Route path="" component={NotFoundPage} />
               </Switch>
             </div>
