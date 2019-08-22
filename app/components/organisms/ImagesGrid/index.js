@@ -1,7 +1,7 @@
 import React from 'react';
 import { MDBContainer, MDBRow, MDBCol } from 'mdbreact';
 import Lightbox from 'react-image-lightbox';
-import 'components/molecules/ImagesGrid/index.css';
+import 'components/organisms/ImagesGrid/index.css';
 import styled from 'styled-components';
 import * as PropTypes from 'prop-types';
 

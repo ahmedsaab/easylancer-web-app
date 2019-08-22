@@ -13,6 +13,19 @@
 
   <link rel="icon" href="/favicon.ico" />
   <title>Easylancer - services finder</title>
+  <style>
+    .bg {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 100%;
+      max-height: 100%;
+      margin: auto;
+      overflow: auto;
+    }
+  </style>
 </head>
 
 <body>
@@ -22,12 +35,13 @@
     <strong>enable JS</strong> to make this app work.</noscript>
 
   <!-- The app hooks into this div -->
-  <div id="app"></div>
+  <div id="app">
+    <img src="dots.gif" alt="loader" class="bg">
+  </div>
 
   <!-- Open Sans Font -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 
-  <!-- A lot of magic happens in this file. HtmlWebpackPlugin automatically injects all assets (e.g. bundle.js, main.css) with the correct HTML tags, which is why they are missing in this file. Don't add any assets here! (Check out webpack.dev.babel.js and webpack.prod.babel.js if you want to know more) -->
 </body>
 
 </html>

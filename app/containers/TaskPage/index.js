@@ -11,6 +11,7 @@ import { loadTask, loadTaskOffers } from 'containers/TaskPage/actions';
 import { MDBCol, MDBRow } from 'mdbreact';
 import TaskHeader from 'containers/TaskPage/TaskHeader';
 import TaskSwitch from 'containers/TaskPage/TaskSwitch';
+import FitPage from 'components/atoms/FitPage';
 import { ContainerRow } from 'containers/TaskPage/components';
 import reducer from 'containers/TaskPage/reducer';
 import {
@@ -18,13 +19,12 @@ import {
   selectTaskPageTaskError,
   selectTaskPageTaskLoading,
 } from 'containers/TaskPage/selectors';
-import LoadingIndicator from 'components/molecules/LoadingIndicator';
+import Spinner from 'components/atoms/Spinner';
 import OfferModal from 'containers/TaskPage/OfferModal';
 import ProfileCard from 'components/molecules/ProfileCard';
 import history from 'utils/history';
 import saga, { offerUrlRegex } from 'containers/TaskPage/saga';
 import TaskActionButtons from 'containers/TaskPage/TaskActionButtons';
-
 export function TaskPage({
   match,
   location,
@@ -44,7 +44,11 @@ export function TaskPage({
   }, [id]);
 
   if (loading) {
-    return <LoadingIndicator />;
+    return (
+      <FitPage>
+        <Spinner dimension="200px" />
+      </FitPage>
+    );
   }
 
   if (error) {

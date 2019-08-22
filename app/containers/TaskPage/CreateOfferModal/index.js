@@ -14,7 +14,7 @@ import {
   RadioButtonsGroup,
   SecondaryText,
 } from 'containers/TaskPage/CreateOfferModal/components';
-import NumberInput from 'components/molecules/NumberInput';
+import NumberInput from 'components/atoms/NumberInput';
 import { updateModal } from 'containers/Modal/actions';
 import {
   selectTaskPageTaskData,

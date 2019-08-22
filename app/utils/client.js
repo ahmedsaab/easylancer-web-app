@@ -27,7 +27,7 @@ export const requestFileUpload = async () => {
 
 export const getTask = async id => {
   try {
-    // await sleep(1000);
+    await sleep(1000);
     const response = await axios.get(
       `${process.env.CLIENT_API_ROOT}/tasks/${id}/view`,
       { headers },

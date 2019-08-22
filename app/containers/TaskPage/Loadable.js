@@ -5,9 +5,14 @@
  */
 
 import loadable from 'utils/loadable';
-import LoadingIndicator from 'components/molecules/LoadingIndicator';
 import React from 'react';
+import FitPage from 'components/atoms/FitPage';
+import Spinner from 'components/atoms/Spinner';
 
 export default loadable(() => import('containers/TaskPage/index'), {
-  fallback: <LoadingIndicator />,
+  fallback: (
+    <FitPage>
+      <Spinner dimension="200px" />
+    </FitPage>
+  ),
 });
