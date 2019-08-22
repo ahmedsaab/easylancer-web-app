@@ -13,6 +13,16 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 function TaskSwitch({ task, offers, disabled }) {
+  const offersBadge =
+    // eslint-disable-next-line no-nested-ternary
+    !Array.isArray(offers) ? (
+      <MDBIcon icon="spinner" pulse className="ml-2" spin fixed />
+    ) : offers.length ? (
+      <MDBBadge color="default" pill className="ml-2">
+        {offers.length}
+      </MDBBadge>
+    ) : null;
+
   const tabs = [
     {
       match: `/task/${task.id}`,
@@ -27,13 +37,7 @@ function TaskSwitch({ task, offers, disabled }) {
       header: (
         <div>
           Offers
-          {offers ? (
-            <MDBBadge color="default" pill className="ml-2">
-              {offers.length}
-            </MDBBadge>
-          ) : (
-            <MDBIcon icon="spinner" pulse className="ml-2" spin fixed />
-          )}
+          {offersBadge}
         </div>
       ),
       component: () => <TaskOffers />,

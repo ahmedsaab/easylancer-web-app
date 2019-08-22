@@ -29,47 +29,75 @@ const DropDownItem = styled.div`
   background-color: ${props => (props.active ? '#2bbbad' : '#fff')};
 `;
 
-const LocationInput = styled(MDBInput).attrs(() => ({
-  label: 'Location',
+const LocationInput = styled(MDBInput).attrs(props => ({
+  label: props.label,
 }))``;
 
-class PlacesAutoComplete extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      address: '',
-    };
+const getTypes = type => {
+  const types = [];
+
+  switch (type) {
+    case 'city':
+      types.push('(cities)');
+      break;
+    case 'country':
+      types.push('country');
+      break;
+    case 'address':
+      types.push('geocode');
+      break;
+    default:
   }
 
-  handleChange = address => {
-    this.setState({ address });
-  };
+  return types;
+};
 
+class Places extends React.Component {
   handleSelect = async address => {
-    const { onLocationChange, onLocationError } = this.props;
+    const { onSelect, onError } = this.props;
 
     try {
       const result = (await geocodeByAddress(address))[0];
-      const location = await getLatLng(result);
+      const geo = await getLatLng(result);
+      const city = result.address_components.find(component =>
+        component.types.includes('locality'),
+      );
+      const cityAlt = result.address_components.find(component =>
+        component.types.includes('administrative_area_level_1'),
+      );
+      const country = result.address_components.find(component =>
+        component.types.includes('country'),
+      );
 
-      console.log(JSON.stringify(result));
-      this.setState({ address: result.formatted_address });
-      onLocationChange(location);
+      onSelect({
+        country,
+        city: city || cityAlt,
+        address: result.formatted_address,
+        geo,
+      });
     } catch (error) {
-      onLocationError(error);
+      onError(error);
     }
   };
 
   render() {
+    const { type, countryISOCode, text, onChange } = this.props;
+    const searchOptions = {
+      types: getTypes(type),
+      componentRestrictions: { country: countryISOCode },
+    };
+
     return (
       <PlacesAutocomplete
-        value={this.state.address}
-        onChange={this.handleChange}
+        value={text}
+        onChange={onChange}
         onSelect={this.handleSelect}
+        searchOptions={searchOptions}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <Content>
             <LocationInput
+              label={this.props.label}
               {...getInputProps({
                 placeholder: 'Search Places ...',
                 className: 'location-search-input',
@@ -93,12 +121,17 @@ class PlacesAutoComplete extends React.Component {
   }
 }
 
-PlacesAutoComplete.propTypes = {
-  onLocationChange: PropTypes.func.isRequired,
-  onLocationError: PropTypes.func.isRequired,
+Places.propTypes = {
+  onSelect: PropTypes.func.isRequired,
+  onError: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  type: PropTypes.oneOf(['city', 'country', 'address']),
+  label: PropTypes.string,
+  text: PropTypes.string,
+  countryISOCode: PropTypes.string,
 };
 
 export default GoogleApiWrapper({
   apiKey: process.env.GOOGLE_MAPS_API_KEY,
   LoadingContainer: LoadingIndicator,
-})(PlacesAutoComplete);
+})(Places);

@@ -15,6 +15,8 @@ import {
   MDBView,
 } from 'mdbreact';
 import styled from 'styled-components';
+import FullName from 'components/molecules/FullName';
+import Location from 'components/molecules/Location';
 
 const CardResp = styled(MDBCard)`
   margin: 4px !important;
@@ -36,11 +38,16 @@ const CardFooter = styled(MDBCardFooter)`
   padding: 0.75rem 0.75rem;
 `;
 
-const CardOwnerName = styled('small')`
+const CardOwnerName = styled(FullName)`
+  font-size: 0.8rem;
   max-width: 80%;
   display: inline-block;
   padding-left: 10px;
   vertical-align: middle;
+`;
+
+const TaskLocation = styled(Location)`
+  font-size: 0.8rem;
 `;
 
 const CardOwnerImg = styled('img')`
@@ -74,7 +81,7 @@ function TaskCard({ task, viewTaskAction }) {
     <CardResp>
       <CardTopLine className="blue-gradient" />
       <MDBCardHeader>
-        <small>Alexandria, Egypt</small>
+        <TaskLocation location={task.location} />
         <div className="float-right">
           <i className="fas fa-credit-card" />
           <CardPrice>€{task.price}</CardPrice>
@@ -101,9 +108,7 @@ function TaskCard({ task, viewTaskAction }) {
               className="img-fluid z-depth-1 rounded-circle"
               alt=""
             />
-            <CardOwnerName className="text-truncate">
-              Dummy User
-            </CardOwnerName>
+            <CardOwnerName user={task.creatorUser} />
           </MDBCol>
           <MDBCol size="6">
             <MDBBtn

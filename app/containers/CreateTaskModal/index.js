@@ -17,7 +17,7 @@ import {
   TimePicker,
   Label,
 } from 'containers/TaskPage/CreateOfferModal/components';
-import { MDBChipsInput, MDBCol, MDBInput, MDBRow } from 'mdbreact';
+import { MDBChipsInput, MDBCol, MDBInput, MDBRow, MDBSelect } from 'mdbreact';
 import NumberInput from 'components/molecules/NumberInput';
 import { updateModal } from 'containers/Modal/actions';
 import {
@@ -27,7 +27,9 @@ import {
 } from 'containers/CreateTaskModal/selectors';
 import {
   sendTaskModal,
-  updateTaskModalForm,
+  updateTaskModalFormCountry,
+  updateTaskModalFormGeneral,
+  updateTaskModalFormLocation,
 } from 'containers/CreateTaskModal/actions';
 import { useInjectSaga } from 'utils/injectSaga';
 import { countries, categories } from 'containers/CreateTaskModal/constants';
@@ -42,7 +44,9 @@ export function CreateTaskModal({
   error,
   onCloseModal,
   onCreateTask,
-  onUpdateForm,
+  onUpdateFormGeneral,
+  onUpdateFormLocation,
+  onUpdateFormCountry,
 }) {
   useInjectReducer({ key: 'createTaskModal', reducer });
   useInjectSaga({ key: 'createTaskModal', saga });
@@ -71,7 +75,9 @@ export function CreateTaskModal({
               <FormSelect
                 color="default"
                 label="Category"
-                getTextContent={category => onUpdateForm('category', category)}
+                getTextContent={category =>
+                  onUpdateFormGeneral('category', category)
+                }
                 selected={form.category}
                 options={Object.keys(categories).map(name => ({
                   text: name,
@@ -83,7 +89,7 @@ export function CreateTaskModal({
               <FormSelect
                 color="default"
                 label="Type"
-                getTextContent={type => onUpdateForm('type', type)}
+                getTextContent={type => onUpdateFormGeneral('type', type)}
                 selected={form.type}
                 options={categories[form.category].data}
               />
@@ -94,7 +100,7 @@ export function CreateTaskModal({
           <MDBInput
             label="Summary"
             value={form.title}
-            onChange={event => onUpdateForm('title', event.target.value)}
+            onChange={event => onUpdateFormGeneral('title', event.target.value)}
           />
         </div>
         <div className="form-group">
@@ -102,42 +108,39 @@ export function CreateTaskModal({
             type="textarea"
             label="Details"
             value={form.description}
-            onChange={event => onUpdateForm('description', event.target.value)}
+            onChange={event =>
+              onUpdateFormGeneral('description', event.target.value)
+            }
             rows="5"
           />
         </div>
         <div className="form-group">
           <MDBRow>
             <MDBCol size={6}>
-              <div>
-                <FormSelect
-                  color="default"
-                  label="Country"
-                  getTextContent={country => onUpdateForm('country', country)}
-                  selected={form.country}
-                  options={Object.keys(countries).map(name => ({
-                    text: name,
-                    value: countries[name].id,
-                  }))}
-                />
-              </div>
-            </MDBCol>
-            <MDBCol size={6}>
-              <FormSelect
-                color="default"
-                label="City"
-                getTextContent={city => onUpdateForm('city', city)}
-                selected={form.city}
-                options={countries[form.country].data}
+              <MDBSelect
+                search
+                options={countries}
+                selected="Choose country"
+                label="Country"
+                getTextContent={country => onUpdateFormCountry(country)}
               />
             </MDBCol>
+            <MDBCol size={6}>
+              {form.country ? (
+                <PlacesAutoComplete
+                  onSelect={location =>
+                    onUpdateFormLocation(location.address, location)
+                  }
+                  onChange={address => onUpdateFormLocation(address, null)}
+                  onError={err => console.error(err)}
+                  text={form.address}
+                  type="address"
+                  label="Address"
+                  countryISOCode={form.country.value}
+                />
+              ) : null}
+            </MDBCol>
           </MDBRow>
-          <div>
-            <PlacesAutoComplete
-              onLocationChange={location => onUpdateForm('location', location)}
-              onLocationError={err => onUpdateForm('location', null)}
-            />
-          </div>
         </div>
         <div className="form-group">
           <MDBRow>
@@ -146,7 +149,7 @@ export function CreateTaskModal({
               <NumberInput
                 id="task-price"
                 value={form.price}
-                onUpdate={price => onUpdateForm('price', price)}
+                onUpdate={price => onUpdateFormGeneral('price', price)}
                 stepSize={10}
               />
             </MDBCol>
@@ -154,14 +157,14 @@ export function CreateTaskModal({
               <Label>Payment Method</Label>
               <RadioButtonsGroup id="task-payment-method">
                 <MDBInput
-                  onClick={() => onUpdateForm('paymentMethod', 'card')}
+                  onClick={() => onUpdateFormGeneral('paymentMethod', 'card')}
                   checked={form.paymentMethod === 'card'}
                   label="Card"
                   type="radio"
                   id="radio1"
                 />
                 <MDBInput
-                  onClick={() => onUpdateForm('paymentMethod', 'cash')}
+                  onClick={() => onUpdateFormGeneral('paymentMethod', 'cash')}
                   checked={form.paymentMethod === 'cash'}
                   label="Cash"
                   type="radio"
@@ -177,7 +180,7 @@ export function CreateTaskModal({
               <TimePicker
                 color="default"
                 label="Time"
-                getValue={time => onUpdateForm('time', time)}
+                getValue={time => onUpdateFormGeneral('time', time)}
               />
             </MDBCol>
             <MDBCol size={6}>
@@ -186,7 +189,7 @@ export function CreateTaskModal({
                 label="Date"
                 disablePast
                 autoOk
-                getValue={date => onUpdateForm('date', date)}
+                getValue={date => onUpdateFormGeneral('date', date)}
               />
             </MDBCol>
           </MDBRow>
@@ -195,7 +198,9 @@ export function CreateTaskModal({
           <Label>Photos</Label>
           <MultiPhotoUploader
             id="task-photos"
-            onUpdateUploadedImages={urls => onUpdateForm('imagesUrls', urls)}
+            onUpdateUploadedImages={urls =>
+              onUpdateFormGeneral('imagesUrls', urls)
+            }
             requestFileUpload={client.requestFileUpload}
           />
         </div>
@@ -223,7 +228,9 @@ CreateTaskModal.propTypes = {
   error: PropTypes.instanceOf(Error),
   onCloseModal: PropTypes.func.isRequired,
   onCreateTask: PropTypes.func.isRequired,
-  onUpdateForm: PropTypes.func.isRequired,
+  onUpdateFormGeneral: PropTypes.func.isRequired,
+  onUpdateFormLocation: PropTypes.func.isRequired,
+  onUpdateFormCountry: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -235,7 +242,11 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
   onCloseModal: () => dispatch(updateModal(null)),
   onCreateTask: () => dispatch(sendTaskModal()),
-  onUpdateForm: (key, value) => dispatch(updateTaskModalForm(key, value)),
+  onUpdateFormGeneral: (key, value) =>
+    dispatch(updateTaskModalFormGeneral(key, value)),
+  onUpdateFormLocation: (address, location) =>
+    dispatch(updateTaskModalFormLocation(address, location)),
+  onUpdateFormCountry: country => dispatch(updateTaskModalFormCountry(country)),
 });
 
 const withConnect = connect(

@@ -7,7 +7,7 @@ import { compose } from 'redux';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import { loadTasks } from 'containers/SearchPage/actions';
-import TaskDeck from 'components/molecules/TaskDeck';
+import TaskDeck from 'containers/SearchPage/TaskDeck';
 import reducer from 'containers/SearchPage/reducer';
 import saga from 'containers/SearchPage/saga';
 import { makeSelectSearchData } from 'containers/SearchPage/selectors';

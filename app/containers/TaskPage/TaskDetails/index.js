@@ -59,10 +59,13 @@ function TaskDetails({ task, google }) {
             width: '100%',
             height: '400px',
           }}
-          initialCenter={{ lat: task.location.lat, lng: task.location.lng }}
+          initialCenter={{
+            lat: task.location.geo.lat,
+            lng: task.location.geo.lng,
+          }}
         >
           <Circle
-            center={{ lat: task.location.lat, lng: task.location.lng }}
+            center={{ lat: task.location.geo.lat, lng: task.location.geo.lng }}
             radius={400}
             strokeColor="#000"
             strokeOpacity={0.1}

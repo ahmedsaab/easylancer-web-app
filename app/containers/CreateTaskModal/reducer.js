@@ -1,6 +1,8 @@
 import produce from 'immer';
 import {
-  UPDATE_TASK_FORM,
+  UPDATE_TASK_FORM_GENERAL,
+  UPDATE_TASK_FORM_COUNTRY,
+  UPDATE_TASK_FORM_LOCATION,
   SEND_TASK_SUCCESS,
   SEND_TASK_FAIL,
   SEND_TASK,
@@ -16,12 +18,15 @@ export const initialState = {
     description: '',
     category: Object.keys(categories)[0],
     type: categories[Object.keys(categories)[0]].data[0].text,
-    country: Object.keys(countries)[0],
-    city: countries[Object.keys(countries)[0]].data[0].text,
     imagesUrls: [],
     date: new Date(),
     time: '12:00AM',
-    location: null,
+    country: null,
+    address: '',
+    location: {
+      city: null,
+      geo: null,
+    },
   },
   loading: false,
   error: null,
@@ -31,13 +36,20 @@ export const initialState = {
 const createTaskModalReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case UPDATE_TASK_FORM:
+      case UPDATE_TASK_FORM_GENERAL:
         draft.form[action.key] = action.value;
         if (action.key === 'category') {
           draft.form.type = categories[action.value].data[0].text;
-        } else if (action.key === 'country') {
-          draft.form.city = countries[action.value].data[0].text;
         }
+        break;
+      case UPDATE_TASK_FORM_COUNTRY:
+        draft.form.location = initialState.form.location;
+        draft.form.address = initialState.form.address;
+        draft.form.country = countries.find(c => c.text === action.country);
+        break;
+      case UPDATE_TASK_FORM_LOCATION:
+        draft.form.address = action.address;
+        draft.form.location = action.location || initialState.form.location;
         break;
       case SEND_TASK:
         draft.loading = true;

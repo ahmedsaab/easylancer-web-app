@@ -18,8 +18,12 @@ const createPayloadFromFrom = form => ({
   time: undefined,
   category: form.category.toLowerCase(),
   type: form.type.toLowerCase(),
-  country: form.country.toLowerCase(),
-  city: form.city.toLowerCase(),
+  location: {
+    address: form.address,
+    country: form.location.country.long_name.toLowerCase(),
+    city: form.location.city.long_name.toLowerCase(),
+    geo: form.location.geo,
+  },
   startDateTime: moment(form.time.toLowerCase(), 'hh:mma')
     .set('year', form.date.getFullYear())
     .set('month', form.date.getMonth())
@@ -36,6 +40,7 @@ export function* postTask() {
     yield put(updateModal(null));
     history.push(`/task/${task.id}`);
   } catch (err) {
+    console.error(err);
     yield put(taskCreateError(err));
   }
 }

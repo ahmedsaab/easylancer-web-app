@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { MDBIcon } from 'mdbreact';
+import Location from '../../../components/molecules/Location';
 
 export const StatusTime = styled('div')`
   font-size: 15px;
@@ -10,7 +11,7 @@ export const StatusTime = styled('div')`
   padding-left: 3px;
 `;
 
-export const LocationText = styled('div')`
+export const LocationText = styled(Location)`
   padding-top: 4px;
   padding-bottom: 4px;
   font-weight: 550;

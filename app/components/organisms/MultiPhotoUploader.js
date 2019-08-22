@@ -38,7 +38,7 @@ class MultiPhotoUploader extends React.Component {
 
   // called every time a file's `status` changes
   handleChangeStatus = async ({ meta, file }, status) => {
-    console.log(status, meta, file);
+    // console.log(status, meta, file);
     const { onUpdateUploadedImages } = this.props;
 
     // eslint-disable-next-line default-case

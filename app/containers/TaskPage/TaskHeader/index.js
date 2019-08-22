@@ -33,7 +33,7 @@ function TaskHeader({ task }) {
       </MDBRow>
       <MDBRow>
         <MDBCol size="12">
-          <LocationText>20251 Hamburg, Germany</LocationText>
+          <LocationText location={task.location} />
         </MDBCol>
       </MDBRow>
       <MDBRow>

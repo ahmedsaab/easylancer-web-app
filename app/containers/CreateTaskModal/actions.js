@@ -2,14 +2,31 @@ import {
   SEND_TASK,
   SEND_TASK_FAIL,
   SEND_TASK_SUCCESS,
-  UPDATE_TASK_FORM,
+  UPDATE_TASK_FORM_GENERAL,
+  UPDATE_TASK_FORM_LOCATION,
+  UPDATE_TASK_FORM_COUNTRY,
 } from './constants';
 
-export function updateTaskModalForm(key, value) {
+export function updateTaskModalFormGeneral(key, value) {
   return {
-    type: UPDATE_TASK_FORM,
+    type: UPDATE_TASK_FORM_GENERAL,
     key,
     value,
+  };
+}
+
+export function updateTaskModalFormCountry(country) {
+  return {
+    type: UPDATE_TASK_FORM_COUNTRY,
+    country,
+  };
+}
+
+export function updateTaskModalFormLocation(address, location) {
+  return {
+    type: UPDATE_TASK_FORM_LOCATION,
+    address,
+    location,
   };
 }
 

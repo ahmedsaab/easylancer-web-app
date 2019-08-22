@@ -1,57 +1,27 @@
-export const UPDATE_TASK_FORM = 'app/CreateTaskModal/UPDATE_TASK_FORM';
+export const UPDATE_TASK_FORM_GENERAL =
+  'app/CreateTaskModal/UPDATE_TASK_FORM_GENERAL';
+export const UPDATE_TASK_FORM_LOCATION =
+  'app/CreateTaskModal/UPDATE_TASK_FORM_LOCATION';
+export const UPDATE_TASK_FORM_COUNTRY =
+  'app/CreateTaskModal/UPDATE_TASK_FORM_COUNTRY';
 export const SEND_TASK = 'app/CreateTaskModal/SEND_TASK';
 export const SEND_TASK_SUCCESS = 'app/CreateTaskModal/SEND_TASK_SUCCESS';
 export const SEND_TASK_FAIL = 'app/CreateTaskModal/SEND_TASK_FAIL';
 
-export const countries = {
-  Egypt: {
-    id: 1234,
-    data: [
-      {
-        text: 'Cairo',
-        value: '1',
-      },
-      {
-        text: 'Alexandria',
-        value: '2',
-      },
-    ],
+export const countries = [
+  {
+    text: 'Egypt',
+    value: 'eg',
   },
-  Germany: {
-    id: 5678,
-    data: [
-      {
-        text: 'Hamburg',
-        value: '3',
-      },
-      {
-        text: 'Berlin',
-        value: '4',
-      },
-      {
-        text: 'Hanover',
-        value: '5',
-      },
-    ],
+  {
+    text: 'Estonia',
+    value: 'est',
   },
-  Estonia: {
-    id: 2853,
-    data: [
-      {
-        text: 'Tallinn',
-        value: '6',
-      },
-      {
-        text: 'Parnu',
-        value: '7',
-      },
-      {
-        text: 'Tartu',
-        value: '8',
-      },
-    ],
+  {
+    text: 'Germany',
+    value: 'de',
   },
-};
+];
 
 export const categories = {
   Beauty: {

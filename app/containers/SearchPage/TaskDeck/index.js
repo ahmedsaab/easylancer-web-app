@@ -4,14 +4,14 @@ import * as PropTypes from 'prop-types';
 import LoadingIndicator from 'components/molecules/LoadingIndicator';
 import { withRouter } from 'react-router-dom';
 import TaskCard from 'components/molecules/TaskCard';
-import { CardDeckResp } from 'components/molecules/TaskDeck/components';
+import { CardDeckResp } from 'containers/SearchPage/TaskDeck/components';
 
 function TaskDeck({ loading, error, tasks, history }) {
   if (loading) {
     return <LoadingIndicator />;
   }
   if (error) {
-    return <div>{JSON.stringify(error)}</div>;
+    return <div>{JSON.stringify(error.message)}</div>;
   }
   if (tasks.length > 0) {
     const taskCards = tasks.map(task => (
