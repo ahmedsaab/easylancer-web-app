@@ -122,7 +122,22 @@ export const SideBarUser = styled(MDBRow).attrs(() => ({
 
 export const SideBarUserImage = styled('img').attrs(() => ({
   className: 'img-fluid z-depth-1 rounded-circle',
-}))``;
+}))`
+  height: 48px;
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
+
+export const ImagePlaceholder = styled.div.attrs(() => ({
+  className: 'img-fluid z-depth-1 rounded-circle',
+}))`
+  height: 48px;
+  width: 48px;
+  position: relative;
+  margin: 0;
+  background-color: #1c2331;
+`;
 
 export const SideBarUserCredit = styled('div')`
   text-align: left;

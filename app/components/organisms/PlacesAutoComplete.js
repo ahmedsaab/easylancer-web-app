@@ -5,9 +5,9 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 import * as PropTypes from 'prop-types';
 import { GoogleApiWrapper } from 'google-maps-react';
-import LoadingIndicator from 'components/molecules/LoadingIndicator';
 import { MDBInput } from 'mdbreact';
 import styled from 'styled-components';
+import Spinner from 'components/atoms/Spinner';
 
 const DropDownContainer = styled.div`
   position: absolute;
@@ -133,5 +133,5 @@ Places.propTypes = {
 
 export default GoogleApiWrapper({
   apiKey: process.env.GOOGLE_MAPS_API_KEY,
-  LoadingContainer: LoadingIndicator,
+  LoadingContainer: Spinner,
 })(Places);

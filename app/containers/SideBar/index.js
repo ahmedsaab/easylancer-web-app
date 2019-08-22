@@ -22,15 +22,15 @@ import {
   SideBarUserData,
   SideBarUserImage,
   SideBarUserName,
-  SideBarButtonContainer,
+  SideBarButtonContainer, ImagePlaceholder,
 } from 'containers/SideBar/components';
 import reducer from 'containers/SideBar/reducer';
 import { makeSelectGlobalUser } from 'containers/App/selectors';
-import LoadingIndicator from 'components/molecules/LoadingIndicator';
 import { setBodyScroll } from 'containers/App/actions';
 import Footer from 'components/molecules/Footer';
 import { updateModal } from 'containers/Modal/actions';
 import auth from 'utils/auth';
+import Spinner from 'components/atoms/Spinner';
 
 function SideBar({ isOpen, user, handleToggle, onCreateTaskButtonClick }) {
   useInjectReducer({ key: 'sideNavBar', reducer });
@@ -45,25 +45,23 @@ function SideBar({ isOpen, user, handleToggle, onCreateTaskButtonClick }) {
         <SideBarHeader>
           {user ? (
             <SideBarUser>
-              <MDBCol size="4">
+              <ImagePlaceholder>
                 <SideBarUserImage src="https://i.pravatar.cc/55" />
-              </MDBCol>
-              <MDBCol size="8">
+              </ImagePlaceholder>
+              <SideBarUserData>
                 <SideBarUserData>
-                  <SideBarUserData>
-                    <SideBarUserName>
-                      {user.firstName} {user.lastName}
-                    </SideBarUserName>
-                    <SideBarUserCredit>
-                      <SideBarUserCreditAmount>€ 112</SideBarUserCreditAmount>
-                      <MDBIcon icon="wallet" />
-                    </SideBarUserCredit>
-                  </SideBarUserData>
+                  <SideBarUserName>
+                    {user.firstName} {user.lastName}
+                  </SideBarUserName>
+                  <SideBarUserCredit>
+                    <SideBarUserCreditAmount>€ 112</SideBarUserCreditAmount>
+                    <MDBIcon icon="wallet" />
+                  </SideBarUserCredit>
                 </SideBarUserData>
-              </MDBCol>
+              </SideBarUserData>
             </SideBarUser>
           ) : (
-            <LoadingIndicator />
+            <Spinner dimension="30px" margin="9px" />
           )}
         </SideBarHeader>
         <SideBarList>
