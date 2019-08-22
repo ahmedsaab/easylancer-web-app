@@ -30,6 +30,9 @@ import LanguageProvider from 'containers/LanguageProvider';
 import '!file-loader?name=[name].[ext]!./images/favicon.ico';
 import 'file-loader?name=.htaccess!./.htaccess'; // eslint-disable-line import/extensions
 
+// This is the auth module
+import auth from 'utils/auth';
+
 import configureStore from './configureStore';
 
 // Import i18n messages
@@ -50,17 +53,25 @@ const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
 const render = messages => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <LanguageProvider messages={messages}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
-      </LanguageProvider>
-    </Provider>,
-    MOUNT_NODE,
-  );
+  // eslint-disable-next-line no-restricted-globals
+  if (location.pathname.includes('/callback')) {
+    auth.handleAuthentication();
+  } else if (process.env.AUTH && !auth.isAuthenticated()) {
+    auth.login();
+  } else {
+    ReactDOM.render(
+      <Provider store={store}>
+        <LanguageProvider messages={messages}>
+          <ConnectedRouter history={history}>
+            <App />
+          </ConnectedRouter>
+        </LanguageProvider>
+      </Provider>,
+      MOUNT_NODE,
+    );
+  }
 };
+
 
 if (module.hot) {
   // Hot reloadable React components and translation json files

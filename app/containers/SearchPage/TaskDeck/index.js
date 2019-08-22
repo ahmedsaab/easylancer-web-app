@@ -1,14 +1,19 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 
-import LoadingIndicator from 'components/molecules/LoadingIndicator';
 import { withRouter } from 'react-router-dom';
 import TaskCard from 'components/molecules/TaskCard';
 import { CardDeckResp } from 'containers/SearchPage/TaskDeck/components';
+import FitPage from 'components/atoms/FitPage';
+import Spinner from 'components/atoms/Spinner';
 
 function TaskDeck({ loading, error, tasks, history }) {
   if (loading) {
-    return <LoadingIndicator />;
+    return (
+      <FitPage>
+        <Spinner dimension="50px" />
+      </FitPage>
+    );
   }
   if (error) {
     return <div>{JSON.stringify(error.message)}</div>;

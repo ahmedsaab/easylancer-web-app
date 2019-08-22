@@ -46,7 +46,7 @@ export function TaskPage({
   if (loading) {
     return (
       <FitPage>
-        <Spinner dimension="200px" />
+        <Spinner dimension="50px" />
       </FitPage>
     );
   }

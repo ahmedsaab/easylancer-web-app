@@ -39,7 +39,6 @@ class Auth {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
       } else if (err) {
-        history.replace('/');
         console.log(err);
         alert(`Error: ${err.error}. Check the console for further details.`);
       }
@@ -68,7 +67,7 @@ class Auth {
     localStorage.setItem('expiresAt', expiresAt);
 
     // navigate to the home route
-    history.replace('/');
+    window.location.replace('/');
   }
 
   renewSession() {
@@ -105,6 +104,7 @@ class Auth {
 
     // Remove isLoggedIn flag from localStorage
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('accessToken');
 
     this.auth0.logout({
       returnTo: window.location.origin,

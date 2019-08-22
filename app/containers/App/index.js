@@ -20,7 +20,6 @@ import TaskPage from 'containers/TaskPage/Loadable';
 import SearchPage from 'containers/SearchPage/Loadable';
 import LoadingIndicator from 'components/molecules/LoadingIndicator';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import auth from 'utils/auth';
 import { Container, ContentRow, Wrapper } from 'containers/App/components';
 import Modal from 'containers/Modal';
 import GlobalStyle from 'global-styles';
@@ -28,26 +27,11 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { loadUser } from 'containers/App/actions';
 import saga from 'containers/App/saga';
 
-const handleAuthentication = ({ location }) => {
-  if (/access_token|id_token|error/.test(location.hash)) {
-    auth.handleAuthentication();
-  }
-};
-
 function App({ onLoad }) {
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
-    if (
-      process.env.AUTH &&
-      !auth.isAuthenticated() &&
-      // eslint-disable-next-line no-restricted-globals
-      !location.pathname.includes('/callback')
-    ) {
-      auth.login();
-    } else {
-      onLoad();
-    }
+    onLoad();
   }, []);
 
   return (
