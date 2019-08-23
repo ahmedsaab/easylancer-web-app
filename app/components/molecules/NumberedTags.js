@@ -18,12 +18,14 @@ const TagText = styled.div`
 `;
 
 function NumberedTags({ tags, className }) {
-  const Tags = tags.map(tag => (
-    <Tag key={tag.name}>
-      <TagText>{tag.name}</TagText>
-      <TagNumber>{tag.count}</TagNumber>
-    </Tag>
-  ));
+  const Tags = tags
+    .sort((a, b) => a > b)
+    .map(tag => (
+      <Tag key={tag.value}>
+        <TagText>{tag.value}</TagText>
+        {tag.count > 1 ? <TagNumber>{tag.count}</TagNumber> : null}
+      </Tag>
+    ));
   return <div className={className}>{Tags}</div>;
 }
 

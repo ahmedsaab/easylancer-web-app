@@ -3,8 +3,8 @@ import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import * as client from 'utils/client';
 
+import * as client from 'utils/client';
 import { useInjectReducer } from 'utils/injectReducer';
 import {
   ModalActionButtons,
@@ -16,8 +16,9 @@ import {
   DatePicker,
   TimePicker,
   Label,
+  TagInput,
 } from 'containers/TaskPage/CreateOfferModal/components';
-import { MDBChipsInput, MDBCol, MDBInput, MDBRow, MDBSelect } from 'mdbreact';
+import { MDBCol, MDBInput, MDBRow, MDBSelect } from 'mdbreact';
 import NumberInput from 'components/atoms/NumberInput';
 import { updateModal } from 'containers/Modal/actions';
 import {
@@ -29,7 +30,7 @@ import {
   sendTaskModal,
   updateTaskModalFormCountry,
   updateTaskModalFormGeneral,
-  updateTaskModalFormLocation,
+  updateTaskModalFormLocation, updateTaskModalPushTag, updateTaskModalRemoveTag,
 } from 'containers/CreateTaskModal/actions';
 import { useInjectSaga } from 'utils/injectSaga';
 import { countries, categories } from 'containers/CreateTaskModal/constants';
@@ -47,6 +48,8 @@ export function CreateTaskModal({
   onUpdateFormGeneral,
   onUpdateFormLocation,
   onUpdateFormCountry,
+  onUpdateFormPushTag,
+  onUpdateFormRemoveTag,
 }) {
   useInjectReducer({ key: 'createTaskModal', reducer });
   useInjectSaga({ key: 'createTaskModal', saga });
@@ -206,9 +209,10 @@ export function CreateTaskModal({
         </div>
         <div className="form-group">
           <Label>Tags</Label>
-          <MDBChipsInput
-            placeholder="+ Tag"
-            secondaryPlaceholder="Enter a tag"
+          <TagInput
+            value={form.tags}
+            onAdd={tag => onUpdateFormPushTag(tag)}
+            onDelete={(tag, index) => onUpdateFormRemoveTag(index)}
           />
         </div>
       </ModalBody>
@@ -231,6 +235,8 @@ CreateTaskModal.propTypes = {
   onUpdateFormGeneral: PropTypes.func.isRequired,
   onUpdateFormLocation: PropTypes.func.isRequired,
   onUpdateFormCountry: PropTypes.func.isRequired,
+  onUpdateFormPushTag: PropTypes.func.isRequired,
+  onUpdateFormRemoveTag: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -247,6 +253,8 @@ const mapDispatchToProps = dispatch => ({
   onUpdateFormLocation: (address, location) =>
     dispatch(updateTaskModalFormLocation(address, location)),
   onUpdateFormCountry: country => dispatch(updateTaskModalFormCountry(country)),
+  onUpdateFormPushTag: tag => dispatch(updateTaskModalPushTag(tag)),
+  onUpdateFormRemoveTag: index => dispatch(updateTaskModalRemoveTag(index)),
 });
 
 const withConnect = connect(

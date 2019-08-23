@@ -4,6 +4,10 @@ export const UPDATE_TASK_FORM_LOCATION =
   'app/CreateTaskModal/UPDATE_TASK_FORM_LOCATION';
 export const UPDATE_TASK_FORM_COUNTRY =
   'app/CreateTaskModal/UPDATE_TASK_FORM_COUNTRY';
+export const UPDATE_TASK_FORM_REMOVE_TAG =
+  'app/CreateTaskModal/UPDATE_TASK_FORM_REMOVE_TAG';
+export const UPDATE_TASK_FORM_PUSH_TAG =
+  'app/CreateTaskModal/UPDATE_TASK_FORM_PUSH_TAG';
 export const SEND_TASK = 'app/CreateTaskModal/SEND_TASK';
 export const SEND_TASK_SUCCESS = 'app/CreateTaskModal/SEND_TASK_SUCCESS';
 export const SEND_TASK_FAIL = 'app/CreateTaskModal/SEND_TASK_FAIL';

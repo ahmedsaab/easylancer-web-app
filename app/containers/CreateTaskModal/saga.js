@@ -24,6 +24,7 @@ const createPayloadFromFrom = form => ({
     city: form.location.city.long_name.toLowerCase(),
     geo: form.location.geo,
   },
+  tags: form.tags,
   startDateTime: moment(form.time.toLowerCase(), 'hh:mma')
     .set('year', form.date.getFullYear())
     .set('month', form.date.getMonth())

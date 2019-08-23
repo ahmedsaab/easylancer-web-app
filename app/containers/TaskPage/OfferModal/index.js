@@ -10,7 +10,7 @@ import FluidModal from 'components/molecules/FluidModal';
 import LoadingIndicator from 'components/molecules/LoadingIndicator';
 import ModalHeader from 'components/atoms/ModalHeader';
 import ModalCloseIcon from 'components/atoms/ModalCloseIcon';
-import { selectTaskPageOfferData } from 'containers/TaskPage/selectors';
+import { selectTaskPageOfferData, selectTaskPageTaskData } from 'containers/TaskPage/selectors';
 import OfferDetails from 'components/molecules/OfferDetails';
 import OfferActionButtons from 'containers/TaskPage/OfferActionButtons';
 
@@ -19,7 +19,7 @@ const OfferFluidModal = styled(FluidModal)`
   margin: 0 0 40px 0;
 `;
 
-function OfferModal({ offer, isOpen, onClose }) {
+function OfferModal({ offer, task, isOpen, onClose }) {
   const ref = useRef(null);
   let content = null;
 
@@ -29,7 +29,7 @@ function OfferModal({ offer, isOpen, onClose }) {
     content = <div>{JSON.stringify(offer)}</div>;
   } else {
     content = (
-      <OfferDetails offer={offer}>
+      <OfferDetails offer={offer} task={task}>
         <OfferActionButtons containerRef={ref} />
       </OfferDetails>
     );
@@ -47,12 +47,14 @@ function OfferModal({ offer, isOpen, onClose }) {
 
 OfferModal.propTypes = {
   offer: PropTypes.object,
+  task: PropTypes.object,
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   offer: selectTaskPageOfferData,
+  task: selectTaskPageTaskData,
 });
 
 const withConnect = connect(mapStateToProps);

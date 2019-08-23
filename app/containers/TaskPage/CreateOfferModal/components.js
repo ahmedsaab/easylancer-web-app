@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import CenteredDiv from 'components/atoms/CenteredDiv';
+import ChipInput from 'material-ui-chip-input';
 import {
   MDBDatePicker,
   MDBModalBody,
@@ -76,15 +77,17 @@ export const FormSelect = props => (
   </FormContainer>
 );
 
-const TimePickerContainer = styled.div`
-
-`;
+const TimePickerContainer = styled.div``;
 
 export const TimePicker = props => (
   <TimePickerContainer>
     <MDBTimePicker {...props} />
   </TimePickerContainer>
 );
+
+export const TagInput = styled(ChipInput)`
+  width: 100%;
+`;
 
 export const DatePicker = styled(MDBDatePicker).attrs(() => ({
   theme: {

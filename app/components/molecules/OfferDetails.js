@@ -28,7 +28,19 @@ export const OfferMessage = styled.div`
   font-size: 0.9rem;
 `;
 
-function OfferDetails({ offer, children }) {
+function OfferDetails({ offer, task, children }) {
+  const commonTags = [];
+
+  task.tags.forEach(tag => {
+    const existentTagIndex = offer.workerUser.tags.findIndex(
+      userTag => userTag.value === tag,
+    );
+
+    if (existentTagIndex !== -1) {
+      commonTags.push(offer.workerUser.tags[existentTagIndex]);
+    }
+  });
+
   return (
     <OfferDetailsContainer>
       <ProfileHeader
@@ -52,8 +64,8 @@ function OfferDetails({ offer, children }) {
       <OfferSection title="Badges" visible={!!offer.workerUser.badges.length}>
         <BadgesDetails badges={offer.workerUser.badges} />
       </OfferSection>
-      <OfferSection title="Tags" visible={!!offer.workerUser.tags.length}>
-        <NumberedTags tags={offer.workerUser.tags} />
+      <OfferSection title="Tags" visible={!!commonTags.length}>
+        <NumberedTags tags={commonTags} />
       </OfferSection>
       {children}
     </OfferDetailsContainer>
@@ -62,6 +74,7 @@ function OfferDetails({ offer, children }) {
 
 OfferDetails.propTypes = {
   offer: PropTypes.object,
+  task: PropTypes.object,
   children: PropTypes.any,
 };
 

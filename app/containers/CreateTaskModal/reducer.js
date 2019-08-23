@@ -3,6 +3,8 @@ import {
   UPDATE_TASK_FORM_GENERAL,
   UPDATE_TASK_FORM_COUNTRY,
   UPDATE_TASK_FORM_LOCATION,
+  UPDATE_TASK_FORM_REMOVE_TAG,
+  UPDATE_TASK_FORM_PUSH_TAG,
   SEND_TASK_SUCCESS,
   SEND_TASK_FAIL,
   SEND_TASK,
@@ -19,6 +21,7 @@ export const initialState = {
     category: Object.keys(categories)[0],
     type: categories[Object.keys(categories)[0]].data[0].text,
     imagesUrls: [],
+    tags: [],
     date: new Date(),
     time: '12:00AM',
     country: null,
@@ -51,16 +54,24 @@ const createTaskModalReducer = (state = initialState, action) =>
         draft.form.address = action.address;
         draft.form.location = action.location || initialState.form.location;
         break;
+      case UPDATE_TASK_FORM_REMOVE_TAG:
+        draft.form.tags = draft.form.tags
+          .slice(0, action.index)
+          .concat(
+            draft.form.tags.slice(action.index + 1, draft.form.tags.length),
+          );
+        break;
+      case UPDATE_TASK_FORM_PUSH_TAG:
+        draft.form.tags = draft.form.tags.concat([action.tag.toLowerCase()]);
+        break;
       case SEND_TASK:
         draft.loading = true;
         break;
-
       case SEND_TASK_SUCCESS:
         draft.loading = false;
         draft.error = null;
         draft.form = initialState.form;
         break;
-
       case SEND_TASK_FAIL:
         draft.loading = false;
         draft.error = action.error;

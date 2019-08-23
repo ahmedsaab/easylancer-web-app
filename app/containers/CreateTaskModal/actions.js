@@ -1,11 +1,13 @@
 import {
+  UPDATE_TASK_FORM_REMOVE_TAG,
   SEND_TASK,
   SEND_TASK_FAIL,
   SEND_TASK_SUCCESS,
   UPDATE_TASK_FORM_GENERAL,
   UPDATE_TASK_FORM_LOCATION,
   UPDATE_TASK_FORM_COUNTRY,
-} from './constants';
+  UPDATE_TASK_FORM_PUSH_TAG,
+} from 'containers/CreateTaskModal/constants';
 
 export function updateTaskModalFormGeneral(key, value) {
   return {
@@ -27,6 +29,20 @@ export function updateTaskModalFormLocation(address, location) {
     type: UPDATE_TASK_FORM_LOCATION,
     address,
     location,
+  };
+}
+
+export function updateTaskModalPushTag(tag) {
+  return {
+    type: UPDATE_TASK_FORM_PUSH_TAG,
+    tag,
+  };
+}
+
+export function updateTaskModalRemoveTag(index) {
+  return {
+    type: UPDATE_TASK_FORM_REMOVE_TAG,
+    index,
   };
 }
 
