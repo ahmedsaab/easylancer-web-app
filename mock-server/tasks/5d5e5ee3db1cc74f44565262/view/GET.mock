@@ -1,0 +1,60 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+
+{
+   "acceptedOffer":"5d5e69d2db1cc74f44565263",
+   "category":"beauty",
+   "createdAt":1566465763776,
+   "creatorRating":null,
+   "creatorUser":{
+      "badges":[
+
+      ],
+      "dislikes":0,
+      "firstName":"Kos",
+      "id":"5cf6c505e02e0436534d5406",
+      "imageUrl":null,
+      "lastName":"Blastik",
+      "likes":0,
+      "approved":false
+   },
+   "description":"Eat my tasty shit you peice of crap",
+   "endDateTime":null,
+   "id":"5d5e5ee3db1cc74f44565262",
+   "imagesUrls":[
+      "https://files-pool.s3.eu-central-1.amazonaws.com/auth0|5cf6c4cf9ae21f0cae6c2959/5d5e5eddafe5c2546a52dc59"
+   ],
+   "location":{
+      "geo":{
+         "lat":53.55566,
+         "lng":9.984808
+      },
+      "country":"germany",
+      "city":"hamburg",
+      "address":"Valentinskamp, Hamburg, Germany"
+   },
+   "paymentMethod":"card",
+   "price":2920,
+   "seenCount":3,
+   "startDateTime":1567142700000,
+   "status":"assigned",
+   "tags":[
+
+   ],
+   "title":"Eat my shit at home",
+   "type":"manicure",
+   "workerRating":null,
+   "workerUser":{
+      "badges":[
+
+      ],
+      "dislikes":0,
+      "firstName":"Ahmed",
+      "id":"5cf59f092357cc11fbc6b3d8",
+      "imageUrl":null,
+      "lastName":"Saab",
+      "likes":0,
+      "approved":false
+   }
+}

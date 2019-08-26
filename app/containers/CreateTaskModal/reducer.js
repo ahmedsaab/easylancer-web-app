@@ -18,8 +18,8 @@ export const initialState = {
     paymentMethod: 'card',
     title: '',
     description: '',
-    category: Object.keys(categories)[0],
-    type: categories[Object.keys(categories)[0]].data[0].text,
+    category: null,
+    type: null,
     imagesUrls: [],
     tags: [],
     date: new Date(),
@@ -42,7 +42,7 @@ const createTaskModalReducer = (state = initialState, action) =>
       case UPDATE_TASK_FORM_GENERAL:
         draft.form[action.key] = action.value;
         if (action.key === 'category') {
-          draft.form.type = categories[action.value].data[0].text;
+          draft.form.type = null;
         }
         break;
       case UPDATE_TASK_FORM_COUNTRY:

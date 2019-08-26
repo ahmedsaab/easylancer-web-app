@@ -16,8 +16,8 @@ const createPayloadFromFrom = form => ({
   ...form,
   date: undefined,
   time: undefined,
-  category: form.category.toLowerCase(),
-  type: form.type.toLowerCase(),
+  category: form.category.text.toLowerCase(),
+  type: form.type.text.toLowerCase(),
   location: {
     address: form.address,
     country: form.location.country.long_name.toLowerCase(),

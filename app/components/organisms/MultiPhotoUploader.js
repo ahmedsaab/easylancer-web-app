@@ -1,7 +1,60 @@
 import 'react-dropzone-uploader/dist/styles.css';
-import Dropzone from 'react-dropzone-uploader';
+import DropZone from 'react-dropzone-uploader';
 import React from 'react';
 import * as PropTypes from 'prop-types';
+import PhotoReview from 'components/organisms/PhotoReview';
+
+const inputLabelStyles = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  alignSelf: 'flex-start',
+  minHeight: '32px',
+  backgroundColor: '#ffffff00',
+  color: '#2BBBAD',
+  fontSize: '14px',
+  fontWeight: '600',
+  cursor: 'pointer',
+  padding: '0',
+  width: '120px',
+  height: '150px',
+  margin: '10px',
+  border: '2px #2BBBAD dashed',
+  borderRadius: '4px',
+  order: '-1',
+};
+
+const inputLabelStylesEmpty = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  alignSelf: 'flex-start',
+  backgroundColor: '#ffffff00',
+  color: '#2BBBAD',
+  fontSize: '14px',
+  fontWeight: '600',
+  cursor: 'pointer',
+  border: '2px #2BBBAD dashed',
+  borderRadius: '4px',
+  width: '100%',
+  margin: '0',
+  padding: '10px',
+  height: '100%',
+};
+
+const ContainerStyles = {
+  alignItems: 'center',
+  overflow: 'auto',
+  position: 'relative',
+  boxSizing: 'border-box',
+  transition: 'all 0.15s linear',
+  border: 'none',
+  marginLeft: '8px',
+  marginRight: '8px',
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fill, 140px)',
+  gridGap: '0.5rem',
+};
 
 class MultiPhotoUploader extends React.Component {
   constructor(props) {
@@ -78,10 +131,19 @@ class MultiPhotoUploader extends React.Component {
 
   render() {
     return (
-      <Dropzone
+      <DropZone
         getUploadParams={this.getUploadParams}
         onChangeStatus={this.handleChangeStatus}
         onSubmit={this.handleSubmit}
+        PreviewComponent={PhotoReview}
+        SubmitButtonComponent={null}
+        inputContent="Add Photos"
+        inputWithFilesContent="Add Photo"
+        styles={{
+          dropzone: ContainerStyles,
+          inputLabel: inputLabelStylesEmpty,
+          inputLabelWithFiles: inputLabelStyles,
+        }}
         accept="image/*"
       />
     );

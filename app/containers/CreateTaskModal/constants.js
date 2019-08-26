@@ -27,73 +27,77 @@ export const countries = [
   },
 ];
 
-export const categories = {
-  Beauty: {
-    id: 1234,
-    data: [
+export const categories = [
+  {
+    value: 1234,
+    text: 'Beauty',
+    types: [
       {
+        value: 1,
         text: 'Manicure',
-        value: '1',
       },
       {
+        value: 2,
         text: 'Hair',
-        value: '2',
       },
     ],
   },
-  Repair: {
-    id: 5678,
-    data: [
+  {
+    value: 5678,
+    text: 'Repair',
+    types: [
       {
+        value: 3,
         text: 'Computer',
-        value: '3',
       },
       {
+        value: 4,
         text: 'Phone',
-        value: '4',
       },
       {
+        value: 5,
         text: 'Bike',
-        value: '5',
       },
       {
+        value: 6,
         text: 'Automotive',
-        value: '6',
       },
     ],
   },
-  Home: {
-    id: 2853,
-    data: [
+  {
+    value: 2853,
+    text: 'Home',
+    types: [
       {
+        value: 7,
         text: 'Cleaning',
-        value: '6',
       },
       {
+        value: 8,
         text: 'Renovation',
-        value: '7',
       },
       {
+        value: 9,
         text: 'Electricity',
-        value: '8',
       },
       {
+        value: 10,
         text: 'Plumping',
-        value: '8',
       },
     ],
   },
-  Expat: {
-    id: 1222,
-    data: [
+  {
+    value: 1222,
+    text: 'Expat',
+    types: [
       {
+        value: 11,
         text: 'Translation',
-        value: '1',
       },
       {
+        value: 12,
         text: 'Paper work',
-        value: '2',
       },
     ],
   },
-};
+];

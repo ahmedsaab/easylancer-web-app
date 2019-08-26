@@ -10,11 +10,12 @@ import {
 } from 'mdbreact';
 import ActionButtons from 'components/molecules/ActionButtons';
 import React from 'react';
+import grafitiImg from 'images/grafiti.jpg';
 
 export const OfferModalTaskTitle = styled('div')`
   display: inline;
   padding-left: 7px;
-  font-weight: 700;
+  font-weight: bolder;
 `;
 
 export const RadioButtonsGroup = styled('div')`
@@ -36,6 +37,7 @@ export const ModalContainer = styled.div`
   height: 100%;
   display: flex;
   flex-flow: column;
+  overflow-y: auto;
   padding: 0;
   label {
     font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
@@ -44,17 +46,24 @@ export const ModalContainer = styled.div`
 
 export const ModalHeader = styled(MDBModalHeader)`
   flex-shrink: 1;
+  background: url(${grafitiImg});
   button {
     font-size: 40px;
+    opacity: 1;
+    color: white;
+    :hover {
+      color: white;
+    }
   }
 `;
 
 export const ModalBody = styled(MDBModalBody)`
   flex-grow: 1;
   padding: 3% 6% 1.5%;
+  overflow-y: auto;
   label {
     color: grey;
-    font-weight: 400;
+    font-weight: bolder;
   }
 `;
 

@@ -15,10 +15,10 @@ export const NavLogoText = styled('span')`
   vertical-align: middle;
   padding-left: 5px;
   font-size: 22px;
-  font-weight: 1000;
+  font-weight: bolder;
 `;
 
-export const NavBar = styled(MDBNavbar).attrs(props => ({
+export const NavBar = styled(MDBNavbar).attrs(() => ({
   color: 'unique-color-dark',
   dark: true,
 }))`

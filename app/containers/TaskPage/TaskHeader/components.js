@@ -14,7 +14,7 @@ export const StatusTime = styled('div')`
 export const LocationText = styled(Location)`
   padding-top: 4px;
   padding-bottom: 4px;
-  font-weight: 550;
+  font-weight: bold;
   // text-decoration: underline;
   // color: cadetblue;
   // cursor: pointer;
@@ -25,7 +25,7 @@ export const TitleText = styled('div')`
   line-height: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
-  font-weight: 700;
+  font-weight: 800;
 `;
 
 export const PriceTagContainer = styled('div')`

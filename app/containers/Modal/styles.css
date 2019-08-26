@@ -1,5 +1,22 @@
 .full-screen-modal-content {
   border-radius: 0 !important;
+  max-height: calc(100vh - 20vh);
+}
+
+
+@media (min-width: 1200px) {
+  .modal.fade.top.show {
+    width: calc(100% - 200px);
+    left: unset;
+    top: unset;
+  }
+}
+
+@media (min-width: 576px) {
+  .full-screen-modal-container {
+    max-width: 700px;
+    margin: auto
+  }
 }
 
 @media (max-width: 768px) {

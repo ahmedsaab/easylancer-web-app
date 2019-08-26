@@ -4,6 +4,7 @@ import Lightbox from 'react-image-lightbox';
 import 'components/organisms/ImagesGrid/index.css';
 import styled from 'styled-components';
 import * as PropTypes from 'prop-types';
+import ImageGrid from 'components/organisms/ImageGrid';
 
 const Figure = styled('figure')`
   padding: 0.5rem;
@@ -24,49 +25,15 @@ class ImagesGrid extends React.Component {
     const { images } = this.props;
 
     return (
-      <MDBContainer>
-        <div className="mdb-lightbox no-margin">
-          <MDBRow>
-            {images.map((url, i) => (
-              <MDBCol sm="3" key={url}>
-                <Figure>
-                  <img
-                    src={url}
-                    alt="Gallery"
-                    className="img-fluid"
-                    onClick={() =>
-                      this.setState({ photoIndex: i, isOpen: true })
-                    }
-                  />
-                </Figure>
-              </MDBCol>
-            ))}
-            {/* <MDBCol sm="3"> */}
-            {/*  <Figure */}
-            {/*    onClick={() => this.setState({ photoIndex: 3, isOpen: true })} */}
-            {/*  > */}
-            {/*    <MDBView waves> */}
-            {/*      <img */}
-            {/*        src={smallImages[3]} */}
-            {/*        alt="Gallery" */}
-            {/*        className="img-fluid" */}
-            {/*      /> */}
-            {/*      {smallImages.length > 4 ? ( */}
-            {/*        <MDBMask */}
-            {/*          className="flex-center" */}
-            {/*          overlay="teal-strong" */}
-            {/*          style={{ cursor: 'zoom-in' }} */}
-            {/*        > */}
-            {/*          <p className="white-text">{`+${smallImages.length - 4}`}</p> */}
-            {/*        </MDBMask> */}
-            {/*      ) : ( */}
-            {/*        <div /> */}
-            {/*      )} */}
-            {/*    </MDBView> */}
-            {/*  </Figure> */}
-            {/* </MDBCol> */}
-          </MDBRow>
-        </div>
+      <div>
+        <ImageGrid
+          tiles={images.map((url, i) => ({
+            img: url,
+            title: '',
+            cols: 1,
+            onClick: () => this.setState({ photoIndex: i, isOpen: true }),
+          }))}
+        />
         {isOpen && (
           <Lightbox
             mainSrc={images[photoIndex]}
@@ -86,7 +53,7 @@ class ImagesGrid extends React.Component {
             }
           />
         )}
-      </MDBContainer>
+      </div>
     );
   }
 }

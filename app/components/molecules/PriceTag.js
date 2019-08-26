@@ -5,7 +5,7 @@ import { MDBIcon } from 'mdbreact';
 
 export const PaymentPriceNumber = styled('div')`
   display: inline;
-  font-weight: 800;
+  font-weight: 900;
   color: black;
 `;
 

@@ -1,0 +1,51 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+
+{
+   "acceptedOffer":null,
+   "category":"home",
+   "createdAt":1566806702940,
+   "creatorRating":null,
+   "creatorUser":{
+      "badges":[
+
+      ],
+      "dislikes":0,
+      "firstName":"Kos",
+      "id":"5cf6c505e02e0436534d5406",
+      "imageUrl":null,
+      "lastName":"Blastik",
+      "likes":0,
+      "approved":false
+   },
+   "description":"My son is very well behaved. He would play with his toys all day. It is important to watch him while playing as he sometimes eat whatever he finds.",
+   "endDateTime":null,
+   "id":"5d6392ae8fd6191a4db27b41",
+   "imagesUrls":[
+      "https://files-pool.s3.eu-central-1.amazonaws.com/auth0|5cf6c4cf9ae21f0cae6c2959/5d5eb762102ab4c64de38597",
+      "https://files-pool.s3.eu-central-1.amazonaws.com/auth0|5cf6c4cf9ae21f0cae6c2959/5d639278847e66fdb30ca7ee",
+      "https://files-pool.s3.eu-central-1.amazonaws.com/auth0|5cf6c4cf9ae21f0cae6c2959/5d63927b847e66b6e60ca7ef"
+   ],
+   "location":{
+      "geo":{
+         "lat":53.58192,
+         "lng":9.979739
+      },
+      "country":"germany",
+      "city":"hamburg",
+      "address":"Lehmweg, Hamburg, Germany"
+   },
+   "paymentMethod":"card",
+   "price":75,
+   "seenCount":1,
+   "startDateTime":1566770400000,
+   "status":"open",
+   "tags":[
+      "yo yo"
+   ],
+   "title":"Babysitter needed for a 1 year old boy",
+   "type":"renovation",
+   "workerRating":null,
+   "workerUser":null
+}

@@ -11,7 +11,7 @@ const TabNav = styled(MDBNav)`
 const TabNavLink = styled(MDBNavLink)`
   color: #4cbbad;
   margin-top: 28px;
-  font-weight: 520;
+  font-weight: bold;
   font-size: 1.2rem;
   &.active {
     border: solid 2px;

@@ -11,8 +11,8 @@ export default styled.div`
   border-radius: 0.125rem;
   display: inline-block;
   padding: 0.5em 0.5em;
-  font-size: 75%;
-  font-weight: 700;
+  font-size: 90%;
+  font-weight: 900;
   line-height: 1;
   text-align: center;
   white-space: nowrap;

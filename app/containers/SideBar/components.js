@@ -141,7 +141,7 @@ export const ImagePlaceholder = styled.div.attrs(() => ({
 
 export const SideBarUserCredit = styled('div')`
   text-align: left;
-  font-weight: 800;
+  font-weight: bolder;
 `;
 
 export const SideBarUserCreditAmount = styled('span')`

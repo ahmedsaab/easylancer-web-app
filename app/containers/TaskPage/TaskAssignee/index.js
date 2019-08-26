@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import styled from 'styled-components';
 
 import {
+  makeSelectTaskPageUserIsTaskOwner,
   selectTaskPageOffersData,
   selectTaskPageTaskData,
 } from 'containers/TaskPage/selectors';
@@ -77,8 +78,8 @@ const AvatarContainer = styled.div`
 /**
  * @return {null}
  */
-function TaskAssignee({ task, offers, onContact }) {
-  if (task.status === 'assigned') {
+function TaskAssignee({ isTaskOwner, task, offers, onContact }) {
+  if (task.status === 'assigned' && isTaskOwner) {
     if (offers === null) {
       return <LoadingIndicator />;
     }
@@ -116,11 +117,13 @@ TaskAssignee.propTypes = {
   task: PropTypes.object,
   offers: PropTypes.array,
   onContact: PropTypes.func,
+  isTaskOwner: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   task: selectTaskPageTaskData,
   offers: selectTaskPageOffersData,
+  isTaskOwner: makeSelectTaskPageUserIsTaskOwner(),
 });
 
 const mapDispatchToProps = dispatch => ({

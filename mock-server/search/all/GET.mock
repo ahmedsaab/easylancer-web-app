@@ -3,52 +3,365 @@ Content-Type: application/json; charset=utf-8
 Access-Control-Allow-Origin: *
 
 [
-  {
-    "category": "category1",
-    "createdAt": 1559597979228,
-    "endDateTime": null,
-    "id": "5cf5939b2357cc11fbc6b3d5",
-    "location": {
-      "lat": 93.2,
-      "lng": 10.23
-    },
-    "paymentMethod": "card",
-    "price": 100,
-    "startDateTime": 1555723569401,
-    "status": "open",
-    "title": "cwecewcew",
-    "type": "type1"
-  },
-  {
-    "category": "category1",
-    "createdAt": 1559598630901,
-    "endDateTime": null,
-    "id": "5cf596262357cc11fbc6b3d6",
-    "location": {
-      "lat": 93.2,
-      "lng": 10.23
-    },
-    "paymentMethod": "card",
-    "price": 400,
-    "startDateTime": 1555723569401,
-    "status": "assigned",
-    "title": "this is a test",
-    "type": "type1"
-  },
-  {
-    "category": "category2",
-    "createdAt": 1560191632847,
-    "endDateTime": null,
-    "id": "5cfea290f2085d3e73b1ef41",
-    "location": {
-      "lat": 53.58384,
-      "lng": 9.98017
-    },
-    "paymentMethod": "card",
-    "price": 300,
-    "startDateTime": 1496846048700,
-    "status": "open",
-    "title": "Home cleaning for 60m2 appartment",
-    "type": "type1"
-  }
+   {
+      "category":"beauty",
+      "createdAt":1566464908792,
+      "creatorUser":{
+         "badges":[
+
+         ],
+         "dislikes":0,
+         "firstName":"Kos",
+         "id":"5cf6c505e02e0436534d5406",
+         "imageUrl":null,
+         "lastName":"Blastik",
+         "likes":0,
+         "approved":false
+      },
+      "endDateTime":null,
+      "id":"5d5e5b8cdb1cc74f44565261",
+      "imagesUrls":[
+
+      ],
+      "location":{
+         "geo":{
+            "lat":59.442947,
+            "lng":24.738302
+         },
+         "country":"estonia",
+         "city":"tallinn",
+         "address":"Kotzebue, Tallinn, Estonia"
+      },
+      "paymentMethod":"card",
+      "price":25,
+      "startDateTime":1566424800000,
+      "status":"open",
+      "title":"My super task",
+      "type":"manicure"
+   },
+   {
+      "category":"beauty",
+      "createdAt":1566465763776,
+      "creatorUser":{
+         "badges":[
+
+         ],
+         "dislikes":0,
+         "firstName":"Kos",
+         "id":"5cf6c505e02e0436534d5406",
+         "imageUrl":null,
+         "lastName":"Blastik",
+         "likes":0,
+         "approved":false
+      },
+      "endDateTime":null,
+      "id":"5d5e5ee3db1cc74f44565262",
+      "imagesUrls":[
+         "https://files-pool.s3.eu-central-1.amazonaws.com/auth0|5cf6c4cf9ae21f0cae6c2959/5d5e5eddafe5c2546a52dc59"
+      ],
+      "location":{
+         "geo":{
+            "lat":53.55566,
+            "lng":9.984808
+         },
+         "country":"germany",
+         "city":"hamburg",
+         "address":"Valentinskamp, Hamburg, Germany"
+      },
+      "paymentMethod":"card",
+      "price":2920,
+      "startDateTime":1567142700000,
+      "status":"assigned",
+      "title":"Eat my shit at home",
+      "type":"manicure"
+   },
+   {
+      "category":"beauty",
+      "createdAt":1566488425195,
+      "creatorUser":{
+         "badges":[
+
+         ],
+         "dislikes":0,
+         "firstName":"Kos",
+         "id":"5cf6c505e02e0436534d5406",
+         "imageUrl":null,
+         "lastName":"Blastik",
+         "likes":0,
+         "approved":false
+      },
+      "endDateTime":null,
+      "id":"5d5eb7696a4601463372e98d",
+      "imagesUrls":[
+         "https://files-pool.s3.eu-central-1.amazonaws.com/auth0|5cf6c4cf9ae21f0cae6c2959/5d5eb762102ab4c64de38597"
+      ],
+      "location":{
+         "geo":{
+            "lat":31.209913,
+            "lng":29.943523
+         },
+         "country":"egypt",
+         "city":"alexandria governorate",
+         "address":"Smoha Sq., Ezbet Saad, Sidi Gaber, Alexandria Governorate, Egypt"
+      },
+      "paymentMethod":"card",
+      "price":45,
+      "startDateTime":1566424800000,
+      "status":"open",
+      "title":"New task",
+      "type":"manicure"
+   },
+   {
+      "category":"beauty",
+      "createdAt":1566515721743,
+      "creatorUser":{
+         "badges":[
+
+         ],
+         "dislikes":0,
+         "firstName":"Jackson",
+         "id":"5cf58c672357cc11fbc6b3d4",
+         "imageUrl":null,
+         "lastName":"Johnson",
+         "likes":0,
+         "approved":false
+      },
+      "endDateTime":null,
+      "id":"5d5f22096f65fe2dd1d31743",
+      "imagesUrls":[
+
+      ],
+      "location":{
+         "geo":{
+            "lat":93.2,
+            "lng":10.23
+         },
+         "country":"estonia",
+         "city":"tallinn",
+         "address":"somewhere"
+      },
+      "paymentMethod":"card",
+      "price":200,
+      "startDateTime":1496846048700,
+      "status":"open",
+      "title":"this is a test",
+      "type":"manicure"
+   },
+   {
+      "category":"beauty",
+      "createdAt":1566515761040,
+      "creatorUser":{
+         "badges":[
+
+         ],
+         "dislikes":0,
+         "firstName":"Jackson",
+         "id":"5cf58c672357cc11fbc6b3d4",
+         "imageUrl":null,
+         "lastName":"Johnson",
+         "likes":0,
+         "approved":false
+      },
+      "endDateTime":null,
+      "id":"5d5f22316f65fe2dd1d31744",
+      "imagesUrls":[
+
+      ],
+      "location":{
+         "geo":{
+            "lat":93.2,
+            "lng":10.23
+         },
+         "country":"estonia",
+         "city":"tallinn",
+         "address":"somewhere"
+      },
+      "paymentMethod":"card",
+      "price":200,
+      "startDateTime":1496846048700,
+      "status":"done",
+      "title":"this is a test",
+      "type":"manicure"
+   },
+   {
+      "category":"beauty",
+      "createdAt":1566516520757,
+      "creatorUser":{
+         "badges":[
+
+         ],
+         "dislikes":0,
+         "firstName":"Jackson",
+         "id":"5cf58c672357cc11fbc6b3d4",
+         "imageUrl":null,
+         "lastName":"Johnson",
+         "likes":0,
+         "approved":false
+      },
+      "endDateTime":null,
+      "id":"5d5f2528610d95329ba11e04",
+      "imagesUrls":[
+
+      ],
+      "location":{
+         "geo":{
+            "lat":93.2,
+            "lng":10.23
+         },
+         "country":"estonia",
+         "city":"tallinn",
+         "address":"somewhere"
+      },
+      "paymentMethod":"card",
+      "price":200,
+      "startDateTime":1496846048700,
+      "status":"done",
+      "title":"this is a test",
+      "type":"manicure"
+   },
+   {
+      "category":"beauty",
+      "createdAt":1566550428552,
+      "creatorUser":{
+         "badges":[
+
+         ],
+         "dislikes":0,
+         "firstName":"Ahmed",
+         "id":"5cf59f092357cc11fbc6b3d8",
+         "imageUrl":null,
+         "lastName":"Saab",
+         "likes":0,
+         "approved":false
+      },
+      "endDateTime":null,
+      "id":"5d5fa99cb1bf0e2149c60b3d",
+      "imagesUrls":[
+
+      ],
+      "location":{
+         "geo":{
+            "lat":58.376316,
+            "lng":26.72242
+         },
+         "country":"estonia",
+         "city":"tartu",
+         "address":"Wilhelm Struve, Tartu, Estonia"
+      },
+      "paymentMethod":"card",
+      "price":25,
+      "startDateTime":1566511200000,
+      "status":"open",
+      "title":"weqdwed",
+      "type":"manicure"
+   },
+   {
+      "category":"beauty",
+      "createdAt":1566552805688,
+      "creatorUser":{
+         "badges":[
+
+         ],
+         "dislikes":0,
+         "firstName":"Kos",
+         "id":"5cf6c505e02e0436534d5406",
+         "imageUrl":null,
+         "lastName":"Blastik",
+         "likes":0,
+         "approved":false
+      },
+      "endDateTime":null,
+      "id":"5d5fb2e5b1bf0e2149c60b3e",
+      "imagesUrls":[
+
+      ],
+      "location":{
+         "geo":{
+            "lat":52.173733,
+            "lng":14.246529
+         },
+         "country":"germany",
+         "city":"beeskow",
+         "address":"Beeskow, Germany"
+      },
+      "paymentMethod":"card",
+      "price":55,
+      "startDateTime":1566511200000,
+      "status":"open",
+      "title":"dwedw",
+      "type":"manicure"
+   },
+   {
+      "category":"beauty",
+      "createdAt":1566554623813,
+      "creatorUser":{
+         "badges":[
+
+         ],
+         "dislikes":0,
+         "firstName":"Ahmed",
+         "id":"5cf59f092357cc11fbc6b3d8",
+         "imageUrl":null,
+         "lastName":"Saab",
+         "likes":0,
+         "approved":false
+      },
+      "endDateTime":null,
+      "id":"5d5fb9fff20b12391eb138b9",
+      "imagesUrls":[
+
+      ],
+      "location":{
+         "geo":{
+            "lat":59.421608,
+            "lng":24.801184
+         },
+         "country":"estonia",
+         "city":"tallinn",
+         "address":"Walter Zapp Building, Lõõtsa 6, 11415 Tallinn, Estonia"
+      },
+      "paymentMethod":"card",
+      "price":55,
+      "startDateTime":1566511200000,
+      "status":"assigned",
+      "title":"Yo yo yo",
+      "type":"manicure"
+   },
+   {
+      "category":"home",
+      "createdAt":1566806702940,
+      "creatorUser":{
+         "badges":[
+
+         ],
+         "dislikes":0,
+         "firstName":"Kos",
+         "id":"5cf6c505e02e0436534d5406",
+         "imageUrl":null,
+         "lastName":"Blastik",
+         "likes":0,
+         "approved":false
+      },
+      "endDateTime":null,
+      "id":"5d6392ae8fd6191a4db27b41",
+      "imagesUrls":[
+         "https://files-pool.s3.eu-central-1.amazonaws.com/auth0|5cf6c4cf9ae21f0cae6c2959/5d639278847e66fdb30ca7ee",
+         "https://files-pool.s3.eu-central-1.amazonaws.com/auth0|5cf6c4cf9ae21f0cae6c2959/5d63927b847e66b6e60ca7ef"
+      ],
+      "location":{
+         "geo":{
+            "lat":53.58192,
+            "lng":9.979739
+         },
+         "country":"germany",
+         "city":"hamburg",
+         "address":"Lehmweg, Hamburg, Germany"
+      },
+      "paymentMethod":"card",
+      "price":75,
+      "startDateTime":1566770400000,
+      "status":"open",
+      "title":"Babysitter needed for a 1 year old boy",
+      "type":"renovation"
+   }
 ]

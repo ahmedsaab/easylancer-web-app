@@ -12,6 +12,7 @@ import { selectTaskPageTaskData } from 'containers/TaskPage/selectors';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import TaskAssignee from 'containers/TaskPage/TaskAssignee';
+import ImageGrid from 'components/organisms/ImageGrid';
 
 const PaddedRow = styled(MDBRow)`
   padding: 10px;
@@ -19,9 +20,11 @@ const PaddedRow = styled(MDBRow)`
 
 const HeaderText = styled('div')`
   font-size: 16px;
-  font-weight: 510;
+  font-weight: bold;
   padding-bottom: 10px;
   padding-top 30px;
+  border-bottom: 2px solid #4CBBAD;
+  margin-bottom: 25px;
 `;
 
 function TaskDetails({ task, google }) {
