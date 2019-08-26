@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import moment from 'moment';
 
 import { MDBCol, MDBRow } from 'mdbreact';
-import ImagesGrid from 'components/organisms/ImagesGrid';
+import ImagesGrid from 'components/organisms/LightboxGrid';
 import { Map, GoogleApiWrapper, Circle } from 'google-maps-react';
 import LoadingIndicator from 'components/molecules/LoadingIndicator';
 import { createStructuredSelector } from 'reselect';

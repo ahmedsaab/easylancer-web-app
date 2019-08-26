@@ -61,72 +61,46 @@ class MultiPhotoUploader extends React.Component {
     super(props);
     this.handleChangeStatus.bind(this);
     this.getUploadParams.bind(this);
-    this.handleSubmit.bind(this);
-    this.state = {
-      files: [],
-    };
   }
 
-  // specify upload params and url for your files
   getUploadParams = async ({ meta }) => {
-    const { requestFileUpload } = this.props;
-
+    const { requestFileUpload, onUpdateUploadedImages, files } = this.props;
     const file = await requestFileUpload();
+    const index = files.findIndex(f => f.id === meta.id);
+    const newFiles = files.slice(0);
 
-    this.setState(prevState => {
-      const oldFiles = prevState.files.slice(0);
-      oldFiles.push({
-        id: meta.id,
-        url: file.download.url,
-        uploaded: false,
-      });
-
-      return {
-        files: oldFiles,
-      };
-    });
+    newFiles[index].url = file.download.url;
+    onUpdateUploadedImages(newFiles);
 
     return file.upload;
   };
 
-  // called every time a file's `status` changes
   handleChangeStatus = async ({ meta, file }, status) => {
-    // console.log(status, meta, file);
-    const { onUpdateUploadedImages } = this.props;
+    const { onUpdateUploadedImages, files } = this.props;
+    const index = files.findIndex(f => f.id === meta.id);
+    const newFiles = files.slice(0);
 
-    // eslint-disable-next-line default-case
     switch (status) {
-      case 'done':
-        this.setState(({ files }) => {
-          const index = files.findIndex(f => f.id === meta.id);
-          const newFiles = files.slice(0);
-          newFiles[index].uploaded = true;
-          return {
-            files: newFiles,
-          };
+      case 'preparing':
+        newFiles.push({
+          id: meta.id,
+          url: null,
+          uploaded: false,
         });
-        onUpdateUploadedImages(this.state.files.map(f => f.url));
+        onUpdateUploadedImages(newFiles);
+        break;
+      case 'done':
+        newFiles[index].uploaded = true;
+        onUpdateUploadedImages(newFiles);
         break;
       case 'removed':
-        this.setState(({ files }) => {
-          const index = files.findIndex(f => f.id === meta.id);
-          const newFiles = files.slice(0);
-          if (index > -1) {
-            newFiles.splice(index, 1);
-          }
-          return {
-            files: newFiles,
-          };
-        });
-        onUpdateUploadedImages(this.state.files.map(f => f.url));
+        if (index > -1) {
+          newFiles.splice(index, 1);
+        }
+        onUpdateUploadedImages(newFiles);
         break;
+      default:
     }
-  };
-
-  // receives array of files that are done uploading when submit button is clicked
-  handleSubmit = async (files, allFiles) => {
-    // console.log(files.map(f => f.meta));
-    allFiles.forEach(f => f.remove());
   };
 
   render() {
@@ -134,7 +108,6 @@ class MultiPhotoUploader extends React.Component {
       <DropZone
         getUploadParams={this.getUploadParams}
         onChangeStatus={this.handleChangeStatus}
-        onSubmit={this.handleSubmit}
         PreviewComponent={PhotoReview}
         SubmitButtonComponent={null}
         inputContent="Add Photos"
@@ -153,6 +126,7 @@ class MultiPhotoUploader extends React.Component {
 MultiPhotoUploader.propTypes = {
   onUpdateUploadedImages: PropTypes.func.isRequired,
   requestFileUpload: PropTypes.func.isRequired,
+  files: PropTypes.array,
 };
 
 export default MultiPhotoUploader;

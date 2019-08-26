@@ -1,14 +1,8 @@
 import React from 'react';
-import { MDBContainer, MDBRow, MDBCol } from 'mdbreact';
-import Lightbox from 'react-image-lightbox';
-import 'components/organisms/ImagesGrid/index.css';
-import styled from 'styled-components';
+import LightBox from 'react-image-lightbox';
+import 'components/organisms/LightboxGrid/index.css';
 import * as PropTypes from 'prop-types';
 import ImageGrid from 'components/organisms/ImageGrid';
-
-const Figure = styled('figure')`
-  padding: 0.5rem;
-`;
 
 class ImagesGrid extends React.Component {
   constructor(props) {
@@ -35,7 +29,7 @@ class ImagesGrid extends React.Component {
           }))}
         />
         {isOpen && (
-          <Lightbox
+          <LightBox
             mainSrc={images[photoIndex]}
             nextSrc={images[(photoIndex + 1) % images.length]}
             prevSrc={images[(photoIndex + images.length - 1) % images.length]}

@@ -14,6 +14,9 @@ import moment from 'moment';
 
 const createPayloadFromFrom = form => ({
   ...form,
+  imagesUrls: form.images
+    .filter(image => image.uploaded)
+    .map(image => image.url),
   date: undefined,
   time: undefined,
   category: form.category.text.toLowerCase(),

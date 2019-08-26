@@ -20,7 +20,7 @@ export const initialState = {
     description: '',
     category: null,
     type: null,
-    imagesUrls: [],
+    images: [],
     tags: [],
     date: new Date(),
     time: '12:00AM',

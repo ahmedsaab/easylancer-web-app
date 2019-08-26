@@ -44,7 +44,7 @@ export default function VerticalLinearStepper({ contents }) {
   const classes = useStyles();
   const labelClasses = useLabelStyles();
   const stepperClasses = useStepperStyles();
-  const [activeStep, setActiveStep] = React.useState(1);
+  const [activeStep, setActiveStep] = React.useState(2);
   const steps = contents.map(content => content.title);
 
   function handleNext() {

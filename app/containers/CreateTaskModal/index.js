@@ -161,15 +161,16 @@ export function CreateTaskModal({
                   </div>
                   <div style={{ display: 'flex', margin: '20px 0px 20px 0px' }}>
                     <MultiPhotoUploader
-                      id="task-photos"
-                      onUpdateUploadedImages={urls =>
-                        onUpdateFormGeneral('imagesUrls', urls)
+                      onUpdateUploadedImages={images =>
+                        onUpdateFormGeneral('images', images)
                       }
                       requestFileUpload={client.requestFileUpload}
+                      files={form.images}
                     />
                   </div>
                 </div>
               ),
+              disabled: !!form.images.find(image => !image.uploaded),
             },
             {
               title: 'How much are you willing to pay?',
