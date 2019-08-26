@@ -2,7 +2,7 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 
-import CancelIcon from '@material-ui/icons/Cancel';
+import ClearSharpIcon from '@material-ui/icons/ClearSharp';
 import ReplayIcon from '@material-ui/icons/Replay';
 import CameraRoundedIcon from '@material-ui/icons/CameraRounded';
 import CenteredDiv from 'components/atoms/CenteredDiv';
@@ -29,16 +29,14 @@ const CenterIcon = styled(CenteredDiv)`
   position: absolute;
 `;
 
-const RemoveIcon = styled(CancelIcon)`
+const RemoveIcon = styled(ClearSharpIcon)`
   color: #989898;
   position: absolute;
-  top: -5px;
-  right: -10px;
   font-size: 22px;
   cursor: pointer;
   z-index: 2;
-  background-color: #dadada;
-  border-radius: 12px;
+  top: 4px;
+  right: 6px;
 `;
 
 const RotateAnimation = keyframes`
@@ -64,15 +62,15 @@ const ProgressImage = styled.img`
   top: 0;
   left: 0;
   z-index: 1;
-  border-radius: 4px;
+  border-radius: 1px;
   border: 2px solid ${props => (props.error ? 'red' : 'white')};
+  object-fit: cover;
 `;
 
 const Container = styled.div`
   position: relative;
-  width: 120px;
+  width: 100%;
   height: 150px;
-  margin: 10px;
   flex: 1;
 `;
 

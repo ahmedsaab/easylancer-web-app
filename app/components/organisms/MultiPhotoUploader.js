@@ -15,10 +15,10 @@ const inputLabelStyles = {
   fontSize: '14px',
   fontWeight: '600',
   cursor: 'pointer',
-  padding: '0',
-  width: '120px',
+  padding: '10px',
+  margin: '0',
+  width: '100%',
   height: '150px',
-  margin: '10px',
   border: '2px #2BBBAD dashed',
   borderRadius: '4px',
   order: '-1',
@@ -52,7 +52,7 @@ const ContainerStyles = {
   marginLeft: '8px',
   marginRight: '8px',
   display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, 140px)',
+  gridTemplateColumns: 'repeat(auto-fill, 120px)',
   gridGap: '0.5rem',
 };
 
