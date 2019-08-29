@@ -15,6 +15,7 @@ import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import { SnackbarProvider } from 'notistack';
 import { red } from '@material-ui/core/colors';
 
 import SideBar from 'containers/SideBar';
@@ -43,36 +44,44 @@ function App({ onLoad }) {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <div style={{ overflowX: 'hidden' }}>
-        <Helmet titleTemplate="%s | Easylancer" defaultTitle="Easylancer">
-          <meta
-            name="description"
-            content="Find local skilled workers in your city"
-          />
-        </Helmet>
-        <Wrapper>
-          <SideBar />
-          <Container fluid>
-            <MDBRow>
-              <Header />
-            </MDBRow>
-            <ContentRow>
-              <div style={{ width: '100%' }}>
-                <Modal />
-                <Switch>
-                  <Route exact path="/" component={SearchPage} />
-                  <Route path="/task/:id" component={TaskPage} />
-                  <Route path="/search" component={SearchPage} />
-                  <Route path="" component={NotFoundPage} />
-                </Switch>
-              </div>
-            </ContentRow>
-          </Container>
-        </Wrapper>
-        <GlobalStyle />
-      </div>
-    </ThemeProvider>
+    <SnackbarProvider
+      maxSnack={3}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'center',
+      }}
+    >
+      <ThemeProvider theme={theme}>
+        <div style={{ overflowX: 'hidden' }}>
+          <Helmet titleTemplate="%s | Easylancer" defaultTitle="Easylancer">
+            <meta
+              name="description"
+              content="Find local skilled workers in your city"
+            />
+          </Helmet>
+          <Wrapper>
+            <SideBar />
+            <Container fluid>
+              <MDBRow>
+                <Header />
+              </MDBRow>
+              <ContentRow>
+                <div style={{ width: '100%' }}>
+                  <Modal />
+                  <Switch>
+                    <Route exact path="/" component={SearchPage} />
+                    <Route path="/task/:id" component={TaskPage} />
+                    <Route path="/search" component={SearchPage} />
+                    <Route path="" component={NotFoundPage} />
+                  </Switch>
+                </div>
+              </ContentRow>
+            </Container>
+          </Wrapper>
+          <GlobalStyle />
+        </div>
+      </ThemeProvider>
+    </SnackbarProvider>
   );
 }
 

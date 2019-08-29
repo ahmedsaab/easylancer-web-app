@@ -15,6 +15,8 @@ import {
   UPDATE_OFFER_MESSAGE,
   UPDATE_OFFER_PAYMENT,
   UPDATE_OFFER_PRICE,
+  RESET_OFFER_FORM,
+  RESET_OFFER_FORM_STATUS,
 } from 'containers/TaskPage/constants';
 
 export const initialState = {
@@ -38,7 +40,7 @@ export const initialState = {
     form: {
       data: {
         message: '',
-        price: 0,
+        price: '',
         payment: 'card',
       },
       status: null,
@@ -115,6 +117,14 @@ const taskPageReducer = (state = initialState, action) =>
 
       case SEND_OFFER_FAIL:
         draft.offer.form.status = 'failed';
+        break;
+
+      case RESET_OFFER_FORM_STATUS:
+        draft.offer.form.status = initialState.offer.form.status;
+        break;
+
+      case RESET_OFFER_FORM:
+        draft.offer.form = initialState.offer.form;
         break;
     }
   });

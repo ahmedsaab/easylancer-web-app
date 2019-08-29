@@ -15,6 +15,8 @@ import {
   UPDATE_OFFER_MESSAGE,
   UPDATE_OFFER_PAYMENT,
   UPDATE_OFFER_PRICE,
+  RESET_OFFER_FORM,
+  RESET_OFFER_FORM_STATUS,
 } from 'containers/TaskPage/constants';
 
 export function loadTask(id) {
@@ -104,6 +106,18 @@ export function updateOfferModalMessage(message) {
   return {
     type: UPDATE_OFFER_MESSAGE,
     message,
+  };
+}
+
+export function resetOfferFormStatusModal() {
+  return {
+    type: RESET_OFFER_FORM_STATUS,
+  };
+}
+
+export function resetOfferFormModal() {
+  return {
+    type: RESET_OFFER_FORM,
   };
 }
 

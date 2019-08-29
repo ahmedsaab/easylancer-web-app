@@ -2,13 +2,7 @@ import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { makeStyles, withStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import CloseIcon from '@material-ui/icons/Close';
 
 import { compose } from 'redux';
 
@@ -16,7 +10,6 @@ import { useInjectReducer } from 'utils/injectReducer';
 import Stepper from 'components/organisms/Stepper';
 import { SummarySection } from 'containers/CreateTaskModal/SummarySection';
 import { DetailsSection } from 'containers/CreateTaskModal/DetailsSection';
-import { PaymentSection } from 'containers/CreateTaskModal/PaymentSection';
 import { LocationSection } from 'containers/CreateTaskModal/LocationSection';
 import { DateTimeSection } from 'containers/CreateTaskModal/DateTimeSection';
 import { TagsSection } from 'containers/CreateTaskModal/TagsSection';
@@ -40,68 +33,12 @@ import {
 } from 'containers/CreateTaskModal/actions';
 import { useInjectSaga } from 'utils/injectSaga';
 
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
+import { ActionButtons } from 'containers/CreateTaskModal/ActionButtons';
+import CancelableDialogTitle from 'components/molecules/CancelableDialogTitle';
+import UnjustifiedDialogFooter from 'components/molecules/UnjustifiedDialogFooter';
 import saga from './saga';
 import reducer from './reducer';
-
-const useStyles = makeStyles(theme => ({
-  cancelBtn: {
-    color: theme.status.danger,
-  },
-  dialogActions: {
-    justifyContent: 'unset',
-    display: 'flex',
-  },
-  forwardBtn: {
-    minWidth: '130px',
-  },
-  actionBtn: {
-    margin: theme.spacing(1),
-    padding: theme.spacing(1),
-  },
-  dialogActionsLeft: {
-    flex: '1',
-    display: 'flex',
-    marginLeft: theme.spacing(3),
-  },
-  dialogActionsRight: {
-    flex: '1',
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-}));
-
-const styles = theme => ({
-  root: {
-    margin: theme.spacing(1),
-    padding: theme.spacing(2),
-  },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(3),
-    color: theme.palette.grey[500],
-  },
-});
-
-const CustomDialogTitle = withStyles(styles)(props => {
-  const { children, classes, onClose } = props;
-  return (
-    <DialogTitle disableTypography className={classes.root}>
-      <Typography variant="h4">{children}</Typography>
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          className={classes.closeButton}
-          onClick={onClose}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  );
-});
+import PaymentInput from 'components/molecules/PaymentInput';
 
 export function CreateTaskModal({
   form,
@@ -120,7 +57,6 @@ export function CreateTaskModal({
 }) {
   useInjectReducer({ key: 'createTaskModal', reducer });
   useInjectSaga({ key: 'createTaskModal', saga });
-  const classes = useStyles();
 
   function handleNext() {
     if (step === 1) {
@@ -163,7 +99,7 @@ export function CreateTaskModal({
     {
       title: 'How much are you willing to pay?',
       component: (
-        <PaymentSection
+        <PaymentInput
           price={form.price}
           paymentMethod={form.paymentMethod}
           onUpdatePrice={pr => onUpdateFormGeneral('price', pr)}
@@ -220,83 +156,24 @@ export function CreateTaskModal({
 
   return (
     <Fragment>
-      <CustomDialogTitle onClose={onCloseModal}>
-        Get shit done!
-      </CustomDialogTitle>
+      <CancelableDialogTitle onClose={onCloseModal}>
+        {"Let's do it!"}
+      </CancelableDialogTitle>
       <DialogContent dividers>
-        <Stepper
-          activeStep={step}
-          contents={steps}
-          FinishButton={() => (
-            <Button
-              disabled={loading}
-              variant="contained"
-              color="secondary"
-              onClick={onCreateTask}
-            >
-              {loading ? (
-                <Fragment>
-                  <LinearProgress
-                    style={{ display: 'block', width: '46px', height: '5px' }}
-                  />
-                  <br />
-                </Fragment>
-              ) : (
-                'Create'
-              )}
-            </Button>
-          )}
-          disabled={loading}
-        />
+        <Stepper activeStep={step} contents={steps} />
       </DialogContent>
-      <DialogActions className={classes.dialogActions}>
-        <div className={classes.dialogActionsLeft}>
-          <Button onClick={onCloseModal} className={classes.cancelBtn}>
-            Cancel
-          </Button>
-        </div>
-        <div className={classes.dialogActionsRight}>
-          {step !== 0 ? (
-            <Button
-              className={classes.actionBtn}
-              disabled={loading}
-              onClick={handleBack}
-            >
-              Back
-            </Button>
-          ) : null}
-          {step < steps.length - 1 ? (
-            <Button
-              className={`${classes.actionBtn} ${classes.forwardBtn}`}
-              disabled={steps[step].disabled}
-              variant="contained"
-              color="primary"
-              onClick={handleNext}
-            >
-              Next
-            </Button>
-          ) : (
-            <Button
-              className={`${classes.actionBtn} ${classes.forwardBtn}`}
-              disabled={loading}
-              variant="contained"
-              color="secondary"
-              onClick={onCreateTask}
-            >
-              {loading ? (
-                <Fragment>
-                  <LinearProgress
-                    style={{ display: 'block', width: '46px', height: '5px' }}
-                  />
-                  <br />
-                </Fragment>
-              ) : (
-                'Finish'
-              )}
-            </Button>
-          )}
-        </div>
-      </DialogActions>
+      <UnjustifiedDialogFooter>
+        <ActionButtons
+          disabled={loading}
+          canGoBack={step !== 0}
+          canGoForward={step < steps.length - 1}
+          forwardDisabled={steps[step].disabled}
+          onBack={handleBack}
+          onCancel={onCloseModal}
+          onFinish={onCreateTask}
+          onNext={handleNext}
+        />
+      </UnjustifiedDialogFooter>
     </Fragment>
   );
 }

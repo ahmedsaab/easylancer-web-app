@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export function PaymentSection({
+export default function PaymentInput({
   price,
   paymentMethod,
   onUpdatePrice,
@@ -34,7 +34,7 @@ export function PaymentSection({
         label="Amount"
         type="number"
         value={price}
-        onChange={event => onUpdatePrice(event.target.value)}
+        onChange={event => onUpdatePrice(parseInt(event.target.value, 10))}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -52,8 +52,8 @@ export function PaymentSection({
   );
 }
 
-PaymentSection.propTypes = {
-  price: PropTypes.string,
+PaymentInput.propTypes = {
+  price: PropTypes.number,
   paymentMethod: PropTypes.string,
   onUpdatePrice: PropTypes.func,
   onUpdatePaymentMethod: PropTypes.func,

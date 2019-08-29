@@ -16,6 +16,8 @@ export const UPDATE_OFFER_MESSAGE = 'app/TaskPage/UPDATE_OFFER_MESSAGE';
 export const SEND_OFFER = 'app/TaskPage/SEND_OFFER';
 export const SEND_OFFER_SUCCESS = 'app/TaskPage/SEND_OFFER_SUCCESS';
 export const SEND_OFFER_FAIL = 'app/TaskPage/SEND_OFFER_FAIL';
+export const RESET_OFFER_FORM = 'app/TaskPage/RESET_OFFER_FORM';
+export const RESET_OFFER_FORM_STATUS = 'app/TaskPage/RESET_OFFER_FORM_STATUS';
 
 export const TASK_STATUSES = [
   'open',

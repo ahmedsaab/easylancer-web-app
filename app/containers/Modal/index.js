@@ -39,7 +39,7 @@ function ResponsiveDialog({ type, onClose }) {
     <Dialog
       fullScreen={fullScreen}
       fullWidth
-      maxWidth="md"
+      maxWidth="sm"
       open={modalContent !== null}
       onClose={onClose}
       scroll="paper"

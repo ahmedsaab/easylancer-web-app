@@ -96,7 +96,7 @@ export const getUser = async () => {
 };
 
 export const postOffer = async (id, offer) => {
-  // await sleep(1000);
+  await sleep(4000);
   try {
     const response = await axios.post(
       `${process.env.CLIENT_API_ROOT}/tasks/${id}/apply`,
@@ -146,7 +146,7 @@ export const acceptOffer = async (taskId, offerId) => {
 };
 
 export const postTask = async task => {
-  // await sleep(4000);
+  await sleep(4000);
   try {
     const response = await axios.post(
       `${process.env.CLIENT_API_ROOT}/tasks/create`,
