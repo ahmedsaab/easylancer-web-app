@@ -13,6 +13,9 @@ import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+import { red } from '@material-ui/core/colors';
 
 import SideBar from 'containers/SideBar';
 import Header from 'containers/Header';
@@ -26,6 +29,12 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { loadUser } from 'containers/App/actions';
 import saga from 'containers/App/saga';
 
+const theme = createMuiTheme({
+  status: {
+    danger: red[500],
+  },
+});
+
 function App({ onLoad }) {
   useInjectSaga({ key: 'app', saga });
 
@@ -34,34 +43,36 @@ function App({ onLoad }) {
   }, []);
 
   return (
-    <div style={{ overflowX: 'hidden' }}>
-      <Helmet titleTemplate="%s | Easylancer" defaultTitle="Easylancer">
-        <meta
-          name="description"
-          content="Find local skilled workers in your city"
-        />
-      </Helmet>
-      <Wrapper>
-        <SideBar />
-        <Container fluid>
-          <MDBRow>
-            <Header />
-          </MDBRow>
-          <ContentRow>
-            <div style={{ width: '100%' }}>
-              <Modal />
-              <Switch>
-                <Route exact path="/" component={SearchPage} />
-                <Route path="/task/:id" component={TaskPage} />
-                <Route path="/search" component={SearchPage} />
-                <Route path="" component={NotFoundPage} />
-              </Switch>
-            </div>
-          </ContentRow>
-        </Container>
-      </Wrapper>
-      <GlobalStyle />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div style={{ overflowX: 'hidden' }}>
+        <Helmet titleTemplate="%s | Easylancer" defaultTitle="Easylancer">
+          <meta
+            name="description"
+            content="Find local skilled workers in your city"
+          />
+        </Helmet>
+        <Wrapper>
+          <SideBar />
+          <Container fluid>
+            <MDBRow>
+              <Header />
+            </MDBRow>
+            <ContentRow>
+              <div style={{ width: '100%' }}>
+                <Modal />
+                <Switch>
+                  <Route exact path="/" component={SearchPage} />
+                  <Route path="/task/:id" component={TaskPage} />
+                  <Route path="/search" component={SearchPage} />
+                  <Route path="" component={NotFoundPage} />
+                </Switch>
+              </div>
+            </ContentRow>
+          </Container>
+        </Wrapper>
+        <GlobalStyle />
+      </div>
+    </ThemeProvider>
   );
 }
 

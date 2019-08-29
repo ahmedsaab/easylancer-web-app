@@ -1,85 +1,76 @@
 import React from 'react';
-import * as PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
-
-import { useInjectReducer } from 'utils/injectReducer';
-import { MDBModal } from 'mdbreact';
+import Dialog from '@material-ui/core/Dialog';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import CreateOfferModal from 'containers/TaskPage/CreateOfferModal';
-import { makeSelectModalType } from 'containers/Modal/selectors';
-import reducer from 'containers/Modal/reducer';
-import 'containers/Modal/styles.css';
-import TaskAssignedModal from 'containers/TaskPage/TaskAssignedModal';
 import CreateTaskModal from 'containers/CreateTaskModal';
+import TaskAssignedModal from 'containers/TaskPage/TaskAssignedModal';
+import * as PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
+import { makeSelectModalType } from 'containers/Modal/selectors';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { updateModal } from 'containers/Modal/actions';
+import { useInjectReducer } from 'utils/injectReducer';
+import reducer from 'containers/Modal/reducer';
 
-export function Modal({ type }) {
-  useInjectReducer({ key: 'modal', reducer });
+function ResponsiveDialog({ type, onClose }) {
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   let modalContent;
-  let modalSettings = {
-    size: 'md',
-    className: '',
-    contentClassName: '',
-    centered: false,
-  };
+  useInjectReducer({ key: 'modal', reducer });
 
   switch (type) {
     case 'create-offer':
       modalContent = <CreateOfferModal />;
-      modalSettings = {
-        size: 'md',
-        className: 'full-screen-modal-container',
-        contentClassName: 'full-screen-modal-content',
-      };
       break;
     case 'create-task':
       modalContent = <CreateTaskModal />;
-      modalSettings = {
-        size: 'lg',
-        className: 'full-screen-modal-container',
-        contentClassName: 'full-screen-modal-content',
-        centered: true,
-      };
       break;
     case 'task-assigned-confirmation':
       modalContent = <TaskAssignedModal />;
-      modalSettings = {
-        size: 'md',
-        className: 'confirmation-modal-container',
-        contentClassName: 'confirmation-modal-content',
-        centered: true,
-      };
       break;
     default:
       modalContent = null;
   }
 
   return (
-    <MDBModal
-      isOpen={modalContent !== null}
-      toggle={() => {}}
-      centered={modalSettings.centered}
-      size={modalSettings.size}
-      className={modalSettings.className}
-      contentClassName={modalSettings.contentClassName}
+    <Dialog
+      fullScreen={fullScreen}
+      fullWidth
+      maxWidth="md"
+      open={modalContent !== null}
+      onClose={onClose}
+      scroll="paper"
+      aria-labelledby="responsive-dialog-title"
     >
       {modalContent}
-    </MDBModal>
+      <div />
+    </Dialog>
   );
 }
 
-Modal.propTypes = {
+ResponsiveDialog.propTypes = {
   type: PropTypes.oneOf([
     'create-offer',
     'create-task',
     'task-assigned-confirmation',
   ]),
+  onClose: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   type: makeSelectModalType(),
 });
 
-const withConnect = connect(mapStateToProps);
+const mapDispatchToProps = dispatch => ({
+  onClose: () => dispatch(updateModal(null)),
+});
 
-export default compose(withConnect)(Modal);
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(withConnect)(ResponsiveDialog);

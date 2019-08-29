@@ -32,9 +32,6 @@ export const ModalContainer = styled.div`
   flex-flow: column;
   overflow-y: auto;
   padding: 0;
-  label {
-    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  }
 `;
 
 export const ModalHeader = styled(MDBModalHeader)`

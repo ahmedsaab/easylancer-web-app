@@ -22,8 +22,15 @@ const makeSelectCreateTaskModalError = () =>
     state => state.error,
   );
 
+const makeSelectCreateTaskModalStep = () =>
+  createSelector(
+    selectCreateTaskModalDomain,
+    state => state.step,
+  );
+
 export {
   makeSelectCreateTaskModalFrom,
   makeSelectCreateTaskModalLoading,
   makeSelectCreateTaskModalError,
+  makeSelectCreateTaskModalStep,
 };

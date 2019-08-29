@@ -8,6 +8,8 @@ import {
   UPDATE_TASK_FORM_COUNTRY,
   UPDATE_TASK_FORM_PUSH_TAG,
   FETCH_TAGS,
+  UPDATE_STEP,
+  RESET,
 } from 'containers/CreateTaskModal/constants';
 
 export function updateTaskModalFormGeneral(key, value) {
@@ -50,6 +52,19 @@ export function updateTaskModalRemoveTag(index) {
   return {
     type: UPDATE_TASK_FORM_REMOVE_TAG,
     index,
+  };
+}
+
+export function updateTaskModalStep(step) {
+  return {
+    type: UPDATE_STEP,
+    step,
+  };
+}
+
+export function updateTaskModalReset() {
+  return {
+    type: RESET,
   };
 }
 
