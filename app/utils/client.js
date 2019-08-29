@@ -1,9 +1,11 @@
 import axios from 'axios';
+import querystring from 'querystring';
 import auth from './auth';
 
 const headers = { Authorization: `Bearer ${auth.getAccessToken()}` };
 
-const sleep = async time => new Promise(resolve => setTimeout(resolve, time));
+export const sleep = async time =>
+  new Promise(resolve => setTimeout(resolve, time));
 
 export const requestFileUpload = async () => {
   try {
@@ -27,7 +29,7 @@ export const requestFileUpload = async () => {
 
 export const getTask = async id => {
   try {
-    await sleep(1000);
+    // await sleep(1000);
     const response = await axios.get(
       `${process.env.CLIENT_API_ROOT}/tasks/${id}/view`,
       { headers },
@@ -73,7 +75,7 @@ export const getTaskOffers = async id => {
 
 export const getUser = async () => {
   try {
-    await sleep(1000);
+    // await sleep(1000);
     const response = await axios.get(`${process.env.CLIENT_API_ROOT}/auth/me`, {
       headers,
     });
@@ -144,7 +146,7 @@ export const acceptOffer = async (taskId, offerId) => {
 };
 
 export const postTask = async task => {
-  await sleep(1000);
+  // await sleep(4000);
   try {
     const response = await axios.post(
       `${process.env.CLIENT_API_ROOT}/tasks/create`,
@@ -169,7 +171,7 @@ export const postTask = async task => {
 };
 
 export const searchTasks = async filters => {
-  await sleep(1000);
+  // await sleep(1000);
   try {
     const response = await axios.get(
       `${process.env.CLIENT_API_ROOT}/search/all`,
@@ -179,6 +181,54 @@ export const searchTasks = async filters => {
     return response.data;
   } catch (error) {
     // console.error(error)
+    if (error.response) {
+      throw new Error(
+        `The server responded with error code ${error.response.status}`,
+      );
+    } else if (error.request) {
+      throw new Error(`Failed to read response from Server`);
+    } else {
+      throw new Error(`An unexpected error occurred`);
+    }
+  }
+};
+
+export const fetchTags = async text => {
+  try {
+    let tags = [];
+    const response = await axios.post(
+      'https://api.meaningcloud.com/topics-2.0',
+      querystring.stringify({
+        key: 'f9f5571e61fd55acd1b9aeaba08f51d2',
+        lang: 'en',
+        ilang: 'en',
+        txt: text,
+        tt: 'ec',
+        uw: 'y',
+        rt: 'y',
+        st: 'n',
+        of: 'json',
+        dm: 's',
+        sdg: 'l',
+      }),
+      {
+        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      },
+    );
+
+    if (response.data.concept_list) {
+      tags = tags.concat(
+        response.data.concept_list.map(concept => concept.form),
+      );
+    }
+    if (response.data.entity_list) {
+      tags = tags.concat(
+        response.data.entity_list.map(concept => concept.form),
+      );
+    }
+
+    return tags;
+  } catch (error) {
     if (error.response) {
       throw new Error(
         `The server responded with error code ${error.response.status}`,

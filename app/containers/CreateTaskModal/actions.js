@@ -7,6 +7,7 @@ import {
   UPDATE_TASK_FORM_LOCATION,
   UPDATE_TASK_FORM_COUNTRY,
   UPDATE_TASK_FORM_PUSH_TAG,
+  FETCH_TAGS,
 } from 'containers/CreateTaskModal/constants';
 
 export function updateTaskModalFormGeneral(key, value) {
@@ -21,6 +22,12 @@ export function updateTaskModalFormCountry(country) {
   return {
     type: UPDATE_TASK_FORM_COUNTRY,
     country,
+  };
+}
+
+export function fetchAndSetTags() {
+  return {
+    type: FETCH_TAGS,
   };
 }
 

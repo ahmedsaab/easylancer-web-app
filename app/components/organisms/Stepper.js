@@ -6,8 +6,6 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,9 +17,7 @@ const useStyles = makeStyles(theme => ({
   },
   actionsContainer: {
     marginBottom: theme.spacing(2),
-  },
-  resetContainer: {
-    padding: theme.spacing(3),
+    marginLeft: theme.spacing(1),
   },
   content: {
     paddingTop: theme.spacing(2),
@@ -40,23 +36,31 @@ const useStepperStyles = makeStyles({
   },
 });
 
-export default function VerticalLinearStepper({ contents }) {
+export default function VerticalLinearStepper({
+  contents,
+  disabled,
+  FinishButton,
+}) {
   const classes = useStyles();
   const labelClasses = useLabelStyles();
   const stepperClasses = useStepperStyles();
-  const [activeStep, setActiveStep] = React.useState(2);
+  const [activeStep, setActiveStep] = React.useState(4);
   const steps = contents.map(content => content.title);
 
   function handleNext() {
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
+    setActiveStep(prevActiveStep => {
+      const { sideEffectOnNext } = contents[prevActiveStep];
+
+      if (sideEffectOnNext) {
+        sideEffectOnNext();
+      }
+
+      return prevActiveStep + 1;
+    });
   }
 
   function handleBack() {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
-  }
-
-  function handleReset() {
-    setActiveStep(0);
   }
 
   return (
@@ -73,40 +77,40 @@ export default function VerticalLinearStepper({ contents }) {
               {contents[index].component}
               <div className={classes.actionsContainer}>
                 <div>
-                  <Button
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    className={classes.button}
-                  >
-                    Back
-                  </Button>
-                  <Button
-                    disabled={contents[index].disabled}
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                  </Button>
+                  {activeStep !== 0 ? (
+                    <Button
+                      disabled={disabled}
+                      onClick={handleBack}
+                      className={classes.button}
+                    >
+                      Back
+                    </Button>
+                  ) : null}
+                  {activeStep < steps.length - 1 ? (
+                    <Button
+                      disabled={contents[index].disabled}
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}
+                    >
+                      Next
+                    </Button>
+                  ) : (
+                    <FinishButton />
+                  )}
                 </div>
               </div>
             </StepContent>
           </Step>
         ))}
       </Stepper>
-      {activeStep === steps.length && (
-        <Paper square elevation={0} className={classes.resetContainer}>
-          <Typography>All steps completed - you&apos;re finished</Typography>
-          <Button onClick={handleReset} className={classes.button}>
-            Reset
-          </Button>
-        </Paper>
-      )}
     </div>
   );
 }
 
 VerticalLinearStepper.propTypes = {
   contents: PropTypes.array,
+  FinishButton: PropTypes.func,
+  disabled: PropTypes.bool,
 };

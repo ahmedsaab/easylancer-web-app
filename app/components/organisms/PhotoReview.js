@@ -1,11 +1,11 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 import ClearSharpIcon from '@material-ui/icons/ClearSharp';
 import ReplayIcon from '@material-ui/icons/Replay';
-import CameraRoundedIcon from '@material-ui/icons/CameraRounded';
 import CenteredDiv from 'components/atoms/CenteredDiv';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const ProgressOverlay = styled.div`
   background: #fff;
@@ -37,23 +37,6 @@ const RemoveIcon = styled(ClearSharpIcon)`
   z-index: 2;
   top: 4px;
   right: 6px;
-`;
-
-const RotateAnimation = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-const UploadingIcon = styled(CameraRoundedIcon)`
-  animation-name: ${RotateAnimation};
-  animation-duration: 4000ms;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  color: #989898;
 `;
 
 const ProgressImage = styled.img`
@@ -88,17 +71,17 @@ class Preview extends React.PureComponent {
       status === 'error_upload' ||
       status === 'error_validation';
 
-    const loading = !errored && status !== 'done';
+    const loading = !errored && status !== 'ready' && status !== 'done';
 
     return (
       <Container>
         {status !== 'preparing' &&
           status !== 'getting_upload_params' &&
           status !== 'uploading' && <RemoveIcon onClick={remove} />}
-        <ProgressOverlay percent={percent} />
+        <ProgressOverlay percent={loading ? percent : 100} />
         <CenterIcon>
           {errored && <RetryIcon fontSize="large" onClick={restart} />}
-          {loading && <UploadingIcon fontSize="large" />}
+          {loading && <CircularProgress />}
         </CenterIcon>
         <ProgressImage error={errored} src={previewUrl} alt="" />
       </Container>

@@ -14,7 +14,6 @@ const useStyles = makeStyles(theme => ({
     flexWrap: 'wrap',
   },
   formControl: {
-    margin: theme.spacing(1),
     minWidth: '100px',
   },
   selectEmpty: {
@@ -28,7 +27,8 @@ export default function SelectDropDown({
   label,
   selection,
   onSelect,
-  style,
+  className,
+  fullWidth,
 }) {
   const classes = useStyles();
 
@@ -42,12 +42,10 @@ export default function SelectDropDown({
   return (
     <FormControl
       variant="outlined"
-      className={classes.formControl}
-      style={style}
+      className={`${className} ${classes.formControl}`}
+      fullWidth={fullWidth}
     >
-      <InputLabel ref={inputLabel} htmlFor="outlined-age-simple">
-        {label}
-      </InputLabel>
+      <InputLabel ref={inputLabel}>{label}</InputLabel>
       <Select
         disabled={disabled}
         value={selected ? selected.value : ''}
@@ -76,10 +74,11 @@ export default function SelectDropDown({
 }
 
 SelectDropDown.propTypes = {
-  style: PropTypes.object,
+  className: PropTypes.string,
   disabled: PropTypes.bool,
   label: PropTypes.string,
   selected: PropTypes.object,
   onSelect: PropTypes.func.isRequired,
   selection: PropTypes.array.isRequired,
+  fullWidth: PropTypes.bool,
 };

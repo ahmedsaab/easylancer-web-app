@@ -11,6 +11,7 @@ export const UPDATE_TASK_FORM_PUSH_TAG =
 export const SEND_TASK = 'app/CreateTaskModal/SEND_TASK';
 export const SEND_TASK_SUCCESS = 'app/CreateTaskModal/SEND_TASK_SUCCESS';
 export const SEND_TASK_FAIL = 'app/CreateTaskModal/SEND_TASK_FAIL';
+export const FETCH_TAGS = 'app/CreateTaskModal/FETCH_TAGS';
 
 export const countries = [
   {
@@ -24,6 +25,21 @@ export const countries = [
   {
     text: 'Germany',
     value: 'de',
+  },
+];
+
+export const currencies = [
+  {
+    value: 'EUR',
+    label: '€',
+  },
+  {
+    value: 'BTC',
+    label: '฿',
+  },
+  {
+    value: 'EGP',
+    label: 'ج.م',
   },
 ];
 

@@ -3,6 +3,7 @@ import DropZone from 'react-dropzone-uploader';
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import PhotoReview from 'components/organisms/PhotoReview';
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 
 const inputLabelStyles = {
   display: 'flex',
@@ -49,8 +50,6 @@ const ContainerStyles = {
   boxSizing: 'border-box',
   transition: 'all 0.15s linear',
   border: 'none',
-  marginLeft: '8px',
-  marginRight: '8px',
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fill, 120px)',
   gridGap: '0.5rem',
@@ -69,55 +68,82 @@ class MultiPhotoUploader extends React.Component {
     const index = files.findIndex(f => f.id === meta.id);
     const newFiles = files.slice(0);
 
-    newFiles[index].url = file.download.url;
-    onUpdateUploadedImages(newFiles);
+    if (index !== -1) {
+      newFiles[index].url = file.download.url;
+      onUpdateUploadedImages(newFiles);
+    }
 
     return file.upload;
   };
 
-  handleChangeStatus = async ({ meta, file }, status) => {
+  handleChangeStatus = async ({ meta, file, restart }, status) => {
     const { onUpdateUploadedImages, files } = this.props;
     const index = files.findIndex(f => f.id === meta.id);
-    const newFiles = files.slice(0);
+    const isOld =
+      files.find(f => Object.is(f.data, file)) &&
+      (index !== -1 ? files[index].uploaded : true);
 
-    switch (status) {
-      case 'preparing':
-        newFiles.push({
-          id: meta.id,
-          url: null,
-          uploaded: false,
-        });
-        onUpdateUploadedImages(newFiles);
-        break;
-      case 'done':
-        newFiles[index].uploaded = true;
-        onUpdateUploadedImages(newFiles);
-        break;
-      case 'removed':
-        if (index > -1) {
-          newFiles.splice(index, 1);
-        }
-        onUpdateUploadedImages(newFiles);
-        break;
-      default:
+    if (!isOld) {
+      const newFiles = files.slice(0);
+
+      switch (status) {
+        case 'ready':
+          restart();
+          break;
+        case 'preparing':
+          newFiles.push({
+            id: meta.id,
+            url: null,
+            uploaded: false,
+            data: file,
+          });
+          onUpdateUploadedImages(newFiles);
+          break;
+        case 'done':
+          newFiles[index].uploaded = true;
+          onUpdateUploadedImages(newFiles);
+          break;
+        case 'removed':
+          if (index > -1) {
+            newFiles.splice(index, 1);
+          }
+          onUpdateUploadedImages(newFiles);
+          break;
+        default:
+      }
     }
   };
 
   render() {
+    const { className, files } = this.props;
+
     return (
       <DropZone
         getUploadParams={this.getUploadParams}
         onChangeStatus={this.handleChangeStatus}
         PreviewComponent={PhotoReview}
+        autoUpload={false}
         SubmitButtonComponent={null}
-        inputContent="Add Photos"
-        inputWithFilesContent="Add Photo"
+        inputContent={() => (
+          <div key="label">
+            <AddAPhotoIcon style={{ width: '100%' }} />
+            <div style={{ width: '100%', textAlign: 'center' }}>Add Photos</div>
+          </div>
+        )}
+        inputWithFilesContent={() => (
+          <div key="label">
+            <AddAPhotoIcon style={{ width: '100%' }} />
+            <div style={{ width: '100%', textAlign: 'center' }}>Add Photo</div>
+          </div>
+        )}
         styles={{
           dropzone: ContainerStyles,
           inputLabel: inputLabelStylesEmpty,
           inputLabelWithFiles: inputLabelStyles,
         }}
+        initialFiles={files.map(f => f.data)}
         accept="image/*"
+        className={className}
       />
     );
   }
@@ -127,6 +153,7 @@ MultiPhotoUploader.propTypes = {
   onUpdateUploadedImages: PropTypes.func.isRequired,
   requestFileUpload: PropTypes.func.isRequired,
   files: PropTypes.array,
+  className: PropTypes.string,
 };
 
 export default MultiPhotoUploader;

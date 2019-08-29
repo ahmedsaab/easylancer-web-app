@@ -5,13 +5,13 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 import * as PropTypes from 'prop-types';
 import { GoogleApiWrapper } from 'google-maps-react';
-import { MDBInput } from 'mdbreact';
 import styled from 'styled-components';
 import Spinner from 'components/atoms/Spinner';
+import TextField from '@material-ui/core/TextField';
 
 const DropDownContainer = styled.div`
   position: absolute;
-  top: 40px;
+  top: 70px;
   z-index: 20;
   border: 1px solid grey;
   width: 100%;
@@ -24,14 +24,12 @@ const Content = styled.div`
 
 const DropDownItem = styled.div`
   padding: 0.5rem;
+  font-weight: 400;
+  line-height: 1.75;
   cursor: pointer;
   color: ${props => (props.active ? '#fff' : '#000')};
-  background-color: ${props => (props.active ? '#2bbbad' : '#fff')};
+  background-color: ${props => (props.active ? '#b0b0b0' : '#fff')};
 `;
-
-const LocationInput = styled(MDBInput).attrs(props => ({
-  label: props.label,
-}))``;
 
 const getTypes = type => {
   const types = [];
@@ -81,7 +79,7 @@ class Places extends React.Component {
   };
 
   render() {
-    const { type, countryISOCode, text, onChange } = this.props;
+    const { type, countryISOCode, text, onChange, label } = this.props;
     const searchOptions = {
       types: getTypes(type),
       componentRestrictions: { country: countryISOCode },
@@ -96,8 +94,12 @@ class Places extends React.Component {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <Content>
-            <LocationInput
-              label={this.props.label}
+            <TextField
+              label={label}
+              placeholder="e.g., Skilled wall painter needed"
+              margin="normal"
+              variant="outlined"
+              fullWidth
               {...getInputProps({
                 placeholder: 'Search Places ...',
                 className: 'location-search-input',

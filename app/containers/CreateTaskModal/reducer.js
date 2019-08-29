@@ -8,22 +8,21 @@ import {
   SEND_TASK_SUCCESS,
   SEND_TASK_FAIL,
   SEND_TASK,
-  categories,
-  countries,
 } from './constants';
 
 export const initialState = {
   form: {
-    price: 25,
-    paymentMethod: 'card',
+    price: '',
+    currency: '',
+    paymentMethod: null,
     title: '',
     description: '',
     category: null,
     type: null,
     images: [],
     tags: [],
-    date: new Date(),
-    time: '12:00AM',
+    startDateTime: null,
+    startDateTimeError: null,
     country: null,
     address: '',
     location: {
@@ -48,7 +47,7 @@ const createTaskModalReducer = (state = initialState, action) =>
       case UPDATE_TASK_FORM_COUNTRY:
         draft.form.location = initialState.form.location;
         draft.form.address = initialState.form.address;
-        draft.form.country = countries.find(c => c.text === action.country);
+        draft.form.country = action.country;
         break;
       case UPDATE_TASK_FORM_LOCATION:
         draft.form.address = action.address;

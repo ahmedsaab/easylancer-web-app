@@ -1,24 +1,21 @@
-import { call, put, select, takeLeading } from 'redux-saga/effects';
+import { call, put, select, takeLeading, takeLatest } from 'redux-saga/effects';
 
 import * as client from 'utils/client';
 
 import { makeSelectCreateTaskModalFrom } from 'containers/CreateTaskModal/selectors';
 import {
   taskCreateError,
-  taskCreateSuccess,
+  taskCreateSuccess, updateTaskModalFormGeneral,
 } from 'containers/CreateTaskModal/actions';
-import { SEND_TASK } from 'containers/CreateTaskModal/constants';
+import { FETCH_TAGS, SEND_TASK } from 'containers/CreateTaskModal/constants';
 import history from 'utils/history';
 import { updateModal } from 'containers/Modal/actions';
-import moment from 'moment';
 
 const createPayloadFromFrom = form => ({
   ...form,
   imagesUrls: form.images
     .filter(image => image.uploaded)
     .map(image => image.url),
-  date: undefined,
-  time: undefined,
   category: form.category.text.toLowerCase(),
   type: form.type.text.toLowerCase(),
   location: {
@@ -28,12 +25,12 @@ const createPayloadFromFrom = form => ({
     geo: form.location.geo,
   },
   tags: form.tags,
-  startDateTime: moment(form.time.toLowerCase(), 'hh:mma')
-    .set('year', form.date.getFullYear())
-    .set('month', form.date.getMonth())
-    .set('date', form.date.getDate())
-    .toISOString(),
 });
+
+const getTagableText = form =>
+  `${form.category.text}, ${form.type.text}, ${form.title}. ${
+    form.description
+  }`;
 
 export function* postTask() {
   const form = yield select(makeSelectCreateTaskModalFrom());
@@ -49,6 +46,18 @@ export function* postTask() {
   }
 }
 
+export function* fetchTags() {
+  const form = yield select(makeSelectCreateTaskModalFrom());
+
+  try {
+    const tags = yield call(client.fetchTags, getTagableText(form));
+    yield put(updateTaskModalFormGeneral('tags', tags));
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export default function* taskData() {
   yield takeLeading(SEND_TASK, postTask);
+  yield takeLatest(FETCH_TAGS, fetchTags);
 }
