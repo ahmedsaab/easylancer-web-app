@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import CancelButton from 'components/atoms/CancelButton';
 import DialogButton from 'components/atoms/DialogButton';
 import MainButton from 'components/atoms/MainButton';

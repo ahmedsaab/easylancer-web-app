@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { MDBBtn, MDBRow } from 'mdbreact';
+import ActionButton from 'components/atoms/ActionButton';
 
 export const SideBarContainer = styled('nav')`
   background: #313e59;
@@ -64,15 +65,17 @@ export const SideBarHeader = styled('div').attrs(() => ({
   text-align: center;
 `;
 
-export const SideBarButton = styled(MDBBtn).attrs(() => ({
-  block: true,
-  className: 'btn btn-blk btn-rounded',
-}))`
+export const SideBarButton = styled(ActionButton)`
   margin: 10px 10px 0 0 !important;
 `;
 
 export const SideBarButtonContainer = styled.div`
   padding: 10px;
+`;
+
+export const SideBarButtonContainerBottom = styled(SideBarButtonContainer)`
+  bottom: 0;
+  margin-top: auto;
 `;
 
 export const SideBarOverlay = styled('div')`

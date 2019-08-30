@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React  from 'react';
 import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -13,12 +13,12 @@ import { DetailsSection } from 'containers/CreateTaskModal/DetailsSection';
 import { LocationSection } from 'containers/CreateTaskModal/LocationSection';
 import { DateTimeSection } from 'containers/CreateTaskModal/DateTimeSection';
 import { TagsSection } from 'containers/CreateTaskModal/TagsSection';
-import { updateModal } from 'containers/Modal/actions';
 import {
   makeSelectCreateTaskModalError,
   makeSelectCreateTaskModalFrom,
   makeSelectCreateTaskModalLoading,
   makeSelectCreateTaskModalStep,
+  makeSelectCreateTaskModalIsOpen,
 } from 'containers/CreateTaskModal/selectors';
 import {
   sendTaskModal,
@@ -29,18 +29,22 @@ import {
   updateTaskModalRemoveTag,
   fetchAndSetTags,
   updateTaskModalStep,
-  updateTaskModalReset,
+  updateTaskModalIsOpen,
 } from 'containers/CreateTaskModal/actions';
 import { useInjectSaga } from 'utils/injectSaga';
 
 import { ActionButtons } from 'containers/CreateTaskModal/ActionButtons';
 import CancelableDialogTitle from 'components/molecules/CancelableDialogTitle';
 import UnjustifiedDialogFooter from 'components/molecules/UnjustifiedDialogFooter';
-import saga from './saga';
-import reducer from './reducer';
 import PaymentInput from 'components/molecules/PaymentInput';
+import Dialog from '@material-ui/core/Dialog';
+import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
+import { useTheme } from '@material-ui/core';
+import reducer from './reducer';
+import saga from './saga';
 
-export function CreateTaskModal({
+function CreateTaskModal({
+  isOpen,
   form,
   loading,
   error,
@@ -57,6 +61,9 @@ export function CreateTaskModal({
 }) {
   useInjectReducer({ key: 'createTaskModal', reducer });
   useInjectSaga({ key: 'createTaskModal', saga });
+
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   function handleNext() {
     if (step === 1) {
@@ -155,7 +162,15 @@ export function CreateTaskModal({
   ];
 
   return (
-    <Fragment>
+    <Dialog
+      fullScreen={fullScreen}
+      fullWidth
+      maxWidth="sm"
+      open={isOpen}
+      onClose={onCloseModal}
+      scroll="paper"
+      aria-labelledby="responsive-dialog-title"
+    >
       <CancelableDialogTitle onClose={onCloseModal}>
         {"Let's do it!"}
       </CancelableDialogTitle>
@@ -174,11 +189,12 @@ export function CreateTaskModal({
           onNext={handleNext}
         />
       </UnjustifiedDialogFooter>
-    </Fragment>
+    </Dialog>
   );
 }
 
 CreateTaskModal.propTypes = {
+  isOpen: PropTypes.bool,
   form: PropTypes.object,
   loading: PropTypes.bool,
   error: PropTypes.instanceOf(Error),
@@ -195,6 +211,7 @@ CreateTaskModal.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  isOpen: makeSelectCreateTaskModalIsOpen(),
   form: makeSelectCreateTaskModalFrom(),
   step: makeSelectCreateTaskModalStep(),
   loading: makeSelectCreateTaskModalLoading(),
@@ -203,8 +220,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   onCloseModal: () => {
-    dispatch(updateModal(null));
-    dispatch(updateTaskModalReset());
+    dispatch(updateTaskModalIsOpen(false));
   },
   onCreateTask: () => dispatch(sendTaskModal()),
   onUpdateFormGeneral: (key, value) =>

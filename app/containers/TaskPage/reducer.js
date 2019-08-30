@@ -15,8 +15,9 @@ import {
   UPDATE_OFFER_MESSAGE,
   UPDATE_OFFER_PAYMENT,
   UPDATE_OFFER_PRICE,
-  RESET_OFFER_FORM,
+  UPDATE_ASSIGNED_MODAL_IS_OPEN,
   RESET_OFFER_FORM_STATUS,
+  UPDATE_OFFER_FORM_IS_OPEN,
 } from 'containers/TaskPage/constants';
 
 export const initialState = {
@@ -32,6 +33,7 @@ export const initialState = {
     error: null,
   },
   offer: {
+    assignedModalIsOpen: false,
     data: null,
     actions: {
       hire: null,
@@ -44,6 +46,7 @@ export const initialState = {
         payment: 'card',
       },
       status: null,
+      isOpen: false,
     },
   },
 };
@@ -123,8 +126,16 @@ const taskPageReducer = (state = initialState, action) =>
         draft.offer.form.status = initialState.offer.form.status;
         break;
 
-      case RESET_OFFER_FORM:
-        draft.offer.form = initialState.offer.form;
+      case UPDATE_OFFER_FORM_IS_OPEN:
+        if (action.isOpen) {
+          draft.offer.form.isOpen = true;
+        } else {
+          draft.offer.form = initialState.offer.form;
+        }
+        break;
+
+      case UPDATE_ASSIGNED_MODAL_IS_OPEN:
+        draft.offer.assignedModalIsOpen = action.isOpen;
         break;
     }
   });

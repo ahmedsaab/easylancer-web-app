@@ -7,7 +7,7 @@ import {
   UPDATE_TASK_FORM_PUSH_TAG,
   SEND_TASK_SUCCESS,
   SEND_TASK_FAIL,
-  SEND_TASK, UPDATE_STEP, RESET,
+  SEND_TASK, UPDATE_STEP, RESET, UPDATE_IS_OPEN,
 } from './constants';
 
 export const initialState = {
@@ -33,6 +33,7 @@ export const initialState = {
   loading: false,
   error: null,
   step: 0,
+  isOpen: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -67,11 +68,16 @@ const createTaskModalReducer = (state = initialState, action) =>
       case UPDATE_STEP:
         draft.step = action.step;
         break;
-      case RESET:
-        draft.form = initialState.form;
-        draft.loading = initialState.loading;
-        draft.error = initialState.error;
-        draft.step = initialState.step;
+      case UPDATE_IS_OPEN:
+        if (action.isOpen) {
+          draft.isOpen = true;
+        } else {
+          draft.form = initialState.form;
+          draft.loading = initialState.loading;
+          draft.error = initialState.error;
+          draft.step = initialState.step;
+          draft.isOpen = false;
+        }
         break;
       case SEND_TASK:
         draft.loading = true;
@@ -80,6 +86,7 @@ const createTaskModalReducer = (state = initialState, action) =>
         draft.loading = false;
         draft.error = null;
         draft.form = initialState.form;
+        draft.isOpen = initialState.isOpen;
         break;
       case SEND_TASK_FAIL:
         draft.loading = false;

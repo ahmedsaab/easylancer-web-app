@@ -10,7 +10,10 @@ import FluidModal from 'components/molecules/FluidModal';
 import LoadingIndicator from 'components/molecules/LoadingIndicator';
 import ModalHeader from 'components/atoms/ModalHeader';
 import ModalCloseIcon from 'components/atoms/ModalCloseIcon';
-import { selectTaskPageOfferData, selectTaskPageTaskData } from 'containers/TaskPage/selectors';
+import {
+  selectTaskPageOfferData,
+  selectTaskPageTaskData,
+} from 'containers/TaskPage/selectors';
 import OfferDetails from 'components/molecules/OfferDetails';
 import OfferActionButtons from 'containers/TaskPage/OfferActionButtons';
 

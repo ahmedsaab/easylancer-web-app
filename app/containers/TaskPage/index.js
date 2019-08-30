@@ -12,7 +12,6 @@ import { MDBCol, MDBRow } from 'mdbreact';
 import TaskHeader from 'containers/TaskPage/TaskHeader';
 import TaskSwitch from 'containers/TaskPage/TaskSwitch';
 import FitPage from 'components/atoms/FitPage';
-import { ContainerRow } from 'containers/TaskPage/components';
 import reducer from 'containers/TaskPage/reducer';
 import {
   selectTaskPageTaskData,
@@ -25,6 +24,18 @@ import ProfileCard from 'components/molecules/ProfileCard';
 import history from 'utils/history';
 import saga, { offerUrlRegex } from 'containers/TaskPage/saga';
 import TaskActionButtons from 'containers/TaskPage/TaskActionButtons';
+import CreateOfferModal from 'containers/TaskPage/CreateOfferModal';
+import TaskAssignedModal from 'containers/TaskPage/TaskAssignedModal';
+import styled from 'styled-components';
+
+export const ContainerRow = styled(MDBRow)`
+  padding-top: 0.5rem;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+`;
+
 export function TaskPage({
   match,
   location,
@@ -65,6 +76,8 @@ export function TaskPage({
         />
       </Helmet>
       <ContainerRow>
+        <CreateOfferModal />
+        <TaskAssignedModal />
         <MDBCol sm="12" md="8">
           <MDBRow>
             <MDBCol size="12">

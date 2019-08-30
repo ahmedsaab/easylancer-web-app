@@ -28,9 +28,16 @@ const makeSelectCreateTaskModalStep = () =>
     state => state.step,
   );
 
+const makeSelectCreateTaskModalIsOpen = () =>
+  createSelector(
+    selectCreateTaskModalDomain,
+    state => state.isOpen,
+  );
+
 export {
   makeSelectCreateTaskModalFrom,
   makeSelectCreateTaskModalLoading,
   makeSelectCreateTaskModalError,
   makeSelectCreateTaskModalStep,
+  makeSelectCreateTaskModalIsOpen
 };

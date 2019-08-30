@@ -67,7 +67,7 @@ const DefaultContent = ({
         </CancelButton>
         <LoadableMainButton
           loading={sending}
-          disabled={sending}
+          disabled={sending || !price || !message || !paymentMethod}
           onClick={onSend}
         >
           Send

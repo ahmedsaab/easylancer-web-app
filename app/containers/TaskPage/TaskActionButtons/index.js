@@ -1,17 +1,9 @@
-/**
- *
- * TaskActionButtons
- *
- */
-
-import React from 'react';
+import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import { updateModal } from 'containers/Modal/actions';
-import ActionButtons from 'components/molecules/ActionButtons';
 import LoadingIndicator from 'components/molecules/LoadingIndicator';
 import {
   selectTaskPageOffersData,
@@ -21,6 +13,30 @@ import {
   selectGlobalDisabled,
   selectGlobalUser,
 } from 'containers/App/selectors';
+import StickyBottom from 'components/molecules/StickyBottom';
+import ActionButton from 'components/atoms/ActionButton';
+import MessageIcon from '@material-ui/icons/Message';
+import IconButton from '@material-ui/core/IconButton';
+import WorkIcon from '@material-ui/icons/Work';
+import UpdateIcon from '@material-ui/icons/Update';
+import AssistantPhotoIcon from '@material-ui/icons/AssistantPhoto';
+import { makeStyles } from '@material-ui/core/styles';
+import { updateOfferFormModalIsOpen } from 'containers/TaskPage/actions';
+
+const useStyles = makeStyles(theme => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+  leftIcon: {
+    marginRight: theme.spacing(1),
+  },
+  rightIcon: {
+    marginLeft: theme.spacing(1),
+  },
+  iconSmall: {
+    fontSize: 20,
+  },
+}));
 
 function TaskActionButtons({
   task,
@@ -30,102 +46,148 @@ function TaskActionButtons({
   containerRef,
   onCreateOfferButtonClick,
 }) {
+  const classes = useStyles();
+
   if (!task || !user || !offers) {
     return <LoadingIndicator />;
   }
 
-  const actionButtons = [];
+  let sticky = null;
+  let constant = null;
   const userIsOwner = task.creatorUser.id === user.id;
   const userIsAssigned = task.workerUser && task.workerUser.id === user.id;
   const userHasApplied = !!offers.find(
     offer => offer.workerUser.id === user.id,
   );
 
-  if (!userIsOwner && !userHasApplied) {
-    actionButtons.push({
-      disabled,
-      icon: 'file-contract',
-      text: 'Offer',
-      onClick: onCreateOfferButtonClick,
-    });
-  }
-
-  if (
+  const canOffer = !userIsOwner && !userHasApplied;
+  const canMessage =
     !userIsOwner &&
     ((!userIsAssigned && task.status === 'open') ||
-      (userIsAssigned && task.status === 'assigned'))
-  ) {
-    actionButtons.push({
-      disabled,
-      icon: 'envelope',
-      text: 'Message',
-      onClick: () => {
-        alert('message action clicked');
-      },
-    });
-  }
-
-  if (task.status === 'assigned' && (userIsOwner || userIsAssigned)) {
-    actionButtons.push({
-      color: 'warning',
-      disabled,
-      icon: 'clock',
-      text: 'Reschedule',
-      onClick: () => {
-        alert('reschedule action clicked');
-      },
-    });
-  }
-
-  if (task.status === 'in-progress' && (userIsOwner || userIsAssigned)) {
-    actionButtons.push({
-      disabled,
-      color: 'success',
-      icon: 'flag-checkered',
-      text: 'Finish',
-      onClick: () => {
-        alert('finish action clicked');
-      },
-    });
-  }
-
-  if (
+      (userIsAssigned && task.status === 'assigned') ||
+      (userIsAssigned && task.status === 'in-progress'));
+  const canReschedule =
+    task.status === 'assigned' && (userIsOwner || userIsAssigned);
+  const canFinish =
+    task.status === 'in-progress' && (userIsOwner || userIsAssigned);
+  const canCopy =
     task.status === 'done' ||
     task.status === 'not-done' ||
-    task.status === 'cancelled'
-  ) {
-    actionButtons.push({
-      disabled,
-      icon: 'copy',
-      text: 'Create a copy',
-      onClick: () => {
-        alert('create a copy action clicked');
-      },
-    });
-  }
-
-  if (
+    task.status === 'cancelled';
+  const canCancel =
     (userIsOwner && (task.status === 'open' || task.status === 'assigned')) ||
-    (userIsAssigned && task.status === 'assigned')
-  ) {
-    actionButtons.push({
-      color: 'danger',
-      disabled,
-      icon: 'times',
-      text: 'Cancel',
-      onClick: () => {
-        alert('cancel action clicked');
-      },
-    });
+    (userIsAssigned && task.status === 'assigned');
+
+  if (canCancel && canMessage && canReschedule) {
+    sticky = (
+      <Fragment>
+        <ActionButton variant="outlined" color="secondary" flex={2}>
+          <UpdateIcon className={classes.leftIcon} />
+          Reschedule
+        </ActionButton>
+        <IconButton color="primary" aria-label="message">
+          <MessageIcon />
+        </IconButton>
+      </Fragment>
+    );
+    constant = (
+      <Fragment>
+        <ActionButton variant="outlined">Cancel</ActionButton>
+      </Fragment>
+    );
+  } else if (canCancel && canReschedule) {
+    sticky = (
+      <Fragment>
+        <ActionButton variant="outlined" color="secondary" flex={2}>
+          <UpdateIcon className={classes.leftIcon} />
+          Reschedule
+        </ActionButton>
+        <ActionButton flex={1} variant="outlined">
+          Cancel
+        </ActionButton>
+      </Fragment>
+    );
+  } else if (canOffer && canMessage) {
+    sticky = (
+      <Fragment>
+        <ActionButton
+          flex={2}
+          color="primary"
+          onClick={onCreateOfferButtonClick}
+        >
+          <WorkIcon className={classes.leftIcon} />
+          Offer
+        </ActionButton>
+        <IconButton color="primary" aria-label="message">
+          <MessageIcon />
+        </IconButton>
+      </Fragment>
+    );
+  } else if (canMessage && canReschedule) {
+    sticky = (
+      <Fragment>
+        <ActionButton variant="outlined" color="secondary" flex={2}>
+          <UpdateIcon className={classes.leftIcon} />
+          Reschedule
+        </ActionButton>
+        <IconButton color="primary" aria-label="message">
+          <MessageIcon />
+        </IconButton>
+      </Fragment>
+    );
+  } else if (canFinish && canMessage) {
+    sticky = (
+      <Fragment>
+        <ActionButton flex={2} color="primary">
+          <AssistantPhotoIcon className={classes.leftIcon} />
+          Finish
+        </ActionButton>
+        <IconButton color="primary" aria-label="message">
+          <MessageIcon />
+        </IconButton>
+      </Fragment>
+    );
+  } else if (canCancel) {
+    constant = (
+      <Fragment>
+        <ActionButton variant="outlined">Cancel</ActionButton>
+      </Fragment>
+    );
+  } else if (canCopy) {
+    sticky = (
+      <Fragment>
+        <ActionButton color="default" variant="outlined">
+          Create similar task
+        </ActionButton>
+      </Fragment>
+    );
+  } else if (canMessage) {
+    sticky = (
+      <Fragment>
+        <ActionButton variant="outlined" color="primary">
+          <MessageIcon className={classes.leftIcon} />
+          Message
+        </ActionButton>
+      </Fragment>
+    );
+  } else if (canFinish) {
+    sticky = (
+      <Fragment>
+        <ActionButton color="primary">
+          <AssistantPhotoIcon className={classes.leftIcon} />
+          Finish
+        </ActionButton>
+      </Fragment>
+    );
   }
 
   return (
-    <ActionButtons
-      whenToBlock={Number.MAX_SAFE_INTEGER}
-      whenToStick={768}
-      relativeStyleRef={containerRef}
-      buttons={actionButtons}
-    />
+    <div>
+      <StickyBottom whenToStick={768} relativeStyleRef={containerRef}>
+        {sticky}
+      </StickyBottom>
+      <div>{constant}</div>
+    </div>
   );
 }
 
@@ -146,7 +208,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onCreateOfferButtonClick: () => dispatch(updateModal('create-offer')),
+  onCreateOfferButtonClick: () => dispatch(updateOfferFormModalIsOpen(true)),
 });
 
 const withConnect = connect(

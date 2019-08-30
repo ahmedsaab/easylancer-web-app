@@ -18,11 +18,12 @@ import {
   offerSentSuccess,
   updateOfferModalPayment,
   updateOfferModalPrice,
+  updateAssignedModalIsOpen,
+  loadTask,
 } from 'containers/TaskPage/actions';
 import * as client from 'utils/client';
 
 import history from 'utils/history';
-import { updateModal } from 'containers/Modal/actions';
 import { makeSelectGlobalLocation } from 'containers/App/selectors';
 import {
   selectTaskPageTaskData,
@@ -69,13 +70,13 @@ export function* acceptOffer() {
   try {
     yield call(client.acceptOffer, taskId, offerId);
     yield put(acceptOfferSuccess());
-    yield put(loadTaskOffers());
+    yield put(loadTaskOffers(taskId));
+    yield put(loadTask(taskId));
+    yield put(updateAssignedModalIsOpen(true));
 
     history.push(`/task/${taskId}`);
   } catch (err) {
     yield put(acceptOfferError(err));
-  } finally {
-    yield put(updateModal('task-assigned-confirmation'));
   }
 }
 
@@ -87,6 +88,7 @@ export function* postOffer() {
     yield call(client.postOffer, id, offer);
     yield put(offerSentSuccess());
     yield put(loadTaskOffers(id));
+    history.push(`/task/${id}/offers`);
   } catch (err) {
     yield put(offerSentError(err));
   }

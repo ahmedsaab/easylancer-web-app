@@ -12,7 +12,6 @@ import { selectTaskPageTaskData } from 'containers/TaskPage/selectors';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import TaskAssignee from 'containers/TaskPage/TaskAssignee';
-import ImageGrid from 'components/organisms/ImageGrid';
 
 const PaddedRow = styled(MDBRow)`
   padding: 10px;

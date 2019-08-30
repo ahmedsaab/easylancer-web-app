@@ -28,6 +28,11 @@ const selectTaskPageOfferFormData = state =>
   (state.taskPage || initialState).offer.form.data;
 const selectTaskPageOfferFormStatus = state =>
   (state.taskPage || initialState).offer.form.status;
+const selectTaskPageOfferFormIsOpen = state =>
+  (state.taskPage || initialState).offer.form.isOpen;
+
+const selectTaskPageAssignedModalIsOpen = state =>
+  (state.taskPage || initialState).offer.assignedModalIsOpen;
 
 const makeSelectTaskPageUserIsTaskOwner = () =>
   createSelector(
@@ -55,6 +60,8 @@ export {
   selectTaskPageOfferActionsHire,
   selectTaskPageOfferFormData,
   selectTaskPageOfferFormStatus,
+  selectTaskPageOfferFormIsOpen,
+  selectTaskPageAssignedModalIsOpen,
   makeSelectTaskPageUserIsTaskOwner,
   makeSelectOfferIsAssigned,
 };

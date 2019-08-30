@@ -5,11 +5,11 @@ import * as client from 'utils/client';
 import { makeSelectCreateTaskModalFrom } from 'containers/CreateTaskModal/selectors';
 import {
   taskCreateError,
-  taskCreateSuccess, updateTaskModalFormGeneral,
+  taskCreateSuccess,
+  updateTaskModalFormGeneral,
 } from 'containers/CreateTaskModal/actions';
 import { FETCH_TAGS, SEND_TASK } from 'containers/CreateTaskModal/constants';
 import history from 'utils/history';
-import { updateModal } from 'containers/Modal/actions';
 
 const createPayloadFromFrom = form => ({
   ...form,
@@ -38,7 +38,6 @@ export function* postTask() {
   try {
     const task = yield call(client.postTask, createPayloadFromFrom(form));
     yield put(taskCreateSuccess());
-    yield put(updateModal(null));
     history.push(`/task/${task.id}`);
   } catch (err) {
     console.error(err);

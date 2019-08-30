@@ -5,10 +5,9 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { makeSelectNavBarVisible } from 'containers/SideBar/selectors';
 import { useInjectReducer } from 'utils/injectReducer';
-import { MDBCol, MDBIcon } from 'mdbreact';
+import { MDBIcon } from 'mdbreact';
 import { toggleSideNav } from 'containers/Header/actions';
 import {
-  SideBarButton,
   SideBarContainer,
   SideBarHeader,
   SideBarLinkElement,
@@ -22,15 +21,18 @@ import {
   SideBarUserData,
   SideBarUserImage,
   SideBarUserName,
-  SideBarButtonContainer, ImagePlaceholder,
+  SideBarButtonContainer,
+  ImagePlaceholder,
+  SideBarButtonContainerBottom,
+  SideBarButton,
 } from 'containers/SideBar/components';
 import reducer from 'containers/SideBar/reducer';
 import { makeSelectGlobalUser } from 'containers/App/selectors';
 import { setBodyScroll } from 'containers/App/actions';
 import Footer from 'components/molecules/Footer';
-import { updateModal } from 'containers/Modal/actions';
 import auth from 'utils/auth';
 import Spinner from 'components/atoms/Spinner';
+import { updateTaskModalIsOpen } from 'containers/CreateTaskModal/actions';
 
 function SideBar({ isOpen, user, handleToggle, onCreateTaskButtonClick }) {
   useInjectReducer({ key: 'sideNavBar', reducer });
@@ -91,14 +93,16 @@ function SideBar({ isOpen, user, handleToggle, onCreateTaskButtonClick }) {
           </SideBarListElement>
         </SideBarList>
         <SideBarButtonContainer>
-          <SideBarButton color="danger" onClick={auth.logout}>
-            Log out
-          </SideBarButton>
-          <SideBarButton onClick={onCreateTaskButtonClick}>
+          <SideBarButton color="primary" onClick={onCreateTaskButtonClick}>
             <MDBIcon className="mr-3" icon="magic" />
             Create task
           </SideBarButton>
         </SideBarButtonContainer>
+        <SideBarButtonContainerBottom>
+          <SideBarButton variant="outlined" fullWidth onClick={auth.logout}>
+            Log out
+          </SideBarButton>
+        </SideBarButtonContainerBottom>
         <Footer />
       </SideBarContainer>
     </div>
@@ -118,7 +122,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(toggleSideNav(false));
   },
   onCreateTaskButtonClick: () => {
-    dispatch(updateModal('create-task'));
+    dispatch(updateTaskModalIsOpen(true));
     dispatch(toggleSideNav(false));
   },
 });

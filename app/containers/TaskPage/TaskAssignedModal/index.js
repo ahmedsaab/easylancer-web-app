@@ -5,28 +5,29 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import moment from 'moment';
 import styled from 'styled-components';
-import { MDBBtn, MDBModalBody, MDBModalFooter, MDBModalHeader } from 'mdbreact';
 
-import { updateModal } from 'containers/Modal/actions';
 import {
-  selectTaskPageOfferActionsHire,
+  selectTaskPageAssignedModalIsOpen,
   selectTaskPageOfferData,
   selectTaskPageTaskData,
 } from 'containers/TaskPage/selectors';
-import 'containers/TaskPage/TaskAssignedModal/styles.css';
-import CenteredDiv from 'components/atoms/CenteredDiv';
+import { updateAssignedModalIsOpen } from 'containers/TaskPage/actions';
 import FullName from 'components/molecules/FullName';
 import Avatar from 'components/molecules/Avatar';
 import Bold from 'components/atoms/Bold';
+import CancelableDialogTitle from 'components/molecules/CancelableDialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import MainButton from 'components/atoms/MainButton';
+import { InformativeDiv } from 'containers/TaskPage/CreateOfferModal/SuccessContent';
+import Dialog from '@material-ui/core/Dialog';
+import { useTheme } from '@material-ui/core';
+import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 
 const imgStyle = {
   width: '120px',
   border: '2px solid rgba(228, 222, 153, 0.54)',
 };
-
-const CenteredContent = styled(CenteredDiv)`
-  padding: 20px 0px 20px 0px;
-`;
 
 const WorkerName = styled(FullName)`
   font-size: 1.2rem;
@@ -39,25 +40,35 @@ const Text = styled.div`
   text-align: center;
 `;
 
-function TaskAssignedModal({ status, task, offer, onClickOkay }) {
-  if (status === 'error') {
-    return <div>Something bad happened</div>;
-  }
-
+/**
+ * @return {null}
+ */
+function TaskAssignedModal({ isOpen, task, offer, onDismiss }) {
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const formatedDate = moment(task.startDateTime).format(
     'h:mm A [on the] Do of MMM ',
   );
 
+  if (!task || !offer) {
+    return null;
+  }
+
   return (
-    <div>
-      <MDBModalHeader
-        toggle={onClickOkay}
-        className="task-assigned-modal-close"
-      >
+    <Dialog
+      fullScreen={fullScreen}
+      fullWidth
+      maxWidth="sm"
+      open={isOpen}
+      onClose={onDismiss}
+      scroll="paper"
+      aria-labelledby="responsive-dialog-title"
+    >
+      <CancelableDialogTitle onClose={onDismiss}>
         Task Assigned to <Bold>{offer.workerUser.firstName}</Bold>
-      </MDBModalHeader>
-      <MDBModalBody>
-        <CenteredContent>
+      </CancelableDialogTitle>
+      <DialogContent dividers>
+        <InformativeDiv>
           <Avatar
             imgStyle={imgStyle}
             imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
@@ -73,37 +84,31 @@ function TaskAssignedModal({ status, task, offer, onClickOkay }) {
             Your worker will meet you at <Bold>{formatedDate}</Bold> in the
             agreed location to finish the job.
           </Text>
-        </CenteredContent>
-      </MDBModalBody>
-      <MDBModalFooter>
-        <MDBBtn
-          style={{ 'font-size': '1rem' }}
-          className="btn btn-rounded waves-effect"
-          onClick={onClickOkay}
-        >
-          Got it!
-        </MDBBtn>
-      </MDBModalFooter>
-    </div>
+        </InformativeDiv>
+      </DialogContent>
+      <DialogActions>
+        <MainButton onClick={onDismiss}>Got it!</MainButton>
+      </DialogActions>
+    </Dialog>
   );
 }
 
 TaskAssignedModal.propTypes = {
-  status: PropTypes.oneOf(['loading', 'success', 'error']),
+  isOpen: PropTypes.bool,
   offer: PropTypes.object,
   task: PropTypes.object,
-  onClickOkay: PropTypes.func,
+  onDismiss: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
+  isOpen: selectTaskPageAssignedModalIsOpen,
   offer: selectTaskPageOfferData,
   task: selectTaskPageTaskData,
-  status: selectTaskPageOfferActionsHire,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onClickOkay: () => {
-    dispatch(updateModal(null));
+  onDismiss: () => {
+    dispatch(updateAssignedModalIsOpen(false));
   },
 });
 

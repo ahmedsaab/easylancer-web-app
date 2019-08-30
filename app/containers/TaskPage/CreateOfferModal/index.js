@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import { updateModal } from 'containers/Modal/actions';
 import {
   selectTaskPageTaskData,
   selectTaskPageOfferFormData,
   selectTaskPageOfferFormStatus,
+  selectTaskPageOfferFormIsOpen,
 } from 'containers/TaskPage/selectors';
 import {
-  resetOfferFormModal,
+  updateOfferFormModalIsOpen,
   resetOfferFormStatusModal,
   sendOfferModal,
   updateOfferModalMessage,
@@ -21,8 +21,12 @@ import {
 import DefaultContent from 'containers/TaskPage/CreateOfferModal/DefaultContent';
 import SuccessContent from 'containers/TaskPage/CreateOfferModal/SuccessContent';
 import { useSnackbar } from 'notistack';
+import Dialog from '@material-ui/core/Dialog';
+import { useTheme } from '@material-ui/core';
+import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 
 function CreateOfferModal({
+  isOpen,
   form,
   task,
   status,
@@ -34,37 +38,54 @@ function CreateOfferModal({
   removeErrorState,
 }) {
   const { enqueueSnackbar } = useSnackbar();
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  let content = null;
 
   if (status === 'success') {
-    return (
+    content = (
       <SuccessContent
         taskOwnerName={task.creatorUser.firstName}
         onClose={onCloseModal}
       />
     );
-  }
-
-  if (status === 'failed') {
+  } else if (status === 'failed') {
     enqueueSnackbar('Something bad happened :(', { variant: 'error' });
     removeErrorState();
+  } else {
+    content = (
+      <DefaultContent
+        sending={status === 'loading'}
+        message={form.message}
+        price={form.price}
+        paymentMethod={form.payment}
+        onUpdatePrice={onUpdatePrice}
+        onUpdatePaymentMethod={onUpdatePayment}
+        onUpdateMessage={onUpdateMessage}
+        onSend={onSendOffer}
+        onClose={onCloseModal}
+      />
+    );
   }
 
   return (
-    <DefaultContent
-      sending={status === 'loading'}
-      message={form.message}
-      price={form.price}
-      paymentMethod={form.payment}
-      onUpdatePrice={onUpdatePrice}
-      onUpdatePaymentMethod={onUpdatePayment}
-      onUpdateMessage={onUpdateMessage}
-      onSend={onSendOffer}
+    <Dialog
+      fullScreen={fullScreen}
+      fullWidth
+      maxWidth="sm"
+      open={isOpen}
       onClose={onCloseModal}
-    />
+      scroll="paper"
+      aria-labelledby="responsive-dialog-title"
+    >
+      {content}
+    </Dialog>
   );
 }
 
 CreateOfferModal.propTypes = {
+  isOpen: PropTypes.bool,
   form: PropTypes.object,
   task: PropTypes.object,
   status: PropTypes.string,
@@ -77,6 +98,7 @@ CreateOfferModal.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  isOpen: selectTaskPageOfferFormIsOpen,
   form: selectTaskPageOfferFormData,
   status: selectTaskPageOfferFormStatus,
   task: selectTaskPageTaskData,
@@ -89,8 +111,7 @@ const mapDispatchToProps = dispatch => ({
   onSendOffer: () => dispatch(sendOfferModal()),
   removeErrorState: () => dispatch(resetOfferFormStatusModal()),
   onCloseModal: () => {
-    dispatch(resetOfferFormModal());
-    dispatch(updateModal(null));
+    dispatch(updateOfferFormModalIsOpen(false));
   },
 });
 

@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import ActionButtons from 'components/molecules/ActionButtons';
 import {
   makeSelectOfferIsAssigned,
   makeSelectTaskPageUserIsTaskOwner,
@@ -13,6 +12,30 @@ import {
   selectTaskPageTaskData,
 } from 'containers/TaskPage/selectors';
 import { acceptOffer } from 'containers/TaskPage/actions';
+import StickyBottom from 'components/molecules/StickyBottom';
+import { makeStyles } from '@material-ui/core';
+import CheckIcon from '@material-ui/icons/Check';
+import IconButton from '@material-ui/core/IconButton';
+import MessageIcon from '@material-ui/icons/Message';
+import LoadableActionButton from 'components/hoc/LoadableActionButton';
+import ActionButton from 'components/atoms/ActionButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CallIcon from '@material-ui/icons/Call';
+
+const useStyles = makeStyles(theme => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+  leftIcon: {
+    marginRight: theme.spacing(1),
+  },
+  rightIcon: {
+    marginLeft: theme.spacing(1),
+  },
+  iconSmall: {
+    fontSize: 20,
+  },
+}));
 
 function OfferActionButtons({
   offer,
@@ -23,78 +46,72 @@ function OfferActionButtons({
   containerRef,
   onAcceptOffer,
 }) {
-  const buttons = [];
+  const classes = useStyles();
   const disabled = Object.values(actions).includes('loading');
+  let sticky = null;
 
   if (task.status === 'open' && isTaskOwner) {
-    buttons.push(
-      {
-        color: 'green',
-        disabled,
-        icon: 'check',
-        text: 'Hire Now',
-        isLoading: actions.hire === 'loading',
-        onClick: () => onAcceptOffer(offer.id),
-      },
-      {
-        color: 'primary',
-        disabled,
-        icon: 'envelope',
-        text: 'Message',
-        onClick: () => {
-          alert('message action clicked');
-        },
-      },
+    sticky = (
+      <Fragment>
+        <LoadableActionButton
+          onClick={() => onAcceptOffer(offer.id)}
+          color="primary"
+          disabled={disabled}
+          flex={2}
+          loading={actions.hire === 'loading'}
+        >
+          <CheckIcon className={classes.leftIcon} />
+          Hire Now
+        </LoadableActionButton>
+        <IconButton disabled={disabled} color="primary" aria-label="message">
+          <MessageIcon />
+        </IconButton>
+      </Fragment>
     );
-  }
-
-  if (!isAssignedOffer && !isTaskOwner) {
-    buttons.push({
-      color: 'danger',
-      disabled,
-      icon: 'trash',
-      text: 'Withdraw',
-      isLoading: actions.withdraw === 'loading',
-      onClick: () => {
-        alert('withdraw offer action clicked');
-      },
-    });
-  }
-
-  if (
+  } else if (!isAssignedOffer && !isTaskOwner) {
+    sticky = (
+      <Fragment>
+        <LoadableActionButton
+          color="secondary"
+          disabled={disabled}
+          flex={2}
+          loading={actions.withdraw === 'loading'}
+        >
+          <DeleteIcon className={classes.leftIcon} />
+          Withdraw
+        </LoadableActionButton>
+        <IconButton disabled={disabled} color="primary" aria-label="message">
+          <MessageIcon />
+        </IconButton>
+      </Fragment>
+    );
+  } else if (
     isTaskOwner &&
     isAssignedOffer &&
     (task.status === 'assigned' || task.status === 'in-progress')
   ) {
-    buttons.push(
-      {
-        color: 'green',
-        disabled,
-        icon: 'phone',
-        text: 'Call',
-        onClick: () => {
-          alert('call worker action clicked');
-        },
-      },
-      {
-        color: 'primary',
-        disabled,
-        icon: 'envelope',
-        text: 'Message',
-        onClick: () => {
-          alert('message action clicked');
-        },
-      },
+    sticky = (
+      <Fragment>
+        <ActionButton
+          color="primary"
+          disabled={disabled}
+          flex={2}
+          variant="outlined"
+        >
+          <CallIcon className={classes.leftIcon} />
+          Call
+        </ActionButton>
+        <IconButton disabled={disabled} color="primary" aria-label="message">
+          <MessageIcon />
+        </IconButton>
+      </Fragment>
     );
   }
 
   return (
-    <ActionButtons
-      whenToBlock={Number.MAX_SAFE_INTEGER}
-      whenToStick={768}
-      relativeStyleRef={containerRef}
-      buttons={buttons}
-    />
+    <StickyBottom whenToStick={768} relativeStyleRef={containerRef}>
+      {sticky}
+    </StickyBottom>
   );
 }
 

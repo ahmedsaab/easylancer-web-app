@@ -13,7 +13,6 @@ const animationShow = keyframes`
 `;
 
 const ModalContainer = styled.div`
-  position: relative;
   margin: 0;
   width: 100%;
   display: flex;

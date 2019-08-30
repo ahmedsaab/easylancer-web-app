@@ -9,7 +9,7 @@ import {
   UPDATE_TASK_FORM_PUSH_TAG,
   FETCH_TAGS,
   UPDATE_STEP,
-  RESET,
+  UPDATE_IS_OPEN,
 } from 'containers/CreateTaskModal/constants';
 
 export function updateTaskModalFormGeneral(key, value) {
@@ -62,9 +62,10 @@ export function updateTaskModalStep(step) {
   };
 }
 
-export function updateTaskModalReset() {
+export function updateTaskModalIsOpen(isOpen) {
   return {
-    type: RESET,
+    type: UPDATE_IS_OPEN,
+    isOpen,
   };
 }
 

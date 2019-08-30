@@ -9,6 +9,7 @@ import StepContent from '@material-ui/core/StepContent';
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
+    padding: '25px',
   },
   content: {
     paddingTop: theme.spacing(2),

@@ -24,11 +24,11 @@ import TaskPage from 'containers/TaskPage/Loadable';
 import SearchPage from 'containers/SearchPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import { Container, ContentRow, Wrapper } from 'containers/App/components';
-import Modal from 'containers/Modal';
 import GlobalStyle from 'global-styles';
 import { useInjectSaga } from 'utils/injectSaga';
 import { loadUser } from 'containers/App/actions';
 import saga from 'containers/App/saga';
+import CreateTaskModal from 'containers/CreateTaskModal';
 
 const theme = createMuiTheme({
   status: {
@@ -67,7 +67,7 @@ function App({ onLoad }) {
               </MDBRow>
               <ContentRow>
                 <div style={{ width: '100%' }}>
-                  <Modal />
+                  <CreateTaskModal />
                   <Switch>
                     <Route exact path="/" component={SearchPage} />
                     <Route path="/task/:id" component={TaskPage} />

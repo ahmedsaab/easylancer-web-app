@@ -11,47 +11,26 @@ import {
   selectTaskPageTaskData,
 } from 'containers/TaskPage/selectors';
 import LoadingIndicator from 'components/molecules/LoadingIndicator';
-import { MDBBtn } from 'mdbreact';
 import history from 'utils/history';
 import FullName from 'components/molecules/FullName';
 import Avatar from 'components/molecules/Avatar';
 import { viewOffer } from 'containers/TaskPage/actions';
+import { makeStyles } from '@material-ui/core';
+import DialogButton from 'components/atoms/DialogButton';
 
 const Container = styled.div`
   color: #004085;
-  background-color: #cce5ff;
+  background-color: #ebf5ff;
   border-color: #b8daff;
   position: relative;
+  display: flex;
   padding: 0.4rem 0.75rem;
   margin-bottom: 1rem;
   margin: 35px 0 0 0;
   border: 1px solid;
-  display: flex;
-`;
-
-const MiddleContainer = styled.div.attrs(() => ({
-  className: 'flex-grow-1',
-}))`
-  padding-left: 20px;
-  font-size: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: left;
-  font-size: 1.1rem;
-  font-weight: bold;
-  min-width: 170px;
-}
-`;
-
-const ContactButton = styled(MDBBtn).attrs(() => ({
-  className: 'btn btn-rounded waves-effect',
-  color: 'blue',
-}))`
-  padding: 0.375rem 0.75rem;
-  margin: 0.75rem;
-  flex-shrink: 1;
-  min-width: 100px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
 `;
 
 const WorkerTag = styled.div`
@@ -66,19 +45,51 @@ const WorkerTag = styled.div`
   letter-spacing: 1px;
   color: #f0f0f0;
   border: 1px solid #014085;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 `;
 
-const AvatarContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: left;
+const WorkerName = styled(FullName)`
+  max-width: 60%;
+  display: inline-block;
+  padding-left: 10px;
+  vertical-align: middle;
 `;
+
+const WorkerAvatarContainer = styled.div`
+  display: inline-block;
+`;
+
+const useStyles = makeStyles(theme => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+  dataContainer: {
+    flexGrow: 1,
+  },
+  avatarContainer: {
+    maxWidth: '100%',
+  },
+  contactButton: {
+    lineHeight: '30px',
+    padding: '5px 10px',
+    margin: '4px 0',
+    float: 'right',
+    verticalAlign: 'middle',
+  },
+  buttonContainer: {
+    padding: 0,
+    flex: '0 0 40%',
+    width: '100%',
+  },
+}));
 
 /**
  * @return {null}
  */
 function TaskAssignee({ isTaskOwner, task, offers, onContact }) {
+  const classes = useStyles();
+
   if (task.status === 'assigned' && isTaskOwner) {
     if (offers === null) {
       return <LoadingIndicator />;
@@ -89,23 +100,28 @@ function TaskAssignee({ isTaskOwner, task, offers, onContact }) {
     return (
       <Container>
         <WorkerTag>Worker</WorkerTag>
-        <AvatarContainer className="flex-shrink-1">
-          <Avatar
-            isApproved={offer.workerUser.isApproved}
-            imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
-            imgStyle={{ width: '50px', border: '1px solid' }}
-          />
-        </AvatarContainer>
-        <MiddleContainer>
-          <FullName user={offer.workerUser} />
-        </MiddleContainer>
-        <ContactButton
-          onClick={() => {
-            onContact(offer.id, task.id);
-          }}
-        >
-          Contact
-        </ContactButton>
+        <div className={classes.dataContainer}>
+          <WorkerAvatarContainer>
+            <Avatar
+              isApproved={offer.workerUser.isApproved}
+              imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
+              imgStyle={{ width: '50px', border: '1px solid' }}
+            />
+          </WorkerAvatarContainer>
+          <WorkerName user={offer.workerUser} />
+        </div>
+        <div className={classes.buttonContainer}>
+          <DialogButton
+            onClick={() => {
+              onContact(offer.id, task.id);
+            }}
+            variant="outlined"
+            color="primary"
+            className={classes.contactButton}
+          >
+            Contact
+          </DialogButton>
+        </div>
       </Container>
     );
   }

@@ -10,7 +10,7 @@ export const UPDATE_TASK_FORM_PUSH_TAG =
   'app/CreateTaskModal/UPDATE_TASK_FORM_PUSH_TAG';
 export const SEND_TASK = 'app/CreateTaskModal/SEND_TASK';
 export const UPDATE_STEP = 'app/CreateTaskModal/UPDATE_STEP';
-export const RESET = 'app/CreateTaskModal/RESET';
+export const UPDATE_IS_OPEN = 'app/CreateTaskModal/UPDATE_IS_OPEN';
 export const SEND_TASK_SUCCESS = 'app/CreateTaskModal/SEND_TASK_SUCCESS';
 export const SEND_TASK_FAIL = 'app/CreateTaskModal/SEND_TASK_FAIL';
 export const FETCH_TAGS = 'app/CreateTaskModal/FETCH_TAGS';
