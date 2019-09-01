@@ -2,12 +2,14 @@ import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-export const withLoading = (Component, width) => {
+export const withLoading = Component => {
   const Hoc = ({ loading, children, ...props }) => (
-    <Component style={{ width }} {...props}>
+    <Component {...props}>
       {loading ? (
         <Fragment>
-          <LinearProgress style={{ display: 'block', width, height: '5px' }} />
+          <LinearProgress
+            style={{ display: 'block', width: '46px', height: '5px' }}
+          />
           <br />
         </Fragment>
       ) : (

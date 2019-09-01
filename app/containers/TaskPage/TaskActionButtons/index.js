@@ -18,9 +18,14 @@ import ActionButton from 'components/atoms/ActionButton';
 import MessageIcon from '@material-ui/icons/Message';
 import WorkIcon from '@material-ui/icons/Work';
 import UpdateIcon from '@material-ui/icons/Update';
+import CloseIcon from '@material-ui/icons/Close';
 import AssistantPhotoIcon from '@material-ui/icons/AssistantPhoto';
-import { makeStyles } from '@material-ui/core/styles';
-import { updateOfferFormModalIsOpen } from 'containers/TaskPage/actions';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {
+  updateCancelModalIsOpen,
+  updateOfferFormModalIsOpen,
+} from 'containers/TaskPage/actions';
+import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -44,15 +49,17 @@ function TaskActionButtons({
   disabled,
   containerRef,
   onCreateOfferButtonClick,
+  onCancelTaskButtonClick,
 }) {
   const classes = useStyles();
+  const theme = useTheme();
+  const compact = useMediaQuery(theme.breakpoints.down('sm'));
 
   if (!task || !user || !offers) {
     return <LoadingIndicator />;
   }
 
   let sticky = null;
-  let constant = null;
   const userIsOwner = task.creatorUser.id === user.id;
   const userIsAssigned = task.workerUser && task.workerUser.id === user.id;
   const userHasApplied = !!offers.find(
@@ -78,27 +85,59 @@ function TaskActionButtons({
     (userIsAssigned && task.status === 'assigned');
 
   if (canCancel && canMessage && canReschedule) {
-    sticky = (
-      <Fragment>
-        <ActionButton variant="outlined" color="secondary" flex={2}>
-          <UpdateIcon className={classes.leftIcon} />
-          Reschedule
-        </ActionButton>
-        <ActionButton
-          disabled={disabled}
-          flex={1}
-          color="primary"
-          variant="outlined"
-        >
-          <MessageIcon />
-        </ActionButton>
-      </Fragment>
-    );
-    constant = (
-      <Fragment>
-        <ActionButton variant="outlined">Cancel</ActionButton>
-      </Fragment>
-    );
+    if (compact) {
+      sticky = (
+        <Fragment>
+          <ActionButton variant="outlined" color="secondary" flex={1}>
+            <UpdateIcon />
+          </ActionButton>
+          <ActionButton
+            flex={1}
+            variant="outlined"
+            onClick={onCancelTaskButtonClick}
+          >
+            <CloseIcon />
+          </ActionButton>
+          <ActionButton
+            disabled={disabled}
+            flex={1}
+            color="primary"
+            variant="outlined"
+          >
+            <MessageIcon />
+          </ActionButton>
+        </Fragment>
+      );
+    } else {
+      sticky = (
+        <div style={{ width: '100%' }}>
+          <div style={{ display: 'flex' }}>
+            <ActionButton variant="outlined" color="secondary" flex={2}>
+              <UpdateIcon className={classes.leftIcon} />
+              Reschedule
+            </ActionButton>
+            <ActionButton
+              disabled={disabled}
+              flex={1}
+              color="primary"
+              variant="outlined"
+            >
+              <MessageIcon />
+            </ActionButton>
+          </div>
+          <div style={{ display: 'flex', paddingTop: '10px' }}>
+            <ActionButton
+              flex={1}
+              variant="outlined"
+              onClick={onCancelTaskButtonClick}
+            >
+              <CloseIcon className={classes.leftIcon} />
+              Cancel
+            </ActionButton>
+          </div>
+        </div>
+      );
+    }
   } else if (canCancel && canReschedule) {
     sticky = (
       <Fragment>
@@ -106,7 +145,11 @@ function TaskActionButtons({
           <UpdateIcon className={classes.leftIcon} />
           Reschedule
         </ActionButton>
-        <ActionButton flex={1} variant="outlined">
+        <ActionButton
+          flex={1}
+          onClick={onCancelTaskButtonClick}
+          variant="outlined"
+        >
           Cancel
         </ActionButton>
       </Fragment>
@@ -169,7 +212,9 @@ function TaskActionButtons({
   } else if (canCancel) {
     sticky = (
       <Fragment>
-        <ActionButton variant="outlined">Cancel</ActionButton>
+        <ActionButton variant="outlined" onClick={onCancelTaskButtonClick}>
+          Cancel
+        </ActionButton>
       </Fragment>
     );
   } else if (canCopy) {
@@ -205,7 +250,6 @@ function TaskActionButtons({
       <StickyBottom whenToStick={768} relativeStyleRef={containerRef}>
         {sticky}
       </StickyBottom>
-      <div>{constant}</div>
     </div>
   );
 }
@@ -216,6 +260,7 @@ TaskActionButtons.propTypes = {
   offers: PropTypes.array,
   disabled: PropTypes.bool,
   onCreateOfferButtonClick: PropTypes.func,
+  onCancelTaskButtonClick: PropTypes.func,
   containerRef: PropTypes.object,
 };
 
@@ -228,6 +273,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   onCreateOfferButtonClick: () => dispatch(updateOfferFormModalIsOpen(true)),
+  onCancelTaskButtonClick: () => dispatch(updateCancelModalIsOpen(true)),
 });
 
 const withConnect = connect(

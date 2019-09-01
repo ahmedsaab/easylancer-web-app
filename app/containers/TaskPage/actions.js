@@ -22,6 +22,10 @@ import {
   WITHDRAW_OFFER,
   WITHDRAW_OFFER_SUCCESS,
   WITHDRAW_OFFER_ERROR,
+  CANCEL_TASK,
+  CANCEL_TASK_SUCCESS,
+  CANCEL_TASK_ERROR,
+  UPDATE_CANCEL_MODAL_IS_OPEN,
 } from 'containers/TaskPage/constants';
 
 export function loadTask(id) {
@@ -138,6 +142,32 @@ export function updateWithdrawModalIsOpen(isOpen) {
   return {
     type: UPDATE_WITHDRAW_MODAL_IS_OPEN,
     isOpen,
+  };
+}
+
+export function updateCancelModalIsOpen(isOpen) {
+  return {
+    type: UPDATE_CANCEL_MODAL_IS_OPEN,
+    isOpen,
+  };
+}
+
+export function cancelTask() {
+  return {
+    type: CANCEL_TASK,
+  };
+}
+
+export function cancelTaskSuccess() {
+  return {
+    type: CANCEL_TASK_SUCCESS,
+  };
+}
+
+export function cancelTaskError(error) {
+  return {
+    type: CANCEL_TASK_ERROR,
+    error,
   };
 }
 

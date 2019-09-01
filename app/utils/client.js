@@ -145,7 +145,6 @@ export const acceptOffer = async (taskId, offerId) => {
 };
 
 export const postTask = async task => {
-  await sleep(4000);
   try {
     const response = await axios.post(
       `${process.env.CLIENT_API_ROOT}/tasks/create`,
@@ -194,6 +193,31 @@ export const withdrawOffer = async taskId => {
   }
 };
 
+export const cancelTask = async id => {
+  await sleep(2000);
+  try {
+    const response = await axios.post(
+      `${process.env.CLIENT_API_ROOT}/tasks/${id}/cancel`,
+      null,
+      {
+        headers,
+      },
+    );
+
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      throw new Error(
+        `The server responded with error code ${error.response.status}`,
+      );
+    } else if (error.request) {
+      throw new Error(`Failed to read response from Server`);
+    } else {
+      throw new Error(`An unexpected error occurred`);
+    }
+  }
+};
+
 export const searchTasks = async filters => {
   // await sleep(1000);
   try {
@@ -221,7 +245,7 @@ export const fetchTags = async text => {
   try {
     let tags = [];
     const response = await axios.post(
-      'https://api.meaningcloud.com/topics-2.0',
+      'https://api.meaningcloud.com/topics-2.02',
       querystring.stringify({
         key: 'f9f5571e61fd55acd1b9aeaba08f51d2',
         lang: 'en',

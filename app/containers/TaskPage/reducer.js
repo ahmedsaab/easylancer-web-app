@@ -22,6 +22,10 @@ import {
   WITHDRAW_OFFER,
   WITHDRAW_OFFER_SUCCESS,
   WITHDRAW_OFFER_ERROR,
+  CANCEL_TASK,
+  CANCEL_TASK_SUCCESS,
+  CANCEL_TASK_ERROR,
+  UPDATE_CANCEL_MODAL_IS_OPEN,
 } from 'containers/TaskPage/constants';
 
 export const initialState = {
@@ -30,6 +34,10 @@ export const initialState = {
     data: null,
     loading: true,
     error: null,
+  },
+  cancelModal: {
+    isOpen: false,
+    isLoading: false,
   },
   offers: {
     data: null,
@@ -158,6 +166,20 @@ const taskPageReducer = (state = initialState, action) =>
       case WITHDRAW_OFFER_ERROR:
         draft.offer.withdrawModal.isLoading = false;
         draft.offer.withdrawModal.isOpen = false;
+        break;
+
+      case CANCEL_TASK:
+        draft.cancelModal.isLoading = true;
+        break;
+
+      case UPDATE_CANCEL_MODAL_IS_OPEN:
+        draft.cancelModal.isOpen = action.isOpen;
+        break;
+
+      case CANCEL_TASK_SUCCESS:
+      case CANCEL_TASK_ERROR:
+        draft.cancelModal.isLoading = false;
+        draft.cancelModal.isOpen = false;
         break;
     }
   });

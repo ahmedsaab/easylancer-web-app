@@ -5,13 +5,13 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import {
+  selectTaskPageCancelModalIsLoading,
+  selectTaskPageCancelModalIsOpen,
   selectTaskPageTaskData,
-  selectTaskPageWithdrawModalIsLoading,
-  selectTaskPageWithdrawModalIsOpen,
 } from 'containers/TaskPage/selectors';
 import {
-  updateWithdrawModalIsOpen,
-  withdrawOffer,
+  updateCancelModalIsOpen,
+  cancelTask,
 } from 'containers/TaskPage/actions';
 import Bold from 'components/atoms/Bold';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -40,13 +40,7 @@ const useStyles = makeStyles(theme => ({
 /**
  * @return {null}
  */
-function WithdrawConfirmationModal({
-  isOpen,
-  isLoading,
-  task,
-  onConfirm,
-  onDismiss,
-}) {
+function CancelTaskModal({ isOpen, isLoading, task, onConfirm, onDismiss }) {
   const classes = useStyles();
 
   if (!task) {
@@ -70,8 +64,7 @@ function WithdrawConfirmationModal({
       <DialogContent dividers>
         <InformativeDiv height={200}>
           <div className={classes.text}>
-            Are you sure you want to withdraw your offer to{' '}
-            <Bold>{task.title}</Bold> ?
+            Are you sure you want to cancel the task <Bold>"{task.title}"</Bold>?
           </div>
         </InformativeDiv>
       </DialogContent>
@@ -82,7 +75,7 @@ function WithdrawConfirmationModal({
           color="primary"
           autoFocus
         >
-          Cancel
+          Go Back
         </Button>
         <Button
           onClick={onConfirm}
@@ -90,14 +83,14 @@ function WithdrawConfirmationModal({
           disabled={isLoading}
           className={classes.yesButton}
         >
-          Withdraw
+          Cancel Task
         </Button>
       </DialogActions>
     </Dialog>
   );
 }
 
-WithdrawConfirmationModal.propTypes = {
+CancelTaskModal.propTypes = {
   isOpen: PropTypes.bool,
   isLoading: PropTypes.bool,
   task: PropTypes.object,
@@ -106,17 +99,17 @@ WithdrawConfirmationModal.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  isOpen: selectTaskPageWithdrawModalIsOpen,
-  isLoading: selectTaskPageWithdrawModalIsLoading,
+  isOpen: selectTaskPageCancelModalIsOpen,
+  isLoading: selectTaskPageCancelModalIsLoading,
   task: selectTaskPageTaskData,
 });
 
 const mapDispatchToProps = dispatch => ({
   onDismiss: () => {
-    dispatch(updateWithdrawModalIsOpen(false));
+    dispatch(updateCancelModalIsOpen(false));
   },
   onConfirm: () => {
-    dispatch(withdrawOffer());
+    dispatch(cancelTask());
   },
 });
 
@@ -125,4 +118,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(WithdrawConfirmationModal);
+export default compose(withConnect)(CancelTaskModal);

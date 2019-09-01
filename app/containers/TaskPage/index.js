@@ -28,6 +28,7 @@ import CreateOfferModal from 'containers/TaskPage/CreateOfferModal';
 import TaskAssignedModal from 'containers/TaskPage/TaskAssignedModal';
 import WithdrawOfferModal from 'containers/TaskPage/WithdrawOfferModal';
 import styled from 'styled-components';
+import CancelTaskModal from 'containers/TaskPage/CancelTaskModal';
 
 export const ContainerRow = styled(MDBRow)`
   padding-top: 0.5rem;
@@ -80,6 +81,7 @@ export function TaskPage({
         <CreateOfferModal />
         <TaskAssignedModal />
         <WithdrawOfferModal />
+        <CancelTaskModal />
         <MDBCol sm="12" md="8">
           <MDBRow>
             <MDBCol size="12">

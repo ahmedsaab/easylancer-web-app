@@ -3,7 +3,7 @@ import {
   LOAD_TASK,
   LOAD_TASK_OFFERS,
   ACCEPT_OFFER,
-  SEND_OFFER, WITHDRAW_OFFER,
+  SEND_OFFER, WITHDRAW_OFFER, CANCEL_TASK,
 } from 'containers/TaskPage/constants';
 import {
   loadTaskOffers,
@@ -19,7 +19,7 @@ import {
   updateOfferModalPayment,
   updateOfferModalPrice,
   updateAssignedModalIsOpen,
-  loadTask, withdrawOfferSuccess, withdrawOfferError, updateWithdrawModalIsOpen,
+  loadTask, withdrawOfferSuccess, withdrawOfferError, updateWithdrawModalIsOpen, cancelTaskSuccess, cancelTaskError,
 } from 'containers/TaskPage/actions';
 import * as client from 'utils/client';
 
@@ -108,10 +108,25 @@ export function* withdrawOffer() {
   }
 }
 
+export function* cancelTask() {
+  const { id } = yield select(selectTaskPageTaskData);
+
+  try {
+    yield call(client.cancelTask, id);
+    yield put(cancelTaskSuccess());
+    yield put(loadTask(id));
+    history.push(`/task/${id}`);
+  } catch (err) {
+    yield put(cancelTaskError(err));
+    console.log(err);
+  }
+}
+
 export default function* taskData() {
   yield takeLatest(LOAD_TASK, getTask);
   yield takeLatest(LOAD_TASK_OFFERS, getTaskOffers);
   yield takeLatest(ACCEPT_OFFER, acceptOffer);
   yield takeLeading(SEND_OFFER, postOffer);
   yield takeLeading(WITHDRAW_OFFER, withdrawOffer);
+  yield takeLeading(CANCEL_TASK, cancelTask);
 }

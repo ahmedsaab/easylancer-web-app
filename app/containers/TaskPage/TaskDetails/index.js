@@ -6,12 +6,13 @@ import moment from 'moment';
 import { MDBCol, MDBRow } from 'mdbreact';
 import ImagesGrid from 'components/organisms/LightboxGrid';
 import { Map, GoogleApiWrapper, Circle } from 'google-maps-react';
-import LoadingIndicator from 'components/molecules/LoadingIndicator';
 import { createStructuredSelector } from 'reselect';
 import { selectTaskPageTaskData } from 'containers/TaskPage/selectors';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import TaskAssignee from 'containers/TaskPage/TaskAssignee';
+import Spinner from 'components/atoms/Spinner';
+import CenteredDiv from 'components/atoms/CenteredDiv';
 
 const PaddedRow = styled(MDBRow)`
   padding: 10px;
@@ -96,5 +97,9 @@ const withConnect = connect(mapStateToProps);
 
 export default GoogleApiWrapper({
   apiKey: process.env.GOOGLE_MAPS_API_KEY,
-  LoadingContainer: LoadingIndicator,
+  LoadingContainer: () => (
+    <CenteredDiv style={{ height: '200px' }}>
+      <Spinner dimension="50px" />
+    </CenteredDiv>
+  ),
 })(compose(withConnect)(TaskDetails));

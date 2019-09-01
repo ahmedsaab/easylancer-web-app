@@ -28,8 +28,12 @@ export const WITHDRAW_OFFER_SUCCESS = 'app/TaskPage/WITHDRAW_OFFER_SUCCESS';
 export const WITHDRAW_OFFER_ERROR = 'app/TaskPage/WITHDRAW_OFFER_ERROR';
 export const UPDATE_WITHDRAW_MODAL_IS_OPEN =
   'app/TaskPage/UPDATE_WITHDRAW_MODAL_IS_OPEN';
-export const UPDATE_WITHDRAW_MODAL_IS_LOADING =
-  'app/TaskPage/UPDATE_WITHDRAW_MODAL_IS_LOADING';
+
+export const CANCEL_TASK = 'app/TaskPage/CANCEL_TASK';
+export const CANCEL_TASK_SUCCESS = 'app/TaskPage/CANCEL_TASK_SUCCESS';
+export const CANCEL_TASK_ERROR = 'app/TaskPage/CANCEL_TASK_ERROR';
+export const UPDATE_CANCEL_MODAL_IS_OPEN =
+  'app/TaskPage/UPDATE_CANCEL_MODAL_IS_OPEN';
 
 export const TASK_STATUSES = [
   'open',
