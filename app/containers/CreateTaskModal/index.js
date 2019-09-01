@@ -101,7 +101,8 @@ function CreateTaskModal({
           onUpdateDescription={d => onUpdateFormGeneral('description', d)}
         />
       ),
-      disabled: !!form.images.find(image => !image.uploaded),
+      disabled:
+        !!form.images.find(image => !image.uploaded) || !form.description,
     },
     {
       title: 'How much are you willing to pay?',

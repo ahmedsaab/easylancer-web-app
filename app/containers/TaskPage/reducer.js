@@ -16,8 +16,12 @@ import {
   UPDATE_OFFER_PAYMENT,
   UPDATE_OFFER_PRICE,
   UPDATE_ASSIGNED_MODAL_IS_OPEN,
+  UPDATE_WITHDRAW_MODAL_IS_OPEN,
   RESET_OFFER_FORM_STATUS,
   UPDATE_OFFER_FORM_IS_OPEN,
+  WITHDRAW_OFFER,
+  WITHDRAW_OFFER_SUCCESS,
+  WITHDRAW_OFFER_ERROR,
 } from 'containers/TaskPage/constants';
 
 export const initialState = {
@@ -33,6 +37,10 @@ export const initialState = {
     error: null,
   },
   offer: {
+    withdrawModal: {
+      isOpen: false,
+      isLoading: false,
+    },
     assignedModalIsOpen: false,
     data: null,
     actions: {
@@ -136,6 +144,20 @@ const taskPageReducer = (state = initialState, action) =>
 
       case UPDATE_ASSIGNED_MODAL_IS_OPEN:
         draft.offer.assignedModalIsOpen = action.isOpen;
+        break;
+
+      case WITHDRAW_OFFER:
+        draft.offer.withdrawModal.isLoading = true;
+        break;
+
+      case UPDATE_WITHDRAW_MODAL_IS_OPEN:
+        draft.offer.withdrawModal.isOpen = action.isOpen;
+        break;
+
+      case WITHDRAW_OFFER_SUCCESS:
+      case WITHDRAW_OFFER_ERROR:
+        draft.offer.withdrawModal.isLoading = false;
+        draft.offer.withdrawModal.isOpen = false;
         break;
     }
   });

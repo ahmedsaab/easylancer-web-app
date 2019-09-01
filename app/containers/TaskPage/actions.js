@@ -18,6 +18,10 @@ import {
   UPDATE_OFFER_FORM_IS_OPEN,
   RESET_OFFER_FORM_STATUS,
   UPDATE_ASSIGNED_MODAL_IS_OPEN,
+  UPDATE_WITHDRAW_MODAL_IS_OPEN,
+  WITHDRAW_OFFER,
+  WITHDRAW_OFFER_SUCCESS,
+  WITHDRAW_OFFER_ERROR,
 } from 'containers/TaskPage/constants';
 
 export function loadTask(id) {
@@ -127,6 +131,32 @@ export function updateAssignedModalIsOpen(isOpen) {
   return {
     type: UPDATE_ASSIGNED_MODAL_IS_OPEN,
     isOpen,
+  };
+}
+
+export function updateWithdrawModalIsOpen(isOpen) {
+  return {
+    type: UPDATE_WITHDRAW_MODAL_IS_OPEN,
+    isOpen,
+  };
+}
+
+export function withdrawOffer() {
+  return {
+    type: WITHDRAW_OFFER,
+  };
+}
+
+export function withdrawOfferSuccess() {
+  return {
+    type: WITHDRAW_OFFER_SUCCESS,
+  };
+}
+
+export function withdrawOfferError(error) {
+  return {
+    type: WITHDRAW_OFFER_ERROR,
+    error,
   };
 }
 

@@ -96,7 +96,6 @@ export const getUser = async () => {
 };
 
 export const postOffer = async (id, offer) => {
-  await sleep(4000);
   try {
     const response = await axios.post(
       `${process.env.CLIENT_API_ROOT}/tasks/${id}/apply`,
@@ -151,6 +150,31 @@ export const postTask = async task => {
     const response = await axios.post(
       `${process.env.CLIENT_API_ROOT}/tasks/create`,
       task,
+      {
+        headers,
+      },
+    );
+
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      throw new Error(
+        `The server responded with error code ${error.response.status}`,
+      );
+    } else if (error.request) {
+      throw new Error(`Failed to read response from Server`);
+    } else {
+      throw new Error(`An unexpected error occurred`);
+    }
+  }
+};
+
+export const withdrawOffer = async taskId => {
+  await sleep(1000);
+  try {
+    const response = await axios.post(
+      `${process.env.CLIENT_API_ROOT}/tasks/${taskId}/withdraw`,
+      null,
       {
         headers,
       },

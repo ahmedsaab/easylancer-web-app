@@ -23,6 +23,14 @@ export const RESET_OFFER_FORM_STATUS = 'app/TaskPage/RESET_OFFER_FORM_STATUS';
 export const UPDATE_ASSIGNED_MODAL_IS_OPEN =
   'app/TaskPage/UPDATE_ASSIGNED_MODAL_IS_OPEN';
 
+export const WITHDRAW_OFFER = 'app/TaskPage/WITHDRAW_OFFER';
+export const WITHDRAW_OFFER_SUCCESS = 'app/TaskPage/WITHDRAW_OFFER_SUCCESS';
+export const WITHDRAW_OFFER_ERROR = 'app/TaskPage/WITHDRAW_OFFER_ERROR';
+export const UPDATE_WITHDRAW_MODAL_IS_OPEN =
+  'app/TaskPage/UPDATE_WITHDRAW_MODAL_IS_OPEN';
+export const UPDATE_WITHDRAW_MODAL_IS_LOADING =
+  'app/TaskPage/UPDATE_WITHDRAW_MODAL_IS_LOADING';
+
 export const TASK_STATUSES = [
   'open',
   'assigned',

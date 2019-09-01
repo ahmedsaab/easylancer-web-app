@@ -13,7 +13,7 @@ export const InformativeDiv = styled(CenteredDiv)`
   text-align: center;
   padding: 0 20px 0 20px;
   height: 100%;
-  min-height: 450px;
+  min-height: ${props => props.height || '450'}px;
 `;
 
 export const SecondaryText = styled.div`

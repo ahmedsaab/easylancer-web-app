@@ -11,11 +11,13 @@ import {
   selectTaskPageOfferData,
   selectTaskPageTaskData,
 } from 'containers/TaskPage/selectors';
-import { acceptOffer } from 'containers/TaskPage/actions';
+import {
+  acceptOffer,
+  updateWithdrawModalIsOpen,
+} from 'containers/TaskPage/actions';
 import StickyBottom from 'components/molecules/StickyBottom';
 import { makeStyles } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
-import IconButton from '@material-ui/core/IconButton';
 import MessageIcon from '@material-ui/icons/Message';
 import LoadableActionButton from 'components/hoc/LoadableActionButton';
 import ActionButton from 'components/atoms/ActionButton';
@@ -45,6 +47,7 @@ function OfferActionButtons({
   isTaskOwner,
   containerRef,
   onAcceptOffer,
+  onWithdrawOffer,
 }) {
   const classes = useStyles();
   const disabled = Object.values(actions).includes('loading');
@@ -63,9 +66,14 @@ function OfferActionButtons({
           <CheckIcon className={classes.leftIcon} />
           Hire Now
         </LoadableActionButton>
-        <IconButton disabled={disabled} color="primary" aria-label="message">
+        <ActionButton
+          disabled={disabled}
+          flex={1}
+          color="primary"
+          variant="outlined"
+        >
           <MessageIcon />
-        </IconButton>
+        </ActionButton>
       </Fragment>
     );
   } else if (!isAssignedOffer && !isTaskOwner) {
@@ -73,16 +81,14 @@ function OfferActionButtons({
       <Fragment>
         <LoadableActionButton
           color="secondary"
+          variant="outlined"
           disabled={disabled}
-          flex={2}
+          onClick={onWithdrawOffer}
           loading={actions.withdraw === 'loading'}
         >
           <DeleteIcon className={classes.leftIcon} />
           Withdraw
         </LoadableActionButton>
-        <IconButton disabled={disabled} color="primary" aria-label="message">
-          <MessageIcon />
-        </IconButton>
       </Fragment>
     );
   } else if (
@@ -101,9 +107,14 @@ function OfferActionButtons({
           <CallIcon className={classes.leftIcon} />
           Call
         </ActionButton>
-        <IconButton disabled={disabled} color="primary" aria-label="message">
+        <ActionButton
+          disabled={disabled}
+          flex={1}
+          color="primary"
+          variant="outlined"
+        >
           <MessageIcon />
-        </IconButton>
+        </ActionButton>
       </Fragment>
     );
   }
@@ -122,6 +133,7 @@ OfferActionButtons.propTypes = {
   task: PropTypes.object,
   containerRef: PropTypes.object,
   onAcceptOffer: PropTypes.func,
+  onWithdrawOffer: PropTypes.func,
   actions: PropTypes.object,
 };
 
@@ -135,6 +147,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   onAcceptOffer: offerId => dispatch(acceptOffer(offerId)),
+  onWithdrawOffer: () => dispatch(updateWithdrawModalIsOpen(true)),
 });
 
 const withConnect = connect(

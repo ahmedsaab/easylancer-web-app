@@ -26,6 +26,7 @@ import saga, { offerUrlRegex } from 'containers/TaskPage/saga';
 import TaskActionButtons from 'containers/TaskPage/TaskActionButtons';
 import CreateOfferModal from 'containers/TaskPage/CreateOfferModal';
 import TaskAssignedModal from 'containers/TaskPage/TaskAssignedModal';
+import WithdrawOfferModal from 'containers/TaskPage/WithdrawOfferModal';
 import styled from 'styled-components';
 
 export const ContainerRow = styled(MDBRow)`
@@ -78,6 +79,7 @@ export function TaskPage({
       <ContainerRow>
         <CreateOfferModal />
         <TaskAssignedModal />
+        <WithdrawOfferModal />
         <MDBCol sm="12" md="8">
           <MDBRow>
             <MDBCol size="12">

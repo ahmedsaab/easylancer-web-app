@@ -16,7 +16,6 @@ import {
 import StickyBottom from 'components/molecules/StickyBottom';
 import ActionButton from 'components/atoms/ActionButton';
 import MessageIcon from '@material-ui/icons/Message';
-import IconButton from '@material-ui/core/IconButton';
 import WorkIcon from '@material-ui/icons/Work';
 import UpdateIcon from '@material-ui/icons/Update';
 import AssistantPhotoIcon from '@material-ui/icons/AssistantPhoto';
@@ -85,9 +84,14 @@ function TaskActionButtons({
           <UpdateIcon className={classes.leftIcon} />
           Reschedule
         </ActionButton>
-        <IconButton color="primary" aria-label="message">
+        <ActionButton
+          disabled={disabled}
+          flex={1}
+          color="primary"
+          variant="outlined"
+        >
           <MessageIcon />
-        </IconButton>
+        </ActionButton>
       </Fragment>
     );
     constant = (
@@ -118,9 +122,14 @@ function TaskActionButtons({
           <WorkIcon className={classes.leftIcon} />
           Offer
         </ActionButton>
-        <IconButton color="primary" aria-label="message">
+        <ActionButton
+          disabled={disabled}
+          flex={1}
+          color="primary"
+          variant="outlined"
+        >
           <MessageIcon />
-        </IconButton>
+        </ActionButton>
       </Fragment>
     );
   } else if (canMessage && canReschedule) {
@@ -130,9 +139,14 @@ function TaskActionButtons({
           <UpdateIcon className={classes.leftIcon} />
           Reschedule
         </ActionButton>
-        <IconButton color="primary" aria-label="message">
+        <ActionButton
+          disabled={disabled}
+          flex={1}
+          color="primary"
+          variant="outlined"
+        >
           <MessageIcon />
-        </IconButton>
+        </ActionButton>
       </Fragment>
     );
   } else if (canFinish && canMessage) {
@@ -142,13 +156,18 @@ function TaskActionButtons({
           <AssistantPhotoIcon className={classes.leftIcon} />
           Finish
         </ActionButton>
-        <IconButton color="primary" aria-label="message">
+        <ActionButton
+          disabled={disabled}
+          flex={1}
+          color="primary"
+          variant="outlined"
+        >
           <MessageIcon />
-        </IconButton>
+        </ActionButton>
       </Fragment>
     );
   } else if (canCancel) {
-    constant = (
+    sticky = (
       <Fragment>
         <ActionButton variant="outlined">Cancel</ActionButton>
       </Fragment>

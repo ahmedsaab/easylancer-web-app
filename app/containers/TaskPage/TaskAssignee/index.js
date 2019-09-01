@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -11,12 +11,12 @@ import {
   selectTaskPageTaskData,
 } from 'containers/TaskPage/selectors';
 import LoadingIndicator from 'components/molecules/LoadingIndicator';
-import history from 'utils/history';
 import FullName from 'components/molecules/FullName';
 import Avatar from 'components/molecules/Avatar';
-import { viewOffer } from 'containers/TaskPage/actions';
 import { makeStyles } from '@material-ui/core';
-import DialogButton from 'components/atoms/DialogButton';
+import CallIcon from '@material-ui/icons/Call';
+import MessageIcon from '@material-ui/icons/Message';
+import IconButton from '@material-ui/core/IconButton';
 
 const Container = styled.div`
   color: #004085;
@@ -81,13 +81,15 @@ const useStyles = makeStyles(theme => ({
     padding: 0,
     flex: '0 0 40%',
     width: '100%',
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
 }));
 
 /**
  * @return {null}
  */
-function TaskAssignee({ isTaskOwner, task, offers, onContact }) {
+function TaskAssignee({ isTaskOwner, task, offers }) {
   const classes = useStyles();
 
   if (task.status === 'assigned' && isTaskOwner) {
@@ -97,33 +99,31 @@ function TaskAssignee({ isTaskOwner, task, offers, onContact }) {
 
     const offer = offers.find(o => o.id === task.acceptedOffer);
 
-    return (
-      <Container>
-        <WorkerTag>Worker</WorkerTag>
-        <div className={classes.dataContainer}>
-          <WorkerAvatarContainer>
-            <Avatar
-              isApproved={offer.workerUser.isApproved}
-              imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
-              imgStyle={{ width: '50px', border: '1px solid' }}
-            />
-          </WorkerAvatarContainer>
-          <WorkerName user={offer.workerUser} />
-        </div>
-        <div className={classes.buttonContainer}>
-          <DialogButton
-            onClick={() => {
-              onContact(offer.id, task.id);
-            }}
-            variant="outlined"
-            color="primary"
-            className={classes.contactButton}
-          >
-            Contact
-          </DialogButton>
-        </div>
-      </Container>
-    );
+    if (offer) {
+      return (
+        <Container>
+          <WorkerTag>Worker</WorkerTag>
+          <div className={classes.dataContainer}>
+            <WorkerAvatarContainer>
+              <Avatar
+                isApproved={offer.workerUser.isApproved}
+                imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
+                imgStyle={{ width: '50px', border: '1px solid' }}
+              />
+            </WorkerAvatarContainer>
+            <WorkerName user={offer.workerUser} />
+          </div>
+          <div className={classes.buttonContainer}>
+            <IconButton color="primary" aria-label="message">
+              <MessageIcon />
+            </IconButton>
+            <IconButton color="primary" aria-label="call">
+              <CallIcon />
+            </IconButton>
+          </div>
+        </Container>
+      );
+    }
   }
 
   return null;
@@ -132,7 +132,6 @@ function TaskAssignee({ isTaskOwner, task, offers, onContact }) {
 TaskAssignee.propTypes = {
   task: PropTypes.object,
   offers: PropTypes.array,
-  onContact: PropTypes.func,
   isTaskOwner: PropTypes.bool,
 };
 
@@ -142,16 +141,6 @@ const mapStateToProps = createStructuredSelector({
   isTaskOwner: makeSelectTaskPageUserIsTaskOwner(),
 });
 
-const mapDispatchToProps = dispatch => ({
-  onContact: (offerId, taskId) => {
-    history.push(`/task/${taskId}/offers/${offerId}`);
-    dispatch(viewOffer(offerId));
-  },
-});
-
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps);
 
 export default compose(withConnect)(TaskAssignee);
