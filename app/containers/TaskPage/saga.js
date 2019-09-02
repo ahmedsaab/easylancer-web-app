@@ -3,7 +3,10 @@ import {
   LOAD_TASK,
   LOAD_TASK_OFFERS,
   ACCEPT_OFFER,
-  SEND_OFFER, WITHDRAW_OFFER, CANCEL_TASK,
+  SEND_OFFER,
+  WITHDRAW_OFFER,
+  CANCEL_TASK,
+  EDIT_TASK,
 } from 'containers/TaskPage/constants';
 import {
   loadTaskOffers,
@@ -19,7 +22,13 @@ import {
   updateOfferModalPayment,
   updateOfferModalPrice,
   updateAssignedModalIsOpen,
-  loadTask, withdrawOfferSuccess, withdrawOfferError, updateWithdrawModalIsOpen, cancelTaskSuccess, cancelTaskError,
+  loadTask,
+  withdrawOfferSuccess,
+  withdrawOfferError,
+  cancelTaskSuccess,
+  cancelTaskError,
+  editTaskSuccess,
+  editTaskError,
 } from 'containers/TaskPage/actions';
 import * as client from 'utils/client';
 
@@ -27,8 +36,10 @@ import history from 'utils/history';
 import { makeSelectGlobalLocation } from 'containers/App/selectors';
 import {
   selectTaskPageTaskData,
-  selectTaskPageOfferFormData, selectTaskPageOfferData,
+  selectTaskPageOfferFormData,
+  selectTaskPageEditModalForm,
 } from 'containers/TaskPage/selectors';
+import { createPayloadFromForm } from 'containers/TaskPage/reducer';
 
 export const offerUrlRegex = RegExp(/offers\/[0-9a-f]/i);
 
@@ -122,6 +133,21 @@ export function* cancelTask() {
   }
 }
 
+export function* editTask() {
+  const form = yield select(selectTaskPageEditModalForm);
+  const { id } = yield select(selectTaskPageTaskData);
+
+  try {
+    yield call(client.updateTask, id, createPayloadFromForm(form));
+    yield put(editTaskSuccess());
+    yield put(loadTask(id));
+    history.push(`/task/${id}`);
+  } catch (err) {
+    yield put(editTaskError(err));
+    console.log(err);
+  }
+}
+
 export default function* taskData() {
   yield takeLatest(LOAD_TASK, getTask);
   yield takeLatest(LOAD_TASK_OFFERS, getTaskOffers);
@@ -129,4 +155,5 @@ export default function* taskData() {
   yield takeLeading(SEND_OFFER, postOffer);
   yield takeLeading(WITHDRAW_OFFER, withdrawOffer);
   yield takeLeading(CANCEL_TASK, cancelTask);
+  yield takeLeading(EDIT_TASK, editTask);
 }

@@ -26,7 +26,52 @@ import {
   CANCEL_TASK_SUCCESS,
   CANCEL_TASK_ERROR,
   UPDATE_CANCEL_MODAL_IS_OPEN,
+  EDIT_TASK,
+  UPDATE_EDIT_MODAL_IS_OPEN,
+  EDIT_TASK_SUCCESS,
+  EDIT_TASK_ERROR,
+  UPDATE_EDIT_MODAL_FORM_GENERAL,
+  UPDATE_EDIT_MODAL_FORM_COUNTRY,
+  UPDATE_EDIT_MODAL_FORM_LOCATION,
+  UPDATE_EDIT_MODAL_FORM_REMOVE_TAG,
+  UPDATE_EDIT_MODAL_FORM_PUSH_TAG,
 } from 'containers/TaskPage/constants';
+import { categories, countries } from 'containers/CreateTaskModal/constants';
+
+export const createPayloadFromForm = form => ({
+  ...form,
+  imagesUrls: form.images
+    .filter(image => image.uploaded)
+    .map(image => image.url),
+  category: form.category.text.toLowerCase(),
+  type: form.type.text.toLowerCase(),
+  location: {
+    address: form.address,
+    country: form.location.country.toLowerCase(),
+    city: form.location.city.toLowerCase(),
+    geo: form.location.geo,
+  },
+  tags: form.tags,
+});
+
+export const createFormFromPayload = payload => ({
+  ...payload,
+  category: categories.find(c => c.text.toLowerCase() === payload.category),
+  type: categories
+    .find(c => c.text.toLowerCase() === payload.category)
+    .types.find(t => t.text.toLowerCase() === payload.type),
+  images: payload.imagesUrls.map(url => ({
+    id: url,
+    url,
+    uploaded: true,
+    data: url,
+  })),
+  startDateTimeError: null,
+  country: countries.find(
+    c => c.text.toLowerCase() === payload.location.country,
+  ),
+  address: payload.location.address,
+});
 
 export const initialState = {
   id: null,
@@ -38,6 +83,29 @@ export const initialState = {
   cancelModal: {
     isOpen: false,
     isLoading: false,
+  },
+  editModal: {
+    isOpen: false,
+    isLoading: false,
+    form: {
+      price: '',
+      currency: '',
+      paymentMethod: null,
+      title: '',
+      description: '',
+      category: null,
+      type: null,
+      images: [],
+      tags: [],
+      startDateTime: null,
+      startDateTimeError: null,
+      country: null,
+      address: '',
+      location: {
+        city: null,
+        geo: null,
+      },
+    },
   },
   offers: {
     data: null,
@@ -79,6 +147,7 @@ const taskPageReducer = (state = initialState, action) =>
       case LOAD_TASK_SUCCESS:
         draft.task.data = action.data;
         draft.task.loading = false;
+        draft.editModal.form = createFormFromPayload(action.data);
         break;
 
       case LOAD_TASK_ERROR:
@@ -180,6 +249,63 @@ const taskPageReducer = (state = initialState, action) =>
       case CANCEL_TASK_ERROR:
         draft.cancelModal.isLoading = false;
         draft.cancelModal.isOpen = false;
+        break;
+
+      case UPDATE_EDIT_MODAL_FORM_GENERAL:
+        draft.editModal.form[action.key] = action.value;
+        if (action.key === 'category') {
+          draft.editModal.form.type = null;
+        }
+        break;
+
+      case UPDATE_EDIT_MODAL_FORM_COUNTRY:
+        draft.editModal.form.location = initialState.editModal.form.location;
+        draft.editModal.form.address = initialState.editModal.form.address;
+        draft.editModal.form.country = action.country;
+        break;
+
+      case UPDATE_EDIT_MODAL_FORM_LOCATION:
+        draft.editModal.form.address = action.address;
+        draft.editModal.form.location =
+          action.location || initialState.editModal.form.location;
+        break;
+
+      case UPDATE_EDIT_MODAL_FORM_REMOVE_TAG:
+        draft.editModal.form.tags = draft.editModal.form.tags
+          .slice(0, action.index)
+          .concat(
+            draft.editModal.form.tags.slice(
+              action.index + 1,
+              draft.editModal.form.tags.length,
+            ),
+          );
+        break;
+
+      case UPDATE_EDIT_MODAL_FORM_PUSH_TAG:
+        draft.editModal.form.tags = draft.editModal.form.tags.concat([
+          action.tag.toLowerCase(),
+        ]);
+        break;
+
+      case EDIT_TASK:
+        draft.editModal.isLoading = true;
+        break;
+
+      case UPDATE_EDIT_MODAL_IS_OPEN:
+        draft.editModal.isOpen = action.isOpen;
+        if (!action.isOpen) {
+          draft.editModal.form = createFormFromPayload(draft.task.data);
+        }
+        break;
+
+      case EDIT_TASK_SUCCESS:
+        draft.editModal.isOpen = false;
+        draft.editModal.isLoading = false;
+        draft.editModal.form = initialState.editModal.form;
+        break;
+
+      case EDIT_TASK_ERROR:
+        draft.editModal.isLoading = false;
         break;
     }
   });

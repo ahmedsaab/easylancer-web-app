@@ -7,7 +7,9 @@ import {
   UPDATE_TASK_FORM_PUSH_TAG,
   SEND_TASK_SUCCESS,
   SEND_TASK_FAIL,
-  SEND_TASK, UPDATE_STEP, RESET, UPDATE_IS_OPEN,
+  SEND_TASK,
+  UPDATE_STEP,
+  UPDATE_IS_OPEN,
 } from './constants';
 
 export const initialState = {
@@ -86,6 +88,7 @@ const createTaskModalReducer = (state = initialState, action) =>
         draft.loading = false;
         draft.error = null;
         draft.form = initialState.form;
+        draft.step = initialState.step;
         draft.isOpen = initialState.isOpen;
         break;
       case SEND_TASK_FAIL:

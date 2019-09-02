@@ -100,9 +100,9 @@ class Places extends React.Component {
               margin="normal"
               variant="outlined"
               fullWidth
+              style={{ margin: 0 }}
               {...getInputProps({
                 placeholder: 'Search Places ...',
-                className: 'location-search-input',
               })}
             />
             <DropDownContainer show={suggestions && suggestions.length}>
@@ -131,9 +131,17 @@ Places.propTypes = {
   label: PropTypes.string,
   text: PropTypes.string,
   countryISOCode: PropTypes.string,
+  className: PropTypes.string,
 };
 
-export default GoogleApiWrapper({
+const WrapperPlaces = GoogleApiWrapper({
   apiKey: process.env.GOOGLE_MAPS_API_KEY,
   LoadingContainer: Spinner,
 })(Places);
+
+export default props => (
+  // eslint-disable-next-line react/prop-types
+  <div className={props.className}>
+    <WrapperPlaces {...props} />
+  </div>
+);

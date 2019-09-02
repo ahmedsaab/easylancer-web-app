@@ -7,15 +7,13 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import EventIcon from '@material-ui/icons/Event';
 
-import './style-temp-fix.css';
+import 'components/organisms/DateTimeSection/style-temp-fix.css';
 
 import moment from 'moment';
 
 const useStyles = makeStyles(theme => ({
   field: {
-    marginBottom: theme.spacing(2),
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
+    margin: theme.spacing(1),
   },
 }));
 

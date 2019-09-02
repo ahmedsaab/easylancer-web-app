@@ -18,11 +18,12 @@ import ActionButton from 'components/atoms/ActionButton';
 import MessageIcon from '@material-ui/icons/Message';
 import WorkIcon from '@material-ui/icons/Work';
 import UpdateIcon from '@material-ui/icons/Update';
-import CloseIcon from '@material-ui/icons/Close';
+import CancelIcon from '@material-ui/icons/CancelPresentationOutlined';
 import AssistantPhotoIcon from '@material-ui/icons/AssistantPhoto';
+import EditIcon from '@material-ui/icons/Edit';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
-  updateCancelModalIsOpen,
+  updateCancelModalIsOpen, updateEditModalIsOpen,
   updateOfferFormModalIsOpen,
 } from 'containers/TaskPage/actions';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
@@ -50,6 +51,7 @@ function TaskActionButtons({
   containerRef,
   onCreateOfferButtonClick,
   onCancelTaskButtonClick,
+  onEditTaskButtonClick,
 }) {
   const classes = useStyles();
   const theme = useTheme();
@@ -80,6 +82,7 @@ function TaskActionButtons({
     task.status === 'done' ||
     task.status === 'not-done' ||
     task.status === 'cancelled';
+  const canEdit = task.status === 'open' && userIsOwner;
   const canCancel =
     (userIsOwner && (task.status === 'open' || task.status === 'assigned')) ||
     (userIsAssigned && task.status === 'assigned');
@@ -88,6 +91,14 @@ function TaskActionButtons({
     if (compact) {
       sticky = (
         <Fragment>
+          <ActionButton
+            disabled={disabled}
+            flex={1}
+            color="primary"
+            variant="outlined"
+          >
+            <MessageIcon />
+          </ActionButton>
           <ActionButton variant="outlined" color="secondary" flex={1}>
             <UpdateIcon />
           </ActionButton>
@@ -96,15 +107,7 @@ function TaskActionButtons({
             variant="outlined"
             onClick={onCancelTaskButtonClick}
           >
-            <CloseIcon />
-          </ActionButton>
-          <ActionButton
-            disabled={disabled}
-            flex={1}
-            color="primary"
-            variant="outlined"
-          >
-            <MessageIcon />
+            <CancelIcon />
           </ActionButton>
         </Fragment>
       );
@@ -131,7 +134,7 @@ function TaskActionButtons({
               variant="outlined"
               onClick={onCancelTaskButtonClick}
             >
-              <CloseIcon className={classes.leftIcon} />
+              <CancelIcon className={classes.leftIcon} />
               Cancel
             </ActionButton>
           </div>
@@ -209,10 +212,23 @@ function TaskActionButtons({
         </ActionButton>
       </Fragment>
     );
-  } else if (canCancel) {
+  } else if (canCancel && canEdit) {
     sticky = (
       <Fragment>
-        <ActionButton variant="outlined" onClick={onCancelTaskButtonClick}>
+        <ActionButton
+          variant="outlined"
+          flex={2}
+          color="primary"
+          onClick={onEditTaskButtonClick}
+        >
+          <EditIcon className={classes.leftIcon} />
+          Edit
+        </ActionButton>
+        <ActionButton
+          flex={1}
+          variant="outlined"
+          onClick={onCancelTaskButtonClick}
+        >
           Cancel
         </ActionButton>
       </Fragment>
@@ -261,6 +277,7 @@ TaskActionButtons.propTypes = {
   disabled: PropTypes.bool,
   onCreateOfferButtonClick: PropTypes.func,
   onCancelTaskButtonClick: PropTypes.func,
+  onEditTaskButtonClick: PropTypes.func,
   containerRef: PropTypes.object,
 };
 
@@ -274,6 +291,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
   onCreateOfferButtonClick: () => dispatch(updateOfferFormModalIsOpen(true)),
   onCancelTaskButtonClick: () => dispatch(updateCancelModalIsOpen(true)),
+  onEditTaskButtonClick: () => dispatch(updateEditModalIsOpen(true)),
 });
 
 const withConnect = connect(

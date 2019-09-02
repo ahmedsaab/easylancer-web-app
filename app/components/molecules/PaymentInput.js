@@ -8,11 +8,8 @@ import PaymentMethodSelector from 'components/molecules/PaymentMethodSelector';
 
 const useStyles = makeStyles(theme => ({
   field: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
+    margin: theme.spacing(1),
     width: '150px',
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(2),
     display: 'block',
   },
 }));

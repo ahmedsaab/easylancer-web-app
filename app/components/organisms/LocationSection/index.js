@@ -7,8 +7,7 @@ import PlacesAutoComplete from 'components/organisms/PlacesAutoComplete';
 
 const useStyles = makeStyles(theme => ({
   field: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
+    margin: theme.spacing(1),
     width: '100%',
   },
   row: {
@@ -37,19 +36,18 @@ export function LocationSection({
         />
       </div>
       <div className={classes.row}>
-        <div className={classes.field}>
-          {country ? (
-            <PlacesAutoComplete
-              onSelect={onUpdateLocation}
-              onChange={onUpdateAddress}
-              onError={err => console.error(err)}
-              text={address}
-              type="address"
-              label="Address"
-              countryISOCode={country.value}
-            />
-          ) : null}
-        </div>
+        {country ? (
+          <PlacesAutoComplete
+            onSelect={onUpdateLocation}
+            onChange={onUpdateAddress}
+            onError={err => console.error(err)}
+            text={address}
+            type="address"
+            label="Address"
+            countryISOCode={country.value}
+            className={classes.field}
+          />
+        ) : null}
       </div>
     </div>
   );

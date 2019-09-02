@@ -44,6 +44,13 @@ const selectTaskPageCancelModalIsOpen = state =>
 const selectTaskPageCancelModalIsLoading = state =>
   (state.taskPage || initialState).cancelModal.isLoading;
 
+const selectTaskPageEditModalIsOpen = state =>
+  (state.taskPage || initialState).editModal.isOpen;
+const selectTaskPageEditModalIsLoading = state =>
+  (state.taskPage || initialState).editModal.isLoading;
+const selectTaskPageEditModalForm = state =>
+  (state.taskPage || initialState).editModal.form;
+
 const makeSelectTaskPageUserIsTaskOwner = () =>
   createSelector(
     selectTaskPageTaskData,
@@ -74,6 +81,9 @@ export {
   selectTaskPageAssignedModalIsOpen,
   selectTaskPageWithdrawModalIsOpen,
   selectTaskPageWithdrawModalIsLoading,
+  selectTaskPageEditModalIsOpen,
+  selectTaskPageEditModalIsLoading,
+  selectTaskPageEditModalForm,
   makeSelectTaskPageUserIsTaskOwner,
   selectTaskPageCancelModalIsOpen,
   selectTaskPageCancelModalIsLoading,

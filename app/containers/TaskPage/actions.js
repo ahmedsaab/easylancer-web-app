@@ -26,6 +26,15 @@ import {
   CANCEL_TASK_SUCCESS,
   CANCEL_TASK_ERROR,
   UPDATE_CANCEL_MODAL_IS_OPEN,
+  EDIT_TASK,
+  EDIT_TASK_SUCCESS,
+  EDIT_TASK_ERROR,
+  UPDATE_EDIT_MODAL_IS_OPEN,
+  UPDATE_EDIT_MODAL_FORM_GENERAL,
+  UPDATE_EDIT_MODAL_FORM_COUNTRY,
+  UPDATE_EDIT_MODAL_FORM_LOCATION,
+  UPDATE_EDIT_MODAL_FORM_PUSH_TAG,
+  UPDATE_EDIT_MODAL_FORM_REMOVE_TAG,
 } from 'containers/TaskPage/constants';
 
 export function loadTask(id) {
@@ -186,6 +195,69 @@ export function withdrawOfferSuccess() {
 export function withdrawOfferError(error) {
   return {
     type: WITHDRAW_OFFER_ERROR,
+    error,
+  };
+}
+
+export function updateEditModalFormGeneral(key, value) {
+  return {
+    type: UPDATE_EDIT_MODAL_FORM_GENERAL,
+    key,
+    value,
+  };
+}
+
+export function updateEditModalFormCountry(country) {
+  return {
+    type: UPDATE_EDIT_MODAL_FORM_COUNTRY,
+    country,
+  };
+}
+
+export function updateEditModalFormLocation(address, location) {
+  return {
+    type: UPDATE_EDIT_MODAL_FORM_LOCATION,
+    address,
+    location,
+  };
+}
+
+export function updateEditModalPushTag(tag) {
+  return {
+    type: UPDATE_EDIT_MODAL_FORM_PUSH_TAG,
+    tag,
+  };
+}
+
+export function updateEditModalRemoveTag(index) {
+  return {
+    type: UPDATE_EDIT_MODAL_FORM_REMOVE_TAG,
+    index,
+  };
+}
+
+export function updateEditModalIsOpen(isOpen) {
+  return {
+    type: UPDATE_EDIT_MODAL_IS_OPEN,
+    isOpen,
+  };
+}
+
+export function editTask() {
+  return {
+    type: EDIT_TASK,
+  };
+}
+
+export function editTaskSuccess() {
+  return {
+    type: EDIT_TASK_SUCCESS,
+  };
+}
+
+export function editTaskError(error) {
+  return {
+    type: EDIT_TASK_ERROR,
     error,
   };
 }

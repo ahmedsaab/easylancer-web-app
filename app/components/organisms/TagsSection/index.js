@@ -5,10 +5,13 @@ import ChipInput from 'material-ui-chip-input';
 
 const useStyles = makeStyles(theme => ({
   field: {
-    marginBottom: theme.spacing(2),
+    margin: theme.spacing(1),
   },
   tagsInputRoot: {
-    padding: '12px 5px 14px 14px',
+    padding: '12px 5px 9px 14px',
+  },
+  row: {
+    display: 'flex',
   },
 }));
 
@@ -16,17 +19,19 @@ export function TagsSection({ tags, onAdd, onDelete }) {
   const classes = useStyles();
 
   return (
-    <div className={classes.field}>
-      <ChipInput
-        label="#"
-        variant="outlined"
-        value={tags}
-        onAdd={onAdd}
-        onDelete={onDelete}
-        classes={{
-          inputRoot: classes.tagsInputRoot,
-        }}
-      />
+    <div className={classes.row}>
+      <div className={classes.field}>
+        <ChipInput
+          label="#"
+          variant="outlined"
+          value={tags}
+          onAdd={onAdd}
+          onDelete={onDelete}
+          classes={{
+            inputRoot: classes.tagsInputRoot,
+          }}
+        />
+      </div>
     </div>
   );
 }

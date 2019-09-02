@@ -7,12 +7,12 @@ import * as client from 'utils/client';
 
 const useStyles = makeStyles(theme => ({
   field: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
     width: '100%',
   },
   row: {
     display: 'flex',
+    margin: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
   },
 }));
 
@@ -45,7 +45,6 @@ export function DetailsSection({
           rows="5"
         />
       </div>
-      <br />
       <div className={classes.row}>
         <div className={classes.field}>
           <MultiPhotoUploader
@@ -56,7 +55,6 @@ export function DetailsSection({
           />
         </div>
       </div>
-      <br />
     </div>
   );
 }

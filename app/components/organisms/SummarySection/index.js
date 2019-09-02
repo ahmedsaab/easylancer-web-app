@@ -7,9 +7,12 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   field: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
+    margin: theme.spacing(1),
     flex: 1,
+  },
+  section: {
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(0),
   },
   row: {
     display: 'flex',
@@ -27,7 +30,7 @@ export function SummarySection({
   const classes = useStyles();
 
   return (
-    <div>
+    <div className={classes.section}>
       <div className={classes.row}>
         <SelectDropDown
           onSelect={onSelectCategory}
@@ -47,6 +50,7 @@ export function SummarySection({
       </div>
       <div className={classes.row}>
         <TextField
+          error={!title}
           placeholder="e.g., Skilled wall painter needed"
           label="Title"
           className={classes.field}

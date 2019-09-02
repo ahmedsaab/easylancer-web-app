@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -8,11 +8,11 @@ import { compose } from 'redux';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import Stepper from 'components/organisms/Stepper';
-import { SummarySection } from 'containers/CreateTaskModal/SummarySection';
-import { DetailsSection } from 'containers/CreateTaskModal/DetailsSection';
-import { LocationSection } from 'containers/CreateTaskModal/LocationSection';
-import { DateTimeSection } from 'containers/CreateTaskModal/DateTimeSection';
-import { TagsSection } from 'containers/CreateTaskModal/TagsSection';
+import { SummarySection } from 'components/organisms/SummarySection';
+import { DetailsSection } from 'components/organisms/DetailsSection';
+import { LocationSection } from 'components/organisms/LocationSection';
+import { DateTimeSection } from 'components/organisms/DateTimeSection';
+import { TagsSection } from 'components/organisms/TagsSection';
 import {
   makeSelectCreateTaskModalError,
   makeSelectCreateTaskModalFrom,

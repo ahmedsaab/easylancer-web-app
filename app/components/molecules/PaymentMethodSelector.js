@@ -11,7 +11,6 @@ const useStyles = makeStyles(() => ({
     height: 'auto',
     padding: '5%',
     width: '75px',
-    marginBottom: '20px',
   },
   toggleText: {
     width: '100%',

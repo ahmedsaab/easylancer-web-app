@@ -35,6 +35,22 @@ export const CANCEL_TASK_ERROR = 'app/TaskPage/CANCEL_TASK_ERROR';
 export const UPDATE_CANCEL_MODAL_IS_OPEN =
   'app/TaskPage/UPDATE_CANCEL_MODAL_IS_OPEN';
 
+export const EDIT_TASK = 'app/TaskPage/EDIT_TASK';
+export const EDIT_TASK_SUCCESS = 'app/TaskPage/EDIT_TASK_SUCCESS';
+export const EDIT_TASK_ERROR = 'app/TaskPage/EDIT_TASK_ERROR';
+export const UPDATE_EDIT_MODAL_IS_OPEN =
+  'app/TaskPage/UPDATE_EDIT_MODAL_IS_OPEN';
+export const UPDATE_EDIT_MODAL_FORM_GENERAL =
+  'app/TaskPage/UPDATE_EDIT_MODAL_FORM_GENERAL';
+export const UPDATE_EDIT_MODAL_FORM_COUNTRY =
+  'app/TaskPage/UPDATE_EDIT_MODAL_FORM_COUNTRY';
+export const UPDATE_EDIT_MODAL_FORM_LOCATION =
+  'app/TaskPage/UPDATE_EDIT_MODAL_FORM_LOCATION';
+export const UPDATE_EDIT_MODAL_FORM_PUSH_TAG =
+  'app/TaskPage/UPDATE_EDIT_MODAL_FORM_PUSH_TAG';
+export const UPDATE_EDIT_MODAL_FORM_REMOVE_TAG =
+  'app/TaskPage/UPDATE_EDIT_MODAL_FORM_REMOVE_TAG';
+
 export const TASK_STATUSES = [
   'open',
   'assigned',
