@@ -6,6 +6,7 @@ import ChipInput from 'material-ui-chip-input';
 const useStyles = makeStyles(theme => ({
   field: {
     margin: theme.spacing(1),
+    width: '100%',
   },
   tagsInputRoot: {
     padding: '12px 5px 9px 14px',
@@ -22,6 +23,7 @@ export function TagsSection({ tags, onAdd, onDelete }) {
     <div className={classes.row}>
       <div className={classes.field}>
         <ChipInput
+          fullWidth
           label="#"
           variant="outlined"
           value={tags}

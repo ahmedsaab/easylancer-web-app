@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import { MDBBtn, MDBRow } from 'mdbreact';
+import { MDBRow } from 'mdbreact';
 import ActionButton from 'components/atoms/ActionButton';
 
 export const SideBarContainer = styled('nav')`
@@ -11,7 +11,7 @@ export const SideBarContainer = styled('nav')`
   transition: all 0.3s;
   min-width: 250px;
   max-width: 250px;
-  z-index: 5000;
+  z-index: 1000;
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -88,7 +88,7 @@ export const SideBarOverlay = styled('div')`
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.8);
-  z-index: 4500;
+  z-index: 950;
   cursor: pointer;
 `;
 

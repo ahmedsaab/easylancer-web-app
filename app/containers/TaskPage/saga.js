@@ -7,6 +7,7 @@ import {
   WITHDRAW_OFFER,
   CANCEL_TASK,
   EDIT_TASK,
+  LOAD_EDIT_MODAL_IMAGES,
 } from 'containers/TaskPage/constants';
 import {
   loadTaskOffers,
@@ -29,6 +30,7 @@ import {
   cancelTaskError,
   editTaskSuccess,
   editTaskError,
+  updateEditModalImagesLoaded,
 } from 'containers/TaskPage/actions';
 import * as client from 'utils/client';
 
@@ -148,8 +150,20 @@ export function* editTask() {
   }
 }
 
+export function* loadEditImages() {
+  const { imagesUrls } = yield select(selectTaskPageEditModalForm);
+
+  try {
+    const files = yield call(client.loadImages, imagesUrls);
+    yield put(updateEditModalImagesLoaded(files));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export default function* taskData() {
   yield takeLatest(LOAD_TASK, getTask);
+  yield takeLatest(LOAD_EDIT_MODAL_IMAGES, loadEditImages);
   yield takeLatest(LOAD_TASK_OFFERS, getTaskOffers);
   yield takeLatest(ACCEPT_OFFER, acceptOffer);
   yield takeLeading(SEND_OFFER, postOffer);

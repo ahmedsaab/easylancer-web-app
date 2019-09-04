@@ -1,10 +1,10 @@
 import React from 'react';
 import LightBox from 'react-image-lightbox';
-import 'components/organisms/LightboxGrid/index.css';
+import 'react-image-lightbox/style.css';
 import * as PropTypes from 'prop-types';
 import ImageGrid from 'components/organisms/ImageGrid';
 
-class ImagesGrid extends React.Component {
+class LightBoxImagesGrid extends React.Component {
   constructor(props) {
     super(props);
 
@@ -16,10 +16,10 @@ class ImagesGrid extends React.Component {
 
   render() {
     const { photoIndex, isOpen } = this.state;
-    const { images } = this.props;
+    const { images, className } = this.props;
 
     return (
-      <div>
+      <div className={className}>
         <ImageGrid
           tiles={images.map((url, i) => ({
             img: url,
@@ -51,8 +51,9 @@ class ImagesGrid extends React.Component {
     );
   }
 }
-ImagesGrid.propTypes = {
+LightBoxImagesGrid.propTypes = {
   images: PropTypes.array.isRequired,
+  className: PropTypes.string,
 };
 
-export default ImagesGrid;
+export default LightBoxImagesGrid;

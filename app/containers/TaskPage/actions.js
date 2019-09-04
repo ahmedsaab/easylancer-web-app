@@ -31,10 +31,11 @@ import {
   EDIT_TASK_ERROR,
   UPDATE_EDIT_MODAL_IS_OPEN,
   UPDATE_EDIT_MODAL_FORM_GENERAL,
-  UPDATE_EDIT_MODAL_FORM_COUNTRY,
   UPDATE_EDIT_MODAL_FORM_LOCATION,
   UPDATE_EDIT_MODAL_FORM_PUSH_TAG,
   UPDATE_EDIT_MODAL_FORM_REMOVE_TAG,
+  UPDATE_EDIT_MODAL_IMAGES_LOADED,
+  LOAD_EDIT_MODAL_IMAGES,
 } from 'containers/TaskPage/constants';
 
 export function loadTask(id) {
@@ -207,13 +208,6 @@ export function updateEditModalFormGeneral(key, value) {
   };
 }
 
-export function updateEditModalFormCountry(country) {
-  return {
-    type: UPDATE_EDIT_MODAL_FORM_COUNTRY,
-    country,
-  };
-}
-
 export function updateEditModalFormLocation(address, location) {
   return {
     type: UPDATE_EDIT_MODAL_FORM_LOCATION,
@@ -233,6 +227,20 @@ export function updateEditModalRemoveTag(index) {
   return {
     type: UPDATE_EDIT_MODAL_FORM_REMOVE_TAG,
     index,
+  };
+}
+
+export function loadEditModalImages(urls) {
+  return {
+    type: LOAD_EDIT_MODAL_IMAGES,
+    urls,
+  };
+}
+
+export function updateEditModalImagesLoaded(files) {
+  return {
+    type: UPDATE_EDIT_MODAL_IMAGES_LOADED,
+    files,
   };
 }
 

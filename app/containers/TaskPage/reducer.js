@@ -31,10 +31,10 @@ import {
   EDIT_TASK_SUCCESS,
   EDIT_TASK_ERROR,
   UPDATE_EDIT_MODAL_FORM_GENERAL,
-  UPDATE_EDIT_MODAL_FORM_COUNTRY,
   UPDATE_EDIT_MODAL_FORM_LOCATION,
   UPDATE_EDIT_MODAL_FORM_REMOVE_TAG,
   UPDATE_EDIT_MODAL_FORM_PUSH_TAG,
+  UPDATE_EDIT_MODAL_IMAGES_LOADED,
 } from 'containers/TaskPage/constants';
 import { categories, countries } from 'containers/CreateTaskModal/constants';
 
@@ -60,12 +60,6 @@ export const createFormFromPayload = payload => ({
   type: categories
     .find(c => c.text.toLowerCase() === payload.category)
     .types.find(t => t.text.toLowerCase() === payload.type),
-  images: payload.imagesUrls.map(url => ({
-    id: url,
-    url,
-    uploaded: true,
-    data: url,
-  })),
   startDateTimeError: null,
   country: countries.find(
     c => c.text.toLowerCase() === payload.location.country,
@@ -88,7 +82,7 @@ export const initialState = {
     isOpen: false,
     isLoading: false,
     form: {
-      price: '',
+      price: null,
       currency: '',
       paymentMethod: null,
       title: '',
@@ -258,12 +252,6 @@ const taskPageReducer = (state = initialState, action) =>
         }
         break;
 
-      case UPDATE_EDIT_MODAL_FORM_COUNTRY:
-        draft.editModal.form.location = initialState.editModal.form.location;
-        draft.editModal.form.address = initialState.editModal.form.address;
-        draft.editModal.form.country = action.country;
-        break;
-
       case UPDATE_EDIT_MODAL_FORM_LOCATION:
         draft.editModal.form.address = action.address;
         draft.editModal.form.location =
@@ -285,6 +273,15 @@ const taskPageReducer = (state = initialState, action) =>
         draft.editModal.form.tags = draft.editModal.form.tags.concat([
           action.tag.toLowerCase(),
         ]);
+        break;
+
+      case UPDATE_EDIT_MODAL_IMAGES_LOADED:
+        draft.editModal.form.images = action.files.map((file, i) => ({
+          data: file.data,
+          id: `file_${i}`,
+          url: file.url,
+          uploaded: true,
+        }));
         break;
 
       case EDIT_TASK:

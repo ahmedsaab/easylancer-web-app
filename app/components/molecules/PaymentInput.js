@@ -5,12 +5,14 @@ import { makeStyles } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { currencies } from 'containers/CreateTaskModal/constants';
 import PaymentMethodSelector from 'components/molecules/PaymentMethodSelector';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
   field: {
     margin: theme.spacing(1),
-    width: '150px',
-    display: 'block',
+  },
+  row: {
+    display: 'flex',
   },
 }));
 
@@ -23,29 +25,37 @@ export default function PaymentInput({
   const classes = useStyles();
 
   return (
-    <div>
-      <TextField
-        id="outlined-adornment-amount"
-        className={classes.field}
-        variant="outlined"
-        label="Amount"
-        type="number"
-        value={price}
-        onChange={event => onUpdatePrice(parseInt(event.target.value, 10))}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              {currencies[0].label}
-            </InputAdornment>
-          ),
-        }}
-      />
-      <PaymentMethodSelector
-        className={classes.field}
-        onChange={method => onUpdatePaymentMethod(method)}
-        method={paymentMethod}
-      />
-    </div>
+    <Grid container spacing={0}>
+      <Grid item xs={12} sm={6}>
+        <div className={classes.row}>
+          <TextField
+            id="outlined-adornment-amount"
+            className={classes.field}
+            fullWidth
+            error={!price}
+            variant="outlined"
+            label="Amount"
+            type="number"
+            value={price || ''}
+            onChange={event => onUpdatePrice(parseInt(event.target.value, 10))}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  {currencies[0].label}
+                </InputAdornment>
+              ),
+            }}
+          />
+        </div>
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <PaymentMethodSelector
+          className={classes.field}
+          onChange={method => onUpdatePaymentMethod(method)}
+          method={paymentMethod}
+        />
+      </Grid>
+    </Grid>
   );
 }
 

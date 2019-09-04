@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 import moment from 'moment';
 
-import { MDBCol, MDBRow } from 'mdbreact';
-import ImagesGrid from 'components/organisms/LightboxGrid';
+import LightBoxImagesGrid from 'components/organisms/LightBoxImagesGrid';
+import SectionHeader from 'components/molecules/SectionHeader';
 import { Map, GoogleApiWrapper, Circle } from 'google-maps-react';
 import { createStructuredSelector } from 'reselect';
 import { selectTaskPageTaskData } from 'containers/TaskPage/selectors';
@@ -13,73 +13,127 @@ import { compose } from 'redux';
 import TaskAssignee from 'containers/TaskPage/TaskAssignee';
 import Spinner from 'components/atoms/Spinner';
 import CenteredDiv from 'components/atoms/CenteredDiv';
+import DescriptionIcon from '@material-ui/icons/Description';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
 
-const PaddedRow = styled(MDBRow)`
-  padding: 10px;
+const PaddedRow = styled.div`
+  padding: 0 30px;
 `;
 
-const HeaderText = styled('div')`
-  font-size: 16px;
-  font-weight: bold;
-  padding-bottom: 10px;
-  padding-top 30px;
-  border-bottom: 2px solid #4CBBAD;
-  margin-bottom: 25px;
-`;
+const useStyles = makeStyles(theme => ({
+  divider: {
+    margin: 'auto',
+  },
+  icon: {
+    color: '#2BBBAD',
+    marginRight: theme.spacing(1),
+  },
+  hideInDesktop: {
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+  section: {
+    margin: '0px 8px',
+  },
+}));
 
 function TaskDetails({ task, google }) {
+  const classes = useStyles();
+
   return (
     <PaddedRow>
-      <MDBCol size="12">
-        <TaskAssignee />
-      </MDBCol>
-      <MDBCol size="12" lg="6">
-        <HeaderText>Description</HeaderText>
-        <div>{task.description}</div>
-      </MDBCol>
-      <MDBCol size="12" lg="6">
-        <HeaderText>Created at</HeaderText>
-        <div>{moment(task.createdAt).format('MMM. D, YYYY [at] h:mm A z')}</div>
-      </MDBCol>
-      <MDBCol size="12">
-        {task.imagesUrls.length ? (
-          <div>
-            <HeaderText>Photos</HeaderText>
-            <ImagesGrid images={task.imagesUrls} />
+      <Grid container spacing={5}>
+        <Grid item xs={12}>
+          <TaskAssignee />
+        </Grid>
+        <Grid item xs={12}>
+          <SectionHeader>
+            <DescriptionIcon className={classes.icon} />
+            Description
+          </SectionHeader>
+          <div className={classes.section}>{task.description}</div>
+        </Grid>
+        <Grid item xs={12}>
+          <Divider orientation="horizontal" />
+        </Grid>
+        <Grid item xs={12}>
+          <SectionHeader>
+            <ScheduleIcon className={classes.icon} />
+            Date & Time
+          </SectionHeader>
+          <div className={classes.section}>
+            {moment
+              .utc(task.startDateTime)
+              .local()
+              .format('MMM D, YYYY [at] h:mm A z')}
           </div>
-        ) : null}
-      </MDBCol>
-      <MDBCol size="12">
-        <HeaderText>Location</HeaderText>
-        <Map
-          google={google}
-          zoom={14}
-          containerStyle={{
-            position: 'static',
-          }}
-          style={{
-            position: 'relative',
-            width: '100%',
-            height: '400px',
-          }}
-          initialCenter={{
-            lat: task.location.geo.lat,
-            lng: task.location.geo.lng,
-          }}
-        >
-          <Circle
-            center={{ lat: task.location.geo.lat, lng: task.location.geo.lng }}
-            radius={400}
-            strokeColor="#000"
-            strokeOpacity={0.1}
-            strokeWeight={10}
-            fillColor="#4CBBAD"
-            fillOpacity={0.3}
-            draggable={false}
-            visible
-          />
-        </Map>
-      </MDBCol>
+        </Grid>
+        <Grid item xs={12}>
+          <Divider orientation="horizontal" />
+        </Grid>
+        <Grid item xs={12}>
+          {task.imagesUrls.length ? (
+            <Fragment>
+              <SectionHeader>
+                <PhotoLibraryIcon className={classes.icon} />
+                Photos
+              </SectionHeader>
+              <LightBoxImagesGrid
+                className={classes.section}
+                images={task.imagesUrls}
+              />
+            </Fragment>
+          ) : null}
+        </Grid>
+        <Grid item xs={12}>
+          <Divider orientation="horizontal" />
+        </Grid>
+        <Grid item xs={12}>
+          <SectionHeader>
+            <LocationOnIcon className={classes.icon} />
+            Location
+          </SectionHeader>
+          <div className={classes.section}>
+            <Map
+              google={google}
+              zoom={14}
+              containerStyle={{
+                position: 'static',
+              }}
+              style={{
+                position: 'relative',
+                width: '100%',
+                height: '400px',
+              }}
+              initialCenter={{
+                lat: task.location.geo.lat,
+                lng: task.location.geo.lng,
+              }}
+            >
+              <Circle
+                center={{
+                  lat: task.location.geo.lat,
+                  lng: task.location.geo.lng,
+                }}
+                radius={400}
+                strokeColor="#000"
+                strokeOpacity={0.1}
+                strokeWeight={10}
+                fillColor="#4CBBAD"
+                fillOpacity={0.3}
+                draggable={false}
+                visible
+              />
+            </Map>
+          </div>
+        </Grid>
+      </Grid>
     </PaddedRow>
   );
 }

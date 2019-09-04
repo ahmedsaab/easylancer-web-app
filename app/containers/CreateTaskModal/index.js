@@ -8,8 +8,8 @@ import { compose } from 'redux';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import Stepper from 'components/organisms/Stepper';
-import { SummarySection } from 'components/organisms/SummarySection';
-import { DetailsSection } from 'components/organisms/DetailsSection';
+import { TextSection } from 'components/organisms/TextSection';
+import { PhotosSection } from 'components/organisms/PhotosSection';
 import { LocationSection } from 'components/organisms/LocationSection';
 import { DateTimeSection } from 'components/organisms/DateTimeSection';
 import { TagsSection } from 'components/organisms/TagsSection';
@@ -80,29 +80,28 @@ function CreateTaskModal({
     {
       title: 'What do you want to get done?',
       component: (
-        <SummarySection
+        <TextSection
           category={form.category}
+          description={form.description}
           type={form.type}
           title={form.title}
           onSelectCategory={c => onUpdateFormGeneral('category', c)}
           onSelectType={t => onUpdateFormGeneral('type', t)}
           onUpdateTitle={t => onUpdateFormGeneral('title', t)}
+          onUpdateDescription={d => onUpdateFormGeneral('description', d)}
         />
       ),
       disabled: !(form.category && form.title && form.type),
     },
     {
-      title: 'Details and photos if any?',
+      title: 'Photos?',
       component: (
-        <DetailsSection
-          description={form.description}
+        <PhotosSection
           images={form.images}
           onUpdateImages={i => onUpdateFormGeneral('images', i)}
-          onUpdateDescription={d => onUpdateFormGeneral('description', d)}
         />
       ),
-      disabled:
-        !!form.images.find(image => !image.uploaded) || !form.description,
+      disabled: !!form.images.find(image => !image.uploaded),
     },
     {
       title: 'How much are you willing to pay?',
@@ -122,6 +121,8 @@ function CreateTaskModal({
         <LocationSection
           country={form.country}
           address={form.address}
+          city={form.location.city}
+          geo={form.location.geo}
           onUpdateAddress={address => onUpdateFormLocation(address, null)}
           onUpdateCountry={onUpdateFormCountry}
           onUpdateLocation={location =>

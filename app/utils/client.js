@@ -312,3 +312,15 @@ export const fetchTags = async text => {
     }
   }
 };
+
+export const loadImages = async urls =>
+  Promise.all(
+    urls.map((url, i) =>
+      fetch(url)
+        .then(res => res.arrayBuffer())
+        .then(buf => ({
+          data: new File([buf], `file_${i}.jpeg`, { type: 'image/jpeg' }),
+          url,
+        })),
+    ),
+  );

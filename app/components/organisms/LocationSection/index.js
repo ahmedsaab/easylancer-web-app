@@ -18,6 +18,8 @@ const useStyles = makeStyles(theme => ({
 export function LocationSection({
   country,
   address,
+  geo,
+  city,
   onUpdateCountry,
   onUpdateLocation,
   onUpdateAddress,
@@ -26,15 +28,17 @@ export function LocationSection({
 
   return (
     <div>
-      <div className={classes.row}>
-        <SelectDropDown
-          onSelect={onUpdateCountry}
-          label="Country"
-          selected={country}
-          selection={countries}
-          className={classes.field}
-        />
-      </div>
+      {onUpdateCountry ? (
+        <div className={classes.row}>
+          <SelectDropDown
+            onSelect={onUpdateCountry}
+            label="Country"
+            selected={country}
+            selection={countries}
+            className={classes.field}
+          />
+        </div>
+      ) : null}
       <div className={classes.row}>
         {country ? (
           <PlacesAutoComplete
@@ -44,6 +48,7 @@ export function LocationSection({
             text={address}
             type="address"
             label="Address"
+            error={!geo || !city || !country}
             countryISOCode={country.value}
             className={classes.field}
           />
@@ -55,7 +60,9 @@ export function LocationSection({
 
 LocationSection.propTypes = {
   country: PropTypes.object,
+  geo: PropTypes.object,
   address: PropTypes.string,
+  city: PropTypes.string,
   onUpdateCountry: PropTypes.func,
   onUpdateLocation: PropTypes.func,
   onUpdateAddress: PropTypes.func,

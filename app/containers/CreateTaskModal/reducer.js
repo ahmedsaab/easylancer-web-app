@@ -14,7 +14,7 @@ import {
 
 export const initialState = {
   form: {
-    price: '',
+    price: null,
     currency: '',
     paymentMethod: null,
     title: '',

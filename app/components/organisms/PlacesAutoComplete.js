@@ -11,7 +11,7 @@ import TextField from '@material-ui/core/TextField';
 
 const DropDownContainer = styled.div`
   position: absolute;
-  top: 70px;
+  top: 50px;
   z-index: 20;
   border: 1px solid grey;
   width: 100%;
@@ -28,7 +28,7 @@ const DropDownItem = styled.div`
   line-height: 1.75;
   cursor: pointer;
   color: ${props => (props.active ? '#fff' : '#000')};
-  background-color: ${props => (props.active ? '#b0b0b0' : '#fff')};
+  background-color: ${props => (props.active ? '#2BBBAD' : '#fff')};
 `;
 
 const getTypes = type => {
@@ -79,7 +79,7 @@ class Places extends React.Component {
   };
 
   render() {
-    const { type, countryISOCode, text, onChange, label } = this.props;
+    const { type, countryISOCode, text, onChange, label, error } = this.props;
     const searchOptions = {
       types: getTypes(type),
       componentRestrictions: { country: countryISOCode },
@@ -95,6 +95,7 @@ class Places extends React.Component {
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <Content>
             <TextField
+              error={error}
               label={label}
               placeholder="e.g., Skilled wall painter needed"
               margin="normal"
@@ -132,6 +133,7 @@ Places.propTypes = {
   text: PropTypes.string,
   countryISOCode: PropTypes.string,
   className: PropTypes.string,
+  error: PropTypes.bool,
 };
 
 const WrapperPlaces = GoogleApiWrapper({

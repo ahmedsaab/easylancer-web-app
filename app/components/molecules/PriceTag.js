@@ -30,7 +30,7 @@ function PriceTag({ price, paymentMethod, className }) {
         €<PaymentPriceNumber>{price}</PaymentPriceNumber>
       </PaymentPrice>
       <PaymentMethod>
-        {paymentMethod ? <MDBIcon icon="credit-card" /> : ''}
+        {paymentMethod === 'card' ? <MDBIcon icon="credit-card" /> : ''}
       </PaymentMethod>
     </PaymentTag>
   );

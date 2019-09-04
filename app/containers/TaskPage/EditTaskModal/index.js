@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -13,10 +13,10 @@ import {
   editTask,
   updateEditModalIsOpen,
   updateEditModalFormGeneral,
-  updateEditModalFormCountry,
   updateEditModalFormLocation,
   updateEditModalPushTag,
   updateEditModalRemoveTag,
+  loadEditModalImages,
 } from 'containers/TaskPage/actions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -25,15 +25,25 @@ import Button from '@material-ui/core/Button';
 import { DialogTitle, makeStyles, useTheme } from '@material-ui/core';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
-import { SummarySection } from 'components/organisms/SummarySection';
-import { DetailsSection } from 'components/organisms/DetailsSection';
+import { TextSection } from 'components/organisms/TextSection';
+import { PhotosSection } from 'components/organisms/PhotosSection';
 import { LocationSection } from 'components/organisms/LocationSection';
 import { DateTimeSection } from 'components/organisms/DateTimeSection';
 import { TagsSection } from 'components/organisms/TagsSection';
 import PaymentInput from 'components/molecules/PaymentInput';
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
+import DescriptionIcon from '@material-ui/icons/Description';
+import EuroSymbolIcon from '@material-ui/icons/EuroSymbol';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import SearchIcon from '@material-ui/icons/Search';
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+import SectionHeader from 'components/molecules/SectionHeader';
+import Spinner from 'components/atoms/Spinner';
 import Image from '../../../images/grafiti.jpg';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   text: {
     paddingBottom: '20px',
     fontSize: '1.1rem',
@@ -45,6 +55,22 @@ const useStyles = makeStyles(() => ({
   yesButton: {
     width: '120px',
   },
+  divider: {
+    margin: 'auto',
+  },
+  horizontalDivider: {
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4),
+  },
+  icon: {
+    color: '#2BBBAD',
+    marginRight: theme.spacing(1),
+  },
+  hideInDesktop: {
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
 }));
 
 function EditTaskModal({
@@ -55,13 +81,32 @@ function EditTaskModal({
   onCloseModal,
   onUpdateFormGeneral,
   onUpdateFormLocation,
-  onUpdateFormCountry,
   onUpdateFormPushTag,
   onUpdateFormRemoveTag,
+  loadImages,
 }) {
   const classes = useStyles();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isInvalid =
+    !form.title ||
+    !form.description ||
+    !form.price ||
+    !form.startDateTime ||
+    form.startDateTimeError ||
+    !(
+      form.location.city &&
+      form.country &&
+      form.address &&
+      form.location.geo
+    ) ||
+    (form.images && !!form.images.find(image => !image.uploaded));
+
+  useEffect(() => {
+    if (isOpen) {
+      loadImages(form.imagesUrls);
+    }
+  }, [isOpen]);
 
   return (
     <Dialog
@@ -73,55 +118,117 @@ function EditTaskModal({
       scroll="paper"
       aria-labelledby="responsive-dialog-title"
     >
-      <DialogTitle className={classes.header} />
+      <DialogTitle className={classes.header}>
+        <div />
+      </DialogTitle>
       {isLoading ? (
         <LinearProgress style={{ display: 'block', height: '5px' }} />
       ) : (
         <div style={{ display: 'block', height: '5px' }} />
       )}
       <DialogContent dividers>
-        <SummarySection
-          category={form.category}
-          type={form.type}
-          title={form.title}
-          onSelectCategory={c => onUpdateFormGeneral('category', c)}
-          onSelectType={t => onUpdateFormGeneral('type', t)}
-          onUpdateTitle={t => onUpdateFormGeneral('title', t)}
-        />
-        <DetailsSection
-          description={form.description}
-          images={form.images}
-          onUpdateImages={i => onUpdateFormGeneral('images', i)}
-          onUpdateDescription={d => onUpdateFormGeneral('description', d)}
-        />
-        <PaymentInput
-          price={form.price}
-          paymentMethod={form.paymentMethod}
-          onUpdatePrice={pr => onUpdateFormGeneral('price', pr)}
-          onUpdatePaymentMethod={pm => onUpdateFormGeneral('paymentMethod', pm)}
-        />
-        <LocationSection
-          country={form.country}
-          address={form.address}
-          onUpdateAddress={address => onUpdateFormLocation(address, null)}
-          onUpdateCountry={onUpdateFormCountry}
-          onUpdateLocation={location =>
-            onUpdateFormLocation(location.address, location)
-          }
-        />
-        <DateTimeSection
-          dateTime={form.startDateTime}
-          onAccept={dateTime => {
-            onUpdateFormGeneral('startDateTimeError', null);
-            onUpdateFormGeneral('startDateTime', dateTime);
-          }}
-          onError={err => onUpdateFormGeneral('startDateTimeError', err)}
-        />
-        <TagsSection
-          tags={form.tags}
-          onAdd={tag => onUpdateFormPushTag(tag)}
-          onDelete={(tag, index) => onUpdateFormRemoveTag(index)}
-        />
+        <Grid container spacing={0}>
+          <Grid item xs={12} sm={5}>
+            <SectionHeader>
+              <DescriptionIcon className={classes.icon} />
+              Description
+            </SectionHeader>
+            <TextSection
+              category={form.category}
+              description={form.description}
+              type={form.type}
+              title={form.title}
+              onUpdateTitle={t => onUpdateFormGeneral('title', t)}
+              onUpdateDescription={d => onUpdateFormGeneral('description', d)}
+            />
+            <Divider
+              className={classes.horizontalDivider}
+              orientation="horizontal"
+            />
+            <SectionHeader>
+              <EuroSymbolIcon className={classes.icon} />
+              Payment
+            </SectionHeader>
+            <PaymentInput
+              price={form.price}
+              paymentMethod={form.paymentMethod}
+              onUpdatePrice={pr => onUpdateFormGeneral('price', pr)}
+              onUpdatePaymentMethod={pm =>
+                onUpdateFormGeneral('paymentMethod', pm)
+              }
+            />
+            <Divider
+              className={classes.horizontalDivider}
+              orientation="horizontal"
+            />
+            <SectionHeader>
+              <ScheduleIcon className={classes.icon} />
+              Date & Time
+            </SectionHeader>
+            <DateTimeSection
+              dateTime={form.startDateTime}
+              onAccept={dateTime => {
+                onUpdateFormGeneral('startDateTimeError', null);
+                onUpdateFormGeneral('startDateTime', dateTime);
+              }}
+              onError={err => onUpdateFormGeneral('startDateTimeError', err)}
+            />
+            <Divider
+              className={`${classes.horizontalDivider} ${
+                classes.hideInDesktop
+              }`}
+              orientation="horizontal"
+            />
+          </Grid>
+          <Grid item xs={12} sm={1}>
+            <Divider className={classes.divider} orientation="vertical" />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <SectionHeader>
+              <LocationOnIcon className={classes.icon} />
+              Location
+            </SectionHeader>
+            <LocationSection
+              country={form.country}
+              address={form.address}
+              city={form.location.city}
+              geo={form.location.geo}
+              onUpdateAddress={address => onUpdateFormLocation(address, null)}
+              onUpdateLocation={location =>
+                onUpdateFormLocation(location.address, location)
+              }
+            />
+            <Divider
+              className={classes.horizontalDivider}
+              orientation="horizontal"
+            />
+            <SectionHeader>
+              <SearchIcon className={classes.icon} />
+              Tags
+            </SectionHeader>
+            <TagsSection
+              tags={form.tags}
+              onAdd={tag => onUpdateFormPushTag(tag)}
+              onDelete={(tag, index) => onUpdateFormRemoveTag(index)}
+            />
+            <Divider
+              className={classes.horizontalDivider}
+              orientation="horizontal"
+            />
+            <SectionHeader>
+              <PhotoLibraryIcon className={classes.icon} />
+              Photos
+            </SectionHeader>
+            {form.images ? (
+              <PhotosSection
+                images={form.images}
+                onUpdateImages={i => onUpdateFormGeneral('images', i)}
+              />
+            ) : (
+              <Spinner />
+            )}
+          </Grid>
+        </Grid>
       </DialogContent>
       <DialogActions>
         <Button disabled={isLoading} onClick={onCloseModal}>
@@ -131,7 +238,7 @@ function EditTaskModal({
           onClick={onSave}
           color="primary"
           variant="contained"
-          disabled={isLoading}
+          disabled={isLoading || isInvalid}
           className={classes.yesButton}
           autoFocus
         >
@@ -150,9 +257,9 @@ EditTaskModal.propTypes = {
   onCloseModal: PropTypes.func,
   onUpdateFormGeneral: PropTypes.func,
   onUpdateFormLocation: PropTypes.func,
-  onUpdateFormCountry: PropTypes.func,
   onUpdateFormPushTag: PropTypes.func,
   onUpdateFormRemoveTag: PropTypes.func,
+  loadImages: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -172,9 +279,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateEditModalFormGeneral(key, value)),
   onUpdateFormLocation: (address, location) =>
     dispatch(updateEditModalFormLocation(address, location)),
-  onUpdateFormCountry: country => dispatch(updateEditModalFormCountry(country)),
   onUpdateFormPushTag: tag => dispatch(updateEditModalPushTag(tag)),
   onUpdateFormRemoveTag: index => dispatch(updateEditModalRemoveTag(index)),
+  loadImages: urls => dispatch(loadEditModalImages(urls)),
 });
 
 const withConnect = connect(

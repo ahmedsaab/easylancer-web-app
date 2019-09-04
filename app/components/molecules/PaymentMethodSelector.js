@@ -8,9 +8,9 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   toggleRoot: {
-    height: 'auto',
-    padding: '5%',
-    width: '75px',
+    height: '56px',
+    padding: '5px',
+    width: '50%',
   },
   toggleText: {
     width: '100%',

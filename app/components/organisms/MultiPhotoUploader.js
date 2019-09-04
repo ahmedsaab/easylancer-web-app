@@ -79,13 +79,11 @@ class MultiPhotoUploader extends React.Component {
   handleChangeStatus = async ({ meta, file, restart }, status) => {
     const { onUpdateUploadedImages, files } = this.props;
     const index = files.findIndex(f => f.id === meta.id);
-    const isOld =
-      files.find(f => Object.is(f.data, file)) &&
-      (index !== -1 ? files[index].uploaded : true);
+    const oldFile = files.find(f => Object.is(f.data, file));
+    const isOld = oldFile && (index !== -1 ? files[index].uploaded : true);
+    const newFiles = files.slice(0);
 
     if (!isOld) {
-      const newFiles = files.slice(0);
-
       switch (status) {
         case 'ready':
           restart();
@@ -111,6 +109,13 @@ class MultiPhotoUploader extends React.Component {
           break;
         default:
       }
+    } else if (status === 'preparing') {
+      oldFile.id = meta.id;
+    } else if (status === 'removed') {
+      if (index > -1) {
+        newFiles.splice(index, 1);
+      }
+      onUpdateUploadedImages(newFiles);
     }
   };
 
