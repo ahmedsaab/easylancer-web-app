@@ -24,6 +24,14 @@ export default function PaymentInput({
 }) {
   const classes = useStyles();
 
+  function onChangePrice(event) {
+    const newPrice = parseInt(event.target.value, 10);
+
+    if (!newPrice || newPrice > 0) {
+      onUpdatePrice(newPrice);
+    }
+  }
+
   return (
     <Grid container spacing={0}>
       <Grid item xs={12} sm={6}>
@@ -37,7 +45,7 @@ export default function PaymentInput({
             label="Amount"
             type="number"
             value={price || ''}
-            onChange={event => onUpdatePrice(parseInt(event.target.value, 10))}
+            onChange={onChangePrice}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

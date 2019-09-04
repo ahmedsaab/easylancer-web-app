@@ -143,6 +143,7 @@ export function* editTask() {
     yield call(client.updateTask, id, createPayloadFromForm(form));
     yield put(editTaskSuccess());
     yield put(loadTask(id));
+    yield put(loadTaskOffers(id));
     history.push(`/task/${id}`);
   } catch (err) {
     yield put(editTaskError(err));

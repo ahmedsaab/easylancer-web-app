@@ -8,6 +8,7 @@ import {
   selectTaskPageEditModalIsOpen,
   selectTaskPageEditModalIsLoading,
   selectTaskPageEditModalForm,
+  selectTaskPageOffersData,
 } from 'containers/TaskPage/selectors';
 import {
   editTask,
@@ -41,6 +42,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import SectionHeader from 'components/molecules/SectionHeader';
 import Spinner from 'components/atoms/Spinner';
+import CenteredDiv from 'components/atoms/CenteredDiv';
+import Bold from 'components/atoms/Bold';
+import AttentionSection from 'containers/TaskPage/EditTaskModal/AttentionSection';
 import Image from '../../../images/grafiti.jpg';
 
 const useStyles = makeStyles(theme => ({
@@ -71,6 +75,9 @@ const useStyles = makeStyles(theme => ({
       display: 'none',
     },
   },
+  iconText: {
+    verticalAlign: 'text-top',
+  },
 }));
 
 function EditTaskModal({
@@ -78,6 +85,7 @@ function EditTaskModal({
   isLoading,
   form,
   onSave,
+  offers,
   onCloseModal,
   onUpdateFormGeneral,
   onUpdateFormLocation,
@@ -127,11 +135,14 @@ function EditTaskModal({
         <div style={{ display: 'block', height: '5px' }} />
       )}
       <DialogContent dividers>
+        {offers && offers.length > 0 ? (
+          <AttentionSection offers={offers} />
+        ) : null}
         <Grid container spacing={0}>
           <Grid item xs={12} sm={5}>
-            <SectionHeader>
+            <SectionHeader className={classes.iconText}>
               <DescriptionIcon className={classes.icon} />
-              Description
+              <Bold className={classes.iconText}>Description</Bold>
             </SectionHeader>
             <TextSection
               category={form.category}
@@ -147,7 +158,7 @@ function EditTaskModal({
             />
             <SectionHeader>
               <EuroSymbolIcon className={classes.icon} />
-              Payment
+              <Bold className={classes.iconText}>Payment</Bold>
             </SectionHeader>
             <PaymentInput
               price={form.price}
@@ -163,7 +174,7 @@ function EditTaskModal({
             />
             <SectionHeader>
               <ScheduleIcon className={classes.icon} />
-              Date & Time
+              <Bold className={classes.iconText}>Date & Time</Bold>
             </SectionHeader>
             <DateTimeSection
               dateTime={form.startDateTime}
@@ -186,7 +197,7 @@ function EditTaskModal({
           <Grid item xs={12} sm={6}>
             <SectionHeader>
               <LocationOnIcon className={classes.icon} />
-              Location
+              <Bold className={classes.iconText}>Location</Bold>
             </SectionHeader>
             <LocationSection
               country={form.country}
@@ -204,7 +215,7 @@ function EditTaskModal({
             />
             <SectionHeader>
               <SearchIcon className={classes.icon} />
-              Tags
+              <Bold className={classes.iconText}>Tags</Bold>
             </SectionHeader>
             <TagsSection
               tags={form.tags}
@@ -217,7 +228,7 @@ function EditTaskModal({
             />
             <SectionHeader>
               <PhotoLibraryIcon className={classes.icon} />
-              Photos
+              <Bold className={classes.iconText}>Photos</Bold>
             </SectionHeader>
             {form.images ? (
               <PhotosSection
@@ -225,7 +236,9 @@ function EditTaskModal({
                 onUpdateImages={i => onUpdateFormGeneral('images', i)}
               />
             ) : (
-              <Spinner />
+              <CenteredDiv>
+                <Spinner dimension="50px" />
+              </CenteredDiv>
             )}
           </Grid>
         </Grid>
@@ -252,6 +265,7 @@ function EditTaskModal({
 EditTaskModal.propTypes = {
   isOpen: PropTypes.bool,
   isLoading: PropTypes.bool,
+  offers: PropTypes.array,
   form: PropTypes.object,
   onSave: PropTypes.func,
   onCloseModal: PropTypes.func,
@@ -266,6 +280,7 @@ const mapStateToProps = createStructuredSelector({
   isOpen: selectTaskPageEditModalIsOpen,
   isLoading: selectTaskPageEditModalIsLoading,
   form: selectTaskPageEditModalForm,
+  offers: selectTaskPageOffersData,
 });
 
 const mapDispatchToProps = dispatch => ({

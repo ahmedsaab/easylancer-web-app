@@ -91,7 +91,7 @@ function CreateTaskModal({
           onUpdateDescription={d => onUpdateFormGeneral('description', d)}
         />
       ),
-      disabled: !(form.category && form.title && form.type),
+      disabled: !(form.category && form.title && form.type && form.description),
     },
     {
       title: 'Photos?',
