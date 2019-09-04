@@ -46,6 +46,8 @@ const selectTaskPageCancelModalIsLoading = state =>
 
 const selectTaskPageEditModalIsOpen = state =>
   (state.taskPage || initialState).editModal.isOpen;
+const selectTaskPageEditModalIsDirty = state =>
+  (state.taskPage || initialState).editModal.isDirty;
 const selectTaskPageEditModalIsLoading = state =>
   (state.taskPage || initialState).editModal.isLoading;
 const selectTaskPageEditModalForm = state =>
@@ -82,6 +84,7 @@ export {
   selectTaskPageWithdrawModalIsOpen,
   selectTaskPageWithdrawModalIsLoading,
   selectTaskPageEditModalIsOpen,
+  selectTaskPageEditModalIsDirty,
   selectTaskPageEditModalIsLoading,
   selectTaskPageEditModalForm,
   makeSelectTaskPageUserIsTaskOwner,

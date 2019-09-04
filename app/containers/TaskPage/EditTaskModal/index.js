@@ -9,6 +9,7 @@ import {
   selectTaskPageEditModalIsLoading,
   selectTaskPageEditModalForm,
   selectTaskPageOffersData,
+  selectTaskPageEditModalIsDirty,
 } from 'containers/TaskPage/selectors';
 import {
   editTask,
@@ -82,6 +83,7 @@ const useStyles = makeStyles(theme => ({
 
 function EditTaskModal({
   isOpen,
+  isDirty,
   isLoading,
   form,
   onSave,
@@ -251,7 +253,7 @@ function EditTaskModal({
           onClick={onSave}
           color="primary"
           variant="contained"
-          disabled={isLoading || isInvalid}
+          disabled={!isDirty || isLoading || isInvalid}
           className={classes.yesButton}
           autoFocus
         >
@@ -264,6 +266,7 @@ function EditTaskModal({
 
 EditTaskModal.propTypes = {
   isOpen: PropTypes.bool,
+  isDirty: PropTypes.bool,
   isLoading: PropTypes.bool,
   offers: PropTypes.array,
   form: PropTypes.object,
@@ -277,6 +280,7 @@ EditTaskModal.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  isDirty: selectTaskPageEditModalIsDirty,
   isOpen: selectTaskPageEditModalIsOpen,
   isLoading: selectTaskPageEditModalIsLoading,
   form: selectTaskPageEditModalForm,

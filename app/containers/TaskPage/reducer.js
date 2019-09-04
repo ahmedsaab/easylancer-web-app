@@ -246,6 +246,7 @@ const taskPageReducer = (state = initialState, action) =>
         break;
 
       case UPDATE_EDIT_MODAL_FORM_GENERAL:
+        draft.editModal.isDirty = true;
         draft.editModal.form[action.key] = action.value;
         if (action.key === 'category') {
           draft.editModal.form.type = null;
@@ -253,12 +254,14 @@ const taskPageReducer = (state = initialState, action) =>
         break;
 
       case UPDATE_EDIT_MODAL_FORM_LOCATION:
+        draft.editModal.isDirty = true;
         draft.editModal.form.address = action.address;
         draft.editModal.form.location =
           action.location || initialState.editModal.form.location;
         break;
 
       case UPDATE_EDIT_MODAL_FORM_REMOVE_TAG:
+        draft.editModal.isDirty = true;
         draft.editModal.form.tags = draft.editModal.form.tags
           .slice(0, action.index)
           .concat(
@@ -270,9 +273,18 @@ const taskPageReducer = (state = initialState, action) =>
         break;
 
       case UPDATE_EDIT_MODAL_FORM_PUSH_TAG:
+        draft.editModal.isDirty = true;
         draft.editModal.form.tags = draft.editModal.form.tags.concat([
           action.tag.toLowerCase(),
         ]);
+        break;
+
+      case UPDATE_EDIT_MODAL_IS_OPEN:
+        draft.editModal.isOpen = action.isOpen;
+        if (!action.isOpen) {
+          draft.editModal.form = createFormFromPayload(draft.task.data);
+          draft.editModal.isDirty = false;
+        }
         break;
 
       case UPDATE_EDIT_MODAL_IMAGES_LOADED:
@@ -288,16 +300,10 @@ const taskPageReducer = (state = initialState, action) =>
         draft.editModal.isLoading = true;
         break;
 
-      case UPDATE_EDIT_MODAL_IS_OPEN:
-        draft.editModal.isOpen = action.isOpen;
-        if (!action.isOpen) {
-          draft.editModal.form = createFormFromPayload(draft.task.data);
-        }
-        break;
-
       case EDIT_TASK_SUCCESS:
         draft.editModal.isOpen = false;
         draft.editModal.isLoading = false;
+        draft.editModal.isDirty = false;
         draft.editModal.form = initialState.editModal.form;
         break;
 

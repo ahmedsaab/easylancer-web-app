@@ -22,7 +22,7 @@ import { makeStyles } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 
 const PaddedRow = styled.div`
-  padding: 0 30px;
+  padding: 0 10px;
 `;
 
 const useStyles = makeStyles(theme => ({
@@ -77,23 +77,25 @@ function TaskDetails({ task, google }) {
         <Grid item xs={12}>
           <Divider orientation="horizontal" />
         </Grid>
-        <Grid item xs={12}>
-          {task.imagesUrls.length ? (
-            <Fragment>
-              <SectionHeader>
-                <PhotoLibraryIcon className={classes.icon} />
-                Photos
-              </SectionHeader>
-              <LightBoxImagesGrid
-                className={classes.section}
-                images={task.imagesUrls}
-              />
-            </Fragment>
-          ) : null}
-        </Grid>
-        <Grid item xs={12}>
-          <Divider orientation="horizontal" />
-        </Grid>
+        {task.imagesUrls.length ? (
+          <Fragment>
+            <Grid item xs={12}>
+              <Fragment>
+                <SectionHeader>
+                  <PhotoLibraryIcon className={classes.icon} />
+                  Photos
+                </SectionHeader>
+                <LightBoxImagesGrid
+                  className={classes.section}
+                  images={task.imagesUrls}
+                />
+              </Fragment>
+            </Grid>
+            <Grid item xs={12}>
+              <Divider orientation="horizontal" />
+            </Grid>
+          </Fragment>
+        ) : null}
         <Grid item xs={12}>
           <SectionHeader>
             <LocationOnIcon className={classes.icon} />
