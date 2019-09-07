@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 import { countries } from 'containers/CreateTaskModal/constants';
@@ -25,6 +25,9 @@ export function LocationSection({
   onUpdateAddress,
 }) {
   const classes = useStyles();
+  const [dirty, setDirty] = useState({
+    address: false,
+  });
 
   return (
     <div>
@@ -43,12 +46,15 @@ export function LocationSection({
         {country ? (
           <PlacesAutoComplete
             onSelect={onUpdateLocation}
-            onChange={onUpdateAddress}
+            onChange={addr => {
+              setDirty({ ...dirty, address: true });
+              onUpdateAddress(addr);
+            }}
             onError={err => console.error(err)}
             text={address}
             type="address"
             label="Address"
-            error={!geo || !city || !country}
+            error={(!geo || !city || !country) && dirty.address}
             countryISOCode={country.value}
             className={classes.field}
           />

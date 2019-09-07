@@ -93,7 +93,10 @@ const useStyles = makeStyles(theme => ({
 function TaskAssignee({ isTaskOwner, task, offers }) {
   const classes = useStyles();
 
-  if (task.status === 'assigned' && isTaskOwner) {
+  if (
+    (task.status === 'assigned' || task.status === 'in-progress') &&
+    isTaskOwner
+  ) {
     if (offers === null) {
       return <LoadingIndicator />;
     }

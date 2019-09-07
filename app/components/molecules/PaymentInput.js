@@ -1,5 +1,5 @@
 import TextField from '@material-ui/core/TextField';
-import React from 'react';
+import React, { useState } from 'react';
 import * as PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -23,11 +23,15 @@ export default function PaymentInput({
   onUpdatePaymentMethod,
 }) {
   const classes = useStyles();
+  const [dirty, setDirty] = useState({
+    price: false,
+  });
 
   function onChangePrice(event) {
     const newPrice = parseInt(event.target.value, 10);
 
     if (!newPrice || newPrice > 0) {
+      setDirty({ ...dirty, price: true });
       onUpdatePrice(newPrice);
     }
   }
@@ -37,10 +41,9 @@ export default function PaymentInput({
       <Grid item xs={12} sm={6}>
         <div className={classes.row}>
           <TextField
-            id="outlined-adornment-amount"
             className={classes.field}
             fullWidth
-            error={!price}
+            error={!price && dirty.price}
             variant="outlined"
             label="Amount"
             type="number"

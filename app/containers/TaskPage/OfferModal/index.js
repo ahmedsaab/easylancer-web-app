@@ -19,7 +19,7 @@ import OfferActionButtons from 'containers/TaskPage/OfferActionButtons';
 
 const OfferFluidModal = styled(FluidModal)`
   padding: 20px;
-  margin: 0 0 40px 0;
+  margin-top: 16px;
 `;
 
 function OfferModal({ offer, task, isOpen, onClose }) {

@@ -23,7 +23,9 @@ import AssistantPhotoIcon from '@material-ui/icons/AssistantPhoto';
 import EditIcon from '@material-ui/icons/Edit';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
-  updateCancelModalIsOpen, updateEditModalIsOpen,
+  updateCancelModalIsOpen,
+  updateEditModalIsOpen,
+  updateFinishModalIsOpen,
   updateOfferFormModalIsOpen,
 } from 'containers/TaskPage/actions';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
@@ -43,6 +45,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+/**
+ * @return {null}
+ */
 function TaskActionButtons({
   task,
   user,
@@ -52,6 +57,7 @@ function TaskActionButtons({
   onCreateOfferButtonClick,
   onCancelTaskButtonClick,
   onEditTaskButtonClick,
+  onFinishTaskButtonClick,
 }) {
   const classes = useStyles();
   const theme = useTheme();
@@ -77,7 +83,9 @@ function TaskActionButtons({
   const canReschedule =
     task.status === 'assigned' && (userIsOwner || userIsAssigned);
   const canFinish =
-    task.status === 'in-progress' && (userIsOwner || userIsAssigned);
+    (task.status === 'in-progress' || task.status === 'pending') &&
+    ((userIsOwner && !task.creatorRating) ||
+      (userIsAssigned && !task.workerRating));
   const canCopy =
     task.status === 'done' ||
     task.status === 'not-done' ||
@@ -92,6 +100,7 @@ function TaskActionButtons({
       sticky = (
         <Fragment>
           <ActionButton
+            first
             disabled={disabled}
             flex={1}
             color="primary"
@@ -99,10 +108,11 @@ function TaskActionButtons({
           >
             <MessageIcon />
           </ActionButton>
-          <ActionButton variant="outlined" color="secondary" flex={1}>
+          <ActionButton middle variant="outlined" color="secondary" flex={1}>
             <UpdateIcon />
           </ActionButton>
           <ActionButton
+            last
             flex={1}
             variant="outlined"
             onClick={onCancelTaskButtonClick}
@@ -115,11 +125,12 @@ function TaskActionButtons({
       sticky = (
         <div style={{ width: '100%' }}>
           <div style={{ display: 'flex' }}>
-            <ActionButton variant="outlined" color="secondary" flex={2}>
+            <ActionButton first variant="outlined" color="secondary" flex={2}>
               <UpdateIcon className={classes.leftIcon} />
               Reschedule
             </ActionButton>
             <ActionButton
+              last
               disabled={disabled}
               flex={1}
               color="primary"
@@ -144,11 +155,12 @@ function TaskActionButtons({
   } else if (canCancel && canReschedule) {
     sticky = (
       <Fragment>
-        <ActionButton variant="outlined" color="secondary" flex={2}>
+        <ActionButton first variant="outlined" color="secondary" flex={2}>
           <UpdateIcon className={classes.leftIcon} />
           Reschedule
         </ActionButton>
         <ActionButton
+          last
           flex={1}
           onClick={onCancelTaskButtonClick}
           variant="outlined"
@@ -161,6 +173,7 @@ function TaskActionButtons({
     sticky = (
       <Fragment>
         <ActionButton
+          first
           flex={2}
           color="primary"
           onClick={onCreateOfferButtonClick}
@@ -169,6 +182,7 @@ function TaskActionButtons({
           Offer
         </ActionButton>
         <ActionButton
+          last
           disabled={disabled}
           flex={1}
           color="primary"
@@ -181,11 +195,12 @@ function TaskActionButtons({
   } else if (canMessage && canReschedule) {
     sticky = (
       <Fragment>
-        <ActionButton variant="outlined" color="secondary" flex={2}>
+        <ActionButton first variant="outlined" color="secondary" flex={2}>
           <UpdateIcon className={classes.leftIcon} />
           Reschedule
         </ActionButton>
         <ActionButton
+          last
           disabled={disabled}
           flex={1}
           color="primary"
@@ -198,11 +213,17 @@ function TaskActionButtons({
   } else if (canFinish && canMessage) {
     sticky = (
       <Fragment>
-        <ActionButton flex={2} color="primary">
+        <ActionButton
+          first
+          onClick={onFinishTaskButtonClick}
+          flex={2}
+          color="primary"
+        >
           <AssistantPhotoIcon className={classes.leftIcon} />
           Finish
         </ActionButton>
         <ActionButton
+          last
           disabled={disabled}
           flex={1}
           color="primary"
@@ -216,6 +237,7 @@ function TaskActionButtons({
     sticky = (
       <Fragment>
         <ActionButton
+          first
           variant="outlined"
           flex={2}
           color="primary"
@@ -225,6 +247,7 @@ function TaskActionButtons({
           Edit
         </ActionButton>
         <ActionButton
+          last
           flex={1}
           variant="outlined"
           onClick={onCancelTaskButtonClick}
@@ -253,7 +276,7 @@ function TaskActionButtons({
   } else if (canFinish) {
     sticky = (
       <Fragment>
-        <ActionButton color="primary">
+        <ActionButton onClick={onFinishTaskButtonClick} color="primary">
           <AssistantPhotoIcon className={classes.leftIcon} />
           Finish
         </ActionButton>
@@ -261,12 +284,14 @@ function TaskActionButtons({
     );
   }
 
+  if (!sticky) {
+    return null;
+  }
+
   return (
-    <div>
-      <StickyBottom whenToStick={768} relativeStyleRef={containerRef}>
-        {sticky}
-      </StickyBottom>
-    </div>
+    <StickyBottom whenToStick={768} relativeStyleRef={containerRef}>
+      {sticky}
+    </StickyBottom>
   );
 }
 
@@ -278,6 +303,7 @@ TaskActionButtons.propTypes = {
   onCreateOfferButtonClick: PropTypes.func,
   onCancelTaskButtonClick: PropTypes.func,
   onEditTaskButtonClick: PropTypes.func,
+  onFinishTaskButtonClick: PropTypes.func,
   containerRef: PropTypes.object,
 };
 
@@ -292,6 +318,7 @@ const mapDispatchToProps = dispatch => ({
   onCreateOfferButtonClick: () => dispatch(updateOfferFormModalIsOpen(true)),
   onCancelTaskButtonClick: () => dispatch(updateCancelModalIsOpen(true)),
   onEditTaskButtonClick: () => dispatch(updateEditModalIsOpen(true)),
+  onFinishTaskButtonClick: () => dispatch(updateFinishModalIsOpen(true)),
 });
 
 const withConnect = connect(

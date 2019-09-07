@@ -20,7 +20,6 @@ import {
 } from 'containers/TaskPage/selectors';
 import Spinner from 'components/atoms/Spinner';
 import OfferModal from 'containers/TaskPage/OfferModal';
-import ProfileCard from 'components/molecules/ProfileCard';
 import history from 'utils/history';
 import saga, { offerUrlRegex } from 'containers/TaskPage/saga';
 import TaskActionButtons from 'containers/TaskPage/TaskActionButtons';
@@ -30,14 +29,29 @@ import WithdrawOfferModal from 'containers/TaskPage/WithdrawOfferModal';
 import styled from 'styled-components';
 import CancelTaskModal from 'containers/TaskPage/CancelTaskModal';
 import EditTaskModal from 'containers/TaskPage/EditTaskModal';
+import FinishTaskModal from 'containers/TaskPage/FinishTaskModal';
+import TaskReview from 'containers/TaskPage/TaskReview';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core';
+import TaskOwner from 'containers/TaskPage/TaskOwner';
 
 export const ContainerRow = styled(MDBRow)`
   padding-top: 0.5rem;
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
-  background-color: white;
 `;
+
+const useStyles = makeStyles({
+  data: {
+    padding: '15px 20px',
+    margin: '0',
+    backgroundColor: '#fff',
+    backgroundClip: 'padding-box',
+    border: '1px solid rgba(0,0,0,0.2)',
+    outline: 0,
+  },
+});
 
 export function TaskPage({
   match,
@@ -49,6 +63,7 @@ export function TaskPage({
 }) {
   useInjectReducer({ key: 'taskPage', reducer });
   useInjectSaga({ key: 'taskPage', saga });
+  const classes = useStyles();
 
   const ref = useRef(null);
   const { id } = match.params;
@@ -84,24 +99,29 @@ export function TaskPage({
         <WithdrawOfferModal />
         <CancelTaskModal />
         <EditTaskModal />
+        <FinishTaskModal />
         <MDBCol sm="12" md="8">
-          <MDBRow>
-            <MDBCol size="12">
-              <TaskHeader />
-            </MDBCol>
-          </MDBRow>
-          <TaskSwitch />
+          <Paper elevation={0} className={classes.data}>
+            <MDBRow>
+              <MDBCol size="12">
+                <TaskHeader />
+              </MDBCol>
+            </MDBRow>
+            <TaskSwitch />
+          </Paper>
         </MDBCol>
         <MDBCol sm="12" md="4">
           <TaskActionButtons containerRef={ref} />
-          <hr />
           <MDBRow className="no-gutters">
-            <MDBCol>
+            <MDBCol sm="12">
               <OfferModal
                 onClose={() => history.push(`/task/${task.id}/offers/`)}
                 isOpen={offerUrlRegex.test(location.pathname)}
               />
-              <ProfileCard user={task.creatorUser} />
+              <TaskOwner user={task.creatorUser} />
+            </MDBCol>
+            <MDBCol sm="12">
+              <TaskReview />
             </MDBCol>
           </MDBRow>
         </MDBCol>

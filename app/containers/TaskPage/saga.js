@@ -8,6 +8,7 @@ import {
   CANCEL_TASK,
   EDIT_TASK,
   LOAD_EDIT_MODAL_IMAGES,
+  FINISH_TASK,
 } from 'containers/TaskPage/constants';
 import {
   loadTaskOffers,
@@ -31,6 +32,8 @@ import {
   editTaskSuccess,
   editTaskError,
   updateEditModalImagesLoaded,
+  finishTaskSuccess,
+  finishTaskError,
 } from 'containers/TaskPage/actions';
 import * as client from 'utils/client';
 
@@ -40,8 +43,13 @@ import {
   selectTaskPageTaskData,
   selectTaskPageOfferFormData,
   selectTaskPageEditModalForm,
+  selectTaskPageFinishModalForm,
+  makeSelectTaskPageUserIsTaskOwner,
 } from 'containers/TaskPage/selectors';
-import { createPayloadFromForm } from 'containers/TaskPage/reducer';
+import {
+  createFinishPayloadFromForm,
+  createPayloadFromForm,
+} from 'containers/TaskPage/reducer';
 
 export const offerUrlRegex = RegExp(/offers\/[0-9a-f]/i);
 
@@ -162,6 +170,27 @@ export function* loadEditImages() {
   }
 }
 
+export function* finishTask() {
+  const form = yield select(selectTaskPageFinishModalForm);
+  const isOwner = yield select(makeSelectTaskPageUserIsTaskOwner());
+  const { id } = yield select(selectTaskPageTaskData);
+
+  try {
+    yield call(
+      client.finishTask,
+      id,
+      createFinishPayloadFromForm(form),
+      isOwner,
+    );
+    yield put(finishTaskSuccess());
+    yield put(loadTask(id));
+    history.push(`/task/${id}`);
+  } catch (err) {
+    yield put(finishTaskError(err));
+    console.log(err);
+  }
+}
+
 export default function* taskData() {
   yield takeLatest(LOAD_TASK, getTask);
   yield takeLatest(LOAD_EDIT_MODAL_IMAGES, loadEditImages);
@@ -171,4 +200,5 @@ export default function* taskData() {
   yield takeLeading(WITHDRAW_OFFER, withdrawOffer);
   yield takeLeading(CANCEL_TASK, cancelTask);
   yield takeLeading(EDIT_TASK, editTask);
+  yield takeLeading(FINISH_TASK, finishTask);
 }

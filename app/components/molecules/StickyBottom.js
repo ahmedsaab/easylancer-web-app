@@ -4,14 +4,19 @@ import styled from 'styled-components';
 import { getWindowWidth } from 'utils/stylesHelper';
 
 const Container = styled('div')`
-  padding-top: 10px;
-  padding-bottom: 10px;
+  // background-clip: padding-box;
+  // border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 0;
+  // margin-bottom: 20px;
   display: flex;
   @media screen and (max-width: ${props => props.whenToStick}px) {
     position: fixed;
     bottom: 0;
     width: 100vw;
     left: 0;
+    padding: 10px;
+    margin: 0;
+    border: unset;
     padding-right: 10px;
     padding-left: 10px;
     background: #ffffffcf;

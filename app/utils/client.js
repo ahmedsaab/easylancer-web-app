@@ -192,8 +192,33 @@ export const updateTask = async (id, task) => {
   }
 };
 
+export const finishTask = async (id, review, isOwner) => {
+  try {
+    const urlEnd = isOwner ? 'owner' : 'worker';
+    const response = await axios.post(
+      `${process.env.CLIENT_API_ROOT}/tasks/${id}/review/${urlEnd}`,
+      review,
+      {
+        headers,
+      },
+    );
+
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      throw new Error(
+        `The server responded with error code ${error.response.status}`,
+      );
+    } else if (error.request) {
+      throw new Error(`Failed to read response from Server`);
+    } else {
+      throw new Error(`An unexpected error occurred`);
+    }
+  }
+};
+
 export const withdrawOffer = async taskId => {
-  await sleep(1000);
+  // await sleep(1000);
   try {
     const response = await axios.post(
       `${process.env.CLIENT_API_ROOT}/tasks/${taskId}/withdraw`,
@@ -218,7 +243,7 @@ export const withdrawOffer = async taskId => {
 };
 
 export const cancelTask = async id => {
-  await sleep(2000);
+  // await sleep(2000);
   try {
     const response = await axios.post(
       `${process.env.CLIENT_API_ROOT}/tasks/${id}/cancel`,

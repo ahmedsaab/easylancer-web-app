@@ -18,12 +18,14 @@ import PriceTag from 'components/molecules/PriceTag';
 import StatusBadge from 'components/molecules/StatusBadge';
 import Tag from 'components/atoms/Tag';
 import { selectTaskPageTaskData } from 'containers/TaskPage/selectors';
+import AttentionHeader from 'containers/TaskPage/TaskHeader/AttentionHeader';
 
 function TaskHeader({ task }) {
   const tags = task.tags.map(tag => <Tag key={tag}>{tag}</Tag>);
 
   return (
     <div>
+      <AttentionHeader task={task} />
       <MDBRow>
         <MDBCol size="12">
           <StatusBadge status={task.status} />

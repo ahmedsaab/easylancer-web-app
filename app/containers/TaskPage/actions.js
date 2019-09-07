@@ -36,6 +36,11 @@ import {
   UPDATE_EDIT_MODAL_FORM_REMOVE_TAG,
   UPDATE_EDIT_MODAL_IMAGES_LOADED,
   LOAD_EDIT_MODAL_IMAGES,
+  FINISH_TASK_ERROR,
+  FINISH_TASK_SUCCESS,
+  FINISH_TASK,
+  UPDATE_FINISH_MODAL_FORM_GENERAL,
+  UPDATE_FINISH_MODAL_IS_OPEN,
 } from 'containers/TaskPage/constants';
 
 export function loadTask(id) {
@@ -266,6 +271,40 @@ export function editTaskSuccess() {
 export function editTaskError(error) {
   return {
     type: EDIT_TASK_ERROR,
+    error,
+  };
+}
+
+export function updateFinishModalIsOpen(isOpen) {
+  return {
+    type: UPDATE_FINISH_MODAL_IS_OPEN,
+    isOpen,
+  };
+}
+
+export function updateFinishModalFormGeneral(key, value) {
+  return {
+    type: UPDATE_FINISH_MODAL_FORM_GENERAL,
+    key,
+    value,
+  };
+}
+
+export function finishTask() {
+  return {
+    type: FINISH_TASK,
+  };
+}
+
+export function finishTaskSuccess() {
+  return {
+    type: FINISH_TASK_SUCCESS,
+  };
+}
+
+export function finishTaskError(error) {
+  return {
+    type: FINISH_TASK_ERROR,
     error,
   };
 }

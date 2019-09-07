@@ -17,6 +17,14 @@ const selectTaskPageOffersLoading = state =>
   (state.taskPage || initialState).offers.loading;
 const selectTaskPageOffersError = state =>
   (state.taskPage || initialState).offers.error;
+const selectTaskPageAcceptedOffer = state => {
+  const page = state.taskPage || initialState;
+  const loaded = page.offers.data && page.task.data;
+
+  return loaded
+    ? page.offers.data.find(offer => offer.id === page.task.data.acceptedOffer)
+    : null;
+};
 
 const selectTaskPageOfferData = state =>
   (state.taskPage || initialState).offer.data;
@@ -53,6 +61,13 @@ const selectTaskPageEditModalIsLoading = state =>
 const selectTaskPageEditModalForm = state =>
   (state.taskPage || initialState).editModal.form;
 
+const selectTaskPageFinishModalIsOpen = state =>
+  (state.taskPage || initialState).finishModal.isOpen;
+const selectTaskPageFinishModalIsLoading = state =>
+  (state.taskPage || initialState).finishModal.isLoading;
+const selectTaskPageFinishModalForm = state =>
+  (state.taskPage || initialState).finishModal.form;
+
 const makeSelectTaskPageUserIsTaskOwner = () =>
   createSelector(
     selectTaskPageTaskData,
@@ -71,6 +86,7 @@ export {
   selectTaskPageTaskData,
   selectTaskPageTaskError,
   selectTaskPageTaskLoading,
+  selectTaskPageAcceptedOffer,
   selectTaskPageOffersData,
   selectTaskPageOffersError,
   selectTaskPageOffersLoading,
@@ -83,6 +99,9 @@ export {
   selectTaskPageAssignedModalIsOpen,
   selectTaskPageWithdrawModalIsOpen,
   selectTaskPageWithdrawModalIsLoading,
+  selectTaskPageFinishModalIsOpen,
+  selectTaskPageFinishModalIsLoading,
+  selectTaskPageFinishModalForm,
   selectTaskPageEditModalIsOpen,
   selectTaskPageEditModalIsDirty,
   selectTaskPageEditModalIsLoading,

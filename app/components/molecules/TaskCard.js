@@ -1,18 +1,13 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import {
-  MDBBtn,
   MDBCard,
   MDBCardBody,
   MDBCardFooter,
   MDBCardHeader,
   MDBCardText,
-  MDBCarousel,
-  MDBCarouselInner,
-  MDBCarouselItem,
   MDBCol,
   MDBRow,
-  MDBView,
 } from 'mdbreact';
 import styled from 'styled-components';
 import FullName from 'components/molecules/FullName';
@@ -20,6 +15,7 @@ import Location from 'components/molecules/Location';
 
 const CardResp = styled(MDBCard)`
   margin: 4px !important;
+  cursor: pointer;
   @media screen and (max-width: 552px) {
     .carousel {
       display: none;
@@ -69,34 +65,12 @@ const CardText = styled(MDBCardText)`
 `;
 
 function TaskCard({ task, viewTaskAction }) {
-  const CarouselItems = task.imagesUrls.map((url, i) => (
-    <MDBCarouselItem itemId={i + 1} key={url}>
-      <MDBView>
-        <img className="d-block w-100" src={url} alt="" />
-      </MDBView>
-    </MDBCarouselItem>
-  ));
-
   return (
-    <CardResp>
+    <CardResp onClick={viewTaskAction}>
       <CardTopLine className="blue-gradient" />
       <MDBCardHeader>
         <TaskLocation location={task.location} />
-        <div className="float-right">
-          <i className="fas fa-credit-card" />
-          <CardPrice>€{task.price}</CardPrice>
-        </div>
       </MDBCardHeader>
-      <MDBCarousel
-        activeItem={1}
-        length={CarouselItems.length}
-        showControls
-        showIndicators
-        interval={false}
-        className="z-depth-1"
-      >
-        <MDBCarouselInner>{CarouselItems}</MDBCarouselInner>
-      </MDBCarousel>
       <MDBCardBody>
         <CardText onClick={viewTaskAction}>{task.title}</CardText>
       </MDBCardBody>
@@ -111,16 +85,10 @@ function TaskCard({ task, viewTaskAction }) {
             <CardOwnerName user={task.creatorUser} />
           </MDBCol>
           <MDBCol size="6">
-            <MDBBtn
-              rounded
-              block
-              outline
-              color="primary"
-              size="sm"
-              onClick={viewTaskAction}
-            >
-              View
-            </MDBBtn>
+            <div className="float-right">
+              <i className="fas fa-credit-card" />
+              <CardPrice>€{task.price}</CardPrice>
+            </div>
           </MDBCol>
         </MDBRow>
       </CardFooter>

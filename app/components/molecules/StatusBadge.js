@@ -36,6 +36,12 @@ function StatusBadge({ status }) {
     case 'cancelled':
       color = 'grey';
       break;
+    case 'pending':
+      color = 'warning';
+      break;
+    case 'investigate':
+      color = 'danger';
+      break;
     default:
       color = 'default';
   }

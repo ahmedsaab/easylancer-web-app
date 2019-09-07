@@ -9,8 +9,6 @@ import EventIcon from '@material-ui/icons/Event';
 
 import 'components/organisms/DateTimeSection/style-temp-fix.css';
 
-import moment from 'moment';
-
 const useStyles = makeStyles(theme => ({
   field: {
     margin: theme.spacing(1),
@@ -58,7 +56,7 @@ export function DateTimeSection({ dateTime, onAccept, onError }) {
 }
 
 DateTimeSection.propTypes = {
-  dateTime: PropTypes.instanceOf(moment),
+  dateTime: PropTypes.any,
   onAccept: PropTypes.func,
   onError: PropTypes.func,
 };

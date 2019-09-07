@@ -39,6 +39,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+/**
+ * @return {null}
+ */
 function OfferActionButtons({
   offer,
   task,
@@ -57,6 +60,7 @@ function OfferActionButtons({
     sticky = (
       <Fragment>
         <LoadableActionButton
+          first
           onClick={() => onAcceptOffer(offer.id)}
           color="primary"
           disabled={disabled}
@@ -67,6 +71,7 @@ function OfferActionButtons({
           Hire Now
         </LoadableActionButton>
         <ActionButton
+          last
           disabled={disabled}
           flex={1}
           color="primary"
@@ -99,6 +104,7 @@ function OfferActionButtons({
     sticky = (
       <Fragment>
         <ActionButton
+          first
           color="primary"
           disabled={disabled}
           flex={2}
@@ -108,6 +114,7 @@ function OfferActionButtons({
           Call
         </ActionButton>
         <ActionButton
+          last
           disabled={disabled}
           flex={1}
           color="primary"
@@ -117,6 +124,10 @@ function OfferActionButtons({
         </ActionButton>
       </Fragment>
     );
+  }
+
+  if (!sticky) {
+    return null;
   }
 
   return (

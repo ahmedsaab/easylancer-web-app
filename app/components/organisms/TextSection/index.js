@@ -1,7 +1,7 @@
 import SelectDropDown from 'components/molecules/SelectDropDown';
 import { categories } from 'containers/CreateTaskModal/constants';
 import TextField from '@material-ui/core/TextField';
-import React from 'react';
+import React, { useState } from 'react';
 import * as PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 
@@ -31,6 +31,10 @@ export function TextSection({
   onUpdateDescription,
 }) {
   const classes = useStyles();
+  const [dirty, setDirty] = useState({
+    title: false,
+    description: false,
+  });
 
   return (
     <div>
@@ -55,12 +59,15 @@ export function TextSection({
       ) : null}
       <div className={classes.row}>
         <TextField
-          error={!title}
+          error={!title && dirty.title}
           placeholder="e.g., Skilled wall painter needed"
           label="Title"
           className={classes.field}
           value={title}
-          onChange={event => onUpdateTitle(event.target.value)}
+          onChange={event => {
+            setDirty({ ...dirty, title: true });
+            onUpdateTitle(event.target.value);
+          }}
           margin="normal"
           variant="outlined"
           fullWidth
@@ -70,12 +77,15 @@ export function TextSection({
       </div>
       <div className={classes.row}>
         <TextField
-          error={!description}
+          error={!description && dirty.description}
           placeholder={detailsPlaceholder}
           label="Details"
           className={classes.field}
           value={description}
-          onChange={event => onUpdateDescription(event.target.value)}
+          onChange={event => {
+            setDirty({ ...dirty, description: true });
+            onUpdateDescription(event.target.value);
+          }}
           margin="none"
           variant="outlined"
           fullWidth

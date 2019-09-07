@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import * as PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 import PaymentInput from 'components/molecules/PaymentInput';
@@ -11,9 +11,7 @@ import LoadableMainButton from 'components/hoc/LoadableMainButton';
 
 const useStyles = makeStyles(theme => ({
   field: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: '100%',
+    margin: theme.spacing(1),
   },
   row: {
     display: 'flex',
@@ -35,11 +33,14 @@ const DefaultContent = ({
   onSend,
 }) => {
   const classes = useStyles();
+  const [dirty, setDirty] = useState({
+    message: false,
+  });
 
   return (
     <Fragment>
       <CancelableDialogTitle onClose={onClose}>
-        {"Sure, so what's up?"}
+        {'Create Offer'}
       </CancelableDialogTitle>
       <DialogContent dividers>
         <PaymentInput
@@ -48,18 +49,24 @@ const DefaultContent = ({
           onUpdatePrice={onUpdatePrice}
           onUpdatePaymentMethod={onUpdatePaymentMethod}
         />
-        <TextField
-          placeholder={exampleMessage}
-          label="Message"
-          className={classes.field}
-          value={message}
-          onChange={event => onUpdateMessage(event.target.value)}
-          margin="none"
-          variant="outlined"
-          fullWidth
-          multiline
-          rows="5"
-        />
+        <div className={classes.row}>
+          <TextField
+            error={!message && dirty.message}
+            placeholder={exampleMessage}
+            label="Message"
+            className={classes.field}
+            value={message}
+            onChange={event => {
+              setDirty({ ...message, message: true });
+              onUpdateMessage(event.target.value);
+            }}
+            margin="none"
+            variant="outlined"
+            fullWidth
+            multiline
+            rows="5"
+          />
+        </div>
       </DialogContent>
       <DialogActions>
         <CancelButton disabled={sending} onClick={onClose}>

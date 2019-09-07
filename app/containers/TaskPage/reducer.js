@@ -35,6 +35,11 @@ import {
   UPDATE_EDIT_MODAL_FORM_REMOVE_TAG,
   UPDATE_EDIT_MODAL_FORM_PUSH_TAG,
   UPDATE_EDIT_MODAL_IMAGES_LOADED,
+  UPDATE_FINISH_MODAL_IS_OPEN,
+  UPDATE_FINISH_MODAL_FORM_GENERAL,
+  FINISH_TASK,
+  FINISH_TASK_SUCCESS,
+  FINISH_TASK_ERROR,
 } from 'containers/TaskPage/constants';
 import { categories, countries } from 'containers/CreateTaskModal/constants';
 
@@ -65,6 +70,12 @@ export const createFormFromPayload = payload => ({
     c => c.text.toLowerCase() === payload.location.country,
   ),
   address: payload.location.address,
+});
+
+export const createFinishPayloadFromForm = form => ({
+  ...form,
+  rating: form.rating || 0,
+  description: form.otherReason || form.description,
 });
 
 export const initialState = {
@@ -99,6 +110,16 @@ export const initialState = {
         city: null,
         geo: null,
       },
+    },
+  },
+  finishModal: {
+    isOpen: false,
+    isLoading: false,
+    form: {
+      rating: null,
+      description: '',
+      like: null,
+      otherReason: null,
     },
   },
   offers: {
@@ -248,9 +269,6 @@ const taskPageReducer = (state = initialState, action) =>
       case UPDATE_EDIT_MODAL_FORM_GENERAL:
         draft.editModal.isDirty = true;
         draft.editModal.form[action.key] = action.value;
-        if (action.key === 'category') {
-          draft.editModal.form.type = null;
-        }
         break;
 
       case UPDATE_EDIT_MODAL_FORM_LOCATION:
@@ -308,7 +326,41 @@ const taskPageReducer = (state = initialState, action) =>
         break;
 
       case EDIT_TASK_ERROR:
-        draft.editModal.isLoading = false;
+        draft.finishModal.isLoading = false;
+        break;
+
+      case UPDATE_FINISH_MODAL_IS_OPEN:
+        draft.finishModal.isOpen = action.isOpen;
+        if (!action.isOpen) {
+          draft.finishModal.form = initialState.finishModal.form;
+        }
+        break;
+
+      case UPDATE_FINISH_MODAL_FORM_GENERAL:
+        if (action.key === 'like') {
+          draft.finishModal.form = { ...initialState.finishModal.form };
+        } else if (
+          action.key === 'description' &&
+          action.value === 'other' &&
+          draft.finishModal.form.like === false
+        ) {
+          draft.finishModal.form.otherReason = '';
+        }
+        draft.finishModal.form[action.key] = action.value;
+        break;
+
+      case FINISH_TASK:
+        draft.finishModal.isLoading = true;
+        break;
+
+      case FINISH_TASK_SUCCESS:
+        draft.finishModal.isOpen = false;
+        draft.finishModal.isLoading = false;
+        draft.finishModal.form = initialState.finishModal.form;
+        break;
+
+      case FINISH_TASK_ERROR:
+        draft.finishModal.isLoading = false;
         break;
     }
   });

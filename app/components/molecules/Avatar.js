@@ -9,12 +9,44 @@ const AvatarContainer = styled(MDBAvatar)`
   position: relative;
   overflow: visible !important;
   border: none !important;
+  text-align: center;
 `;
 
-function Avatar({ imgSrc, isApproved, imgStyle }) {
+const Badge = styled.div`
+  background-color: ${props => props.color};
+  color: white;
+  padding: 2px 4px;
+  border-radius: 3px;
+  position: absolute;
+  font-weight: 700;
+  top: 80%;
+  left: 0;
+  right: 0;
+  margin: auto 20%;
+  text-align: center;
+  font-size: ${props => props.fontSize}px;
+`;
+
+function Avatar({ imgSrc, isApproved, isOwner, isWorker, imgStyle }) {
   return (
     <AvatarContainer className="mx-auto">
       {isApproved ? <ApprovedIcon icon="check-circle" /> : null}
+      {isWorker ? (
+        <Badge
+          fontSize={Math.round(imgStyle.width.slice(0, -2) / 8)}
+          color="#2f5a9a"
+        >
+          Worker
+        </Badge>
+      ) : null}
+      {isOwner ? (
+        <Badge
+          fontSize={Math.round(imgStyle.width.slice(0, -2) / 8)}
+          color="#DC4646"
+        >
+          Owner
+        </Badge>
+      ) : null}
       <AvatarImage style={imgStyle} src={imgSrc} alt="" />
     </AvatarContainer>
   );
@@ -24,6 +56,8 @@ Avatar.propTypes = {
   imgStyle: PropTypes.object,
   imgSrc: PropTypes.string,
   isApproved: PropTypes.bool,
+  isWorker: PropTypes.bool,
+  isOwner: PropTypes.bool,
 };
 
 export default Avatar;
