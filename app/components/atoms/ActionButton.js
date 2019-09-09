@@ -12,9 +12,6 @@ const ActionButton = styled(withTheme(Button))(props => ({
 ActionButton.defaultProps = {
   variant: 'contained',
   color: 'secondary',
-  first: false,
-  middle: false,
-  last: false,
   fullWidth: true,
 };
 

@@ -103,7 +103,7 @@ function SideBar({ isOpen, user, handleToggle, onCreateTaskButtonClick }) {
           </SideBarButton>
         </SideBarButtonContainer>
         <SideBarButtonContainerBottom>
-          <SideBarButton color="white" onClick={auth.logout}>
+          <SideBarButton textcolor="white" onClick={auth.logout}>
             Log out
           </SideBarButton>
         </SideBarButtonContainerBottom>

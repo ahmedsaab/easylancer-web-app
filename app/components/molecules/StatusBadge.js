@@ -60,6 +60,8 @@ StatusBadge.propTypes = {
     'done',
     'not-done',
     'cancelled',
+    'investigate',
+    'pending-review',
   ]),
 };
 
