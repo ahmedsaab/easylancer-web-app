@@ -37,6 +37,13 @@ const useStyles = makeStyles(theme => ({
   iconSmall: {
     fontSize: 20,
   },
+  container: {
+    padding: theme.spacing(1),
+    [theme.breakpoints.up('md')]: {
+      marginBottom: theme.spacing(2),
+      padding: 0,
+    },
+  },
 }));
 
 /**
@@ -131,7 +138,11 @@ function OfferActionButtons({
   }
 
   return (
-    <StickyBottom whenToStick={768} relativeStyleRef={containerRef}>
+    <StickyBottom
+      className={classes.container}
+      whenToStick="sm"
+      relativeStyleRef={containerRef}
+    >
       {sticky}
     </StickyBottom>
   );

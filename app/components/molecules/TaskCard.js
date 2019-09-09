@@ -16,7 +16,7 @@ import Location from 'components/molecules/Location';
 const CardResp = styled(MDBCard)`
   margin: 4px !important;
   cursor: pointer;
-  @media screen and (max-width: 552px) {
+  @media screen and (max-width: 599px) {
     .carousel {
       display: none;
     }

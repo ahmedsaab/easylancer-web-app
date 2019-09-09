@@ -7,7 +7,7 @@ import moment from 'moment';
 
 const useStyles = makeStyles({
   attention: {
-    margin: '-0.5rem -15px 10px -15px',
+    margin: '-15px -20px 10px -20px',
   },
 });
 
@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 export default function AttentionHeader({ task }) {
   const classes = useStyles();
 
-  if (task.status !== 'pending') {
+  if (task.status !== 'pending-review') {
     return null;
   }
 

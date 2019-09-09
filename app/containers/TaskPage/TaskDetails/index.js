@@ -21,10 +21,6 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 
-const PaddedRow = styled.div`
-  padding: 0 10px;
-`;
-
 const useStyles = makeStyles(theme => ({
   divider: {
     margin: 'auto',
@@ -34,12 +30,12 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1),
   },
   hideInDesktop: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       display: 'none',
     },
   },
   section: {
-    margin: '0px 8px',
+    margin: '0',
   },
 }));
 
@@ -47,96 +43,94 @@ function TaskDetails({ task, google }) {
   const classes = useStyles();
 
   return (
-    <PaddedRow>
-      <Grid container spacing={5}>
-        <Grid item xs={12}>
-          <TaskAssignee />
-        </Grid>
-        <Grid item xs={12}>
-          <SectionHeader>
-            <DescriptionIcon className={classes.icon} />
-            Description
-          </SectionHeader>
-          <div className={classes.section}>{task.description}</div>
-        </Grid>
-        <Grid item xs={12}>
-          <Divider orientation="horizontal" />
-        </Grid>
-        <Grid item xs={12}>
-          <SectionHeader>
-            <ScheduleIcon className={classes.icon} />
-            Date & Time
-          </SectionHeader>
-          <div className={classes.section}>
-            {moment
-              .utc(task.startDateTime)
-              .local()
-              .format('MMM D, YYYY [at] h:mm A z')}
-          </div>
-        </Grid>
-        <Grid item xs={12}>
-          <Divider orientation="horizontal" />
-        </Grid>
-        {task.imagesUrls.length ? (
-          <Fragment>
-            <Grid item xs={12}>
-              <Fragment>
-                <SectionHeader>
-                  <PhotoLibraryIcon className={classes.icon} />
-                  Photos
-                </SectionHeader>
-                <LightBoxImagesGrid
-                  className={classes.section}
-                  images={task.imagesUrls}
-                />
-              </Fragment>
-            </Grid>
-            <Grid item xs={12}>
-              <Divider orientation="horizontal" />
-            </Grid>
-          </Fragment>
-        ) : null}
-        <Grid item xs={12}>
-          <SectionHeader>
-            <LocationOnIcon className={classes.icon} />
-            Location
-          </SectionHeader>
-          <div className={classes.section}>
-            <Map
-              google={google}
-              zoom={14}
-              containerStyle={{
-                position: 'static',
-              }}
-              style={{
-                position: 'relative',
-                width: '100%',
-                height: '400px',
-              }}
-              initialCenter={{
+    <Grid container spacing={5}>
+      <Grid item xs={12}>
+        <TaskAssignee />
+      </Grid>
+      <Grid item xs={12}>
+        <SectionHeader>
+          <DescriptionIcon className={classes.icon} />
+          Description
+        </SectionHeader>
+        <div className={classes.section}>{task.description}</div>
+      </Grid>
+      <Grid item xs={12}>
+        <Divider orientation="horizontal" />
+      </Grid>
+      <Grid item xs={12}>
+        <SectionHeader>
+          <ScheduleIcon className={classes.icon} />
+          Date & Time
+        </SectionHeader>
+        <div className={classes.section}>
+          {moment
+            .utc(task.startDateTime)
+            .local()
+            .format('MMM D, YYYY [at] h:mm A z')}
+        </div>
+      </Grid>
+      <Grid item xs={12}>
+        <Divider orientation="horizontal" />
+      </Grid>
+      {task.imagesUrls.length ? (
+        <Fragment>
+          <Grid item xs={12}>
+            <Fragment>
+              <SectionHeader>
+                <PhotoLibraryIcon className={classes.icon} />
+                Photos
+              </SectionHeader>
+              <LightBoxImagesGrid
+                className={classes.section}
+                images={task.imagesUrls}
+              />
+            </Fragment>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider orientation="horizontal" />
+          </Grid>
+        </Fragment>
+      ) : null}
+      <Grid item xs={12}>
+        <SectionHeader>
+          <LocationOnIcon className={classes.icon} />
+          Location
+        </SectionHeader>
+        <div className={classes.section}>
+          <Map
+            google={google}
+            zoom={14}
+            containerStyle={{
+              position: 'static',
+            }}
+            style={{
+              position: 'relative',
+              width: '100%',
+              height: '400px',
+            }}
+            initialCenter={{
+              lat: task.location.geo.lat,
+              lng: task.location.geo.lng,
+            }}
+          >
+            <Circle
+              center={{
                 lat: task.location.geo.lat,
                 lng: task.location.geo.lng,
               }}
-            >
-              <Circle
-                center={{
-                  lat: task.location.geo.lat,
-                  lng: task.location.geo.lng,
-                }}
-                radius={400}
-                strokeColor="#000"
-                strokeOpacity={0.1}
-                strokeWeight={10}
-                fillColor="#4CBBAD"
-                fillOpacity={0.3}
-                draggable={false}
-                visible
-              />
-            </Map>
-          </div>
-        </Grid>
+              radius={400}
+              strokeColor="#000"
+              strokeOpacity={0.1}
+              strokeWeight={10}
+              fillColor="#4CBBAD"
+              fillOpacity={0.3}
+              draggable={false}
+              visible
+            />
+          </Map>
+        </div>
       </Grid>
-    </PaddedRow>
+    </Grid>
   );
 }
 

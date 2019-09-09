@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
-import styled from 'styled-components';
 
 import FluidModal from 'components/molecules/FluidModal';
 import LoadingIndicator from 'components/molecules/LoadingIndicator';
@@ -16,14 +15,18 @@ import {
 } from 'containers/TaskPage/selectors';
 import OfferDetails from 'components/molecules/OfferDetails';
 import OfferActionButtons from 'containers/TaskPage/OfferActionButtons';
+import { makeStyles } from '@material-ui/core';
 
-const OfferFluidModal = styled(FluidModal)`
-  padding: 20px;
-  margin-top: 16px;
-`;
+const useStyles = makeStyles(theme => ({
+  container: {
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
+}));
 
 function OfferModal({ offer, task, isOpen, onClose }) {
   const ref = useRef(null);
+  const classes = useStyles();
   let content = null;
 
   if (!offer) {
@@ -39,12 +42,12 @@ function OfferModal({ offer, task, isOpen, onClose }) {
   }
 
   return (
-    <OfferFluidModal isOpen={isOpen} reference={ref}>
+    <FluidModal className={classes.container} isOpen={isOpen} reference={ref}>
       <ModalHeader>
         <ModalCloseIcon onClick={onClose} />
       </ModalHeader>
       {content}
-    </OfferFluidModal>
+    </FluidModal>
   );
 }
 

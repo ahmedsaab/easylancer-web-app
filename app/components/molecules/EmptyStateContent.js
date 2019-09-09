@@ -9,7 +9,7 @@ const ContentContainer = styled(CenteredDiv)`
   padding-right: 15%;
   padding-top: 20%;
   padding-bottom: 20%;
-  @media (max-width: 575px) {
+  @media (max-width: 599px) {
     padding-left: 10%;
     padding-right: 10%;
   }

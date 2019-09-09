@@ -36,7 +36,7 @@ function StatusBadge({ status }) {
     case 'cancelled':
       color = 'grey';
       break;
-    case 'pending':
+    case 'pending-review':
       color = 'warning';
       break;
     case 'investigate':

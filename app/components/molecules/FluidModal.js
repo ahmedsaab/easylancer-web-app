@@ -28,7 +28,7 @@ const ModalContainer = styled.div`
   animation-duration: 0.5s;
   animation-fill-mode: both;
   animation-timing-function: ease-out;
-  @media (max-width: 768px) {
+  @media (max-width: 959px) {
     margin: 0 !important;
     position: fixed !important;
     height: 100vh !important;

@@ -49,7 +49,16 @@ function OfferListItem({ offer, isSelected, isAssigned, onClick, disabled }) {
               {offer.workerUser.firstName} {offer.workerUser.lastName}
             </div>
             <div style={{ paddingTop: '5px' }}>
-              <WorkerRating score={7} />
+              {offer.workerUser.ratings.value ? (
+                <WorkerRating
+                  score={
+                    Math.ceil(
+                      offer.workerUser.ratings.value /
+                        offer.workerUser.ratings.count,
+                    ) * 2
+                  }
+                />
+              ) : null}
               <LikesMetric
                 style={{ float: 'left' }}
                 likes={offer.workerUser.likes}

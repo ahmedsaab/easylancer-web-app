@@ -50,7 +50,7 @@ function OfferDetails({ offer, task, children }) {
         isApproved={offer.workerUser.approved}
         firstName={offer.workerUser.firstName}
         lastName={offer.workerUser.lastName}
-        rating={9}
+        rating={offer.workerUser.ratings}
         online={false}
         lastSeen={new Date()}
       >

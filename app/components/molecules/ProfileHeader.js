@@ -68,7 +68,9 @@ function ProfileHeader({
       </TopContainer>
       <CenterDiv>
         <ProfileName user={{ firstName, lastName }} />
-        <StarRating score={rating} />
+        {rating.value ? (
+          <StarRating score={Math.ceil(rating.value / rating.count) * 2} />
+        ) : null}
       </CenterDiv>
       {children}
     </Container>
@@ -83,7 +85,7 @@ ProfileHeader.propTypes = {
   isApproved: PropTypes.bool,
   firstName: PropTypes.string,
   lastName: PropTypes.string,
-  rating: PropTypes.number,
+  rating: PropTypes.object,
   children: PropTypes.any,
 };
 

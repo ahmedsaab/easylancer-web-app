@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { MDBRow } from 'mdbreact';
-import ActionButton from 'components/atoms/ActionButton';
+import Button from '@material-ui/core/Button';
 
 export const SideBarContainer = styled('nav')`
   background: #313e59;
@@ -18,7 +18,7 @@ export const SideBarContainer = styled('nav')`
   &.active {
     margin-left: 0;
   }
-  @media (max-width: 1200px) {
+  @media (max-width: 1279px) {
     margin-left: -250px;
   }
 `;
@@ -65,7 +65,7 @@ export const SideBarHeader = styled('div').attrs(() => ({
   text-align: center;
 `;
 
-export const SideBarButton = styled(ActionButton)`
+export const SideBarButton = styled(Button)`
   margin: 10px 10px 0 0 !important;
 `;
 

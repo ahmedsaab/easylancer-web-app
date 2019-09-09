@@ -76,11 +76,13 @@ export default function Review({ user, isOwner, review }) {
       </div>
       <div className={classes.ratingAndText}>
         <div>
-          <RatingStars
-            fontSize="20px"
-            value={review.rating}
-            className={classes.rating}
-          />
+          {review.rating > 0 ? (
+            <RatingStars
+              fontSize="20px"
+              value={review.rating}
+              className={classes.rating}
+            />
+          ) : null}
           <div className={classes.like}>
             {review.like ? (
               <ThumbUpIcon className={classes.likeOk} />

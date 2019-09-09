@@ -43,6 +43,13 @@ const useStyles = makeStyles(theme => ({
   iconSmall: {
     fontSize: 20,
   },
+  container: {
+    padding: theme.spacing(1),
+    [theme.breakpoints.up('md')]: {
+      marginBottom: theme.spacing(2),
+      padding: 0,
+    },
+  },
 }));
 
 /**
@@ -83,13 +90,9 @@ function TaskActionButtons({
   const canReschedule =
     task.status === 'assigned' && (userIsOwner || userIsAssigned);
   const canFinish =
-    (task.status === 'in-progress' || task.status === 'pending') &&
+    (task.status === 'in-progress' || task.status === 'pending-review') &&
     ((userIsOwner && !task.creatorRating) ||
       (userIsAssigned && !task.workerRating));
-  const canCopy =
-    task.status === 'done' ||
-    task.status === 'not-done' ||
-    task.status === 'cancelled';
   const canEdit = task.status === 'open' && userIsOwner;
   const canCancel =
     (userIsOwner && (task.status === 'open' || task.status === 'assigned')) ||
@@ -256,14 +259,6 @@ function TaskActionButtons({
         </ActionButton>
       </Fragment>
     );
-  } else if (canCopy) {
-    sticky = (
-      <Fragment>
-        <ActionButton color="default" variant="outlined">
-          Create similar task
-        </ActionButton>
-      </Fragment>
-    );
   } else if (canMessage) {
     sticky = (
       <Fragment>
@@ -282,6 +277,14 @@ function TaskActionButtons({
         </ActionButton>
       </Fragment>
     );
+  } else {
+    sticky = (
+      <Fragment>
+        <ActionButton color="default" variant="outlined">
+          Create similar task
+        </ActionButton>
+      </Fragment>
+    );
   }
 
   if (!sticky) {
@@ -289,7 +292,11 @@ function TaskActionButtons({
   }
 
   return (
-    <StickyBottom whenToStick={768} relativeStyleRef={containerRef}>
+    <StickyBottom
+      className={classes.container}
+      whenToStick="sm"
+      relativeStyleRef={containerRef}
+    >
       {sticky}
     </StickyBottom>
   );

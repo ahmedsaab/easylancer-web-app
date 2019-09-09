@@ -6,7 +6,7 @@ export const NavMenuButton = styled('div').attrs(props => ({
 }))`
   color: #f5f5f5;
   cursor: pointer;
-  @media (min-width: 1200px) {
+  @media (min-width: 1280px) {
     display: none;
   }
 `;
@@ -29,7 +29,7 @@ export const NavBar = styled(MDBNavbar).attrs(() => ({
   right: 0;
   left: 0;
   width: 100%;
-  @media (min-width: 1200px) {
+  @media (min-width: 1280px) {
     padding-left: 266px;
   }
 `;

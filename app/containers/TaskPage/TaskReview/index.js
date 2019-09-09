@@ -12,8 +12,8 @@ import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles(theme => ({
   review: {
-    padding: '20px',
-    margin: '0 0 20px 0',
+    padding: theme.spacing(2),
+    margin: theme.spacing(0, 0, 2, 0),
     backgroundColor: '#fff',
     backgroundClip: 'padding-box',
     border: '1px solid rgba(0,0,0,0.2)',

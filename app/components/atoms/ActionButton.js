@@ -1,5 +1,6 @@
 import { styled, withTheme } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
+import * as PropTypes from 'prop-types';
 
 const ActionButton = styled(withTheme(Button))(props => ({
   marginRight: props.first || props.middle ? props.theme.spacing(0.5) : 0,
@@ -11,7 +12,16 @@ const ActionButton = styled(withTheme(Button))(props => ({
 ActionButton.defaultProps = {
   variant: 'contained',
   color: 'secondary',
+  first: false,
+  middle: false,
+  last: false,
   fullWidth: true,
+};
+
+ActionButton.propTypes = {
+  first: PropTypes.bool,
+  middle: PropTypes.bool,
+  last: PropTypes.bool,
 };
 
 export default ActionButton;

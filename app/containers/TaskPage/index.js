@@ -26,7 +26,6 @@ import TaskActionButtons from 'containers/TaskPage/TaskActionButtons';
 import CreateOfferModal from 'containers/TaskPage/CreateOfferModal';
 import TaskAssignedModal from 'containers/TaskPage/TaskAssignedModal';
 import WithdrawOfferModal from 'containers/TaskPage/WithdrawOfferModal';
-import styled from 'styled-components';
 import CancelTaskModal from 'containers/TaskPage/CancelTaskModal';
 import EditTaskModal from 'containers/TaskPage/EditTaskModal';
 import FinishTaskModal from 'containers/TaskPage/FinishTaskModal';
@@ -34,24 +33,30 @@ import TaskReview from 'containers/TaskPage/TaskReview';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core';
 import TaskOwner from 'containers/TaskPage/TaskOwner';
+import Grid from '@material-ui/core/Grid';
 
-export const ContainerRow = styled(MDBRow)`
-  padding-top: 0.5rem;
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-`;
-
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   data: {
-    padding: '15px 20px',
+    padding: '20px',
     margin: '0',
+    marginBottom: theme.spacing(2),
     backgroundColor: '#fff',
     backgroundClip: 'padding-box',
     border: '1px solid rgba(0,0,0,0.2)',
     outline: 0,
   },
-});
+  container: {
+    padding: theme.spacing(1, 1, 0, 1),
+    maxWidth: '1000px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  widgets: {
+    [theme.breakpoints.up('md')]: {
+      margin: theme.spacing(0, 2),
+    },
+  },
+}));
 
 export function TaskPage({
   match,
@@ -93,39 +98,39 @@ export function TaskPage({
           content="This is a page that shows the details of a Task"
         />
       </Helmet>
-      <ContainerRow>
+      <Grid className={classes.container} container spacing={0}>
         <CreateOfferModal />
         <TaskAssignedModal />
         <WithdrawOfferModal />
         <CancelTaskModal />
         <EditTaskModal />
         <FinishTaskModal />
-        <MDBCol sm="12" md="8">
+        <Grid item xs={12} md={8}>
           <Paper elevation={0} className={classes.data}>
-            <MDBRow>
-              <MDBCol size="12">
-                <TaskHeader />
-              </MDBCol>
-            </MDBRow>
+            <TaskHeader />
             <TaskSwitch />
           </Paper>
-        </MDBCol>
-        <MDBCol sm="12" md="4">
-          <TaskActionButtons containerRef={ref} />
-          <MDBRow className="no-gutters">
-            <MDBCol sm="12">
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Grid className={classes.widgets} container spacing={0}>
+            <Grid item xs={12}>
+              <TaskActionButtons containerRef={ref} />
+            </Grid>
+            <Grid item xs={12}>
               <OfferModal
                 onClose={() => history.push(`/task/${task.id}/offers/`)}
                 isOpen={offerUrlRegex.test(location.pathname)}
               />
+            </Grid>
+            <Grid item xs={12}>
               <TaskOwner user={task.creatorUser} />
-            </MDBCol>
-            <MDBCol sm="12">
+            </Grid>
+            <Grid className={classes.widget} item xs={12}>
               <TaskReview />
-            </MDBCol>
-          </MDBRow>
-        </MDBCol>
-      </ContainerRow>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     </div>
   );
 }

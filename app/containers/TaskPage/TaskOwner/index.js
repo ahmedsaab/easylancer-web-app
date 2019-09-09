@@ -9,16 +9,14 @@ import FullName from 'components/molecules/FullName';
 
 const useStyles = makeStyles(theme => ({
   container: {
-    padding: '20px',
-    margin: '20px 0',
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    margin: '0',
     display: 'flex',
     alignItems: 'left',
     backgroundClip: 'padding-box',
     border: '1px solid rgba(0,0,0,0.2)',
     outline: 0,
-  },
-  divider: {
-    margin: theme.spacing(4, 0),
   },
   name: {
     fontSize: '20px',

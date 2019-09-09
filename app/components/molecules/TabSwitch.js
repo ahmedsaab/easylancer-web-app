@@ -23,10 +23,6 @@ const TabNavLink = styled(MDBNavLink)`
   }
 `;
 
-const TabContent = styled('div')`
-  margin-bottom: 20px;
-`;
-
 function TabSwitch({ tabs, disabled }) {
   const tabLinks = tabs.map(tab => (
     <MDBNavItem disabled key={tab.path}>
@@ -50,9 +46,7 @@ function TabSwitch({ tabs, disabled }) {
         <TabNav className="nav-tabs nav-justified">{tabLinks}</TabNav>
       </MDBCol>
       <MDBCol size="12">
-        <TabContent>
-          <Switch>{tabSwitch}</Switch>
-        </TabContent>
+        <Switch>{tabSwitch}</Switch>
       </MDBCol>
     </MDBRow>
   );
