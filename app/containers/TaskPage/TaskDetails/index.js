@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
-import styled from 'styled-components';
 import moment from 'moment';
 
 import LightBoxImagesGrid from 'components/organisms/LightBoxImagesGrid';

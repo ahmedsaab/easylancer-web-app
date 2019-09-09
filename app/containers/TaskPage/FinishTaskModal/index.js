@@ -20,21 +20,29 @@ import {
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
-import Button from '@material-ui/core/Button';
 import { DialogTitle, makeStyles, useTheme } from '@material-ui/core';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import YesNoSelector from 'containers/TaskPage/FinishTaskModal/YesNoSelector';
 import PositiveFeedbackSection from 'containers/TaskPage/FinishTaskModal/PositiveFeedbackSection';
 import NegativeFeedbackSection from 'containers/TaskPage/FinishTaskModal/NegativeFeedbackSection';
+import DialogButton from 'components/atoms/DialogButton';
+import MainDialogButton from 'components/hoc/LoadableMainDialogButton';
 import Image from '../../../images/grafiti.jpg';
 
 const useStyles = makeStyles(theme => ({
+  dialogActionsLeft: {
+    flex: '1',
+    display: 'flex',
+    marginLeft: theme.spacing(1),
+  },
+  dialogActionsRight: {
+    flex: '1',
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
   header: {
     background: `url(${Image})`,
-  },
-  yesButton: {
-    width: '120px',
   },
   question: {
     fontSize: '1.4rem',
@@ -164,19 +172,21 @@ function FinishTaskModal({
         {feedbackContent}
       </DialogContent>
       <DialogActions>
-        <Button disabled={isLoading} onClick={onCloseModal}>
-          Cancel
-        </Button>
-        <Button
-          onClick={onSend}
-          color="primary"
-          variant="contained"
-          disabled={isLoading || isInvalid}
-          className={classes.yesButton}
-          autoFocus
-        >
-          Finish
-        </Button>
+        <div className={classes.dialogActionsLeft}>
+          <DialogButton disabled={isLoading} onClick={onCloseModal}>
+            Cancel
+          </DialogButton>
+        </div>
+        <div className={classes.dialogActionsRight}>
+          <MainDialogButton
+            onClick={onSend}
+            variant="contained"
+            disabled={isLoading || isInvalid}
+            autoFocus
+          >
+            Finish
+          </MainDialogButton>
+        </div>
       </DialogActions>
     </Dialog>
   );

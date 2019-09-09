@@ -15,14 +15,15 @@ import { updateAssignedModalIsOpen } from 'containers/TaskPage/actions';
 import FullName from 'components/molecules/FullName';
 import Avatar from 'components/molecules/Avatar';
 import Bold from 'components/atoms/Bold';
-import CancelableDialogTitle from 'components/molecules/CancelableDialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
-import MainButton from 'components/atoms/MainButton';
+import MainDialogButton from 'components/atoms/MainDialogButton';
 import { InformativeDiv } from 'containers/TaskPage/CreateOfferModal/SuccessContent';
 import Dialog from '@material-ui/core/Dialog';
 import { useTheme } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Typography from '@material-ui/core/Typography';
 
 const imgStyle = {
   width: '120px',
@@ -64,9 +65,11 @@ function TaskAssignedModal({ isOpen, task, offer, onDismiss }) {
       scroll="paper"
       aria-labelledby="responsive-dialog-title"
     >
-      <CancelableDialogTitle onClose={onDismiss}>
-        Task Assigned to <Bold>{offer.workerUser.firstName}</Bold>
-      </CancelableDialogTitle>
+      <DialogTitle onClose={onDismiss}>
+        <Typography variant="h4">
+          Task Assigned to <Bold>{offer.workerUser.firstName}</Bold>
+        </Typography>
+      </DialogTitle>
       <DialogContent dividers>
         <InformativeDiv>
           <Avatar
@@ -87,7 +90,7 @@ function TaskAssignedModal({ isOpen, task, offer, onDismiss }) {
         </InformativeDiv>
       </DialogContent>
       <DialogActions>
-        <MainButton onClick={onDismiss}>Got it!</MainButton>
+        <MainDialogButton onClick={onDismiss}>Got it!</MainDialogButton>
       </DialogActions>
     </Dialog>
   );

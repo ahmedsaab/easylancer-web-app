@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(0, 0, 0, 2),
   },
   message: {
-    paddingTop: theme.spacing(2),
+    paddingTop: theme.spacing(1),
     fontSize: '14px',
     fontStyle: 'italic',
   },
@@ -40,6 +40,9 @@ const useStyles = makeStyles(theme => ({
   review: {
     display: 'flex',
   },
+  hiddenOverflow: {
+    overflow: 'hidden',
+  },
   quotes: {
     '&::before': {
       fontSize: '25px',
@@ -53,7 +56,7 @@ const useStyles = makeStyles(theme => ({
   name: {
     paddingTop: theme.spacing(2),
     fontWeight: 700,
-    fontSize: '12px',
+    fontSize: '14px',
   },
 }));
 
@@ -75,7 +78,7 @@ export default function Review({ user, isOwner, review }) {
         />
       </div>
       <div className={classes.ratingAndText}>
-        <div>
+        <div className={classes.hiddenOverflow}>
           {review.rating > 0 ? (
             <RatingStars
               fontSize="20px"

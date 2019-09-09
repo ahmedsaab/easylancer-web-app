@@ -7,7 +7,7 @@ import moment from 'moment';
 
 const useStyles = makeStyles({
   attention: {
-    margin: '-15px -20px 10px -20px',
+    margin: '-20px -20px 16px -20px',
   },
 });
 
@@ -42,8 +42,7 @@ export default function AttentionHeader({ task }) {
   return (
     <Attention className={classes.attention}>
       This task will automatically updated to <Bold>{forecastStatus}</Bold> if
-      no review received from the <Bold>{pendingUser}</Bold> in{' '}
-      <Bold>{forecastDate}</Bold>.
+      no review received from the <Bold>{pendingUser}</Bold>.
     </Attention>
   );
 }

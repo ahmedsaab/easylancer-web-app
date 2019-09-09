@@ -1,16 +1,15 @@
 import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
-import CancelButton from 'components/atoms/CancelButton';
 import DialogButton from 'components/atoms/DialogButton';
-import MainButton from 'components/atoms/MainButton';
-import LoadableMainButton from 'components/hoc/LoadableMainButton';
+import MainDialogButton from 'components/atoms/MainDialogButton';
+import LoadableMainDialogButton from 'components/hoc/LoadableMainDialogButton';
 
 const useStyles = makeStyles(theme => ({
   dialogActionsLeft: {
     flex: '1',
     display: 'flex',
-    marginLeft: theme.spacing(3),
+    marginLeft: theme.spacing(1),
   },
   dialogActionsRight: {
     flex: '1',
@@ -34,9 +33,9 @@ export function ActionButtons({
   return (
     <Fragment>
       <div className={classes.dialogActionsLeft}>
-        <CancelButton disabled={disabled} onClick={onCancel}>
+        <DialogButton disabled={disabled} onClick={onCancel}>
           Cancel
-        </CancelButton>
+        </DialogButton>
       </div>
       <div className={classes.dialogActionsRight}>
         {canGoBack ? (
@@ -45,21 +44,21 @@ export function ActionButtons({
           </DialogButton>
         ) : null}
         {canGoForward ? (
-          <MainButton
+          <MainDialogButton
             disabled={forwardDisabled}
             color="primary"
             onClick={onNext}
           >
             Next
-          </MainButton>
+          </MainDialogButton>
         ) : (
-          <LoadableMainButton
+          <LoadableMainDialogButton
             loading={disabled}
             disabled={disabled}
             onClick={onFinish}
           >
-            Finish
-          </LoadableMainButton>
+            Create
+          </LoadableMainDialogButton>
         )}
       </div>
     </Fragment>

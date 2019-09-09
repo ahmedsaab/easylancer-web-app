@@ -23,7 +23,6 @@ import {
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
-import Button from '@material-ui/core/Button';
 import { DialogTitle, makeStyles, useTheme } from '@material-ui/core';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
@@ -46,9 +45,21 @@ import Spinner from 'components/atoms/Spinner';
 import CenteredDiv from 'components/atoms/CenteredDiv';
 import Bold from 'components/atoms/Bold';
 import AttentionSection from 'containers/TaskPage/EditTaskModal/AttentionSection';
+import DialogButton from 'components/atoms/DialogButton';
+import MainDialogButton from 'components/hoc/LoadableMainDialogButton';
 import Image from '../../../images/grafiti.jpg';
 
 const useStyles = makeStyles(theme => ({
+  dialogActionsLeft: {
+    flex: '1',
+    display: 'flex',
+    marginLeft: theme.spacing(1),
+  },
+  dialogActionsRight: {
+    flex: '1',
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
   text: {
     paddingBottom: '20px',
     fontSize: '1.1rem',
@@ -56,9 +67,6 @@ const useStyles = makeStyles(theme => ({
   },
   header: {
     background: `url(${Image})`,
-  },
-  yesButton: {
-    width: '120px',
   },
   divider: {
     margin: 'auto',
@@ -246,19 +254,22 @@ function EditTaskModal({
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button disabled={isLoading} onClick={onCloseModal}>
-          Cancel
-        </Button>
-        <Button
-          onClick={onSave}
-          color="primary"
-          variant="contained"
-          disabled={!isDirty || isLoading || isInvalid}
-          className={classes.yesButton}
-          autoFocus
-        >
-          Save
-        </Button>
+        <div className={classes.dialogActionsLeft}>
+          <DialogButton disabled={isLoading} onClick={onCloseModal}>
+            Cancel
+          </DialogButton>
+        </div>
+        <div className={classes.dialogActionsRight}>
+          <MainDialogButton
+            onClick={onSave}
+            color="primary"
+            variant="contained"
+            disabled={!isDirty || isLoading || isInvalid}
+            autoFocus
+          >
+            Save
+          </MainDialogButton>
+        </div>
       </DialogActions>
     </Dialog>
   );

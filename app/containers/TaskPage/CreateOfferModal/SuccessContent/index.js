@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import styled from 'styled-components';
 import CenteredDiv from 'components/atoms/CenteredDiv';
-import MainButton from 'components/atoms/MainButton';
+import MainDialogButton from 'components/atoms/MainDialogButton';
 
 export const InformativeDiv = styled(CenteredDiv)`
   font-size: 1.4rem;
@@ -37,7 +37,7 @@ const SuccessContent = ({ taskOwnerName, onClose }) => (
       </InformativeDiv>
     </DialogContent>
     <DialogActions>
-      <MainButton onClick={onClose}>Cool!</MainButton>
+      <MainDialogButton onClick={onClose}>Got it</MainDialogButton>
     </DialogActions>
   </Fragment>
 );

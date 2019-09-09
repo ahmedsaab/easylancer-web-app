@@ -6,8 +6,8 @@ import TextField from '@material-ui/core/TextField';
 import CancelableDialogTitle from 'components/molecules/CancelableDialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
-import CancelButton from 'components/atoms/CancelButton';
-import LoadableMainButton from 'components/hoc/LoadableMainButton';
+import LoadableMainDialogButton from 'components/hoc/LoadableMainDialogButton';
+import DialogButton from 'components/atoms/DialogButton';
 
 const useStyles = makeStyles(theme => ({
   field: {
@@ -15,6 +15,16 @@ const useStyles = makeStyles(theme => ({
   },
   row: {
     display: 'flex',
+  },
+  dialogActionsLeft: {
+    flex: '1',
+    display: 'flex',
+    marginLeft: theme.spacing(1),
+  },
+  dialogActionsRight: {
+    flex: '1',
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
 }));
 
@@ -69,16 +79,20 @@ const DefaultContent = ({
         </div>
       </DialogContent>
       <DialogActions>
-        <CancelButton disabled={sending} onClick={onClose}>
-          Cancel
-        </CancelButton>
-        <LoadableMainButton
-          loading={sending}
-          disabled={sending || !price || !message || !paymentMethod}
-          onClick={onSend}
-        >
-          Send
-        </LoadableMainButton>
+        <div className={classes.dialogActionsLeft}>
+          <DialogButton disabled={sending} onClick={onClose}>
+            Cancel
+          </DialogButton>
+        </div>
+        <div className={classes.dialogActionsRight}>
+          <LoadableMainDialogButton
+            loading={sending}
+            disabled={sending || !price || !message || !paymentMethod}
+            onClick={onSend}
+          >
+            Send
+          </LoadableMainDialogButton>
+        </div>
       </DialogActions>
     </Fragment>
   );

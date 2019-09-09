@@ -49,7 +49,7 @@ function ActionButtons({
   children,
 }) {
   const whenToStickPixels = theme.breakpoints.values[whenToStick];
-  const stick = useMediaQuery(theme.breakpoints.between('xs', whenToStick));
+  const notStick = useMediaQuery(theme.breakpoints.up(whenToStick));
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -58,7 +58,7 @@ function ActionButtons({
     setMarginOnRelative(relativeStyleRef, whenToStickPixels, ref);
   });
 
-  const classes = useStyles({ stick });
+  const classes = useStyles({ stick: !notStick });
   const ref = useRef(null);
 
   return (

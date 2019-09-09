@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
   },
   attentionPaper: {
     padding: theme.spacing(2, 2, 3, 2),
-    margin: theme.spacing(0, 0, 4, 0),
+    margin: '-16px -24px 10px -24px',
     backgroundColor: 'rgba(255,229,100,0.3)',
     fontSize: '0.8rem',
     borderLeftColor: '#ffe564',
