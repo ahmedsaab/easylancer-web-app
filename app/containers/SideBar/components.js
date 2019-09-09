@@ -66,11 +66,13 @@ export const SideBarHeader = styled('div').attrs(() => ({
 `;
 
 export const SideBarButton = styled(Button)`
+  color: ${props => props.color} !important;
+  padding: 15px !important;
   margin: 10px 10px 0 0 !important;
 `;
 
 export const SideBarButtonContainer = styled.div`
-  padding: 10px;
+  padding: 10px 20px;
 `;
 
 export const SideBarButtonContainerBottom = styled(SideBarButtonContainer)`

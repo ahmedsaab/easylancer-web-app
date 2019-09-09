@@ -93,13 +93,17 @@ function SideBar({ isOpen, user, handleToggle, onCreateTaskButtonClick }) {
           </SideBarListElement>
         </SideBarList>
         <SideBarButtonContainer>
-          <SideBarButton color="primary" onClick={onCreateTaskButtonClick}>
+          <SideBarButton
+            variant="contained"
+            fullWidth
+            onClick={onCreateTaskButtonClick}
+          >
             <MDBIcon className="mr-3" icon="magic" />
             Create task
           </SideBarButton>
         </SideBarButtonContainer>
         <SideBarButtonContainerBottom>
-          <SideBarButton variant="outlined" fullWidth onClick={auth.logout}>
+          <SideBarButton color="white" onClick={auth.logout}>
             Log out
           </SideBarButton>
         </SideBarButtonContainerBottom>
