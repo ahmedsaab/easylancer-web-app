@@ -1,22 +1,8 @@
 import styled from 'styled-components';
 
-const getHoverBorderColor = props => {
-  if (props.selected) {
-    return '#2bbbad';
-  }
-  return '#fff';
-};
-
-const getBorderColor = props => {
-  if (props.selected) {
-    return '#2bbbad';
-  }
-  return '#fff';
-};
-
 const getBackgroundColor = props => {
-  if (props.assigned) {
-    return `#cce5ff5e`;
+  if (props.selected) {
+    return '#eaeaea';
   }
   return '#fff';
 };
@@ -27,19 +13,18 @@ export default styled.div.attrs(() => ({
 }))`
   :hover {
     color: black !important;
-    border-color: ${props => getHoverBorderColor(props)} !important;
-    background-color: ${props => getBackgroundColor(props)} !important;
     box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18),
       0 4px 15px 0 rgba(0, 0, 0, 0.15);
     outline: 0;
   }
   text-transform: none;
-  border: 2px solid;
-  border-color: ${props => (props.selected ? `#2bbbad` : 'white')} !important;
+  border-top: solid;
+  border-top-width: ${props => (props.assigned ? `5px` : '0px')} !important;
+  border-top-color: ${props =>
+    props.assigned ? `#2bbbad` : 'white'} !important;
+  border-color: white;
   background-color: ${props => getBackgroundColor(props)} !important;
-  border-color: ${props => getBorderColor(props)} !important;
   color: black !important;
-  border-radius: 0.6em;
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 0.7rem;
