@@ -8,7 +8,6 @@ import { compose } from 'redux';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import { loadTask, loadTaskOffers } from 'containers/TaskPage/actions';
-import { MDBCol, MDBRow } from 'mdbreact';
 import TaskHeader from 'containers/TaskPage/TaskHeader';
 import TaskSwitch from 'containers/TaskPage/TaskSwitch';
 import FitPage from 'components/atoms/FitPage';
