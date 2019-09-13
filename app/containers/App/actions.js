@@ -19,7 +19,9 @@ import {
   LOAD_USER,
   LOAD_USER_SUCCESS,
   LOAD_USER_ERROR,
+  UPDATE_USER_MODE,
   SET_BODY_SCROLL,
+  UPDATE_USER_MODE_ERROR,
 } from 'containers/App/constants';
 
 export function loadUser() {
@@ -38,6 +40,20 @@ export function loadUserSuccess(user) {
 export function loadUserError(error) {
   return {
     type: LOAD_USER_ERROR,
+    error,
+  };
+}
+
+export function updateUserMode(role) {
+  return {
+    type: UPDATE_USER_MODE,
+    role,
+  };
+}
+
+export function updateUserModeError(error) {
+  return {
+    type: UPDATE_USER_MODE_ERROR,
     error,
   };
 }

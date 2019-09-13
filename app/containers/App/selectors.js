@@ -29,6 +29,12 @@ const makeSelectError = () =>
     globalState => globalState.error,
   );
 
+const makeSelectGlobalSettings = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.settings,
+  );
+
 const makeSelectGlobalLocation = () =>
   createSelector(
     selectRouter,
@@ -43,4 +49,5 @@ export {
   makeSelectError,
   selectGlobalUser,
   makeSelectGlobalLocation,
+  makeSelectGlobalSettings,
 };

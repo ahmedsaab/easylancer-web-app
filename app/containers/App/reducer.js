@@ -13,6 +13,8 @@ import {
   LOAD_USER_SUCCESS,
   LOAD_USER_ERROR,
   SET_BODY_SCROLL,
+  UPDATE_USER_MODE,
+  UPDATE_USER_MODE_ERROR,
 } from 'containers/App/constants';
 import { disableBodyScroll, enableBodyScroll } from 'utils/stylesHelper';
 
@@ -21,6 +23,10 @@ export const initialState = {
   loading: false,
   error: null,
   user: null,
+  settings: {
+    mode: 'OWNER',
+    language: 'EN',
+  },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -37,12 +43,21 @@ const appReducer = (state = initialState, action) =>
         draft.loading = false;
         draft.error = null;
         draft.user = action.user;
+        draft.settings = action.user.settings;
         break;
 
       case LOAD_USER_ERROR:
         draft.loading = false;
         draft.error = action.error;
         draft.user = null;
+        break;
+
+      case UPDATE_USER_MODE:
+        draft.settings.role = action.role;
+        break;
+
+      case UPDATE_USER_MODE_ERROR:
+        draft.settings.role = draft.user.settings.role;
         break;
 
       case SET_BODY_SCROLL:

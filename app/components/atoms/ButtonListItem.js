@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const getBackgroundColor = props => {
   if (props.selected) {
-    return '#eaeaea';
+    return '#f4f4f4';
   }
   return '#fff';
 };

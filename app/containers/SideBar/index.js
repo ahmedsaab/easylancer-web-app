@@ -27,15 +27,60 @@ import {
   SideBarButton,
 } from 'containers/SideBar/components';
 import reducer from 'containers/SideBar/reducer';
-import { makeSelectGlobalUser } from 'containers/App/selectors';
-import { setBodyScroll } from 'containers/App/actions';
+import {
+  makeSelectGlobalSettings,
+  makeSelectGlobalUser,
+} from 'containers/App/selectors';
+import { setBodyScroll, updateUserMode } from 'containers/App/actions';
 import Footer from 'components/molecules/Footer';
 import auth from 'utils/auth';
 import Spinner from 'components/atoms/Spinner';
 import { updateTaskModalIsOpen } from 'containers/CreateTaskModal/actions';
+import Switch from '@material-ui/core/Switch';
+import { makeStyles } from '@material-ui/core';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { red, blue } from '@material-ui/core/colors';
 
-function SideBar({ isOpen, user, handleToggle, onCreateTaskButtonClick }) {
+const useStyles = makeStyles(theme => ({
+  footerControls: {
+    display: 'flex',
+  },
+  roleSwitch: {
+    margin: 'auto 0 auto auto',
+  },
+  toggleLabel: {
+    fontSize: '0.6rem',
+  },
+}));
+
+const ModeSwitch = withStyles({
+  switchBase: {
+    color: red[500],
+    '&$checked': {
+      color: blue[500],
+    },
+    '&$checked + $track': {
+      backgroundColor: blue[500],
+    },
+  },
+  checked: {},
+  track: {
+    backgroundColor: red[500],
+  },
+})(Switch);
+
+function SideBar({
+  isOpen,
+  user,
+  settings,
+  handleToggle,
+  onCreateTaskButtonClick,
+  onUpdateUserModeCheck,
+}) {
   useInjectReducer({ key: 'sideNavBar', reducer });
+  const classes = useStyles();
+  const { toggleLabel } = classes;
 
   return (
     <div>
@@ -95,6 +140,7 @@ function SideBar({ isOpen, user, handleToggle, onCreateTaskButtonClick }) {
         <SideBarButtonContainer>
           <SideBarButton
             variant="contained"
+            color="primary"
             fullWidth
             onClick={onCreateTaskButtonClick}
           >
@@ -103,21 +149,42 @@ function SideBar({ isOpen, user, handleToggle, onCreateTaskButtonClick }) {
           </SideBarButton>
         </SideBarButtonContainer>
         <SideBarButtonContainerBottom>
-          <SideBarButton textcolor="white" onClick={auth.logout}>
-            Log out
-          </SideBarButton>
+          <div className={classes.footerControls}>
+            <SideBarButton textcolor="white" onClick={auth.logout}>
+              Log out
+            </SideBarButton>
+            {user ? (
+              <FormControlLabel
+                className={classes.roleSwitch}
+                value="bottom"
+                control={
+                  <ModeSwitch
+                    checked={settings.role === 'WORKER'}
+                    onChange={onUpdateUserModeCheck}
+                    color="primary"
+                  />
+                }
+                label={`${settings.role}`}
+                labelPlacement="bottom"
+                classes={{ label: toggleLabel }}
+              />
+            ) : null}
+          </div>
         </SideBarButtonContainerBottom>
         <Footer />
       </SideBarContainer>
     </div>
   );
 }
-
+// background-color: #f50057;
+// switchBase
 SideBar.propTypes = {
   isOpen: PropTypes.bool,
   handleToggle: PropTypes.func,
   user: PropTypes.object,
+  settings: PropTypes.object,
   onCreateTaskButtonClick: PropTypes.func,
+  onUpdateUserModeCheck: PropTypes.func,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -129,11 +196,18 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateTaskModalIsOpen(true));
     dispatch(toggleSideNav(false));
   },
+  onUpdateUserModeCheck: event => {
+    const newRole = event.target.checked ? 'WORKER' : 'OWNER';
+
+    dispatch(updateUserMode(newRole));
+    dispatch(toggleSideNav(false));
+  },
 });
 
 const mapStateToProps = createStructuredSelector({
   isOpen: makeSelectNavBarVisible(),
   user: makeSelectGlobalUser(),
+  settings: makeSelectGlobalSettings(),
 });
 
 const withConnect = connect(

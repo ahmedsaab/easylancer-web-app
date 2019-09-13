@@ -6,6 +6,7 @@ import TaskCard from 'components/molecules/TaskCard';
 import { CardDeckResp } from 'containers/SearchPage/TaskDeck/components';
 import FitPage from 'components/atoms/FitPage';
 import Spinner from 'components/atoms/Spinner';
+import Error500 from 'components/atoms/Error500';
 
 function TaskDeck({ loading, error, tasks, history }) {
   if (loading) {
@@ -16,7 +17,7 @@ function TaskDeck({ loading, error, tasks, history }) {
     );
   }
   if (error) {
-    return <div>{JSON.stringify(error.message)}</div>;
+    return <Error500 />;
   }
   if (tasks.length > 0) {
     const taskCards = tasks.map(task => (

@@ -27,6 +27,29 @@ export const requestFileUpload = async () => {
   }
 };
 
+export const getMyTasks = async () => {
+  try {
+    // await sleep(1000);
+    const response = await axios.get(
+      `${process.env.CLIENT_API_ROOT}/me/tasks`,
+      { headers },
+    );
+
+    return response.data;
+  } catch (error) {
+    // console.error(error)
+    if (error.response) {
+      throw new Error(
+        `The server responded with error code ${error.response.status}`,
+      );
+    } else if (error.request) {
+      throw new Error(`Failed to read response from Server`);
+    } else {
+      throw new Error(`An unexpected error occurred`);
+    }
+  }
+};
+
 export const getTask = async id => {
   try {
     // await sleep(1000);
@@ -73,16 +96,40 @@ export const getTaskOffers = async id => {
   }
 };
 
-export const getUser = async () => {
+export const getMe = async () => {
   try {
     // await sleep(1000);
-    const response = await axios.get(`${process.env.CLIENT_API_ROOT}/auth/me`, {
+    const response = await axios.get(`${process.env.CLIENT_API_ROOT}/me/view`, {
       headers,
     });
 
     return response.data;
   } catch (error) {
     // console.error(error)
+    if (error.response) {
+      throw new Error(
+        `The server responded with error code ${error.response.status}`,
+      );
+    } else if (error.request) {
+      throw new Error(`Failed to read response from Server`);
+    } else {
+      throw new Error(`An unexpected error occurred`);
+    }
+  }
+};
+
+export const updateMe = async user => {
+  try {
+    const response = await axios.post(
+      `${process.env.CLIENT_API_ROOT}/me/edit`,
+      user,
+      {
+        headers,
+      },
+    );
+
+    return response.data;
+  } catch (error) {
     if (error.response) {
       throw new Error(
         `The server responded with error code ${error.response.status}`,

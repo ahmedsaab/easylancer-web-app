@@ -54,8 +54,26 @@ Authentication is made by Auth0 to get a valid JWT token (https://auth0.com/)
     - [ ] Open message modal from task
     - [X] SideBar content regarding logged in user
     - [ ] Sign in and sign up
-
     
+- (A) As an owner I should be able to see:
+    - (1) all my open tasks (those that are open, assigned to a worker, pending my review, or pending the worker's review)
+    - (2) all my closed tasks (including those that are done, not-done, cancelled, or in investigation)
+    
+- (B) As a worker I should be able to see:
+    - (1) all the tasks I applied to (in any status)
+    - (2) all my planned tasks (those that are assigned to me or waiting my review)
+    - (3) all my closed tasks (including those that are done, not-done, cancelled, in investigation, or pending the owner's review)
+    
+A0: New -> []
+A1: Planned -> [Started, Scheduled, Pending my review]
+A2: Finished -> [Investigating, Done, Not Done, Pending the worker review]
+A3: Cancelled -> []
+
+B1: Planned -> [Started, Scheduled, Pending my review]
+B2: Finished -> [Investigating, Done, Not Done, Pending the owner review]
+B3: New -> []
+B4: Cancelled -> []
+
 ### TODO (BE)
 
 - [X] Review and change the task statuses names
