@@ -6,7 +6,7 @@ import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core';
 import FitPage from 'components/atoms/FitPage';
 import Spinner from 'components/atoms/Spinner';
 import {
@@ -19,6 +19,12 @@ import { Switch, Route } from 'react-router-dom';
 import history from 'utils/history';
 import Error404 from 'components/atoms/Error404';
 import ListGroup from 'containers/MyTasksPage/ListGroup';
+import AppBar from '@material-ui/core/AppBar';
+import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import FlagIcon from '@material-ui/icons/Flag';
+import BlockIcon from '@material-ui/icons/Block';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 import { makeSelectMyTasksByList } from './selectors';
 import { loadMyTasks } from './actions';
 import reducer from './reducer';
@@ -26,13 +32,20 @@ import saga from './saga';
 
 const useStyles = makeStyles(theme => ({
   container: {
-    padding: theme.spacing(0, 1, 0, 1),
     maxWidth: '1000px',
     marginLeft: 'auto',
     marginRight: 'auto',
   },
   tabs: {
     flexGrow: 1,
+  },
+  content: {
+    padding: theme.spacing(0, 1, 0, 1),
+  },
+  title: {
+    padding: theme.spacing(4, 2, 4, 2),
+    fontSize: '2.5rem',
+    fontWeight: 500,
   },
 }));
 
@@ -67,6 +80,8 @@ export function MyTasksPage({
     onPageLoad();
   }, []);
   const classes = useStyles();
+  const theme = useTheme();
+  const compact = useMediaQuery(theme.breakpoints.down('sm'));
   const activeTab = location.pathname.split('/').pop();
 
   let listGroups = null;
@@ -90,10 +105,30 @@ export function MyTasksPage({
 
   if (user.settings.role === 'WORKER') {
     tabs = [
-      <Tab label="Applied" value="applied" key="applied" />,
-      <Tab label="Planned" value="planned" key="planned" />,
-      <Tab label="Finished" value="finished" key="finished" />,
-      <Tab label="Cancelled" value="cancelled" key="cancelled" />,
+      <Tab
+        icon={<AssignmentIcon />}
+        label={compact ? null : 'Applied'}
+        value="applied"
+        key="applied"
+      />,
+      <Tab
+        icon={<ScheduleIcon />}
+        label={compact ? null : 'Planned'}
+        value="planned"
+        key="planned"
+      />,
+      <Tab
+        icon={<FlagIcon />}
+        label={compact ? null : 'Finished'}
+        value="finished"
+        key="finished"
+      />,
+      <Tab
+        icon={<BlockIcon />}
+        label={compact ? null : 'Cancelled'}
+        value="cancelled"
+        key="cancelled"
+      />,
     ];
     listGroups = [
       <ListGroup
@@ -128,10 +163,30 @@ export function MyTasksPage({
     ];
   } else if (user.settings.role === 'OWNER') {
     tabs = [
-      <Tab label="Open" value="open" key="open" />,
-      <Tab label="Planned" value="planned" key="planned" />,
-      <Tab label="Finished" value="finished" key="finished" />,
-      <Tab label="Cancelled" value="cancelled" key="cancelled" />,
+      <Tab
+        icon={<AssignmentIcon />}
+        label={compact ? null : 'Open'}
+        value="open"
+        key="open"
+      />,
+      <Tab
+        icon={<ScheduleIcon />}
+        label={compact ? null : 'Planned'}
+        value="planned"
+        key="planned"
+      />,
+      <Tab
+        icon={<FlagIcon />}
+        label={compact ? null : 'Finished'}
+        value="finished"
+        key="finished"
+      />,
+      <Tab
+        icon={<BlockIcon />}
+        label={compact ? null : 'Cancelled'}
+        value="cancelled"
+        key="cancelled"
+      />,
     ];
     listGroups = [
       <ListGroup
@@ -168,7 +223,8 @@ export function MyTasksPage({
 
   return (
     <div className={classes.container}>
-      <div className={classes.tabs}>
+      {!compact ? <div className={classes.title}>My Orders</div> : null}
+      <AppBar position="static" color="default" className={classes.tabs}>
         <Tabs
           value={activeTab}
           onChange={(event, value) => {
@@ -176,13 +232,14 @@ export function MyTasksPage({
           }}
           indicatorColor="primary"
           textColor="primary"
-          scrollButtons="auto"
           centered
+          variant={compact ? 'fullWidth' : 'default'}
+          scrollButtons="auto"
         >
           {tabs}
         </Tabs>
-      </div>
-      <div>
+      </AppBar>
+      <div className={classes.content}>
         <Switch>
           {listGroups}
           <Route path="/my-orders/" component={Error404} />

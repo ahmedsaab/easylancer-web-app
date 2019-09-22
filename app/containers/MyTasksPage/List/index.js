@@ -6,7 +6,6 @@ import * as PropTypes from 'prop-types';
 import SectionHeader from 'components/molecules/SectionHeader';
 import CachedIcon from '@material-ui/icons/Cached';
 import { makeStyles } from '@material-ui/core';
-import TaskCard from 'components/molecules/TaskCard';
 import history from 'utils/history';
 
 const useStyles = makeStyles(theme => ({
@@ -68,9 +67,9 @@ export default function List({
 
   return (
     <div className={className}>
-      {title && Icon ? (
+      {title ? (
         <SectionHeader>
-          <Icon className={classes.icon} />
+          {Icon ? <Icon className={classes.icon} /> : null}
           {title}
         </SectionHeader>
       ) : null}
