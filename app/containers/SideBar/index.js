@@ -119,7 +119,7 @@ function SideBar({
             </SideBarLinkElement>
           </SideBarListElement>
           <SideBarListElement onClick={handleToggle}>
-            <SideBarLinkElement to="/my-orders">
+            <SideBarLinkElement to="/my-orders/">
               <MDBIcon icon="handshake" />
               <SideBarLinkElementText>My orders</SideBarLinkElementText>
             </SideBarLinkElement>

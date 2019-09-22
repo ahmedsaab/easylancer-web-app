@@ -23,13 +23,13 @@ import Header from 'containers/Header';
 import TaskPage from 'containers/TaskPage/Loadable';
 import MyTasksPage from 'containers/MyTasksPage/Loadable';
 import SearchPage from 'containers/SearchPage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import { Container, ContentRow, Wrapper } from 'containers/App/components';
 import GlobalStyle from 'global-styles';
 import { useInjectSaga } from 'utils/injectSaga';
 import { loadUser } from 'containers/App/actions';
 import saga from 'containers/App/saga';
 import CreateTaskModal from 'containers/CreateTaskModal';
+import Error404 from 'components/atoms/Error404';
 
 const theme = createMuiTheme({
   status: {
@@ -74,7 +74,7 @@ function App({ onLoad }) {
                     <Route path="/task/:id" component={TaskPage} />
                     <Route path="/search" component={SearchPage} />
                     <Route path="/my-orders" component={MyTasksPage} />
-                    <Route path="" component={NotFoundPage} />
+                    <Route path="" component={Error404} />
                   </Switch>
                 </div>
               </ContentRow>

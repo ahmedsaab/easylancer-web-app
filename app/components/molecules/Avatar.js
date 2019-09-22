@@ -2,7 +2,7 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { MDBAvatar } from 'mdbreact';
-import AvatarImage from 'components/atoms/AvatarImage';
+import RoundedImage from 'components/atoms/RoundedImage';
 import ApprovedIcon from 'components/atoms/ApprovedIcon';
 
 const AvatarContainer = styled(MDBAvatar)`
@@ -27,9 +27,16 @@ const Badge = styled.div`
   font-size: ${props => props.fontSize}px;
 `;
 
-function Avatar({ imgSrc, isApproved, isOwner, isWorker, imgStyle }) {
+function Avatar({
+  imgSrc,
+  isApproved,
+  isOwner,
+  isWorker,
+  className,
+  imgStyle,
+}) {
   return (
-    <AvatarContainer className="mx-auto">
+    <AvatarContainer className={className}>
       {isApproved ? <ApprovedIcon icon="check-circle" /> : null}
       {isWorker ? (
         <Badge
@@ -47,7 +54,7 @@ function Avatar({ imgSrc, isApproved, isOwner, isWorker, imgStyle }) {
           Owner
         </Badge>
       ) : null}
-      <AvatarImage style={imgStyle} src={imgSrc} alt="" />
+      <RoundedImage style={imgStyle} src={imgSrc} alt="" />
     </AvatarContainer>
   );
 }
@@ -55,6 +62,7 @@ function Avatar({ imgSrc, isApproved, isOwner, isWorker, imgStyle }) {
 Avatar.propTypes = {
   imgStyle: PropTypes.object,
   imgSrc: PropTypes.string,
+  className: PropTypes.string,
   isApproved: PropTypes.bool,
   isWorker: PropTypes.bool,
   isOwner: PropTypes.bool,

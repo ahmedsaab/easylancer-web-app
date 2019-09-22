@@ -27,17 +27,77 @@ export const requestFileUpload = async () => {
   }
 };
 
-export const getMyTasks = async () => {
+export const getMyTasks = async (type, page = 1) => {
   try {
-    // await sleep(1000);
+    let path = '';
+    switch (type) {
+      case 'appliedNew':
+        path = 'applied/open';
+        break;
+      case 'appliedHistory':
+        path = 'applied/history';
+        break;
+      case 'appliedScheduled':
+        path = 'assigned/scheduled';
+        break;
+      case 'appliedStarted':
+        path = 'assigned/started';
+        break;
+      case 'appliedPendingWorker':
+        path = 'assigned/pending-worker-review';
+        break;
+      case 'appliedDone':
+        path = 'assigned/done';
+        break;
+      case 'appliedNotDone':
+        path = 'assigned/not-done';
+        break;
+      case 'appliedInvestigate':
+        path = 'assigned/investigate';
+        break;
+      case 'appliedPendingOwner':
+        path = 'assigned/pending-owner-review';
+        break;
+      case 'appliedCancelled':
+        path = 'assigned/cancelled';
+        break;
+      case 'createdOpen':
+        path = 'created/open';
+        break;
+      case 'createdScheduled':
+        path = 'created/scheduled';
+        break;
+      case 'createdStarted':
+        path = 'created/started';
+        break;
+      case 'createdPendingWorker':
+        path = 'created/pending-worker-review';
+        break;
+      case 'createdDone':
+        path = 'created/done';
+        break;
+      case 'createdNotDone':
+        path = 'created/not-done';
+        break;
+      case 'createdInvestigate':
+        path = 'created/investigate';
+        break;
+      case 'createdPendingOwner':
+        path = 'created/pending-owner-review';
+        break;
+      case 'createdCancelled':
+        path = 'created/cancelled';
+        break;
+      default:
+    }
+
     const response = await axios.get(
-      `${process.env.CLIENT_API_ROOT}/me/tasks`,
+      `${process.env.CLIENT_API_ROOT}/my-tasks/${path}?page=${page}`,
       { headers },
     );
 
     return response.data;
   } catch (error) {
-    // console.error(error)
     if (error.response) {
       throw new Error(
         `The server responded with error code ${error.response.status}`,

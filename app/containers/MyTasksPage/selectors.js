@@ -3,20 +3,8 @@ import { initialState } from './reducer';
 
 const selectMyTasksPageDomain = state => state.myTasksPage || initialState;
 
-export const makeSelectMyTasksData = () =>
+export const makeSelectMyTasksByList = list =>
   createSelector(
     selectMyTasksPageDomain,
-    state => state.data,
-  );
-
-export const makeSelectMyTasksLoading = () =>
-  createSelector(
-    selectMyTasksPageDomain,
-    state => state.loading,
-  );
-
-export const makeSelectMyTasksError = () =>
-  createSelector(
-    selectMyTasksPageDomain,
-    state => state.error,
+    state => state[list],
   );

@@ -28,15 +28,6 @@ export const TitleText = styled('div')`
   font-weight: 800;
 `;
 
-export const PriceTagContainer = styled('div')`
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-size: 2.5rem;
-  @media (min-width: 960px) {
-    float: right;
-  }
-`;
-
 export const SeenInfo = styled('div')`
   float: right;
   font-size: 22px;

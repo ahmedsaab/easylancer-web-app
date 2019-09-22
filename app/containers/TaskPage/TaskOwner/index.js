@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
     fontWeight: '700',
   },
   image: {
-    flex: 1,
+    flexShrink: 1,
   },
   data: {
     flex: 3,
@@ -36,13 +36,12 @@ export default function TaskOwner({ user }) {
 
   return (
     <Paper elevation={0} className={classes.container}>
-      <div className={classes.image}>
-        <Avatar
-          imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
-          isApproved={user.approved}
-          imgStyle={{ width: '80px' }}
-        />
-      </div>
+      <Avatar
+        imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
+        isApproved={user.approved}
+        imgStyle={{ width: '80px' }}
+        className={classes.image}
+      />
       <div className={classes.data}>
         <FullName className={classes.name} user={user} />
         <LikesMetric

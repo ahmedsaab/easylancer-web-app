@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
-import moment from 'moment';
 
 import LightBoxImagesGrid from 'components/organisms/LightBoxImagesGrid';
 import SectionHeader from 'components/molecules/SectionHeader';
@@ -19,6 +18,7 @@ import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
+import { formatTaskStartDateTime } from 'utils/date-time-helpers';
 
 const useStyles = makeStyles(theme => ({
   divider: {
@@ -62,10 +62,7 @@ function TaskDetails({ task, google }) {
           Date & Time
         </SectionHeader>
         <div className={classes.section}>
-          {moment
-            .utc(task.startDateTime)
-            .local()
-            .format('MMM D, YYYY [at] h:mm A z')}
+          {formatTaskStartDateTime(task.startDateTime)}
         </div>
       </Grid>
       <Grid item xs={12}>
