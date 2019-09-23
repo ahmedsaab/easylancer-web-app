@@ -55,10 +55,15 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     padding: theme.spacing(0, 1, 0, 1),
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '48px',
+    },
   },
   tabs: {
     zIndex: 'unset',
-    // position: 'fixed',
+    [theme.breakpoints.down('sm')]: {
+      position: 'fixed',
+    },
   },
   title: {
     padding: theme.spacing(4, 2, 4, 2),
