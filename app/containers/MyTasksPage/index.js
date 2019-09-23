@@ -25,6 +25,8 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import FlagIcon from '@material-ui/icons/Flag';
 import BlockIcon from '@material-ui/icons/Block';
 import ScheduleIcon from '@material-ui/icons/Schedule';
+import EmptyStateContent from 'components/molecules/EmptyStateContent';
+import * as boxImage from 'images/box.png';
 import { makeSelectMyTasksByList } from './selectors';
 import { loadMyTasks } from './actions';
 import reducer from './reducer';
@@ -32,20 +34,30 @@ import saga from './saga';
 
 const useStyles = makeStyles(theme => ({
   container: {
+    minHeight: 'calc(100vh - 60px)',
     maxWidth: '1000px',
     marginLeft: 'auto',
     marginRight: 'auto',
-  },
-  tabs: {
-    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
   },
   content: {
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
     padding: theme.spacing(0, 1, 0, 1),
+  },
+  tabs: {
+    zIndex: 'unset',
+    // position: 'fixed',
   },
   title: {
     padding: theme.spacing(4, 2, 4, 2),
     fontSize: '2.5rem',
     fontWeight: 500,
+  },
+  emptyState: {
+    flexGrow: 1,
   },
 }));
 
@@ -83,6 +95,14 @@ export function MyTasksPage({
   const theme = useTheme();
   const compact = useMediaQuery(theme.breakpoints.down('sm'));
   const activeTab = location.pathname.split('/').pop();
+  const DefaultEmptyState = (
+    <EmptyStateContent
+      className={classes.emptyState}
+      details="There are no tasks"
+      summary="There are no tasks"
+      picture={boxImage}
+    />
+  );
 
   let listGroups = null;
   let tabs = null;
@@ -136,6 +156,7 @@ export function MyTasksPage({
         lists={[appliedPendingWorker, appliedStarted, appliedScheduled]}
         loadListPage={onLoadListPage}
         path="/my-orders/planned"
+        emptyState={DefaultEmptyState}
       />,
       <ListGroup
         key="Done"
@@ -147,18 +168,21 @@ export function MyTasksPage({
         ]}
         loadListPage={onLoadListPage}
         path="/my-orders/finished"
+        emptyState={DefaultEmptyState}
       />,
       <ListGroup
         key="Cancelled"
         lists={[appliedCancelled]}
         loadListPage={onLoadListPage}
         path="/my-orders/cancelled"
+        emptyState={DefaultEmptyState}
       />,
       <ListGroup
         key="Applied"
         lists={[appliedNew, appliedHistory]}
         loadListPage={onLoadListPage}
         path="/my-orders/applied"
+        emptyState={DefaultEmptyState}
       />,
     ];
   } else if (user.settings.role === 'OWNER') {
@@ -194,6 +218,7 @@ export function MyTasksPage({
         lists={[createdOpen]}
         loadListPage={onLoadListPage}
         path="/my-orders/open"
+        emptyState={DefaultEmptyState}
       />,
       <ListGroup
         key="Finished"
@@ -205,18 +230,21 @@ export function MyTasksPage({
         ]}
         loadListPage={onLoadListPage}
         path="/my-orders/finished"
+        emptyState={DefaultEmptyState}
       />,
       <ListGroup
         key="Cancelled"
         lists={[createdCancelled]}
         loadListPage={onLoadListPage}
         path="/my-orders/cancelled"
+        emptyState={DefaultEmptyState}
       />,
       <ListGroup
         key="Planned"
         lists={[createdPendingOwner, createdStarted, createdScheduled]}
         loadListPage={onLoadListPage}
         path="/my-orders/planned"
+        emptyState={DefaultEmptyState}
       />,
     ];
   }

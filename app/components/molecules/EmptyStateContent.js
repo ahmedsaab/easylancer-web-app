@@ -7,8 +7,6 @@ const ContentContainer = styled(CenteredDiv)`
   background: #f9f9f9bf;
   padding-left: 15%;
   padding-right: 15%;
-  padding-top: 20%;
-  padding-bottom: 20%;
   @media (max-width: 599px) {
     padding-left: 10%;
     padding-right: 10%;
@@ -27,18 +25,12 @@ const Details = styled.div`
 `;
 
 const Picture = styled.img`
-  width: 70%;
+  width: 200px;
   padding-top: 10px;
   padding-bottom: 20px;
 `;
 
-function EmptyStateContent({
-  summary,
-  details,
-  picture,
-  children,
-  className,
-}) {
+function EmptyStateContent({ summary, details, picture, children, className }) {
   return (
     <ContentContainer className={className}>
       <Picture src={picture} />

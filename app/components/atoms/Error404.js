@@ -1,10 +1,12 @@
-import styled from 'styled-components';
 import FitPage from 'components/atoms/FitPage';
+import EmptyStateContent from 'components/molecules/EmptyStateContent';
+import React from 'react';
 import ErrorImage from '../../images/404.png';
 
-export default styled(FitPage)`
-  background-image: url(${ErrorImage});
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-`;
+export default function Error404() {
+  return (
+    <FitPage>
+      <EmptyStateContent picture={ErrorImage} summary="Nothing to do here." />
+    </FitPage>
+  );
+}

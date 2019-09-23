@@ -1,4 +1,3 @@
-import FitPage from 'components/atoms/FitPage';
 import Spinner from 'components/atoms/Spinner';
 import React from 'react';
 import * as PropTypes from 'prop-types';
@@ -9,28 +8,36 @@ import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles(theme => ({
   container: {
     padding: theme.spacing(1),
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
   },
   list: {
     marginTop: theme.spacing(2),
   },
+  fullHeight: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+  },
 }));
 
-export default function ListGroup({ lists, path, loadListPage }) {
+export default function ListGroup({ lists, path, loadListPage, emptyState }) {
   const classes = useStyles();
 
   if (lists.find(list => !list.data)) {
     return (
-      <FitPage>
-        <Spinner dimension="50px" />
-      </FitPage>
+      <div className={classes.fullHeight}>
+        <Spinner margin="auto" dimension="50px" />
+      </div>
     );
   }
 
   if (lists.find(list => list.error)) {
-    return <FitPage>Error :(</FitPage>;
+    return <div className={classes.fullHeight}>Error :(</div>;
   }
 
-  let content = 'All clear!';
+  let content = emptyState;
 
   if (lists.find(list => list.data.length > 0)) {
     content = lists.map(list => (
@@ -56,4 +63,5 @@ ListGroup.propTypes = {
   lists: PropTypes.array.isRequired,
   loadListPage: PropTypes.func,
   path: PropTypes.string,
+  emptyState: PropTypes.any,
 };
