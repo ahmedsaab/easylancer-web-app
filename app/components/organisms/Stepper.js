@@ -9,7 +9,10 @@ import StepContent from '@material-ui/core/StepContent';
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    padding: '25px',
+    padding: theme.spacing(2, 3),
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(2, 0),
+    },
   },
   content: {
     paddingTop: theme.spacing(2),

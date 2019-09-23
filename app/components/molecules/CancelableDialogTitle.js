@@ -22,7 +22,7 @@ export default withStyles(styles)(props => {
   const { children, classes, onClose } = props;
   return (
     <DialogTitle disableTypography className={classes.root}>
-      <Typography variant="h4">{children}</Typography>
+      <Typography variant="h5">{children}</Typography>
       <IconButton
         aria-label="close"
         className={classes.closeButton}

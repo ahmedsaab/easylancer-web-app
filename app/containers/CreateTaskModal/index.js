@@ -34,12 +34,12 @@ import {
 import { useInjectSaga } from 'utils/injectSaga';
 
 import { ActionButtons } from 'containers/CreateTaskModal/ActionButtons';
-import CancelableDialogTitle from 'components/molecules/CancelableDialogTitle';
 import UnjustifiedDialogFooter from 'components/molecules/UnjustifiedDialogFooter';
 import PaymentInput from 'components/molecules/PaymentInput';
 import Dialog from '@material-ui/core/Dialog';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import { useTheme } from '@material-ui/core';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -173,9 +173,7 @@ function CreateTaskModal({
       scroll="paper"
       aria-labelledby="responsive-dialog-title"
     >
-      <CancelableDialogTitle onClose={onCloseModal}>
-        {"Let's do it!"}
-      </CancelableDialogTitle>
+      <DialogTitle onClose={onCloseModal}>Create a new task</DialogTitle>
       <DialogContent dividers>
         <Stepper activeStep={step} contents={steps} />
       </DialogContent>

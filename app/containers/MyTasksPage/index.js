@@ -23,10 +23,19 @@ import AppBar from '@material-ui/core/AppBar';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import FlagIcon from '@material-ui/icons/Flag';
-import BlockIcon from '@material-ui/icons/Block';
 import ScheduleIcon from '@material-ui/icons/Schedule';
+import CloseIcon from '@material-ui/icons/Close';
 import EmptyStateContent from 'components/molecules/EmptyStateContent';
 import * as boxImage from 'images/box.png';
+import * as thumbImage from 'images/positive-vote.png';
+import * as sleepImage from 'images/sleep.png';
+import * as lazyImage from 'images/lazy.png';
+import * as babyImage from 'images/baby.png';
+import Button from '@material-ui/core/Button';
+import SearchIcon from '@material-ui/icons/Search';
+
+import { updateTaskModalIsOpen } from 'containers/CreateTaskModal/actions';
+import { toggleSideNav } from 'containers/Header/actions';
 import { makeSelectMyTasksByList } from './selectors';
 import { loadMyTasks } from './actions';
 import reducer from './reducer';
@@ -59,6 +68,13 @@ const useStyles = makeStyles(theme => ({
   emptyState: {
     flexGrow: 1,
   },
+  emptyStateButton: {
+    margin: theme.spacing(2),
+    padding: theme.spacing(1, 2, 1, 2),
+  },
+  emptyStateButtonIcon: {
+    marginRight: theme.spacing(1),
+  },
 }));
 
 export function MyTasksPage({
@@ -83,6 +99,7 @@ export function MyTasksPage({
   createdInvestigate,
   createdPendingWorker,
   createdCancelled,
+  onCreateTaskButtonClick,
   onLoadListPage,
   onPageLoad,
 }) {
@@ -95,14 +112,6 @@ export function MyTasksPage({
   const theme = useTheme();
   const compact = useMediaQuery(theme.breakpoints.down('sm'));
   const activeTab = location.pathname.split('/').pop();
-  const DefaultEmptyState = (
-    <EmptyStateContent
-      className={classes.emptyState}
-      details="There are no tasks"
-      summary="There are no tasks"
-      picture={boxImage}
-    />
-  );
 
   let listGroups = null;
   let tabs = null;
@@ -144,7 +153,7 @@ export function MyTasksPage({
         key="finished"
       />,
       <Tab
-        icon={<BlockIcon />}
+        icon={<CloseIcon />}
         label={compact ? null : 'Cancelled'}
         value="cancelled"
         key="cancelled"
@@ -152,11 +161,50 @@ export function MyTasksPage({
     ];
     listGroups = [
       <ListGroup
+        key="Applied"
+        lists={[appliedNew, appliedHistory]}
+        loadListPage={onLoadListPage}
+        path="/my-orders/applied"
+        emptyState={
+          <EmptyStateContent
+            className={classes.emptyState}
+            summary="No applied tasks yet"
+            details="Start applying now"
+            picture={boxImage}
+          >
+            <Button
+              onClick={() => history.push('/search')}
+              color="primary"
+              className={classes.emptyStateButton}
+            >
+              <SearchIcon className={classes.emptyStateButtonIcon} />
+              Search tasks
+            </Button>
+          </EmptyStateContent>
+        }
+      />,
+      <ListGroup
         key="Planned"
         lists={[appliedPendingWorker, appliedStarted, appliedScheduled]}
         loadListPage={onLoadListPage}
         path="/my-orders/planned"
-        emptyState={DefaultEmptyState}
+        emptyState={
+          <EmptyStateContent
+            className={classes.emptyState}
+            summary="All clear!"
+            details="No planned tasks at the moment"
+            picture={sleepImage}
+          >
+            <Button
+              onClick={() => history.push('/search')}
+              color="primary"
+              className={classes.emptyStateButton}
+            >
+              <SearchIcon className={classes.emptyStateButtonIcon} />
+              Search tasks
+            </Button>
+          </EmptyStateContent>
+        }
       />,
       <ListGroup
         key="Done"
@@ -168,21 +216,37 @@ export function MyTasksPage({
         ]}
         loadListPage={onLoadListPage}
         path="/my-orders/finished"
-        emptyState={DefaultEmptyState}
+        emptyState={
+          <EmptyStateContent
+            className={classes.emptyState}
+            summary="Wow! Zero finished tasks."
+            details="Start applying now"
+            picture={babyImage}
+          >
+            <Button
+              onClick={() => history.push('/search')}
+              color="primary"
+              className={classes.emptyStateButton}
+            >
+              <SearchIcon className={classes.emptyStateButtonIcon} />
+              Search tasks
+            </Button>
+          </EmptyStateContent>
+        }
       />,
       <ListGroup
         key="Cancelled"
         lists={[appliedCancelled]}
         loadListPage={onLoadListPage}
         path="/my-orders/cancelled"
-        emptyState={DefaultEmptyState}
-      />,
-      <ListGroup
-        key="Applied"
-        lists={[appliedNew, appliedHistory]}
-        loadListPage={onLoadListPage}
-        path="/my-orders/applied"
-        emptyState={DefaultEmptyState}
+        emptyState={
+          <EmptyStateContent
+            className={classes.emptyState}
+            summary="No cancelled tasks"
+            details="Good for you!"
+            picture={thumbImage}
+          />
+        }
       />,
     ];
   } else if (user.settings.role === 'OWNER') {
@@ -206,7 +270,7 @@ export function MyTasksPage({
         key="finished"
       />,
       <Tab
-        icon={<BlockIcon />}
+        icon={<CloseIcon />}
         label={compact ? null : 'Cancelled'}
         value="cancelled"
         key="cancelled"
@@ -218,7 +282,22 @@ export function MyTasksPage({
         lists={[createdOpen]}
         loadListPage={onLoadListPage}
         path="/my-orders/open"
-        emptyState={DefaultEmptyState}
+        emptyState={
+          <EmptyStateContent
+            className={classes.emptyState}
+            summary="No open tasks found"
+            details="Need something done?"
+            picture={boxImage}
+          >
+            <Button
+              onClick={onCreateTaskButtonClick}
+              color="primary"
+              className={classes.emptyStateButton}
+            >
+              Create task
+            </Button>
+          </EmptyStateContent>
+        }
       />,
       <ListGroup
         key="Finished"
@@ -230,21 +309,58 @@ export function MyTasksPage({
         ]}
         loadListPage={onLoadListPage}
         path="/my-orders/finished"
-        emptyState={DefaultEmptyState}
+        emptyState={
+          <EmptyStateContent
+            className={classes.emptyState}
+            summary="No finished tasks yet"
+            details="Need something done?"
+            picture={babyImage}
+          >
+            <Button
+              onClick={onCreateTaskButtonClick}
+              color="primary"
+              className={classes.emptyStateButton}
+            >
+              Create task
+            </Button>
+          </EmptyStateContent>
+        }
       />,
       <ListGroup
         key="Cancelled"
         lists={[createdCancelled]}
         loadListPage={onLoadListPage}
         path="/my-orders/cancelled"
-        emptyState={DefaultEmptyState}
+        emptyState={
+          <EmptyStateContent
+            className={classes.emptyState}
+            summary="No cancelled tasks"
+            details="Good for you!"
+            picture={thumbImage}
+          />
+        }
       />,
       <ListGroup
         key="Planned"
         lists={[createdPendingOwner, createdStarted, createdScheduled]}
         loadListPage={onLoadListPage}
         path="/my-orders/planned"
-        emptyState={DefaultEmptyState}
+        emptyState={
+          <EmptyStateContent
+            className={classes.emptyState}
+            summary="No planned tasks"
+            details="Need something done?"
+            picture={lazyImage}
+          >
+            <Button
+              onClick={onCreateTaskButtonClick}
+              color="primary"
+              className={classes.emptyStateButton}
+            >
+              Create task
+            </Button>
+          </EmptyStateContent>
+        }
       />,
     ];
   }
@@ -301,6 +417,7 @@ MyTasksPage.propTypes = {
   location: PropTypes.object,
   onLoadListPage: PropTypes.func.isRequired,
   onPageLoad: PropTypes.func.isRequired,
+  onCreateTaskButtonClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -351,6 +468,10 @@ const mapDispatchToProps = dispatch => ({
   },
   onLoadListPage: (name, page) => {
     dispatch(loadMyTasks(name, page));
+  },
+  onCreateTaskButtonClick: () => {
+    dispatch(updateTaskModalIsOpen(true));
+    dispatch(toggleSideNav(false));
   },
 });
 
