@@ -200,6 +200,7 @@ const mapDispatchToProps = dispatch => ({
     const newRole = event.target.checked ? 'WORKER' : 'OWNER';
 
     dispatch(updateUserMode(newRole));
+    dispatch(setBodyScroll(true));
     dispatch(toggleSideNav(false));
   },
 });

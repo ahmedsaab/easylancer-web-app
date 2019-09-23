@@ -24,9 +24,6 @@ function StatusBadge({ status }) {
     case 'assigned':
       color = 'blue';
       break;
-    case 'in-progress':
-      color = 'warning';
-      break;
     case 'done':
       color = 'grey';
       break;
@@ -36,7 +33,9 @@ function StatusBadge({ status }) {
     case 'cancelled':
       color = 'grey';
       break;
-    case 'pending-review':
+    case 'in-progress':
+    case 'pending-owner-review':
+    case 'pending-worker-review':
       color = 'warning';
       break;
     case 'investigate':
@@ -61,7 +60,8 @@ StatusBadge.propTypes = {
     'not-done',
     'cancelled',
     'investigate',
-    'pending-review',
+    'pending-owner-review',
+    'pending-worker-review',
   ]),
 };
 

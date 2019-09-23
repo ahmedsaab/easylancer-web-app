@@ -18,7 +18,7 @@ import ActionButton from 'components/atoms/ActionButton';
 import MessageIcon from '@material-ui/icons/Message';
 import WorkIcon from '@material-ui/icons/Work';
 import UpdateIcon from '@material-ui/icons/Update';
-import CancelIcon from '@material-ui/icons/CancelPresentationOutlined';
+import CloseIcon from '@material-ui/icons/Close';
 import AssistantPhotoIcon from '@material-ui/icons/AssistantPhoto';
 import EditIcon from '@material-ui/icons/Edit';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -90,7 +90,9 @@ function TaskActionButtons({
   const canReschedule =
     task.status === 'assigned' && (userIsOwner || userIsAssigned);
   const canFinish =
-    (task.status === 'in-progress' || task.status === 'pending-review') &&
+    (task.status === 'in-progress' ||
+      task.status === 'pending-owner-review' ||
+      task.status === 'pending-worker-review') &&
     ((userIsOwner && !task.creatorRating) ||
       (userIsAssigned && !task.workerRating));
   const canEdit = task.status === 'open' && userIsOwner;
@@ -120,7 +122,7 @@ function TaskActionButtons({
             variant="outlined"
             onClick={onCancelTaskButtonClick}
           >
-            <CancelIcon />
+            <CloseIcon />
           </ActionButton>
         </Fragment>
       );
@@ -148,7 +150,6 @@ function TaskActionButtons({
               variant="outlined"
               onClick={onCancelTaskButtonClick}
             >
-              <CancelIcon className={classes.leftIcon} />
               Cancel
             </ActionButton>
           </div>

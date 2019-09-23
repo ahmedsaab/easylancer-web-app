@@ -17,7 +17,10 @@ const useStyles = makeStyles({
 export default function AttentionHeader({ task }) {
   const classes = useStyles();
 
-  if (task.status !== 'pending-review') {
+  if (
+    task.status !== 'pending-owner-review' &&
+    task.status !== 'pending-worker-review'
+  ) {
     return null;
   }
 

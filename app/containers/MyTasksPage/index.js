@@ -173,7 +173,7 @@ export function MyTasksPage({
         emptyState={
           <EmptyStateContent
             className={classes.emptyState}
-            summary="No applied tasks yet"
+            summary="No open offers found"
             details="Start applying now"
             picture={boxImage}
           >
