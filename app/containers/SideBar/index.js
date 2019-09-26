@@ -41,6 +41,7 @@ import { makeStyles } from '@material-ui/core';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { red, blue } from '@material-ui/core/colors';
+import history from 'utils/history';
 
 const useStyles = makeStyles(theme => ({
   footerControls: {
@@ -77,6 +78,7 @@ function SideBar({
   handleToggle,
   onCreateTaskButtonClick,
   onUpdateUserModeCheck,
+  onProfileButtonClick,
 }) {
   useInjectReducer({ key: 'sideNavBar', reducer });
   const classes = useStyles();
@@ -91,7 +93,7 @@ function SideBar({
       <SideBarContainer className={isOpen ? 'active' : ''} id="sidebar">
         <SideBarHeader>
           {user ? (
-            <SideBarUser>
+            <SideBarUser onClick={() => onProfileButtonClick(user.id)}>
               <ImagePlaceholder>
                 <SideBarUserImage src="https://i.pravatar.cc/55" />
               </ImagePlaceholder>
@@ -185,6 +187,7 @@ SideBar.propTypes = {
   settings: PropTypes.object,
   onCreateTaskButtonClick: PropTypes.func,
   onUpdateUserModeCheck: PropTypes.func,
+  onProfileButtonClick: PropTypes.func,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -194,6 +197,10 @@ const mapDispatchToProps = dispatch => ({
   },
   onCreateTaskButtonClick: () => {
     dispatch(updateTaskModalIsOpen(true));
+    dispatch(toggleSideNav(false));
+  },
+  onProfileButtonClick: userId => {
+    history.push(`/profile/${userId}`);
     dispatch(toggleSideNav(false));
   },
   onUpdateUserModeCheck: event => {

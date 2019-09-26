@@ -112,6 +112,29 @@ export const getMyTasks = async (type, page = 1) => {
   }
 };
 
+export const getProfile = async id => {
+  try {
+    // await sleep(1000);
+    const response = await axios.get(
+      `${process.env.CLIENT_API_ROOT}/profiles/${id}/view`,
+      { headers },
+    );
+
+    return response.data;
+  } catch (error) {
+    // console.error(error)
+    if (error.response) {
+      throw new Error(
+        `The server responded with error code ${error.response.status}`,
+      );
+    } else if (error.request) {
+      throw new Error(`Failed to read response from Server`);
+    } else {
+      throw new Error(`An unexpected error occurred`);
+    }
+  }
+};
+
 export const getTask = async id => {
   try {
     // await sleep(1000);

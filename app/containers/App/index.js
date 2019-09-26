@@ -21,6 +21,7 @@ import { red } from '@material-ui/core/colors';
 import SideBar from 'containers/SideBar';
 import Header from 'containers/Header';
 import TaskPage from 'containers/TaskPage/Loadable';
+import ProfilePage from 'containers/ProfilePage/Loadable';
 import MyTasksPage from 'containers/MyTasksPage/Loadable';
 import SearchPage from 'containers/SearchPage/Loadable';
 import { Container, ContentRow, Wrapper } from 'containers/App/components';
@@ -72,6 +73,7 @@ function App({ onLoad }) {
                   <Switch>
                     <Route exact path="/" component={SearchPage} />
                     <Route path="/task/:id" component={TaskPage} />
+                    <Route path="/profile/:id" component={ProfilePage} />
                     <Route path="/search" component={SearchPage} />
                     <Route path="/my-orders" component={MyTasksPage} />
                     <Route path="" component={Error404} />

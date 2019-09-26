@@ -1,13 +1,26 @@
-/*
- *
- * ProfilePage actions
- *
- */
+import {
+  LOAD_PROFILE,
+  LOAD_PROFILE_SUCCESS,
+  LOAD_PROFILE_ERROR,
+} from './constants';
 
-import { DEFAULT_ACTION } from './constants';
-
-export function defaultAction() {
+export function loadProfile(id) {
   return {
-    type: DEFAULT_ACTION,
+    type: LOAD_PROFILE,
+    id,
+  };
+}
+
+export function profileLoaded(data) {
+  return {
+    type: LOAD_PROFILE_SUCCESS,
+    data,
+  };
+}
+
+export function profileLoadingError(error) {
+  return {
+    type: LOAD_PROFILE_ERROR,
+    error,
   };
 }

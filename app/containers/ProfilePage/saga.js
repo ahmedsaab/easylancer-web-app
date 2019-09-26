@@ -1,6 +1,20 @@
-// import { take, call, put, select } from 'redux-saga/effects';
+import { call, put, takeLatest } from '@redux-saga/core/effects';
+import * as client from 'utils/client';
+import { LOAD_PROFILE } from 'containers/ProfilePage/constants';
+import {
+  profileLoaded,
+  profileLoadingError,
+} from 'containers/ProfilePage/actions';
 
-// Individual exports for testing
-export default function* profilePageSaga() {
-  // See example in containers/HomePage/saga.js
+export function* getProfile({ id }) {
+  try {
+    const profile = yield call(client.getProfile, id);
+    yield put(profileLoaded(profile));
+  } catch (err) {
+    yield put(profileLoadingError(err));
+  }
+}
+
+export default function* profilePage() {
+  yield takeLatest(LOAD_PROFILE, getProfile);
 }

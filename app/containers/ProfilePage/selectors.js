@@ -1,25 +1,22 @@
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
-/**
- * Direct selector to the profilePage state domain
- */
-
 const selectProfilePageDomain = state => state.profilePage || initialState;
 
-/**
- * Other specific selectors
- */
-
-/**
- * Default selector used by ProfilePage
- */
-
-const makeSelectProfilePage = () =>
+export const makeSelectProfilePage = () =>
   createSelector(
     selectProfilePageDomain,
-    substate => substate,
+    subState => subState,
   );
 
-export default makeSelectProfilePage;
-export { selectProfilePageDomain };
+export const makeSelectProfilePageProfile = () =>
+  createSelector(
+    selectProfilePageDomain,
+    subState => subState.profile,
+  );
+
+export const makeSelectProfilePageProfileProp = prop =>
+  createSelector(
+    makeSelectProfilePageProfile(),
+    subState => subState[prop],
+  );

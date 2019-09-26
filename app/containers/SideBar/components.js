@@ -125,7 +125,9 @@ export const SideBarUserData = styled('div')`
 
 export const SideBarUser = styled(MDBRow).attrs(() => ({
   className: 'align-self-center no-gutters',
-}))``;
+}))`
+  cursor: pointer;
+`;
 
 export const SideBarUserImage = styled('img').attrs(() => ({
   className: 'img-fluid z-depth-1 rounded-circle',
