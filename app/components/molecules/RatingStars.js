@@ -7,6 +7,13 @@ import StarBorderRoundedIcon from '@material-ui/icons/StarBorderRounded';
 import StarRoundedIcon from '@material-ui/icons/StarRounded';
 import Box from '@material-ui/core/Box';
 
+function getNumberAndUnit(string) {
+  return {
+    number: string.match(/\d+/g).map(Number),
+    unit: string.replace(/[0-9]/g, ''),
+  };
+}
+
 const useStyles = makeStyles({
   ratingIcon: {
     fontSize: props => props.fontSize || '40px',
@@ -20,6 +27,15 @@ const useStyles = makeStyles({
   emptyRatingIcon: {
     color: 'grey',
   },
+  count: {
+    fontSize: props =>
+      `${Math.round(getNumberAndUnit(props.fontSize).number * 0.7)}${
+        getNumberAndUnit(props.fontSize).unit
+      }` || '40px',
+    color: 'grey',
+    display: 'inline-block',
+    paddingLeft: '4px',
+  },
 });
 
 export default function RatingStars({
@@ -29,6 +45,7 @@ export default function RatingStars({
   fontSize,
   onChange,
   labels,
+  count,
 }) {
   const defaultClasses = useStyles({ fontSize });
 
@@ -40,7 +57,8 @@ export default function RatingStars({
   return (
     <div className={`${defaultClasses.root} ${className} ${classes.root}`}>
       <Rating
-        initialRating={value}
+        initialRating={Math.round(value * 2) / 2}
+        fractions={onChange ? 1 : 2}
         emptySymbol={
           <StarBorderRoundedIcon
             className={`${defaultClasses.ratingIcon} ${classes.ratingIcon} ${
@@ -58,6 +76,7 @@ export default function RatingStars({
         readonly={!onChange}
         onChange={onChange}
       />
+      {count ? <div className={defaultClasses.count}>({count})</div> : null}
       {labels ? (
         <Box className={defaultClasses.ratingLabel}>{labels[value] || '•'}</Box>
       ) : null}
@@ -71,5 +90,6 @@ RatingStars.propTypes = {
   labels: PropTypes.object,
   className: PropTypes.string,
   value: PropTypes.number,
+  count: PropTypes.number,
   onChange: PropTypes.func,
 };

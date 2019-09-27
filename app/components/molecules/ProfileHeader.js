@@ -3,10 +3,13 @@ import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 import IconWithNumber from 'components/molecules/IconWithNumber';
 import Avatar from 'components/molecules/Avatar';
-import StarRating from 'components/molecules/StarRating';
 import CenteredDiv from 'components/atoms/CenteredDiv';
 import FullName from 'components/molecules/FullName';
 import OnlineStatus from 'components/molecules/OnlineStatus';
+import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
+import ThumbDownOutlinedIcon from '@material-ui/icons/ThumbDownOutlined';
+import { makeStyles } from '@material-ui/core';
+import RatingStars from 'components/molecules/RatingStars';
 
 const Container = styled('div')`
   display: flex;
@@ -32,14 +35,16 @@ const UserOnlineStatus = styled(OnlineStatus)`
   margin-bottom: 20px;
 `;
 
-const Likes = styled(IconWithNumber)`
-  font-size: 1.5rem;
-`;
-
 const imgStyle = {
   width: '120px',
   border: '2px solid rgba(228, 222, 153, 0.54)',
 };
+
+const useStyles = makeStyles(theme => ({
+  metricIcon: {
+    fontSize: '1.2rem',
+  },
+}));
 
 function ProfileHeader({
   likes,
@@ -50,26 +55,47 @@ function ProfileHeader({
   lastName,
   rating,
   className,
+  online,
+  lastSeen,
   children,
 }) {
+  const classes = useStyles();
+
   return (
     <Container className={className}>
-      <UserOnlineStatus online={false} lastSeen={new Date()} />
+      {online && lastSeen ? (
+        <UserOnlineStatus online={online} lastSeen={lastSeen} />
+      ) : null}
       <TopContainer>
         <CenterDiv grow="1">
-          <Likes iconColor="green" icon="smile" metric={likes} />
+          <IconWithNumber
+            className={classes.metricIcon}
+            iconColor="green"
+            Icon={ThumbUpAltOutlinedIcon}
+            metric={likes}
+          />
         </CenterDiv>
         <CenterDiv grow="2">
           <Avatar imgStyle={imgStyle} imgSrc={imgSrc} isApproved={isApproved} />
         </CenterDiv>
         <CenterDiv grow="1">
-          <Likes iconColor="red" icon="frown" metric={dislikes} />
+          <IconWithNumber
+            className={classes.metricIcon}
+            iconColor="red"
+            Icon={ThumbDownOutlinedIcon}
+            metric={dislikes}
+          />
         </CenterDiv>
       </TopContainer>
       <CenterDiv>
         <ProfileName user={{ firstName, lastName }} />
         {rating.value ? (
-          <StarRating score={Math.ceil(rating.value / rating.count) * 2} />
+          <RatingStars
+            fontSize="20px"
+            value={rating.value / rating.count}
+            className={classes.rating}
+            count={rating.count}
+          />
         ) : null}
       </CenterDiv>
       {children}
@@ -85,6 +111,8 @@ ProfileHeader.propTypes = {
   isApproved: PropTypes.bool,
   firstName: PropTypes.string,
   lastName: PropTypes.string,
+  online: PropTypes.bool,
+  lastSeen: PropTypes.instanceOf(Date),
   rating: PropTypes.object,
   children: PropTypes.any,
 };

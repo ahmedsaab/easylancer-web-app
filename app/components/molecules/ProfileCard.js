@@ -5,6 +5,7 @@ import { MDBBtn, MDBCard, MDBCardBody, MDBIcon } from 'mdbreact';
 import Avatar from 'components/molecules/Avatar';
 import LikesMetric from 'components/molecules/LikesMetric';
 import styled from 'styled-components';
+import { makeStyles } from '@material-ui/core';
 
 const ProfileCardContainer = styled(MDBCard).attrs(() => ({
   testimonial: true,
@@ -43,7 +44,16 @@ const ViewProfileLink = styled('a')`
   padding-right: 20px;
 `;
 
+const useStyles = makeStyles(theme => ({
+  likes: {
+    fontSize: '22px',
+    fontWeight: '600',
+  },
+}));
+
 function ProfileCard({ user }) {
+  const classes = useStyles();
+
   return (
     <ProfileCardContainer>
       <Avatar
@@ -65,10 +75,7 @@ function ProfileCard({ user }) {
           <MDBIcon icon="chevron-right" />
         </GoToProfileButton>
         <LikesMetric
-          style={{
-            fontSize: '22px',
-            fontWeight: '600',
-          }}
+          className={classes.likes}
           likes={user.likes}
           dislikes={user.dislikes}
         />

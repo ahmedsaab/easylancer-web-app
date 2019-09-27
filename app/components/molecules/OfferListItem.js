@@ -6,28 +6,59 @@ import Avatar from 'components/molecules/Avatar';
 import ButtonListItem from 'components/atoms/ButtonListItem';
 import PriceTag from 'components/molecules/PriceTag';
 import LikesMetric from 'components/molecules/LikesMetric';
-import StarRating from 'components/molecules/StarRating';
-
-const PriceTagContainer = styled.div.attrs(() => ({
-  className: 'flex-shrink-1',
-}))`
-  font-size: 1.3rem;
-`;
+import RatingStars from 'components/molecules/RatingStars';
+import { makeStyles } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import FullName from 'components/molecules/FullName';
 
 const MiddleContainer = styled.div.attrs(() => ({
   className: 'flex-grow-1',
 }))`
   padding-left: 20px;
-  padding-right: 20px;
+  padding-right: 10px;
   font-size: 1rem;
 `;
 
-const WorkerRating = styled(StarRating)`
-  float: left;
-  padding-right: 20px;
-`;
+const useStyles = makeStyles(theme => ({
+  rating: {
+    float: 'left',
+    paddingRight: theme.spacing(2),
+  },
+  likes: {
+    marginTop: theme.spacing(0.5),
+    float: 'left',
+    fontSize: '12px',
+  },
+  price: {
+    fontSize: '1rem',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    [theme.breakpoints.up('sm')]: {
+      flexDirection: 'row-reverse',
+    },
+  },
+  paymentMethod: {
+    [theme.breakpoints.up('sm')]: {
+      paddingRight: theme.spacing(1),
+    },
+  },
+  priceContainer: {
+    minWidth: '50px',
+  },
+  name: {
+    fontSize: '14px',
+  },
+}));
+
+const imgStyle = {
+  width: '60px',
+  border: '2px solid white',
+};
 
 function OfferListItem({ offer, isSelected, isAssigned, onClick, disabled }) {
+  const classes = useStyles();
+
   return (
     <ButtonListItem
       assigned={isAssigned}
@@ -38,38 +69,46 @@ function OfferListItem({ offer, isSelected, isAssigned, onClick, disabled }) {
       <div className="d-flex">
         <div className="flex-shrink-1">
           <Avatar
-            imgStyle={{ width: '80px', border: '2px solid white' }}
+            imgStyle={imgStyle}
             imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
             isApproved={offer.workerUser.approved}
           />
         </div>
         <MiddleContainer>
-          <div>
-            <div className="d-flex">
-              {offer.workerUser.firstName} {offer.workerUser.lastName}
-            </div>
-            <div style={{ paddingTop: '5px' }}>
-              {offer.workerUser.ratings.value ? (
-                <WorkerRating
-                  score={
-                    Math.ceil(
-                      offer.workerUser.ratings.value /
-                        offer.workerUser.ratings.count,
-                    ) * 2
+          <Grid container spacing={0}>
+            <Grid item xs={12} sm={6}>
+              <FullName user={offer.workerUser} className={classes.name} />
+            </Grid>
+            {offer.workerUser.ratings.value ? (
+              <Grid item xs={12} sm={6}>
+                <RatingStars
+                  fontSize="15px"
+                  value={
+                    offer.workerUser.ratings.value /
+                    offer.workerUser.ratings.count
                   }
+                  className={classes.rating}
+                  count={offer.workerUser.ratings.count}
                 />
-              ) : null}
+              </Grid>
+            ) : null}
+            <Grid item xs={12} sm={6}>
               <LikesMetric
-                style={{ float: 'left' }}
+                className={classes.likes}
                 likes={offer.workerUser.likes}
                 dislikes={offer.workerUser.dislikes}
               />
-            </div>
-          </div>
+            </Grid>
+          </Grid>
         </MiddleContainer>
-        <PriceTagContainer>
-          <PriceTag price={offer.price} paymentMethod={offer.paymentMethod} />
-        </PriceTagContainer>
+        <div className={classes.priceContainer}>
+          <PriceTag
+            className={classes.price}
+            price={offer.price}
+            paymentMethod={offer.paymentMethod}
+            classes={{ method: classes.paymentMethod }}
+          />
+        </div>
       </div>
     </ButtonListItem>
   );

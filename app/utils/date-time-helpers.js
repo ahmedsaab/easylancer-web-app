@@ -13,3 +13,10 @@ export function formatTaskCreatedAt(createdAt) {
     .local()
     .format('MMM D, YYYY');
 }
+
+export function formatProfileCreatedAtDate(createdAt) {
+  return moment
+    .utc(createdAt)
+    .local()
+    .format('MMM D, YYYY');
+}

@@ -5,8 +5,8 @@ import CenteredDiv from 'components/atoms/CenteredDiv';
 
 const ContentContainer = styled(CenteredDiv)`
   background: #f9f9f9bf;
-  padding-left: 15%;
-  padding-right: 15%;
+  padding-left: 25%;
+  padding-right: 25%;
   @media (max-width: 599px) {
     padding-left: 10%;
     padding-right: 10%;
@@ -14,18 +14,18 @@ const ContentContainer = styled(CenteredDiv)`
 `;
 
 const Summary = styled.div`
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: bold;
   text-align: center;
 `;
 
 const Details = styled.div`
-  font-size: 1rem;
+  font-size: 0.8rem;
   text-align: center;
 `;
 
 const Picture = styled.img`
-  width: 200px;
+  width: 150px;
   padding-top: 10px;
   padding-bottom: 20px;
 `;

@@ -1,11 +1,20 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import { MDBIcon } from 'mdbreact';
+import { makeStyles } from '@material-ui/core';
 
-function IconWithNumber({ metric, icon, iconColor, className }) {
+const useStyles = makeStyles(theme => ({
+  icon: {
+    marginRight: theme.spacing(1),
+    fontSize: 'inherit',
+  },
+}));
+
+function IconWithNumber({ metric, Icon, iconColor, className }) {
+  const classes = useStyles();
+
   return (
     <div className={className}>
-      <MDBIcon className="mr-1" style={{ color: iconColor }} far icon={icon} />
+      <Icon className={classes.icon} style={{ color: iconColor }} />
       {metric}
     </div>
   );
@@ -14,7 +23,7 @@ function IconWithNumber({ metric, icon, iconColor, className }) {
 IconWithNumber.propTypes = {
   iconColor: PropTypes.string,
   metric: PropTypes.number,
-  icon: PropTypes.string,
+  Icon: PropTypes.any,
   className: PropTypes.string,
 };
 

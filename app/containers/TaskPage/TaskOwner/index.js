@@ -29,6 +29,10 @@ const useStyles = makeStyles(theme => ({
     flex: 3,
     paddingLeft: theme.spacing(2),
   },
+  likes: {
+    fontSize: '16px',
+    paddingTop: '8px',
+  },
 }));
 
 export default function TaskOwner({ user }) {
@@ -45,10 +49,7 @@ export default function TaskOwner({ user }) {
       <div className={classes.data}>
         <FullName className={classes.name} user={user} />
         <LikesMetric
-          style={{
-            fontSize: '16px',
-            paddingTop: '8px',
-          }}
+          className={classes.likes}
           likes={user.likes}
           dislikes={user.dislikes}
         />

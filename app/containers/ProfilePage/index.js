@@ -7,56 +7,114 @@ import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core';
 import FitPage from 'components/atoms/FitPage';
 import Spinner from 'components/atoms/Spinner';
 import Grid from '@material-ui/core/Grid';
 import { makeSelectProfilePageProfileProp } from 'containers/ProfilePage/selectors';
 import { loadProfile } from 'containers/ProfilePage/actions';
-import saga from './saga';
+import Paper from '@material-ui/core/Paper';
+import AppBar from '@material-ui/core/AppBar/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import { TabPanel } from 'containers/ProfilePage/TabPanel';
+import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
+import ProfileHeader from 'components/molecules/ProfileHeader';
+import { StudioTab } from 'containers/ProfilePage/StudioTab';
+import { DetailsTab } from 'containers/ProfilePage/DetailsTab';
+import Divider from '@material-ui/core/Divider';
+import { makeSelectGlobalUser } from 'containers/App/selectors';
+import EditIcon from '@material-ui/icons/Edit';
+import Button from '@material-ui/core/Button';
 import reducer from './reducer';
+import saga from './saga';
 
 const useStyles = makeStyles(theme => ({
-  data: {
-    padding: '20px',
-    margin: '0',
-    marginBottom: theme.spacing(2),
+  info: {
     backgroundColor: '#fff',
+    padding: theme.spacing(2, 2, 3, 2),
     backgroundClip: 'padding-box',
     border: '1px solid rgba(0,0,0,0.2)',
     outline: 0,
   },
+  tabs: {
+    backgroundColor: '#fff',
+    backgroundClip: 'padding-box',
+    border: '1px solid rgba(0,0,0,0.2)',
+  },
   container: {
-    padding: theme.spacing(1, 1, 0, 1),
+    padding: theme.spacing(1, 1, 1, 1),
     maxWidth: '1000px',
+    width: '100%',
     marginLeft: 'auto',
     marginRight: 'auto',
   },
-  widgets: {
-    [theme.breakpoints.up('md')]: {
-      margin: theme.spacing(0, 2),
-    },
+  tabContent: {
+    margin: theme.spacing(2, 3),
+  },
+  extendedHeader: {
+    padding: theme.spacing(1, 1, 1, 1),
+  },
+  divider: {
+    margin: theme.spacing(2, 0),
+  },
+  editButton: {
+    padding: theme.spacing(1, 2),
+    fontSize: '0.8rem',
+  },
+  buttons: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    flexDirection: 'column',
+  },
+  header: {
+    marginTop: theme.spacing(2),
+  },
+  editIcon: {
+    marginRight: theme.spacing(0.7),
+    fontSize: '1rem',
   },
 }));
 
-export function ProfilePage({ match, loading, error, profile, onPageLoad }) {
+export function ProfilePage({
+  match,
+  loading,
+  error,
+  profile,
+  user,
+  onPageLoad,
+  onEditProfileButtonClick,
+}) {
   useInjectReducer({ key: 'profilePage', reducer });
   useInjectSaga({ key: 'profilePage', saga });
   const classes = useStyles();
+  const theme = useTheme();
+  const compact = useMediaQuery(theme.breakpoints.down('sm'));
   const ref = useRef(null);
   const { id } = match.params;
+  const [tab, setTab] = React.useState('details');
+
+  if (!compact && tab === 'details') {
+    setTab('studio');
+  }
 
   useEffect(() => {
     onPageLoad(id);
   }, [id]);
 
-  if (loading) {
+  const onChangeTab = (event, newTab) => {
+    setTab(newTab);
+  };
+
+  if (loading || !user) {
     return (
       <FitPage>
         <Spinner dimension="50px" />
       </FitPage>
     );
   }
+
+  const isOwnProfile = user.id === profile.id;
 
   if (error) {
     return <div>{JSON.stringify(error.message)}</div>;
@@ -68,9 +126,86 @@ export function ProfilePage({ match, loading, error, profile, onPageLoad }) {
         <title>ProfilePage</title>
         <meta name="description" content="Description of ProfilePage" />
       </Helmet>
-      <Grid className={classes.container} container spacing={0}>
+      <Grid className={classes.container} container spacing={2}>
+        <Grid item xs={12} md={4}>
+          <Paper elevation={0} className={classes.info}>
+            {isOwnProfile ? (
+              <div className={classes.buttons}>
+                <Button
+                  flex={2}
+                  color="primary"
+                  className={classes.editButton}
+                  onClick={onEditProfileButtonClick}
+                >
+                  <EditIcon className={classes.editIcon} />
+                  Edit
+                </Button>
+              </div>
+            ) : null}
+            <ProfileHeader
+              className={classes.header}
+              likes={profile.likes}
+              dislikes={profile.dislikes}
+              imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
+              isApproved={profile.approved}
+              firstName={profile.firstName}
+              lastName={profile.lastName}
+              rating={profile.ratings}
+            />
+            {!compact ? (
+              <Divider className={classes.divider} orientation="horizontal" />
+            ) : null}
+            <DetailsTab
+              visible={!compact}
+              className={classes.extendedHeader}
+              tags={profile.tags}
+              about={profile.about}
+              createdAt={profile.createdAt}
+              languages={[]}
+            />
+          </Paper>
+        </Grid>
         <Grid item xs={12} md={8}>
-          {JSON.stringify({ match, loading, error, profile })}
+          <Paper elevation={0} className={classes.tabs}>
+            <AppBar position="static" color="default">
+              <Tabs
+                value={tab}
+                onChange={onChangeTab}
+                indicatorColor="primary"
+                textColor="primary"
+                centered
+                variant="fullWidth"
+                scrollButtons="auto"
+              >
+                {compact ? <Tab label="Details" value="details" /> : null}
+                <Tab label={`Studio (${[].length})`} value="studio" />
+                <Tab label="Reviews" value="reviews" />
+              </Tabs>
+            </AppBar>
+            <TabPanel
+              className={classes.tabContent}
+              visible={tab === 'details' && compact}
+            >
+              <DetailsTab
+                tags={profile.tags}
+                about={profile.about}
+                createdAt={profile.createdAt}
+                languages={[]}
+              />
+            </TabPanel>
+            <TabPanel className={classes.tabContent} visible={tab === 'studio'}>
+              <StudioTab
+                imagesUrls={[]}
+                onAddImages={isOwnProfile ? onEditProfileButtonClick : null}
+              />
+            </TabPanel>
+            <TabPanel
+              className={classes.tabContent}
+              visible={tab === 'reviews'}
+            >
+              Reviews tab
+            </TabPanel>
+          </Paper>
         </Grid>
       </Grid>
     </div>
@@ -83,16 +218,19 @@ ProfilePage.propTypes = {
       id: PropTypes.node,
     }).isRequired,
   }).isRequired,
+  user: PropTypes.object,
   profile: PropTypes.object,
   loading: PropTypes.bool,
   error: PropTypes.instanceOf(Error),
   onPageLoad: PropTypes.func,
+  onEditProfileButtonClick: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   profile: makeSelectProfilePageProfileProp('data'),
   loading: makeSelectProfilePageProfileProp('loading'),
   error: makeSelectProfilePageProfileProp('error'),
+  user: makeSelectGlobalUser(),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -101,6 +239,9 @@ const mapDispatchToProps = dispatch => ({
     // dispatch(loadProfileGoodReviews(id));
     // dispatch(loadProfileBadReviews(id));
     // dispatch(loadProfileOpenTasks(id));
+  },
+  onEditProfileButtonClick: () => {
+    alert('clicked edit profile');
   },
 });
 
