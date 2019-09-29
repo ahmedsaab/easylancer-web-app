@@ -326,7 +326,7 @@ const taskPageReducer = (state = initialState, action) =>
         break;
 
       case EDIT_TASK_ERROR:
-        draft.finishModal.isLoading = false;
+        draft.editModal.isLoading = false;
         break;
 
       case UPDATE_FINISH_MODAL_IS_OPEN:

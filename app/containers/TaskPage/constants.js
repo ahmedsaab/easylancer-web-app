@@ -59,12 +59,3 @@ export const UPDATE_FINISH_MODAL_FORM_GENERAL =
 export const FINISH_TASK = 'app/TaskPage/FINISH_TASK';
 export const FINISH_TASK_SUCCESS = 'app/TaskPage/FINISH_TASK_SUCCESS';
 export const FINISH_TASK_ERROR = 'app/TaskPage/FINISH_TASK_ERROR';
-
-export const TASK_STATUSES = [
-  'open',
-  'assigned',
-  'in-progress',
-  'done',
-  'not-done',
-  'cancelled',
-];

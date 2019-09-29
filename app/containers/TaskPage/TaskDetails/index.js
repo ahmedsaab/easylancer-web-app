@@ -77,6 +77,7 @@ function TaskDetails({ task, google }) {
                 Photos
               </SectionHeader>
               <LightBoxImagesGrid
+                imageHeight={140}
                 className={classes.section}
                 images={task.imagesUrls}
               />

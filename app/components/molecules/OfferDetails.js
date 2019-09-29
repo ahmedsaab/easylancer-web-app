@@ -46,7 +46,7 @@ function OfferDetails({ offer, task, children }) {
       <ProfileHeader
         likes={offer.workerUser.likes}
         dislikes={offer.workerUser.dislikes}
-        imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
+        imgSrc={offer.workerUser.imageUrl}
         isApproved={offer.workerUser.approved}
         firstName={offer.workerUser.firstName}
         lastName={offer.workerUser.lastName}

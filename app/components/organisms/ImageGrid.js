@@ -16,6 +16,7 @@ const useStyles = makeStyles(theme => ({
   gridList: {
     width: '100%',
     height: 'auto',
+    margin: '0 !important',
   },
 }));
 
@@ -40,12 +41,12 @@ const ClickableGridListTile = styled(GridListTile)`
   }
 `;
 
-export default function ImageGrid({ tiles }) {
+export default function ImageGrid({ tiles, cellHeight }) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <GridList cellHeight={160} className={classes.gridList} cols={3}>
+      <GridList cellHeight={cellHeight} className={classes.gridList} cols={3}>
         {tiles.map(tile => (
           <ClickableGridListTile
             onClick={tile.onClick}
@@ -62,4 +63,5 @@ export default function ImageGrid({ tiles }) {
 
 ImageGrid.propTypes = {
   tiles: PropTypes.array.isRequired,
+  cellHeight: PropTypes.number.isRequired
 };

@@ -37,6 +37,8 @@ const UserOnlineStatus = styled(OnlineStatus)`
 
 const imgStyle = {
   width: '120px',
+  height: '120px',
+  objectFit: 'cover',
   border: '2px solid rgba(228, 222, 153, 0.54)',
 };
 

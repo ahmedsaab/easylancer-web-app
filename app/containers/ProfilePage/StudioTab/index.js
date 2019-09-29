@@ -20,6 +20,16 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1),
     fontSize: '1rem',
   },
+  editImagesButton: {
+    margin: theme.spacing(1),
+    padding: theme.spacing(1),
+    fontSize: '0.7rem',
+  },
+  editImagesContainer: {
+    display: 'flex',
+    flexDirection: 'columns',
+    alignItems: 'flex-end',
+  },
 }));
 
 export function StudioTab({ imagesUrls, onAddImages }) {
@@ -44,7 +54,24 @@ export function StudioTab({ imagesUrls, onAddImages }) {
       </EmptyStateContent>
     );
   }
-  return <LightBoxImagesGrid images={imagesUrls} />;
+  return (
+    <div>
+      {onAddImages ? (
+        <div className={classes.editImagesContainer}>
+          <Button
+            fullWidth
+            onClick={onAddImages}
+            color="primary"
+            className={classes.editImagesButton}
+          >
+            <AddAPhotoIcon className={classes.emptyStateButtonIcon} />
+            Edit Pictures
+          </Button>
+        </div>
+      ) : null}
+      <LightBoxImagesGrid images={imagesUrls} imageHeight={100} />
+    </div>
+  );
 }
 
 StudioTab.propTypes = {

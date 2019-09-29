@@ -111,8 +111,13 @@ function TaskAssignee({ isTaskOwner, task, offers }) {
             <WorkerAvatarContainer>
               <Avatar
                 isApproved={offer.workerUser.isApproved}
-                imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
-                imgStyle={{ width: '50px', border: '1px solid' }}
+                imgSrc={offer.workerUser.imageUrl}
+                imgStyle={{
+                  width: '50px',
+                  height: '50px',
+                  objectFit: 'cover',
+                  border: '1px solid',
+                }}
               />
             </WorkerAvatarContainer>
             <WorkerName user={offer.workerUser} />

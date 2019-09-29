@@ -135,6 +135,30 @@ export const getProfile = async id => {
   }
 };
 
+export const updateProfile = async (id, profile) => {
+  try {
+    const response = await axios.post(
+      `${process.env.CLIENT_API_ROOT}/profiles/${id}/edit`,
+      profile,
+      {
+        headers,
+      },
+    );
+
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      throw new Error(
+        `The server responded with error code ${error.response.status}`,
+      );
+    } else if (error.request) {
+      throw new Error(`Failed to read response from Server`);
+    } else {
+      throw new Error(`An unexpected error occurred`);
+    }
+  }
+};
+
 export const getTask = async id => {
   try {
     // await sleep(1000);

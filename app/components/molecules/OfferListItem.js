@@ -53,6 +53,8 @@ const useStyles = makeStyles(theme => ({
 
 const imgStyle = {
   width: '60px',
+  height: '60px',
+  objectFit: 'cover',
   border: '2px solid white',
 };
 
@@ -70,7 +72,7 @@ function OfferListItem({ offer, isSelected, isAssigned, onClick, disabled }) {
         <div className="flex-shrink-1">
           <Avatar
             imgStyle={imgStyle}
-            imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
+            imgSrc={offer.workerUser.imageUrl}
             isApproved={offer.workerUser.approved}
           />
         </div>

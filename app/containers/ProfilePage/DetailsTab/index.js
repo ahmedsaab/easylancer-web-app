@@ -9,9 +9,16 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import TranslateIcon from '@material-ui/icons/Translate';
 import LabelOutlinedIcon from '@material-ui/icons/LabelOutlined';
 import EventIcon from '@material-ui/icons/Event';
+import Tag from 'components/atoms/Tag';
+import * as langs from 'utils/languages.json';
 
 const useStyles = makeStyles(theme => ({
-  section: {},
+  container: {
+    padding: theme.spacing(0, 2),
+  },
+  about: {
+    fontStyle: 'italic',
+  },
   text: {
     color: 'grey',
     fontSize: '0.8rem',
@@ -27,20 +34,23 @@ export function DetailsTab({
   visible = true,
 }) {
   const classes = useStyles();
+  const langsTags = languages.map(l => (
+    <Tag key={l}>{langs.default[l.toLowerCase()].name}</Tag>
+  ));
 
   return (
     <Grid
-      container
-      className={className}
-      spacing={2}
+      className={`${className} ${classes.container}`}
       style={{ display: visible ? 'flex' : 'none' }}
+      container
+      spacing={2}
     >
       <Grid item xs={12}>
         <Section
           Icon={InfoOutlinedIcon}
-          className={classes.section}
+          className={classes.about}
           title="About"
-          valid={about}
+          valid={!!about}
         >
           {about}
         </Section>
@@ -50,9 +60,9 @@ export function DetailsTab({
           Icon={TranslateIcon}
           className={classes.section}
           title="Languages"
-          valid={languages.length}
+          valid={!!languages.length}
         >
-          {JSON.stringify(languages)}
+          {langsTags}
         </Section>
       </Grid>
       <Grid item xs={12}>
@@ -60,7 +70,7 @@ export function DetailsTab({
           Icon={LabelOutlinedIcon}
           className={classes.section}
           title="Tags"
-          valid={tags.length}
+          valid={!!tags.length}
         >
           <NumberedTags tags={tags} />
         </Section>
@@ -77,7 +87,7 @@ export function DetailsTab({
 }
 
 DetailsTab.propTypes = {
-  createdAt: PropTypes.instanceOf(Date),
+  createdAt: PropTypes.number,
   languages: PropTypes.array,
   about: PropTypes.string,
   tags: PropTypes.array,

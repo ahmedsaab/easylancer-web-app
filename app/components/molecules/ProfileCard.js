@@ -56,10 +56,7 @@ function ProfileCard({ user }) {
 
   return (
     <ProfileCardContainer>
-      <Avatar
-        imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
-        isApproved={user.approved}
-      />
+      <Avatar imgSrc={user.imageUrl} isApproved={user.approved} />
       <ProfileCardBody>
         <ProfileCardHeader>
           <div>

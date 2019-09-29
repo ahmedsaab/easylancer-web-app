@@ -16,11 +16,12 @@ class LightBoxImagesGrid extends React.Component {
 
   render() {
     const { photoIndex, isOpen } = this.state;
-    const { images, className } = this.props;
+    const { images, className, imageHeight } = this.props;
 
     return (
       <div className={className}>
         <ImageGrid
+          cellHeight={imageHeight}
           tiles={images.map((url, i) => ({
             img: url,
             title: '',
@@ -53,6 +54,7 @@ class LightBoxImagesGrid extends React.Component {
 }
 LightBoxImagesGrid.propTypes = {
   images: PropTypes.array.isRequired,
+  imageHeight: PropTypes.number.isRequired,
   className: PropTypes.string,
 };
 

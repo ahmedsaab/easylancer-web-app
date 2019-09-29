@@ -27,6 +27,8 @@ import Typography from '@material-ui/core/Typography';
 
 const imgStyle = {
   width: '120px',
+  height: '120px',
+  objectFit: 'cover',
   border: '2px solid rgba(228, 222, 153, 0.54)',
 };
 
@@ -74,7 +76,7 @@ function TaskAssignedModal({ isOpen, task, offer, onDismiss }) {
         <InformativeDiv>
           <Avatar
             imgStyle={imgStyle}
-            imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
+            imgSrc={offer.workerUser.imageUrl}
             isApproved={offer.workerUser.isApproved || true}
           />
           <WorkerName user={offer.workerUser} />

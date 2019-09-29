@@ -11,8 +11,14 @@ import { makeStyles, useTheme } from '@material-ui/core';
 import FitPage from 'components/atoms/FitPage';
 import Spinner from 'components/atoms/Spinner';
 import Grid from '@material-ui/core/Grid';
-import { makeSelectProfilePageProfileProp } from 'containers/ProfilePage/selectors';
-import { loadProfile } from 'containers/ProfilePage/actions';
+import {
+  makeSelectProfilePageEditModalProp,
+  makeSelectProfilePageProfileProp,
+} from 'containers/ProfilePage/selectors';
+import {
+  loadProfile,
+  updateProfileEditModalIsOpen,
+} from 'containers/ProfilePage/actions';
 import Paper from '@material-ui/core/Paper';
 import AppBar from '@material-ui/core/AppBar/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -24,8 +30,15 @@ import { StudioTab } from 'containers/ProfilePage/StudioTab';
 import { DetailsTab } from 'containers/ProfilePage/DetailsTab';
 import Divider from '@material-ui/core/Divider';
 import { makeSelectGlobalUser } from 'containers/App/selectors';
-import EditIcon from '@material-ui/icons/Edit';
+import EditProfileModal from 'containers/ProfilePage/EditProfileModal';
+import SettingsIcon from '@material-ui/icons/Settings';
+import IconButton from '@material-ui/core/IconButton';
+import PersonIcon from '@material-ui/icons/Person';
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+import GradeIcon from '@material-ui/icons/Grade';
 import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/Edit';
+import Badge from '@material-ui/core/Badge';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -43,14 +56,14 @@ const useStyles = makeStyles(theme => ({
     border: '1px solid rgba(0,0,0,0.2)',
   },
   container: {
-    padding: theme.spacing(1, 1, 1, 1),
+    padding: theme.spacing(1, 0.25, 1, 0.25),
     maxWidth: '1000px',
     width: '100%',
     marginLeft: 'auto',
     marginRight: 'auto',
   },
   tabContent: {
-    margin: theme.spacing(2, 3),
+    margin: theme.spacing(2, 1),
   },
   extendedHeader: {
     padding: theme.spacing(1, 1, 1, 1),
@@ -58,21 +71,25 @@ const useStyles = makeStyles(theme => ({
   divider: {
     margin: theme.spacing(2, 0),
   },
-  editButton: {
-    padding: theme.spacing(1, 2),
-    fontSize: '0.8rem',
-  },
   buttons: {
     display: 'flex',
     alignItems: 'flex-end',
     flexDirection: 'column',
+    marginBottom: theme.spacing(-3),
   },
-  header: {
-    marginTop: theme.spacing(2),
+  editButton: {
+    padding: theme.spacing(1, 2),
+    fontSize: '0.8rem',
   },
   editIcon: {
     marginRight: theme.spacing(0.7),
     fontSize: '1rem',
+  },
+  imagesIcon: {
+    margin: theme.spacing(2),
+  },
+  header: {
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -82,6 +99,7 @@ export function ProfilePage({
   error,
   profile,
   user,
+  isEdit,
   onPageLoad,
   onEditProfileButtonClick,
 }) {
@@ -106,7 +124,11 @@ export function ProfilePage({
     setTab(newTab);
   };
 
-  if (loading || !user) {
+  if (error) {
+    return <div>{JSON.stringify(error.message)}</div>;
+  }
+
+  if (loading || !user || !profile) {
     return (
       <FitPage>
         <Spinner dimension="50px" />
@@ -116,21 +138,21 @@ export function ProfilePage({
 
   const isOwnProfile = user.id === profile.id;
 
-  if (error) {
-    return <div>{JSON.stringify(error.message)}</div>;
-  }
-
   return (
     <div ref={ref}>
       <Helmet>
         <title>ProfilePage</title>
         <meta name="description" content="Description of ProfilePage" />
       </Helmet>
+      {isOwnProfile && isEdit ? <EditProfileModal /> : null}
       <Grid className={classes.container} container spacing={2}>
         <Grid item xs={12} md={4}>
           <Paper elevation={0} className={classes.info}>
             {isOwnProfile ? (
               <div className={classes.buttons}>
+                {/* <IconButton color="primary"> */}
+                {/*  <SettingsIcon /> */}
+                {/* </IconButton> */}
                 <Button
                   flex={2}
                   color="primary"
@@ -146,7 +168,7 @@ export function ProfilePage({
               className={classes.header}
               likes={profile.likes}
               dislikes={profile.dislikes}
-              imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
+              imgSrc={profile.imageUrl}
               isApproved={profile.approved}
               firstName={profile.firstName}
               lastName={profile.lastName}
@@ -161,7 +183,7 @@ export function ProfilePage({
               tags={profile.tags}
               about={profile.about}
               createdAt={profile.createdAt}
-              languages={[]}
+              languages={profile.languages}
             />
           </Paper>
         </Grid>
@@ -177,9 +199,35 @@ export function ProfilePage({
                 variant="fullWidth"
                 scrollButtons="auto"
               >
-                {compact ? <Tab label="Details" value="details" /> : null}
-                <Tab label={`Studio (${[].length})`} value="studio" />
-                <Tab label="Reviews" value="reviews" />
+                {compact ? <Tab icon={<PersonIcon />} value="details" /> : null}
+                <Tab
+                  label={
+                    <Badge
+                      className={classes.imagesIcon}
+                      badgeContent={
+                        profile.imagesUrls.length > 0
+                          ? profile.imagesUrls.length
+                          : null
+                      }
+                      color="secondary"
+                    >
+                      <PhotoLibraryIcon />
+                    </Badge>
+                  }
+                  value="studio"
+                />
+                <Tab
+                  label={
+                    <Badge
+                      className={classes.imagesIcon}
+                      badgeContent={null}
+                      color="secondary"
+                    >
+                      <GradeIcon />
+                    </Badge>
+                  }
+                  value="reviews"
+                />
               </Tabs>
             </AppBar>
             <TabPanel
@@ -190,12 +238,12 @@ export function ProfilePage({
                 tags={profile.tags}
                 about={profile.about}
                 createdAt={profile.createdAt}
-                languages={[]}
+                languages={profile.languages}
               />
             </TabPanel>
             <TabPanel className={classes.tabContent} visible={tab === 'studio'}>
               <StudioTab
-                imagesUrls={[]}
+                imagesUrls={profile.imagesUrls}
                 onAddImages={isOwnProfile ? onEditProfileButtonClick : null}
               />
             </TabPanel>
@@ -224,9 +272,11 @@ ProfilePage.propTypes = {
   error: PropTypes.instanceOf(Error),
   onPageLoad: PropTypes.func,
   onEditProfileButtonClick: PropTypes.func,
+  isEdit: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
+  isEdit: makeSelectProfilePageEditModalProp('isOpen'),
   profile: makeSelectProfilePageProfileProp('data'),
   loading: makeSelectProfilePageProfileProp('loading'),
   error: makeSelectProfilePageProfileProp('error'),
@@ -241,7 +291,7 @@ const mapDispatchToProps = dispatch => ({
     // dispatch(loadProfileOpenTasks(id));
   },
   onEditProfileButtonClick: () => {
-    alert('clicked edit profile');
+    dispatch(updateProfileEditModalIsOpen(true));
   },
 });
 

@@ -95,7 +95,7 @@ function SideBar({
           {user ? (
             <SideBarUser onClick={() => onProfileButtonClick(user.id)}>
               <ImagePlaceholder>
-                <SideBarUserImage src="https://i.pravatar.cc/55" />
+                <SideBarUserImage src={user.imageUrl} />
               </ImagePlaceholder>
               <SideBarUserData>
                 <SideBarUserData>
@@ -202,6 +202,7 @@ const mapDispatchToProps = dispatch => ({
   onProfileButtonClick: userId => {
     history.push(`/profile/${userId}`);
     dispatch(toggleSideNav(false));
+    dispatch(setBodyScroll(true));
   },
   onUpdateUserModeCheck: event => {
     const newRole = event.target.checked ? 'WORKER' : 'OWNER';

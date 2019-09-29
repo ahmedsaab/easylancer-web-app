@@ -9,14 +9,32 @@ export const makeSelectProfilePage = () =>
     subState => subState,
   );
 
+export const makeSelectProfilePageId = () =>
+  createSelector(
+    selectProfilePageDomain,
+    subState => subState.id,
+  );
+
 export const makeSelectProfilePageProfile = () =>
   createSelector(
     selectProfilePageDomain,
     subState => subState.profile,
   );
 
+export const makeSelectProfilePageEditModal = () =>
+  createSelector(
+    selectProfilePageDomain,
+    subState => subState.editModal,
+  );
+
 export const makeSelectProfilePageProfileProp = prop =>
   createSelector(
     makeSelectProfilePageProfile(),
+    subState => subState[prop],
+  );
+
+export const makeSelectProfilePageEditModalProp = prop =>
+  createSelector(
+    makeSelectProfilePageEditModal(),
     subState => subState[prop],
   );

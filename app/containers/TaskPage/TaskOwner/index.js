@@ -41,9 +41,9 @@ export default function TaskOwner({ user }) {
   return (
     <Paper elevation={0} className={classes.container}>
       <Avatar
-        imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
+        imgSrc={user.imageUrl}
         isApproved={user.approved}
-        imgStyle={{ width: '80px' }}
+        imgStyle={{ width: '80px', height: '80px', objectFit: 'cover' }}
         className={classes.image}
       />
       <div className={classes.data}>
