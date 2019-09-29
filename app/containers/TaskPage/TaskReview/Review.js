@@ -39,6 +39,7 @@ const useStyles = makeStyles(theme => ({
   },
   review: {
     display: 'flex',
+    cursor: 'pointer',
   },
   hiddenOverflow: {
     overflow: 'hidden',
@@ -60,15 +61,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Review({ user, isOwner, review }) {
+export default function Review({ user, isOwner, review, onClick }) {
   const classes = useStyles();
 
   return (
-    <div className={classes.review}>
+    <div className={classes.review} onClick={onClick}>
       <div className={classes.imageAndName}>
         <Avatar
-          imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
-          imgStyle={{ width: '60px' }}
+          imgSrc={user.imageUrl}
+          imgStyle={{ width: '60px', height: '60px', objectFit: 'cover' }}
           isOwner={isOwner}
           isWorker={!isOwner}
         />
@@ -106,4 +107,5 @@ Review.propTypes = {
   user: PropTypes.object,
   review: PropTypes.object,
   isOwner: PropTypes.bool,
+  onClick: PropTypes.func,
 };

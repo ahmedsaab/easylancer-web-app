@@ -24,6 +24,7 @@ const inputLabelStyles = {
   position: 'absolute',
   bottom: 0,
   overflow: 'hidden',
+  zIndex: 5,
 };
 
 const ContainerStyles = {

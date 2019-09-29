@@ -2,7 +2,7 @@ import React from 'react';
 import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import ClearSharpIcon from '@material-ui/icons/ClearSharp';
+import CancelIcon from '@material-ui/icons/Cancel';
 import ReplayIcon from '@material-ui/icons/Replay';
 import CenteredDiv from 'components/atoms/CenteredDiv';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -29,7 +29,7 @@ const CenterIcon = styled(CenteredDiv)`
   position: absolute;
 `;
 
-const RemoveIcon = styled(ClearSharpIcon)`
+const RemoveIcon = styled(CancelIcon)`
   color: #989898;
   position: absolute;
   font-size: 22px;

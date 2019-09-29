@@ -12,6 +12,7 @@ import {
 import styled from 'styled-components';
 import FullName from 'components/molecules/FullName';
 import Location from 'components/molecules/Location';
+import Avatar from 'components/molecules/Avatar';
 
 const CardResp = styled(MDBCard)`
   margin: 4px !important;
@@ -46,8 +47,9 @@ const TaskLocation = styled(Location)`
   font-size: 0.8rem;
 `;
 
-const CardOwnerImg = styled('img')`
+const CardAvatar = styled(Avatar)`
   max-width: 20%;
+  display: inline;
 `;
 
 const CardPrice = styled('div')`
@@ -77,10 +79,14 @@ function TaskCard({ task, viewTaskAction }) {
       <CardFooter>
         <MDBRow>
           <MDBCol size="6" className="align-self-center">
-            <CardOwnerImg
-              src="https://i.pravatar.cc/25"
-              className="img-fluid z-depth-1 rounded-circle"
-              alt=""
+            <CardAvatar
+              imgSrc={task.creatorUser.imageUrl}
+              imgStyle={{
+                width: '20px',
+                height: '20px',
+                objectFit: 'cover',
+                border: '1px solid white',
+              }}
             />
             <CardOwnerName user={task.creatorUser} />
           </MDBCol>

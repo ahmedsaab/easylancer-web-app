@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Avatar from 'components/molecules/Avatar';
 import LikesMetric from 'components/molecules/LikesMetric';
 import FullName from 'components/molecules/FullName';
+import history from 'utils/history';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -17,6 +18,7 @@ const useStyles = makeStyles(theme => ({
     backgroundClip: 'padding-box',
     border: '1px solid rgba(0,0,0,0.2)',
     outline: 0,
+    cursor: 'pointer',
   },
   name: {
     fontSize: '20px',
@@ -39,7 +41,11 @@ export default function TaskOwner({ user }) {
   const classes = useStyles();
 
   return (
-    <Paper elevation={0} className={classes.container}>
+    <Paper
+      elevation={0}
+      className={classes.container}
+      onClick={() => history.push(`/profile/${user.id}`)}
+    >
       <Avatar
         imgSrc={user.imageUrl}
         isApproved={user.approved}

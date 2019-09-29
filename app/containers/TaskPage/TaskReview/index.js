@@ -9,6 +9,8 @@ import { makeStyles } from '@material-ui/core';
 import Review from 'containers/TaskPage/TaskReview/Review';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
+import history from 'utils/history';
+import { OfferHeader } from 'components/molecules/OfferDetails';
 
 const useStyles = makeStyles(theme => ({
   review: {
@@ -36,9 +38,18 @@ function TaskReview({ task }) {
 
   return (
     <Paper elevation={0} className={classes.review}>
-      <Review isOwner user={task.creatorUser} review={task.creatorRating} />
+      <Review
+        isOwner
+        user={task.creatorUser}
+        review={task.creatorRating}
+        onClick={() => history.push(`/profile/${task.creatorUser.id}`)}
+      />
       <Divider className={classes.divider} orientation="horizontal" />
-      <Review user={task.workerUser} review={task.workerRating} />
+      <Review
+        user={task.workerUser}
+        review={task.workerRating}
+        onClick={() => history.push(`/profile/${task.workerUser.id}`)}
+      />
     </Paper>
   );
 }

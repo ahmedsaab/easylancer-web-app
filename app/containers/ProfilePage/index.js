@@ -209,7 +209,7 @@ export function ProfilePage({
                           ? profile.imagesUrls.length
                           : null
                       }
-                      color="secondary"
+                      color="primary"
                     >
                       <PhotoLibraryIcon />
                     </Badge>

@@ -3,7 +3,6 @@ import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-import ReplayIcon from '@material-ui/icons/Replay';
 import CenteredDiv from 'components/atoms/CenteredDiv';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Avatar from 'components/molecules/Avatar';
@@ -14,13 +13,11 @@ const ProgressOverlay = styled.div`
   width: ${props => 100 - props.percent}%;
   position: absolute;
   opacity: 0.5;
+  z-index: 2;
 `;
 
-const RetryIcon = styled(ReplayIcon)`
-  background-color: #cececec7;
-  border-radius: 39px;
-  font-size: 45px;
-  cursor: pointer;
+const ProgressIndicator = styled(CircularProgress)`
+  z-index: 10;
 `;
 
 const CenterIcon = styled(CenteredDiv)`
@@ -37,17 +34,19 @@ const RemoveIcon = styled(RemoveCircleIcon)`
   z-index: 2;
   top: 4px;
   right: 6px;
+  z-index: 10;
 `;
 
-const ProgressImage = styled.img`
+const ErrorOverlay = styled(CenteredDiv)`
+  background: #ff000059;
   height: 100%;
   width: 100%;
-  top: 0;
-  left: 0;
+  position: absolute;
+  border-radius: 50%;
   z-index: 1;
-  border-radius: 1px;
-  border: 2px solid ${props => (props.error ? 'red' : 'white')};
-  object-fit: cover;
+  font-size: 12px;
+  color: white;
+  font-weight: 700;
 `;
 
 const Container = styled.div`
@@ -66,7 +65,7 @@ const FillAvatar = styled(Avatar)`
 class ProfilePhotoPreview extends React.PureComponent {
   render() {
     const {
-      fileWithMeta: { remove, restart },
+      fileWithMeta: { remove },
       meta: { percent = 0, previewUrl, status },
     } = this.props;
 
@@ -79,20 +78,21 @@ class ProfilePhotoPreview extends React.PureComponent {
 
     const loading = !errored && status !== 'ready' && status !== 'done';
 
+    // const removeIcon = status !== 'preparing' &&
+    //   status !== 'getting_upload_params' &&
+    //   status !== 'uploading' &&
+    //   status !== 'done' &&
+    //   !errored && <RemoveIcon color="error" onClick={remove} />;
+
+    const removeIcon = null;
+
     return (
       <Container>
-        {status !== 'preparing' &&
-          status !== 'getting_upload_params' &&
-          status !== 'uploading' && (
-            <RemoveIcon color="error" onClick={remove} />
-          )}
+        {removeIcon}
         <ProgressOverlay percent={loading ? percent : 100} />
-        <CenterIcon>
-          {errored && <RetryIcon fontSize="large" onClick={restart} />}
-          {loading && <CircularProgress />}
-        </CenterIcon>
+        <CenterIcon>{loading && <ProgressIndicator />}</CenterIcon>
+        {errored ? <ErrorOverlay>Invalid photo</ErrorOverlay> : null}
         <FillAvatar
-          error={errored}
           imgStyle={{ objectFit: 'cover', height: '100%', width: '100%' }}
           imgSrc={previewUrl}
           alt=""

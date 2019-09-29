@@ -10,6 +10,7 @@ const AvatarContainer = styled(MDBAvatar)`
   overflow: visible !important;
   border: none !important;
   text-align: center;
+  z-index: unset;
 `;
 
 const Badge = styled.div`

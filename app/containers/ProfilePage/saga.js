@@ -27,6 +27,7 @@ import {
   makeSelectProfilePageId,
 } from 'containers/ProfilePage/selectors';
 import { getUpdateFields } from 'containers/ProfilePage/reducer';
+import { loadUser } from 'containers/App/actions';
 
 export function* getProfile({ id }) {
   try {
@@ -45,6 +46,7 @@ export function* editProfile() {
     yield call(client.updateProfile, id, getUpdateFields(form));
     yield put(editProfileSuccess());
     yield put(loadProfile(id));
+    yield put(loadUser(id));
     history.push(`/profile/${id}`);
   } catch (err) {
     yield put(editProfileError(err));

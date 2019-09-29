@@ -133,7 +133,9 @@ export const SideBarUserImage = styled('img').attrs(() => ({
   className: 'img-fluid z-depth-1 rounded-circle',
 }))`
   height: 48px;
+  width: 48px;
   position: absolute;
+  object-fit: cover;
   top: 0;
   left: 0;
 `;

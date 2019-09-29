@@ -29,8 +29,8 @@ export function AssigneeCard({ user }) {
       <div className={classes.header}>Assignee</div>
       <CenteredDiv className={classes.container}>
         <Avatar
-          imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
-          imgStyle={{ maxWidth: '60px' }}
+          imgSrc={user.imageUrl}
+          imgStyle={{ width: '60px', height: '60px', objectFit: 'cover' }}
           className={classes.image}
         />
         <FullName className={classes.name} user={user} />

@@ -8,6 +8,7 @@ import ProfileHeader from 'components/molecules/ProfileHeader';
 import styled from 'styled-components';
 import Section from 'components/molecules/Section';
 import PriceTag from 'components/molecules/PriceTag';
+import history from 'utils/history';
 
 export const OfferDetailsContainer = styled.div`
   display: flex;
@@ -28,6 +29,10 @@ export const OfferMessage = styled.div`
   font-size: 0.9rem;
 `;
 
+export const OfferHeader = styled(ProfileHeader)`
+  cursor: pointer;
+`;
+
 function OfferDetails({ offer, task, children }) {
   const commonTags = [];
 
@@ -43,7 +48,7 @@ function OfferDetails({ offer, task, children }) {
 
   return (
     <OfferDetailsContainer>
-      <ProfileHeader
+      <OfferHeader
         likes={offer.workerUser.likes}
         dislikes={offer.workerUser.dislikes}
         imgSrc={offer.workerUser.imageUrl}
@@ -53,11 +58,12 @@ function OfferDetails({ offer, task, children }) {
         rating={offer.workerUser.ratings}
         online={false}
         lastSeen={new Date()}
+        onClick={() => history.push(`/profile/${offer.workerUser.id}`)}
       >
         <CenteredDiv>
           <OfferPrice price={offer.price} paymentMethod={offer.paymentMethod} />
         </CenteredDiv>
-      </ProfileHeader>
+      </OfferHeader>
       <OfferSection title="Message" visible={!!offer.message}>
         <OfferMessage>{offer.message}</OfferMessage>
       </OfferSection>

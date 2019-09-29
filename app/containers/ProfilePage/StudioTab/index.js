@@ -9,7 +9,6 @@ import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 const useStyles = makeStyles(theme => ({
   emptyState: {
     minHeight: '350px',
-    margin: theme.spacing(-2, -3),
   },
   emptyStateButton: {
     margin: theme.spacing(2),

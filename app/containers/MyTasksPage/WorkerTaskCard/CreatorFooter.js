@@ -27,8 +27,8 @@ export function CreatorFooter({ user }) {
   return (
     <div className={classes.container}>
       <Avatar
-        imgSrc="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
-        imgStyle={{ maxWidth: '35px' }}
+        imgSrc={user.imageUrl}
+        imgStyle={{ width: '35px', height: '35px', objectFit: 'cover' }}
         className={classes.image}
       />
       <FullName className={classes.name} user={user} />

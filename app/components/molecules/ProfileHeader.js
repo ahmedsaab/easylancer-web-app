@@ -60,11 +60,12 @@ function ProfileHeader({
   online,
   lastSeen,
   children,
+  onClick,
 }) {
   const classes = useStyles();
 
   return (
-    <Container className={className}>
+    <Container className={className} onClick={onClick}>
       {online && lastSeen ? (
         <UserOnlineStatus online={online} lastSeen={lastSeen} />
       ) : null}
@@ -117,6 +118,7 @@ ProfileHeader.propTypes = {
   lastSeen: PropTypes.instanceOf(Date),
   rating: PropTypes.object,
   children: PropTypes.any,
+  onClick: PropTypes.func,
 };
 
 export default ProfileHeader;
