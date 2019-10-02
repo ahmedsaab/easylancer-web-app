@@ -9,16 +9,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
 import { DialogTitle, makeStyles, useTheme } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQuery';
-import { TextSection } from 'components/organisms/TextSection';
 import { PhotosSection } from 'components/organisms/PhotosSection';
-import { LocationSection } from 'components/organisms/LocationSection';
-import { DateTimeSection } from 'components/organisms/DateTimeSection';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
-import DescriptionIcon from '@material-ui/icons/Description';
-import ScheduleIcon from '@material-ui/icons/Schedule';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import PersonIcon from '@material-ui/icons/Person';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import SectionHeader from 'components/molecules/SectionHeader';
 import Spinner from 'components/atoms/Spinner';
@@ -136,7 +130,7 @@ function EditProfileModal({
         <Grid container spacing={0}>
           <Grid item xs={12} sm={5}>
             <SectionHeader className={classes.iconText}>
-              <PersonIcon className={classes.icon} />
+              <AccountCircleIcon className={classes.icon} />
               <Bold className={classes.iconText}>Photo</Bold>
             </SectionHeader>
             <div className={classes.profileImage}>

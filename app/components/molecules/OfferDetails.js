@@ -49,13 +49,11 @@ function OfferDetails({ offer, task, children }) {
   return (
     <OfferDetailsContainer>
       <OfferHeader
-        likes={offer.workerUser.likes}
-        dislikes={offer.workerUser.dislikes}
         imgSrc={offer.workerUser.imageUrl}
         isApproved={offer.workerUser.approved}
         firstName={offer.workerUser.firstName}
         lastName={offer.workerUser.lastName}
-        rating={offer.workerUser.ratings}
+        rating={offer.workerUser.ratings.worker}
         online={false}
         lastSeen={new Date()}
         onClick={() => history.push(`/profile/${offer.workerUser.id}`)}

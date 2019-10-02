@@ -14,9 +14,12 @@ import Grid from '@material-ui/core/Grid';
 import {
   makeSelectProfilePageEditModalProp,
   makeSelectProfilePageProfileProp,
+  makeSelectProfilePageReviewsProp,
 } from 'containers/ProfilePage/selectors';
 import {
   loadProfile,
+  loadWorkerProfileBadReviews,
+  loadWorkerProfileGoodReviews,
   updateProfileEditModalIsOpen,
 } from 'containers/ProfilePage/actions';
 import Paper from '@material-ui/core/Paper';
@@ -35,12 +38,16 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import IconButton from '@material-ui/core/IconButton';
 import PersonIcon from '@material-ui/icons/Person';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
-import GradeIcon from '@material-ui/icons/Grade';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
-import Badge from '@material-ui/core/Badge';
-import reducer from './reducer';
+import PaginatedTaskList from 'components/molecules/PaginatedTaskList';
+import * as emptyReviewImage from 'images/customer.png';
+import EmptyStateContent from 'components/molecules/EmptyStateContent';
+import ProfileTaskReview from 'containers/ProfilePage/ProfileTaskReview';
 import saga from './saga';
+import reducer from './reducer';
 
 const useStyles = makeStyles(theme => ({
   info: {
@@ -72,10 +79,9 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(2, 0),
   },
   buttons: {
+    marginBottom: theme.spacing(-5),
     display: 'flex',
-    alignItems: 'flex-end',
-    flexDirection: 'column',
-    marginBottom: theme.spacing(-3),
+    justifyContent: 'space-between',
   },
   editButton: {
     padding: theme.spacing(1, 2),
@@ -91,6 +97,29 @@ const useStyles = makeStyles(theme => ({
   header: {
     marginTop: theme.spacing(2),
   },
+  tab: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: theme.spacing(1, 0),
+    flexWrap: 'wrap',
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: 'column',
+    },
+  },
+  tabNumber: {
+    paddingLeft: '5px',
+    fontSize: '0.7rem',
+    [theme.breakpoints.down('xs')]: {
+      padding: 0,
+    },
+  },
+  emptyState: {
+    minHeight: '350px',
+  },
+  list: {
+    padding: theme.spacing(0, 1),
+  },
 }));
 
 export function ProfilePage({
@@ -98,9 +127,13 @@ export function ProfilePage({
   loading,
   error,
   profile,
+  goodReviews,
+  badReviews,
   user,
   isEdit,
   onPageLoad,
+  onLoadMoreGoodReviews,
+  onLoadMoreBadReviews,
   onEditProfileButtonClick,
 }) {
   useInjectReducer({ key: 'profilePage', reducer });
@@ -150,9 +183,9 @@ export function ProfilePage({
           <Paper elevation={0} className={classes.info}>
             {isOwnProfile ? (
               <div className={classes.buttons}>
-                {/* <IconButton color="primary"> */}
-                {/*  <SettingsIcon /> */}
-                {/* </IconButton> */}
+                <IconButton color="primary">
+                  <SettingsIcon />
+                </IconButton>
                 <Button
                   flex={2}
                   color="primary"
@@ -166,8 +199,6 @@ export function ProfilePage({
             ) : null}
             <ProfileHeader
               className={classes.header}
-              likes={profile.likes}
-              dislikes={profile.dislikes}
               imgSrc={profile.imageUrl}
               isApproved={profile.approved}
               firstName={profile.firstName}
@@ -202,31 +233,44 @@ export function ProfilePage({
                 {compact ? <Tab icon={<PersonIcon />} value="details" /> : null}
                 <Tab
                   label={
-                    <Badge
-                      className={classes.imagesIcon}
-                      badgeContent={
-                        profile.imagesUrls.length > 0
-                          ? profile.imagesUrls.length
-                          : null
-                      }
-                      color="primary"
-                    >
-                      <PhotoLibraryIcon />
-                    </Badge>
+                    <div className={classes.tab}>
+                      {compact ? <PhotoLibraryIcon /> : <div>Studio</div>}
+                      <div className={classes.tabNumber}>
+                        {profile.imagesUrls.length > 0
+                          ? `(${profile.imagesUrls.length})`
+                          : null}
+                      </div>
+                    </div>
                   }
                   value="studio"
                 />
                 <Tab
                   label={
-                    <Badge
-                      className={classes.imagesIcon}
-                      badgeContent={null}
-                      color="secondary"
-                    >
-                      <GradeIcon />
-                    </Badge>
+                    <div className={classes.tab}>
+                      {compact ? <ThumbUpIcon /> : <div>Positive reviews</div>}
+                      <div className={classes.tabNumber}>
+                        {profile.ratings.worker.likes > 0
+                          ? `(${profile.ratings.worker.likes})`
+                          : null}
+                      </div>
+                    </div>
                   }
-                  value="reviews"
+                  value="good-reviews"
+                />
+                <Tab
+                  label={
+                    <div className={classes.tab}>
+                      {compact ? (
+                        <ThumbDownIcon />
+                      ) : (
+                        <div>Negative reviews</div>
+                      )}
+                      <div className={classes.tabNumber}>
+                        {profile.dislikes > 0 ? `(${profile.dislikes})` : null}
+                      </div>
+                    </div>
+                  }
+                  value="bad-reviews"
                 />
               </Tabs>
             </AppBar>
@@ -249,9 +293,49 @@ export function ProfilePage({
             </TabPanel>
             <TabPanel
               className={classes.tabContent}
-              visible={tab === 'reviews'}
+              visible={tab === 'good-reviews'}
             >
-              Reviews tab
+              <PaginatedTaskList
+                className={classes.list}
+                error={goodReviews.error}
+                loading={goodReviews.loading}
+                data={goodReviews.data}
+                hasNext={goodReviews.hasNext}
+                page={goodReviews.page}
+                onLoadPage={page => onLoadMoreGoodReviews(id, page)}
+                Task={ProfileTaskReview}
+                emptyState={
+                  <EmptyStateContent
+                    className={classes.emptyState}
+                    summary="Nothing done yet"
+                    details="Hopefully soon!"
+                    picture={emptyReviewImage}
+                  />
+                }
+              />
+            </TabPanel>
+            <TabPanel
+              className={classes.tabContent}
+              visible={tab === 'bad-reviews'}
+            >
+              <PaginatedTaskList
+                className={classes.list}
+                error={badReviews.error}
+                loading={badReviews.loading}
+                data={badReviews.data}
+                hasNext={badReviews.hasNext}
+                page={badReviews.page}
+                onLoadPage={page => onLoadMoreBadReviews(id, page)}
+                Task={ProfileTaskReview}
+                emptyState={
+                  <EmptyStateContent
+                    className={classes.emptyState}
+                    summary="Excellent!"
+                    details="No bad reviews"
+                    picture={emptyReviewImage}
+                  />
+                }
+              />
             </TabPanel>
           </Paper>
         </Grid>
@@ -271,6 +355,10 @@ ProfilePage.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.instanceOf(Error),
   onPageLoad: PropTypes.func,
+  goodReviews: PropTypes.object,
+  badReviews: PropTypes.object,
+  onLoadMoreGoodReviews: PropTypes.func,
+  onLoadMoreBadReviews: PropTypes.func,
   onEditProfileButtonClick: PropTypes.func,
   isEdit: PropTypes.bool,
 };
@@ -280,18 +368,26 @@ const mapStateToProps = createStructuredSelector({
   profile: makeSelectProfilePageProfileProp('data'),
   loading: makeSelectProfilePageProfileProp('loading'),
   error: makeSelectProfilePageProfileProp('error'),
+  goodReviews: makeSelectProfilePageReviewsProp('good'),
+  badReviews: makeSelectProfilePageReviewsProp('bad'),
   user: makeSelectGlobalUser(),
 });
 
 const mapDispatchToProps = dispatch => ({
   onPageLoad: id => {
     dispatch(loadProfile(id));
-    // dispatch(loadProfileGoodReviews(id));
-    // dispatch(loadProfileBadReviews(id));
+    dispatch(loadWorkerProfileGoodReviews(id));
+    dispatch(loadWorkerProfileBadReviews(id));
     // dispatch(loadProfileOpenTasks(id));
   },
   onEditProfileButtonClick: () => {
     dispatch(updateProfileEditModalIsOpen(true));
+  },
+  onLoadMoreGoodReviews(id, page) {
+    dispatch(loadWorkerProfileGoodReviews(id, page));
+  },
+  onLoadMoreBadReviews(id, page) {
+    dispatch(loadWorkerProfileBadReviews(id, page));
   },
 });
 

@@ -54,11 +54,7 @@ export default function TaskOwner({ user }) {
       />
       <div className={classes.data}>
         <FullName className={classes.name} user={user} />
-        <LikesMetric
-          className={classes.likes}
-          likes={user.likes}
-          dislikes={user.dislikes}
-        />
+        <LikesMetric className={classes.likes} rating={user.ratings.creator} />
       </div>
     </Paper>
   );

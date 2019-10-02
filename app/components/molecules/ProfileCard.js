@@ -71,11 +71,7 @@ function ProfileCard({ user }) {
         <GoToProfileButton>
           <MDBIcon icon="chevron-right" />
         </GoToProfileButton>
-        <LikesMetric
-          className={classes.likes}
-          likes={user.likes}
-          dislikes={user.dislikes}
-        />
+        <LikesMetric className={classes.likes} rating={user.ratings.worker} />
         <div>
           <ViewProfileLink>
             <h5>

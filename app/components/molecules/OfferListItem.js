@@ -97,8 +97,7 @@ function OfferListItem({ offer, isSelected, isAssigned, onClick, disabled }) {
             <Grid item xs={12} sm={6}>
               <LikesMetric
                 className={classes.likes}
-                likes={offer.workerUser.likes}
-                dislikes={offer.workerUser.dislikes}
+                rating={offer.workerUser.ratings.worker}
               />
             </Grid>
           </Grid>

@@ -27,6 +27,12 @@ export const makeSelectProfilePageEditModal = () =>
     subState => subState.editModal,
   );
 
+export const makeSelectProfilePageReviews = () =>
+  createSelector(
+    selectProfilePageDomain,
+    subState => subState.reviews,
+  );
+
 export const makeSelectProfilePageProfileProp = prop =>
   createSelector(
     makeSelectProfilePageProfile(),
@@ -36,5 +42,11 @@ export const makeSelectProfilePageProfileProp = prop =>
 export const makeSelectProfilePageEditModalProp = prop =>
   createSelector(
     makeSelectProfilePageEditModal(),
+    subState => subState[prop],
+  );
+
+export const makeSelectProfilePageReviewsProp = prop =>
+  createSelector(
+    makeSelectProfilePageReviews(),
     subState => subState[prop],
   );

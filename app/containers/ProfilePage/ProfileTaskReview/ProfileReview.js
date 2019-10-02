@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   },
   message: {
     paddingTop: theme.spacing(1),
-    fontSize: '14px',
+    fontSize: '12px',
     fontStyle: 'italic',
   },
   rating: {
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   },
   noRating: {
     display: 'inline-block',
-    fontSize: '0.9rem',
+    fontSize: '0.7rem',
     color: 'grey',
     fontStyle: 'italic',
   },
@@ -39,9 +39,11 @@ const useStyles = makeStyles(theme => ({
   },
   likeOk: {
     color: '#47bf49',
+    fontSize: '1rem',
   },
   likeNotOk: {
     color: '#dc4646',
+    fontSize: '1rem',
   },
   review: {
     display: 'flex',
@@ -52,7 +54,7 @@ const useStyles = makeStyles(theme => ({
   },
   quotes: {
     '&::before': {
-      fontSize: '25px',
+      fontSize: '18px',
       fontWeight: '700',
       paddingRight: '5px',
     },
@@ -61,13 +63,12 @@ const useStyles = makeStyles(theme => ({
     },
   },
   name: {
-    paddingTop: theme.spacing(2),
-    fontWeight: 700,
-    fontSize: '14px',
+    paddingTop: theme.spacing(0.5),
+    fontSize: '10px',
   },
 }));
 
-export default function Review({ user, isOwner, review, onClick }) {
+export default function ProfileReview({ user, review, onClick }) {
   const classes = useStyles();
 
   return (
@@ -75,9 +76,7 @@ export default function Review({ user, isOwner, review, onClick }) {
       <div className={classes.imageAndName}>
         <Avatar
           imgSrc={user.imageUrl}
-          imgStyle={{ width: '60px', height: '60px', objectFit: 'cover' }}
-          isOwner={isOwner}
-          isWorker={!isOwner}
+          imgStyle={{ width: '40px', height: '40px', objectFit: 'cover' }}
         />
         <FullName
           className={classes.name}
@@ -88,7 +87,7 @@ export default function Review({ user, isOwner, review, onClick }) {
         <div className={classes.hiddenOverflow}>
           {review.rating > 0 ? (
             <RatingStars
-              fontSize="20px"
+              fontSize="16px"
               value={review.rating}
               className={classes.rating}
             />
@@ -111,9 +110,8 @@ export default function Review({ user, isOwner, review, onClick }) {
   );
 }
 
-Review.propTypes = {
+ProfileReview.propTypes = {
   user: PropTypes.object,
   review: PropTypes.object,
-  isOwner: PropTypes.bool,
   onClick: PropTypes.func,
 };

@@ -70,6 +70,7 @@ export default function PositiveFeedbackSection({
             value={rating.value}
             onChange={onUpdateRating}
             labels={rating.labels}
+            fontSize="40px"
           />
         </div>
       </div>

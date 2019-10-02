@@ -48,9 +48,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const getLikesStyle = likes => ({ visibility: likes ? 'visible' : 'hidden' });
+
 function ProfileHeader({
-  likes,
-  dislikes,
   imgSrc,
   isApproved,
   firstName,
@@ -70,23 +70,23 @@ function ProfileHeader({
         <UserOnlineStatus online={online} lastSeen={lastSeen} />
       ) : null}
       <TopContainer>
-        <CenterDiv grow="1">
+        <CenterDiv grow="1" style={getLikesStyle(rating.likes)}>
           <IconWithNumber
             className={classes.metricIcon}
             iconColor="green"
             Icon={ThumbUpAltOutlinedIcon}
-            metric={likes}
+            metric={rating.likes}
           />
         </CenterDiv>
         <CenterDiv grow="2">
           <Avatar imgStyle={imgStyle} imgSrc={imgSrc} isApproved={isApproved} />
         </CenterDiv>
-        <CenterDiv grow="1">
+        <CenterDiv grow="1" style={getLikesStyle(rating.dislikes)}>
           <IconWithNumber
             className={classes.metricIcon}
             iconColor="red"
             Icon={ThumbDownOutlinedIcon}
-            metric={dislikes}
+            metric={rating.dislikes}
           />
         </CenterDiv>
       </TopContainer>
@@ -108,8 +108,6 @@ function ProfileHeader({
 
 ProfileHeader.propTypes = {
   className: PropTypes.string,
-  likes: PropTypes.number,
-  dislikes: PropTypes.number,
   imgSrc: PropTypes.string,
   isApproved: PropTypes.bool,
   firstName: PropTypes.string,

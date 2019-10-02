@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function LikesMetric({ likes, dislikes, className }) {
+function LikesMetric({ rating, className }) {
   const classes = useStyles();
 
   return (
@@ -25,14 +25,14 @@ function LikesMetric({ likes, dislikes, className }) {
         className={classes.icon}
         iconColor="green"
         Icon={ThumbUpAltOutlinedIcon}
-        metric={likes}
+        metric={rating.likes}
       />
       <div className={classes.divider}>/</div>
       <IconWithNumber
         className={classes.icon}
         iconColor="red"
         Icon={ThumbDownOutlinedIcon}
-        metric={dislikes}
+        metric={rating.dislikes}
       />
     </div>
   );
@@ -40,8 +40,7 @@ function LikesMetric({ likes, dislikes, className }) {
 
 LikesMetric.propTypes = {
   className: PropTypes.object,
-  likes: PropTypes.number,
-  dislikes: PropTypes.number,
+  rating: PropTypes.object,
 };
 
 export default LikesMetric;

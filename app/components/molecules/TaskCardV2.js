@@ -1,5 +1,6 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -46,7 +47,7 @@ const useStyles = makeStyles(theme => ({
   },
   info: {
     display: 'flex',
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(0.5),
     marginLeft: theme.spacing(1),
     fontSize: '0.8rem',
   },
@@ -99,6 +100,8 @@ export default function TaskCardV2({
   DesktopFooter,
   DesktopExtension,
   onClick,
+  className,
+  compact,
 }) {
   const classes = useStyles();
   let mobileFooter = null;
@@ -129,7 +132,7 @@ export default function TaskCardV2({
 
   if (DesktopExtension) {
     desktopExtension = (
-      <Grid className={classes.hideInMobile} item xs={12} sm={4}>
+      <Grid className={classes.hideInMobile} item xs={12} sm={5}>
         <Card className={classes.card} onClick={onClick}>
           <CardContent className={classes.content}>
             <DesktopExtension />
@@ -140,17 +143,17 @@ export default function TaskCardV2({
   }
 
   return (
-    <Grid className={classes.container} container spacing={2}>
-      <Grid item xs={12} sm={desktopExtension ? 8 : 12}>
+    <Grid className={clsx(classes.container, className)} container spacing={2}>
+      <Grid item xs={12} sm={desktopExtension ? 7 : 12}>
         <Card className={classes.card} onClick={onClick}>
           <CardContent className={classes.content}>
-            <Grid container spacing={2}>
+            <Grid container spacing={1}>
               <Grid
                 className={classes.header}
                 item
                 sm={12}
-                md={8}
-                lg={desktopExtension ? 8 : 9}
+                md={compact ? 12 : 7}
+                lg={compact ? 12 : desktopExtension ? 7 : 9}
               >
                 <div className={classes.categoryImage}>
                   <TaskCategoryImage
@@ -171,7 +174,12 @@ export default function TaskCardV2({
                   ) : null}
                 </div>
               </Grid>
-              <Grid item xs={9} md={4} lg={desktopExtension ? 4 : 3}>
+              <Grid
+                item
+                xs={9}
+                md={compact ? 12 : 5}
+                lg={compact ? 12 : desktopExtension ? 5 : 3}
+              >
                 <div className={classes.info}>
                   <ScheduleIcon className={classes.icon} />
                   <div>{formatTaskStartDateTime(task.startDateTime)}</div>
@@ -182,7 +190,7 @@ export default function TaskCardV2({
                 </div>
               </Grid>
               {desktopFooter}
-              <Grid item xs={3} sm={6}>
+              <Grid item xs={3} sm={compact ? desktopFooter ? 6 : 3 : 6}>
                 <PriceTag
                   className={classes.price}
                   price={task.price}
@@ -202,6 +210,8 @@ export default function TaskCardV2({
 
 TaskCardV2.propTypes = {
   task: PropTypes.object,
+  className: PropTypes.string,
+  compact: PropTypes.bool,
   onClick: PropTypes.func,
   MobileFooter: PropTypes.any,
   DesktopFooter: PropTypes.any,
