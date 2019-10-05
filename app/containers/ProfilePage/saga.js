@@ -7,7 +7,9 @@ import {
 } from '@redux-saga/core/effects';
 import * as client from 'utils/client';
 import {
-  EDIT_PROFILE, LOAD_OWNER_PROFILE_BAD_REVIEWS, LOAD_OWNER_PROFILE_GOOD_REVIEWS,
+  EDIT_PROFILE,
+  LOAD_OWNER_PROFILE_BAD_REVIEWS,
+  LOAD_OWNER_PROFILE_GOOD_REVIEWS,
   LOAD_PROFILE,
   LOAD_PROFILE_EDIT_MODAL_IMAGES,
   LOAD_PROFILE_EDIT_MODAL_PROFILE_IMAGE,
@@ -31,14 +33,12 @@ import {
   workerProfileGoodReviewsError,
   workerProfileGoodReviewsLoaded,
 } from 'containers/ProfilePage/actions';
-import history from 'utils/history';
 import {
   makeSelectProfilePageEditModalProp,
   makeSelectProfilePageId,
 } from 'containers/ProfilePage/selectors';
 import { getUpdateFields } from 'containers/ProfilePage/reducer';
 import { loadUser } from 'containers/App/actions';
-import { makeSelectGlobalUser } from 'containers/App/selectors';
 
 export function* getProfile({ id }) {
   try {

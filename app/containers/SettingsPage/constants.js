@@ -1,7 +1,5 @@
-/*
- *
- * SettingsPage constants
- *
- */
-
-export const DEFAULT_ACTION = 'app/SettingsPage/DEFAULT_ACTION';
+export const LOAD_USER_SETTINGS = 'app/SettingsPage/LOAD_USER_SETTINGS';
+export const LOAD_USER_SETTINGS_SUCCESS =
+  'app/SettingsPage/LOAD_USER_SETTINGS_SUCCESS';
+export const LOAD_USER_SETTINGS_ERROR =
+  'app/SettingsPage/LOAD_USER_SETTINGS_ERROR';

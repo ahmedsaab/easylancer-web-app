@@ -492,6 +492,29 @@ export const searchTasks = async filters => {
   }
 };
 
+export const getSettings = async () => {
+  // await sleep(1000);
+  try {
+    const response = await axios.get(
+      `${process.env.CLIENT_API_ROOT}/settings/view`,
+      { headers },
+    );
+
+    return response.data;
+  } catch (error) {
+    // console.error(error)
+    if (error.response) {
+      throw new Error(
+        `The server responded with error code ${error.response.status}`,
+      );
+    } else if (error.request) {
+      throw new Error(`Failed to read response from Server`);
+    } else {
+      throw new Error(`An unexpected error occurred`);
+    }
+  }
+};
+
 export const fetchTags = async text => {
   try {
     let tags = [];

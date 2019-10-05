@@ -1,25 +1,28 @@
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
-/**
- * Direct selector to the settingsPage state domain
- */
-
 const selectSettingsPageDomain = state => state.settingsPage || initialState;
 
-/**
- * Other specific selectors
- */
-
-/**
- * Default selector used by SettingsPage
- */
-
-const makeSelectSettingsPage = () =>
+const makeSelectSettingsPageSettings = () =>
   createSelector(
     selectSettingsPageDomain,
-    substate => substate,
+    subState => subState.settings,
   );
 
-export default makeSelectSettingsPage;
-export { selectSettingsPageDomain };
+export const makeSelectSettingsPageSettingsLoading = () =>
+  createSelector(
+    makeSelectSettingsPageSettings(),
+    subState => subState.loading,
+  );
+
+export const makeSelectSettingsPageSettingsError = () =>
+  createSelector(
+    makeSelectSettingsPageSettings(),
+    subState => subState.error,
+  );
+
+export const makeSelectSettingsPageSettingsData = () =>
+  createSelector(
+    makeSelectSettingsPageSettings(),
+    subState => subState.data,
+  );

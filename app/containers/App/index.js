@@ -23,6 +23,7 @@ import Header from 'containers/Header';
 import TaskPage from 'containers/TaskPage/Loadable';
 import ProfilePage from 'containers/ProfilePage/Loadable';
 import MyTasksPage from 'containers/MyTasksPage/Loadable';
+import SettingsPage from 'containers/SettingsPage/Loadable';
 import SearchPage from 'containers/SearchPage/Loadable';
 import { Container, ContentRow, Wrapper } from 'containers/App/components';
 import GlobalStyle from 'global-styles';
@@ -73,6 +74,7 @@ function App({ onLoad }) {
                   <Switch>
                     <Route exact path="/" component={SearchPage} />
                     <Route path="/task/:id" component={TaskPage} />
+                    <Route path="/settings" component={SettingsPage} />
                     <Route
                       path="/profile/:id/:profileType"
                       component={ProfilePage}
