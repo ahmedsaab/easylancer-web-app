@@ -50,6 +50,29 @@ export const getWorkerReviews = async (userId, status, page = 1) => {
   }
 };
 
+export const getOwnerReviews = async (userId, status, page = 1) => {
+  try {
+    const response = await axios.get(
+      `${
+        process.env.CLIENT_API_ROOT
+      }/profiles/${userId}/owner/reviews?status=${status}&page=${page}`,
+      { headers },
+    );
+
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      throw new Error(
+        `The server responded with error code ${error.response.status}`,
+      );
+    } else if (error.request) {
+      throw new Error(`Failed to read response from Server`);
+    } else {
+      throw new Error(`An unexpected error occurred`);
+    }
+  }
+};
+
 export const getMyTasks = async (type, page = 1) => {
   // await sleep(200000);
 

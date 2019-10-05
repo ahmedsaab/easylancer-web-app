@@ -31,6 +31,7 @@ export const OfferMessage = styled.div`
 
 export const OfferHeader = styled(ProfileHeader)`
   cursor: pointer;
+  padding-top: 24px;
 `;
 
 function OfferDetails({ offer, task, children }) {
@@ -56,7 +57,7 @@ function OfferDetails({ offer, task, children }) {
         rating={offer.workerUser.ratings.worker}
         online={false}
         lastSeen={new Date()}
-        onClick={() => history.push(`/profile/${offer.workerUser.id}`)}
+        onClick={() => history.push(`/profile/${offer.workerUser.id}/worker`)}
       >
         <CenteredDiv>
           <OfferPrice price={offer.price} paymentMethod={offer.paymentMethod} />

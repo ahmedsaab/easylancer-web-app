@@ -8,7 +8,8 @@ import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 
 const useStyles = makeStyles(theme => ({
   emptyState: {
-    minHeight: '350px',
+    height: '100%',
+    minHeight: '300px',
   },
   emptyStateButton: {
     margin: theme.spacing(2),
@@ -64,7 +65,7 @@ export function StudioTab({ imagesUrls, onAddImages }) {
             className={classes.editImagesButton}
           >
             <AddAPhotoIcon className={classes.emptyStateButtonIcon} />
-            Edit Pictures
+            Edit
           </Button>
         </div>
       ) : null}

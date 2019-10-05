@@ -36,12 +36,10 @@ import Footer from 'components/molecules/Footer';
 import auth from 'utils/auth';
 import Spinner from 'components/atoms/Spinner';
 import { updateTaskModalIsOpen } from 'containers/CreateTaskModal/actions';
-import Switch from '@material-ui/core/Switch';
 import { makeStyles } from '@material-ui/core';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { red, blue } from '@material-ui/core/colors';
 import history from 'utils/history';
+import RoleSwitch from 'components/molecules/RoleSwitch';
 
 const useStyles = makeStyles(theme => ({
   footerControls: {
@@ -55,22 +53,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ModeSwitch = withStyles({
-  switchBase: {
-    color: red[500],
-    '&$checked': {
-      color: blue[500],
-    },
-    '&$checked + $track': {
-      backgroundColor: blue[500],
-    },
-  },
-  checked: {},
-  track: {
-    backgroundColor: red[500],
-  },
-})(Switch);
-
 function SideBar({
   isOpen,
   user,
@@ -82,7 +64,6 @@ function SideBar({
 }) {
   useInjectReducer({ key: 'sideNavBar', reducer });
   const classes = useStyles();
-  const { toggleLabel } = classes;
 
   return (
     <div>
@@ -93,7 +74,11 @@ function SideBar({
       <SideBarContainer className={isOpen ? 'active' : ''} id="sidebar">
         <SideBarHeader>
           {user ? (
-            <SideBarUser onClick={() => onProfileButtonClick(user.id)}>
+            <SideBarUser
+              onClick={() =>
+                onProfileButtonClick(user.id, user.settings.role.toLowerCase())
+              }
+            >
               <ImagePlaceholder>
                 <SideBarUserImage src={user.imageUrl} />
               </ImagePlaceholder>
@@ -156,19 +141,9 @@ function SideBar({
               Log out
             </SideBarButton>
             {user ? (
-              <FormControlLabel
-                className={classes.roleSwitch}
-                value="bottom"
-                control={
-                  <ModeSwitch
-                    checked={settings.role === 'WORKER'}
-                    onChange={onUpdateUserModeCheck}
-                    color="primary"
-                  />
-                }
-                label={`${settings.role}`}
-                labelPlacement="bottom"
-                classes={{ label: toggleLabel }}
+              <RoleSwitch
+                onUpdate={onUpdateUserModeCheck}
+                role={settings.role}
               />
             ) : null}
           </div>
@@ -199,8 +174,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateTaskModalIsOpen(true));
     dispatch(toggleSideNav(false));
   },
-  onProfileButtonClick: userId => {
-    history.push(`/profile/${userId}`);
+  onProfileButtonClick: (userId, profile) => {
+    history.push(`/profile/${userId}/${profile}`);
     dispatch(toggleSideNav(false));
     dispatch(setBodyScroll(true));
   },

@@ -44,7 +44,7 @@ export default function TaskOwner({ user }) {
     <Paper
       elevation={0}
       className={classes.container}
-      onClick={() => history.push(`/profile/${user.id}`)}
+      onClick={() => history.push(`/profile/${user.id}/owner`)}
     >
       <Avatar
         imgSrc={user.imageUrl}

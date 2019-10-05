@@ -42,13 +42,13 @@ function TaskReview({ task }) {
         isOwner
         user={task.creatorUser}
         review={task.creatorRating}
-        onClick={() => history.push(`/profile/${task.creatorUser.id}`)}
+        onClick={() => history.push(`/profile/${task.creatorUser.id}/owner`)}
       />
       <Divider className={classes.divider} orientation="horizontal" />
       <Review
         user={task.workerUser}
         review={task.workerRating}
-        onClick={() => history.push(`/profile/${task.workerUser.id}`)}
+        onClick={() => history.push(`/profile/${task.workerUser.id}/worker`)}
       />
     </Paper>
   );

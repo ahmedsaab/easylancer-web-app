@@ -44,7 +44,7 @@ export default function PaginatedTaskList({
 }) {
   const classes = useStyles();
 
-  if (loading && !data) {
+  if (loading || !data) {
     return (
       <FitPage>
         <Spinner dimension="50px" />

@@ -8,7 +8,6 @@ import {
   LOAD_WORKER_PROFILE_BAD_REVIEWS,
   LOAD_WORKER_PROFILE_BAD_REVIEWS_SUCCESS,
   LOAD_WORKER_PROFILE_BAD_REVIEWS_ERROR,
-  UPDATE_PROFILE_EDIT_MODAL_IS_OPEN,
   EDIT_PROFILE,
   EDIT_PROFILE_ERROR,
   EDIT_PROFILE_SUCCESS,
@@ -17,7 +16,14 @@ import {
   UPDATE_PROFILE_EDIT_MODAL_IMAGES_LOADED,
   LOAD_PROFILE_EDIT_MODAL_PROFILE_IMAGE,
   UPDATE_PROFILE_EDIT_MODAL_PROFILE_IMAGE_LOADED,
-  UPDATE_PROFILE_SELECTED_REVIEWS,
+  UPDATE_PROFILE_EDIT_PHOTOS_MODAL_IS_OPEN,
+  UPDATE_PROFILE_EDIT_MODAL_IS_OPEN,
+  LOAD_OWNER_PROFILE_GOOD_REVIEWS,
+  LOAD_OWNER_PROFILE_GOOD_REVIEWS_SUCCESS,
+  LOAD_OWNER_PROFILE_GOOD_REVIEWS_ERROR,
+  LOAD_OWNER_PROFILE_BAD_REVIEWS,
+  LOAD_OWNER_PROFILE_BAD_REVIEWS_SUCCESS,
+  LOAD_OWNER_PROFILE_BAD_REVIEWS_ERROR,
 } from 'containers/ProfilePage/constants';
 
 export function loadProfile(id) {
@@ -85,16 +91,60 @@ export function workerProfileBadReviewsError(error) {
   };
 }
 
-export function updateProfileSelectedReviews(value) {
+export function loadOwnerProfileGoodReviews(id, page = 1) {
   return {
-    type: UPDATE_PROFILE_SELECTED_REVIEWS,
-    value,
+    type: LOAD_OWNER_PROFILE_GOOD_REVIEWS,
+    id,
+    page,
+  };
+}
+
+export function ownerProfileGoodReviewsLoaded(data) {
+  return {
+    type: LOAD_OWNER_PROFILE_GOOD_REVIEWS_SUCCESS,
+    ...data,
+  };
+}
+
+export function ownerProfileGoodReviewsError(error) {
+  return {
+    type: LOAD_OWNER_PROFILE_GOOD_REVIEWS_ERROR,
+    error,
+  };
+}
+
+export function loadOwnerProfileBadReviews(id, page = 1) {
+  return {
+    type: LOAD_OWNER_PROFILE_BAD_REVIEWS,
+    id,
+    page,
+  };
+}
+
+export function ownerProfileBadReviewsLoaded(data) {
+  return {
+    type: LOAD_OWNER_PROFILE_BAD_REVIEWS_SUCCESS,
+    ...data,
+  };
+}
+
+export function ownerProfileBadReviewsError(error) {
+  return {
+    type: LOAD_OWNER_PROFILE_BAD_REVIEWS_ERROR,
+    error,
   };
 }
 
 export function updateProfileEditModalIsOpen(isOpen) {
   return {
     type: UPDATE_PROFILE_EDIT_MODAL_IS_OPEN,
+    isOpen,
+  };
+}
+
+export function updateProfileEditPhotosModalIsOpen(isOpen) {
+  return {
+    type: UPDATE_PROFILE_EDIT_PHOTOS_MODAL_IS_OPEN,
     isOpen,
   };
 }

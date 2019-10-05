@@ -6,6 +6,7 @@ import Tag from 'components/atoms/Tag';
 const TagNumber = styled.div`
   display: inline;
   border: 1px solid #0000004a;
+  padding-left: 5px;
   border-radius: 3px;
   padding: 0px 5px;
   background: #c7d8ff;
@@ -14,7 +15,6 @@ const TagNumber = styled.div`
 
 const TagText = styled.div`
   display: inline;
-  padding-right: 5px;
 `;
 
 function NumberedTags({ tags, className }) {

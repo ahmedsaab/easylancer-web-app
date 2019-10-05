@@ -73,7 +73,10 @@ function App({ onLoad }) {
                   <Switch>
                     <Route exact path="/" component={SearchPage} />
                     <Route path="/task/:id" component={TaskPage} />
-                    <Route path="/profile/:id" component={ProfilePage} />
+                    <Route
+                      path="/profile/:id/:profileType"
+                      component={ProfilePage}
+                    />
                     <Route path="/search" component={SearchPage} />
                     <Route path="/my-orders" component={MyTasksPage} />
                     <Route path="" component={Error404} />

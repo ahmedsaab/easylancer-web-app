@@ -58,7 +58,6 @@ export function DetailsTab({
       <Grid item xs={12}>
         <Section
           Icon={TranslateIcon}
-          className={classes.section}
           title="Languages"
           valid={!!languages.length}
         >
@@ -66,17 +65,12 @@ export function DetailsTab({
         </Section>
       </Grid>
       <Grid item xs={12}>
-        <Section
-          Icon={LabelOutlinedIcon}
-          className={classes.section}
-          title="Tags"
-          valid={!!tags.length}
-        >
+        <Section Icon={LabelOutlinedIcon} title="Tags" valid={!!tags.length}>
           <NumberedTags tags={tags} />
         </Section>
       </Grid>
       <Grid item xs={12}>
-        <Section Icon={EventIcon} className={classes.section} title="Joined">
+        <Section Icon={EventIcon} title="Joined">
           <div className={classes.text}>
             {formatProfileCreatedAtDate(createdAt)}
           </div>
