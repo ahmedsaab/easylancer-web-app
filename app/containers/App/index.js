@@ -53,6 +53,7 @@ function App({ onLoad }) {
         vertical: 'top',
         horizontal: 'center',
       }}
+      autoHideDuration={1500}
     >
       <ThemeProvider theme={theme}>
         <div style={{ overflowX: 'hidden' }}>

@@ -9,6 +9,12 @@ const makeSelectSettingsPageSettings = () =>
     subState => subState.settings,
   );
 
+const makeSelectSettingsPageFrom = () =>
+  createSelector(
+    selectSettingsPageDomain,
+    subState => subState.form,
+  );
+
 export const makeSelectSettingsPageSettingsLoading = () =>
   createSelector(
     makeSelectSettingsPageSettings(),
@@ -25,4 +31,23 @@ export const makeSelectSettingsPageSettingsData = () =>
   createSelector(
     makeSelectSettingsPageSettings(),
     subState => subState.data,
+  );
+
+export const makeSelectSettingsPageFormData = () =>
+  createSelector(
+    makeSelectSettingsPageFrom(),
+    subState => subState.data,
+  );
+
+
+export const makeSelectSettingsPageFormLoading = () =>
+  createSelector(
+    makeSelectSettingsPageFrom(),
+    subState => subState.loading,
+  );
+
+export const makeSelectSettingsPageFormExpanded = () =>
+  createSelector(
+    makeSelectSettingsPageFrom(),
+    subState => subState.expanded,
   );

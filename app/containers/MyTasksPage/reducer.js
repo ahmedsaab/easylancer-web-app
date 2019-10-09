@@ -200,7 +200,7 @@ export const initialState = {
     data: null,
     loading: null,
     error: null,
-    Task: OwnerAssignedTaskCard,
+    Task: OwnerOpenTaskCard,
     page: null,
     hasNext: null,
   },

@@ -29,6 +29,7 @@ export default function SelectDropDown({
   onSelect,
   className,
   fullWidth,
+  inputClassName,
 }) {
   const classes = useStyles();
 
@@ -54,6 +55,7 @@ export default function SelectDropDown({
         }
         input={
           <OutlinedInput
+            classes={{ input: inputClassName }}
             labelWidth={labelWidth}
             name={label}
             id="outlined-age-simple"
@@ -75,6 +77,7 @@ export default function SelectDropDown({
 
 SelectDropDown.propTypes = {
   className: PropTypes.string,
+  inputClassName: PropTypes.string,
   disabled: PropTypes.bool,
   label: PropTypes.string,
   selected: PropTypes.object,

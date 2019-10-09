@@ -7,7 +7,7 @@ import PlacesAutoComplete from 'components/organisms/PlacesAutoComplete';
 
 const useStyles = makeStyles(theme => ({
   field: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1.5, 0),
     width: '100%',
   },
   row: {
@@ -20,6 +20,9 @@ export function LocationSection({
   address,
   geo,
   city,
+  type = 'address',
+  label = 'Address',
+  className,
   onUpdateCountry,
   onUpdateLocation,
   onUpdateAddress,
@@ -30,7 +33,7 @@ export function LocationSection({
   });
 
   return (
-    <div>
+    <div className={className}>
       {onUpdateCountry ? (
         <div className={classes.row}>
           <SelectDropDown
@@ -52,9 +55,12 @@ export function LocationSection({
             }}
             onError={err => console.error(err)}
             text={address}
-            type="address"
-            label="Address"
-            error={(!geo || !city || !country) && dirty.address}
+            type={type}
+            label={label}
+            error={
+              ((!geo && type === 'address') || !city || !country) &&
+              dirty.address
+            }
             countryISOCode={country.value}
             className={classes.field}
           />
@@ -69,6 +75,9 @@ LocationSection.propTypes = {
   geo: PropTypes.object,
   address: PropTypes.string,
   city: PropTypes.string,
+  className: PropTypes.string,
+  type: PropTypes.string,
+  label: PropTypes.string,
   onUpdateCountry: PropTypes.func,
   onUpdateLocation: PropTypes.func,
   onUpdateAddress: PropTypes.func,

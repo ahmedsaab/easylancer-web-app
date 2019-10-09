@@ -6,6 +6,7 @@ const OfflinePlugin = require('offline-plugin');
 const { HashedModuleIdsPlugin } = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const DotEnv = require('dotenv-webpack');
 
 module.exports = require('./webpack.base.babel')({
   mode: 'production',
@@ -66,6 +67,10 @@ module.exports = require('./webpack.base.babel')({
   },
 
   plugins: [
+    new DotEnv({
+      path: './app/config/stage.env',
+      defaults: false,
+    }),
     // Minify and optimize the index.html
     new HtmlWebpackPlugin({
       template: 'app/index.html',

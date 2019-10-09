@@ -11,3 +11,7 @@ export function clean(pojo) {
     return object;
   }, {});
 }
+
+export function equal(object1, object2) {
+  return JSON.stringify(object1) === JSON.stringify(object2);
+}
