@@ -4,6 +4,8 @@ WORKDIR /usr/src/app/temp
 
 COPY . .
 
+RUN apk add autoconf automake alpine-sdk libtool zlib-dev zlib nasm
+
 RUN npm install
 
 RUN npm run build
@@ -14,11 +16,13 @@ RUN mv build ..
 
 RUN mv package.json ..
 
-RUN npm install --production
-
 WORKDIR /usr/src/app
 
+RUN npm install --production
+
 RUN rm -rf temp
+
+RUN apk del autoconf automake alpine-sdk libtool zlib-dev zlib nasm
 
 EXPOSE 3000
 

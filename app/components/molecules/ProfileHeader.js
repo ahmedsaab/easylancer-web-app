@@ -5,7 +5,6 @@ import IconWithNumber from 'components/molecules/IconWithNumber';
 import Avatar from 'components/molecules/Avatar';
 import CenteredDiv from 'components/atoms/CenteredDiv';
 import FullName from 'components/molecules/FullName';
-import OnlineStatus from 'components/molecules/OnlineStatus';
 import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ThumbDownOutlinedIcon from '@material-ui/icons/ThumbDownOutlined';
 import { makeStyles } from '@material-ui/core';
@@ -37,10 +36,6 @@ const ProfileName = styled(FullName)`
   font-size: 1.3rem;
   font-weight: bold;
   padding: 10px 0 0 0;
-`;
-
-const UserOnlineStatus = styled(OnlineStatus)`
-  margin-bottom: 20px;
 `;
 
 const imgStyle = {
@@ -123,9 +118,6 @@ function ProfileHeader({
   return (
     <Container className={className} onClick={onClick}>
       <div className={classes.header}>
-        {online && lastSeen ? (
-          <UserOnlineStatus online={online} lastSeen={lastSeen} />
-        ) : null}
         {createdAt ? (
           <div className={classes.createdAtText}>
             <EventIcon className={classes.joinedIcon} />
