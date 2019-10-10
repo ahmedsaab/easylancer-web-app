@@ -1,14 +1,15 @@
 import React from 'react';
-import { MDBCol, MDBNav, MDBNavItem, MDBNavLink, MDBRow } from 'mdbreact';
+import { MDBCol, MDBNav, MDBNavItem, MDBRow } from 'mdbreact';
 import { Route, Switch } from 'react-router-dom';
 import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
+import history from 'utils/history';
 
 const TabNav = styled(MDBNav)`
   border-bottom: 2px solid #dee2e6;
 `;
 
-const TabNavLink = styled(MDBNavLink)`
+const TabNavLink = styled.div`
   color: #4cbbad;
   margin-top: 28px;
   font-weight: bold;
@@ -26,11 +27,7 @@ const TabNavLink = styled(MDBNavLink)`
 function TabSwitch({ tabs, disabled }) {
   const tabLinks = tabs.map(tab => (
     <MDBNavItem disabled key={tab.path}>
-      <TabNavLink
-        onClick={disabled ? e => e.preventDefault() : () => {}}
-        exact={tab.exact}
-        to={tab.path}
-      >
+      <TabNavLink onClick={() => (!disabled ? history.push(tab.path) : null)}>
         {tab.header}
       </TabNavLink>
     </MDBNavItem>

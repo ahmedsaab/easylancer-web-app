@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 
 import LightBoxImagesGrid from 'components/organisms/LightBoxImagesGrid';
 import SectionHeader from 'components/molecules/SectionHeader';
-import { Map, GoogleApiWrapper, Circle } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import { createStructuredSelector } from 'reselect';
 import { selectTaskPageTaskData } from 'containers/TaskPage/selectors';
 import { connect } from 'react-redux';
@@ -110,19 +110,12 @@ function TaskDetails({ task, google }) {
               lng: task.location.geo.lng,
             }}
           >
-            <Circle
-              center={{
+            <Marker
+              position={{
                 lat: task.location.geo.lat,
                 lng: task.location.geo.lng,
               }}
-              radius={400}
-              strokeColor="#000"
-              strokeOpacity={0.1}
-              strokeWeight={10}
-              fillColor="#4CBBAD"
-              fillOpacity={0.3}
-              draggable={false}
-              visible
+              name={task.location.address}
             />
           </Map>
         </div>

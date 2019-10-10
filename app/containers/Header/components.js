@@ -41,3 +41,10 @@ export const NavIcon = styled(MDBIcon)`
 export const NavLogoIcon = styled('img').attrs(props => ({
   height: '30',
 }))``;
+
+export const Brand = styled('a')`
+  color: white;
+  :hover {
+    color: #00b38d;
+  }
+`;

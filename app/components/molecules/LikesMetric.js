@@ -39,7 +39,7 @@ function LikesMetric({ rating, className }) {
 }
 
 LikesMetric.propTypes = {
-  className: PropTypes.object,
+  className: PropTypes.string,
   rating: PropTypes.object,
 };
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import { MDBNavbarBrand } from 'mdbreact';
 import * as PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -11,6 +10,7 @@ import {
   NavLogoText,
   NavMenuButton,
   NavLogoIcon,
+  Brand,
 } from 'containers/Header/components';
 import { setBodyScroll } from 'containers/App/actions';
 
@@ -20,10 +20,10 @@ function Header({ handleToggle }) {
       <NavMenuButton onClick={handleToggle}>
         <NavIcon icon="bars" size="2x" />
       </NavMenuButton>
-      <MDBNavbarBrand href="#">
+      <Brand href="/">
         <NavLogoIcon src={logo} />
         <NavLogoText>Easylancer</NavLogoText>
-      </MDBNavbarBrand>
+      </Brand>
       <NavIcon icon="bell" size="lg" />
     </NavBar>
   );

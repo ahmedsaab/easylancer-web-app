@@ -1,11 +1,10 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { MDBAvatar } from 'mdbreact';
 import RoundedImage from 'components/atoms/RoundedImage';
 import ApprovedIcon from 'components/atoms/ApprovedIcon';
 
-const AvatarContainer = styled(MDBAvatar)`
+const AvatarContainer = styled.div`
   position: relative;
   overflow: visible !important;
   border: none !important;
