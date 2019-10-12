@@ -57,7 +57,7 @@ function App({ onLoad }) {
     >
       <ThemeProvider theme={theme}>
         <div style={{ overflowX: 'hidden' }}>
-          <Helmet titleTemplate="%s | Easylancer" defaultTitle="Easylancer">
+          <Helmet titleTemplate="%s | skillRanks" defaultTitle="skillRanks">
             <meta
               name="description"
               content="Find local skilled workers in your city"

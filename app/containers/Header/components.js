@@ -45,6 +45,6 @@ export const NavLogoIcon = styled('img').attrs(props => ({
 export const Brand = styled('a')`
   color: white;
   :hover {
-    color: #00b38d;
+    color: white;
   }
 `;
