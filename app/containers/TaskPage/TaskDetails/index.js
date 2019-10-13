@@ -21,6 +21,9 @@ import Divider from '@material-ui/core/Divider';
 import { formatTaskStartDateTime } from 'utils/date-time-helpers';
 
 const useStyles = makeStyles(theme => ({
+  container: {
+    paddingTop: theme.spacing(3),
+  },
   divider: {
     margin: 'auto',
   },
@@ -42,10 +45,8 @@ function TaskDetails({ task, google }) {
   const classes = useStyles();
 
   return (
-    <Grid container spacing={5}>
-      <Grid item xs={12}>
-        <TaskAssignee />
-      </Grid>
+    <Grid className={classes.container} container spacing={5}>
+      <TaskAssignee />
       <Grid item xs={12}>
         <SectionHeader>
           <DescriptionIcon className={classes.icon} />

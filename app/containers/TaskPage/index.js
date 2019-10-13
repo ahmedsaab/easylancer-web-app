@@ -43,6 +43,7 @@ const useStyles = makeStyles(theme => ({
     backgroundClip: 'padding-box',
     border: '1px solid rgba(0,0,0,0.2)',
     outline: 0,
+    position: 'relative',
   },
   container: {
     padding: theme.spacing(1, 1, 0, 1),

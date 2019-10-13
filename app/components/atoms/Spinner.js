@@ -2,7 +2,11 @@ import styled from 'styled-components';
 import React from 'react';
 import * as PropTypes from 'prop-types';
 
-const Spinner = ({ margin = '40px', dimension = '50px' }) => (
+const Spinner = ({
+  margin = '40px',
+  dimension = '50px',
+  strokeWidth = '2',
+}) => (
   <StyledSpinner margin={margin} dimension={dimension} viewBox="0 0 50 50">
     <circle
       className="path"
@@ -10,7 +14,7 @@ const Spinner = ({ margin = '40px', dimension = '50px' }) => (
       cy="25"
       r="20"
       fill="none"
-      strokeWidth="2"
+      strokeWidth={strokeWidth}
     />
   </StyledSpinner>
 );
@@ -51,6 +55,7 @@ const StyledSpinner = styled.svg`
 Spinner.propTypes = {
   margin: PropTypes.string,
   dimension: PropTypes.string,
+  strokeWidth: PropTypes.number,
 };
 
 export default Spinner;

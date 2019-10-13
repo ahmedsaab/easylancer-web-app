@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import { createMuiTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import { SnackbarProvider } from 'notistack';
 import { red } from '@material-ui/core/colors';
@@ -39,12 +40,23 @@ const theme = createMuiTheme({
   },
 });
 
+const globalStyles = makeStyles({
+  '@global': {
+    button: {
+      '&:focus': {
+        outline: 'none',
+      },
+    },
+  },
+});
+
 function App({ onLoad }) {
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
     onLoad();
   }, []);
+  const classes = globalStyles();
 
   return (
     <SnackbarProvider
@@ -63,7 +75,7 @@ function App({ onLoad }) {
               content="Find local skilled workers in your city"
             />
           </Helmet>
-          <Wrapper>
+          <Wrapper classes={classes.tomato}>
             <SideBar />
             <Container fluid>
               <MDBRow>

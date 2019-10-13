@@ -25,9 +25,8 @@ const ModalContainer = styled.div`
   z-index: 100;
   display: ${props => (props.isOpen ? 'visible' : 'none')};
   animation-name: ${animationShow};
-  animation-duration: 0.5s;
+  animation-duration: 0.4s;
   animation-fill-mode: both;
-  animation-timing-function: ease-out;
   @media (max-width: 959px) {
     margin: 0 !important;
     position: fixed !important;

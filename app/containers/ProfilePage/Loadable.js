@@ -12,7 +12,7 @@ import React from 'react';
 export default loadable(() => import('./index'), {
   fallback: (
     <FitPage>
-      <Spinner dimension="200px" />
+      <Spinner dimension="50px" />
     </FitPage>
   ),
 });

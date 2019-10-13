@@ -17,6 +17,7 @@ import { makeStyles } from '@material-ui/core';
 import CallIcon from '@material-ui/icons/Call';
 import MessageIcon from '@material-ui/icons/Message';
 import IconButton from '@material-ui/core/IconButton';
+import Grid from '@material-ui/core/Grid';
 
 const Container = styled.div`
   color: #004085;
@@ -105,32 +106,34 @@ function TaskAssignee({ isTaskOwner, task, offers }) {
 
     if (offer) {
       return (
-        <Container>
-          <WorkerTag>Worker</WorkerTag>
-          <div className={classes.dataContainer}>
-            <WorkerAvatarContainer>
-              <Avatar
-                isApproved={offer.workerUser.isApproved}
-                imgSrc={offer.workerUser.imageUrl}
-                imgStyle={{
-                  width: '50px',
-                  height: '50px',
-                  objectFit: 'cover',
-                  border: '1px solid',
-                }}
-              />
-            </WorkerAvatarContainer>
-            <WorkerName user={offer.workerUser} />
-          </div>
-          <div className={classes.buttonContainer}>
-            <IconButton color="primary" aria-label="message">
-              <MessageIcon />
-            </IconButton>
-            <IconButton color="primary" aria-label="call">
-              <CallIcon />
-            </IconButton>
-          </div>
-        </Container>
+        <Grid item xs={12}>
+          <Container>
+            <WorkerTag>Worker</WorkerTag>
+            <div className={classes.dataContainer}>
+              <WorkerAvatarContainer>
+                <Avatar
+                  isApproved={offer.workerUser.isApproved}
+                  imgSrc={offer.workerUser.imageUrl}
+                  imgStyle={{
+                    width: '50px',
+                    height: '50px',
+                    objectFit: 'cover',
+                    border: '1px solid',
+                  }}
+                />
+              </WorkerAvatarContainer>
+              <WorkerName user={offer.workerUser} />
+            </div>
+            <div className={classes.buttonContainer}>
+              <IconButton color="primary" aria-label="message">
+                <MessageIcon />
+              </IconButton>
+              <IconButton color="primary" aria-label="call">
+                <CallIcon />
+              </IconButton>
+            </div>
+          </Container>
+        </Grid>
       );
     }
   }

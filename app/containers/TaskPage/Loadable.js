@@ -12,7 +12,7 @@ import Spinner from 'components/atoms/Spinner';
 export default loadable(() => import('containers/TaskPage/index'), {
   fallback: (
     <FitPage>
-      <Spinner dimension="200px" />
+      <Spinner dimension="50px" />
     </FitPage>
   ),
 });

@@ -140,7 +140,7 @@ function OfferActionButtons({
   return (
     <StickyBottom
       className={classes.container}
-      whenToStick="sm"
+      whenToStick="md"
       relativeStyleRef={containerRef}
     >
       {sticky}

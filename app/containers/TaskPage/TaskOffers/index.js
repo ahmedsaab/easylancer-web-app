@@ -6,7 +6,6 @@ import history from 'utils/history';
 
 import * as PropTypes from 'prop-types';
 import LoadingIndicator from 'components/molecules/LoadingIndicator';
-import OfferList from 'components/molecules/OfferList';
 import {
   OffersEmptyState,
   TaskOffersContainer,
@@ -20,6 +19,7 @@ import {
 } from 'containers/TaskPage/selectors';
 import { viewOffer } from 'containers/TaskPage/actions';
 import { makeSelectGlobalLocation } from 'containers/App/selectors';
+import OfferList from 'containers/TaskPage/TaskOffers/OfferList';
 
 function TaskOffers({
   task,
@@ -65,7 +65,7 @@ function TaskOffers({
           offers={offers.filter(
             offer => !offer.isNew && offer.id !== task.acceptedOffer,
           )}
-          label="All"
+          label={task.acceptedOffer ? 'Others' : null}
           selectedOfferId={selectedOfferId}
           onClickOffer={onClickOffer}
         />

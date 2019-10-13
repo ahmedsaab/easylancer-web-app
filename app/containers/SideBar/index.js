@@ -37,11 +37,10 @@ import auth from 'utils/auth';
 import Spinner from 'components/atoms/Spinner';
 import { updateTaskModalIsOpen } from 'containers/CreateTaskModal/actions';
 import { makeStyles } from '@material-ui/core';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import history from 'utils/history';
 import RoleSwitch from 'components/molecules/RoleSwitch';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   footerControls: {
     display: 'flex',
   },
@@ -95,7 +94,7 @@ function SideBar({
               </SideBarUserData>
             </SideBarUser>
           ) : (
-            <Spinner dimension="30px" margin="9px" />
+            <Spinner dimension="30px" margin="9px" strokeWidth={5} />
           )}
         </SideBarHeader>
         <SideBarList>
