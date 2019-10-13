@@ -94,7 +94,8 @@ function EditProfileModal({
   const isInvalid = form.image && !form.image.uploaded;
   const isDirty =
     form.about !== profile.about ||
-    JSON.stringify(form.languages) !== JSON.stringify(profile.languages);
+    JSON.stringify(form.languages) !== JSON.stringify(profile.languages) ||
+    (form.image && form.image.url !== profile.imageUrl);
 
   useEffect(() => {
     loadImage(form.imageUrl || form.imagesUrls[0]);
